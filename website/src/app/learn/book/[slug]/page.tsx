@@ -7,8 +7,9 @@ export function generateStaticParams() {
   return Object.keys(chapters).map((slug) => ({ slug }));
 }
 
-export default async function ChapterPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+export default async function ChapterPage({ params }: { params: Promise<{ slug: string }> | { slug: string } }) {
+  const resolvedParams = await Promise.resolve(params);
+  const slug = resolvedParams?.slug || 'ch01-getting-started';
   const chapter = chapters[slug] || chapters['ch01-getting-started'];
 
   return (
