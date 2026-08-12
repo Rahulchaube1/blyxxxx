@@ -1,8 +1,27 @@
 {
+  "name": "blyx-monorepo",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd website && npm run dev",
+    "build": "cd website && npm install --legacy-peer-deps && npx next build --webpack",
+    "start": "cd website && npm run start",
+    "lint": "cd website && npm run lint"
+  },
   "dependencies": {
-    "browser-ui-test": "^0.25.0",
-    "es-check": "^9.4.4",
-    "eslint": "^8.57.1",
-    "typescript": "^5.8.3"
+    "@monaco-editor/react": "^4.6.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.0.0",
+    "lucide-react": "^0.400.0",
+    "next": "^16.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.4.0"
   }
 }
