@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const BLYX_EXAMPLES = [
   {
@@ -58,37 +59,37 @@ export default function HomePage() {
   };
 
   return (
-    <div style={{ background: '#0A0908', color: '#F0EDE8', minHeight: '100vh', overflowX: 'hidden' }}>
-      {/* Background Radial Glow */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: '100%',
-        maxWidth: '1200px',
-        height: '600px',
-        background: 'radial-gradient(ellipse at top, rgba(124, 58, 237, 0.18) 0%, rgba(6, 182, 212, 0.05) 50%, transparent 70%)',
-        pointerEvents: 'none',
-        zIndex: 0,
-      }} />
+    <div style={{ background: '#080F1E', color: '#F0EDE8', minHeight: '100vh', overflowX: 'hidden' }}>
+      {/* Hero Section with Doodle Banner Background */}
+      <section style={{ position: 'relative', zIndex: 1, padding: '60px 24px 80px', maxWidth: '1280px', margin: '0 auto', textAlign: 'center' }}>
+        
+        {/* Banner Illustration */}
+        <div style={{ maxWidth: '1000px', margin: '0 auto 36px', borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(0, 207, 255, 0.25)', boxShadow: '0 0 35px rgba(0, 207, 255, 0.15)' }}>
+          <Image
+            src="/hero_doodle.jpg"
+            alt="Blyx Penguin Mascot Doodle Banner"
+            width={1200}
+            height={675}
+            priority
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+        </div>
 
-      {/* Hero Section */}
-      <section style={{ position: 'relative', zIndex: 1, padding: '80px 24px 60px', maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+        {/* Release Pill */}
         <div style={{
           display: 'inline-flex',
           alignItems: 'center',
           gap: '8px',
-          padding: '6px 16px',
+          padding: '6px 18px',
           borderRadius: '9999px',
-          background: 'rgba(124, 58, 237, 0.12)',
-          border: '1px solid rgba(124, 58, 237, 0.3)',
-          color: '#A78BFA',
+          background: 'rgba(0, 207, 255, 0.12)',
+          border: '1px solid rgba(0, 207, 255, 0.35)',
+          color: '#00CFFF',
           fontSize: '13px',
           fontWeight: 600,
-          marginBottom: '28px',
+          marginBottom: '24px',
         }}>
-          ✨ Blyx v0.1.0-alpha Released &bull; AI-Native Systems Language
+          🐧 Blyx v0.1.0-alpha Released &bull; AI-Native Systems Language
         </div>
 
         <h1 style={{
@@ -98,7 +99,7 @@ export default function HomePage() {
           lineHeight: 1.08,
           letterSpacing: '-2px',
           marginBottom: '24px',
-          background: 'linear-gradient(135deg, #FFFFFF 20%, #F0EDE8 50%, #A78BFA 80%, #7C3AED 100%)',
+          background: 'linear-gradient(135deg, #FFFFFF 20%, #F0EDE8 50%, #00CFFF 80%, #7C3AED 100%)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
         }}>
@@ -108,68 +109,71 @@ export default function HomePage() {
         <p style={{
           fontFamily: "'Inter', sans-serif",
           fontSize: 'clamp(18px, 2.2vw, 22px)',
-          color: '#9CA3AF',
-          maxWidth: '780px',
+          color: '#7A8FB0',
+          maxWidth: '820px',
           margin: '0 auto 40px',
           lineHeight: 1.6,
         }}>
-          Blyx is an AI-native programming language backed by a high-performance <strong style={{ color: '#F0EDE8' }}>Rust compiler runtime</strong>.
-          Designed with first-class primitives (<code style={{ color: '#A78BFA', background: 'rgba(124,58,237,0.2)', padding: '2px 6px', borderRadius: '4px' }}>generate</code>, <code style={{ color: '#A78BFA', background: 'rgba(124,58,237,0.2)', padding: '2px 6px', borderRadius: '4px' }}>reason</code>, <code style={{ color: '#A78BFA', background: 'rgba(124,58,237,0.2)', padding: '2px 6px', borderRadius: '4px' }}>orchestrate</code>, <code style={{ color: '#A78BFA', background: 'rgba(124,58,237,0.2)', padding: '2px 6px', borderRadius: '4px' }}>task</code>), static tensor types, and lock-free actor concurrency with zero garbage collection.
+          Blyx is an AI-native programming language backed by a high-performance <strong style={{ color: '#F0EDE8' }}>Rust compiler engine</strong>.
+          Designed with first-class primitives (<code style={{ color: '#00CFFF', background: 'rgba(0,207,255,0.15)', padding: '2px 6px', borderRadius: '4px' }}>generate</code>, <code style={{ color: '#00CFFF', background: 'rgba(0,207,255,0.15)', padding: '2px 6px', borderRadius: '4px' }}>reason</code>, <code style={{ color: '#00CFFF', background: 'rgba(0,207,255,0.15)', padding: '2px 6px', borderRadius: '4px' }}>orchestrate</code>, <code style={{ color: '#00CFFF', background: 'rgba(0,207,255,0.15)', padding: '2px 6px', borderRadius: '4px' }}>task</code>), static tensor types, and lock-free actor concurrency with zero garbage collection.
         </p>
 
-        {/* CTA Buttons */}
-        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '56px' }}>
-          <Link href="/download" style={{
-            padding: '14px 32px',
-            borderRadius: '8px',
-            background: '#7C3AED',
-            color: '#FFFFFF',
-            fontWeight: 700,
-            fontSize: '16px',
-            textDecoration: 'none',
-            boxShadow: '0 0 25px rgba(124, 58, 237, 0.5)',
-            transition: 'all 0.2s',
-          }}>
-            Get Started &rarr;
-          </Link>
-          <Link href="/play" style={{
-            padding: '14px 32px',
-            borderRadius: '8px',
-            background: 'rgba(255, 255, 255, 0.05)',
-            color: '#F0EDE8',
-            fontWeight: 600,
-            fontSize: '16px',
-            textDecoration: 'none',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
-          }}>
-            Open Playground
-          </Link>
+        {/* CTA Buttons + Coding Mascot */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '32px', flexWrap: 'wrap', marginBottom: '56px' }}>
+          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+            <Link href="/download" style={{
+              padding: '16px 36px',
+              borderRadius: '10px',
+              background: 'linear-gradient(135deg, #7C3AED 0%, #00CFFF 100%)',
+              color: '#FFFFFF',
+              fontWeight: 700,
+              fontSize: '16px',
+              textDecoration: 'none',
+              boxShadow: '0 0 30px rgba(0, 207, 255, 0.4)',
+              transition: 'all 0.2s',
+            }}>
+              Get Started &rarr;
+            </Link>
+            <Link href="/play" style={{
+              padding: '16px 36px',
+              borderRadius: '10px',
+              background: 'rgba(255, 255, 255, 0.05)',
+              color: '#F0EDE8',
+              fontWeight: 600,
+              fontSize: '16px',
+              textDecoration: 'none',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+            }}>
+              Open Playground
+            </Link>
+          </div>
         </div>
 
         {/* Quick Install Bar */}
         <div style={{
-          maxWidth: '560px',
+          maxWidth: '600px',
           margin: '0 auto 60px',
-          background: '#121118',
-          border: '1px solid rgba(124, 58, 237, 0.3)',
-          borderRadius: '10px',
-          padding: '12px 20px',
+          background: '#0D172A',
+          border: '1px solid rgba(0, 207, 255, 0.35)',
+          borderRadius: '12px',
+          padding: '14px 24px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           fontFamily: "'JetBrains Mono', monospace",
           fontSize: '14px',
           color: '#F0EDE8',
+          boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
         }}>
-          <span style={{ color: '#9CA3AF' }}>$ <span style={{ color: '#F0EDE8' }}>curl -sSL https://blyx-lang.space/install.sh | sh</span></span>
+          <span style={{ color: '#7A8FB0' }}>$ <span style={{ color: '#F0EDE8' }}>curl -sSL https://blyx-lang.space/install.sh | sh</span></span>
           <button
             onClick={copyInstallCommand}
             style={{
-              background: 'rgba(124, 58, 237, 0.2)',
-              border: '1px solid #7C3AED',
-              color: '#A78BFA',
+              background: 'rgba(0, 207, 255, 0.18)',
+              border: '1px solid #00CFFF',
+              color: '#00CFFF',
               borderRadius: '6px',
-              padding: '4px 12px',
+              padding: '6px 14px',
               fontSize: '12px',
               cursor: 'pointer',
               fontWeight: 600,
@@ -181,20 +185,20 @@ export default function HomePage() {
 
         {/* Code Showcase Terminal */}
         <div style={{
-          maxWidth: '860px',
+          maxWidth: '900px',
           margin: '0 auto',
-          background: '#121118',
-          border: '1px solid rgba(124, 58, 237, 0.3)',
-          borderRadius: '12px',
+          background: '#0C1322',
+          border: '1px solid rgba(0, 207, 255, 0.3)',
+          borderRadius: '16px',
           overflow: 'hidden',
-          boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6)',
+          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.7)',
           textAlign: 'left',
         }}>
-          {/* Header / Tabs */}
+          {/* Terminal Header */}
           <div style={{
-            background: '#181622',
-            padding: '12px 20px',
-            borderBottom: '1px solid rgba(124, 58, 237, 0.2)',
+            background: '#131C31',
+            padding: '14px 24px',
+            borderBottom: '1px solid rgba(0, 207, 255, 0.2)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -212,15 +216,15 @@ export default function HomePage() {
                   key={idx}
                   onClick={() => setActiveTab(idx)}
                   style={{
-                    background: activeTab === idx ? '#7C3AED' : 'transparent',
-                    color: activeTab === idx ? '#FFFFFF' : '#9CA3AF',
+                    background: activeTab === idx ? '#00CFFF' : 'transparent',
+                    color: activeTab === idx ? '#080F1E' : '#7A8FB0',
                     border: 'none',
                     borderRadius: '6px',
-                    padding: '4px 12px',
+                    padding: '6px 14px',
                     fontSize: '13px',
                     fontFamily: "'JetBrains Mono', monospace",
                     cursor: 'pointer',
-                    fontWeight: 500,
+                    fontWeight: 700,
                   }}
                 >
                   {ex.filename}
@@ -231,7 +235,7 @@ export default function HomePage() {
 
           {/* Code Block */}
           <pre style={{
-            padding: '24px',
+            padding: '28px',
             margin: 0,
             fontFamily: "'JetBrains Mono', monospace",
             fontSize: '14px',
@@ -244,89 +248,71 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Core Features Grid */}
-      <section style={{ padding: '80px 24px', maxWidth: '1200px', margin: '0 auto' }}>
+      {/* Core Features Grid with Penguin Mascot Doodle Art */}
+      <section style={{ padding: '80px 24px 100px', maxWidth: '1280px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-          <h2 style={{ fontFamily: "'Inter', sans-serif", fontSize: '36px', fontWeight: 800, color: '#F0EDE8', marginBottom: '12px' }}>
+          <h2 style={{ fontFamily: "'Inter', sans-serif", fontSize: '38px', fontWeight: 800, color: '#F0EDE8', marginBottom: '14px' }}>
             Built for the AI &amp; Systems Horizon
           </h2>
-          <p style={{ fontSize: '18px', color: '#9CA3AF', maxWidth: '640px', margin: '0 auto' }}>
+          <p style={{ fontSize: '18px', color: '#7A8FB0', maxWidth: '660px', margin: '0 auto' }}>
             Combining Rust-level safety and speed with native LLM primitives for autonomous multi-agent workloads.
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
-          <div style={{ background: '#121118', border: '1px solid rgba(124, 58, 237, 0.2)', borderRadius: '12px', padding: '32px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '10px', background: 'rgba(124, 58, 237, 0.2)', color: '#A78BFA', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', marginBottom: '20px' }}>
-              🧠
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '28px' }}>
+          
+          {/* Card 1: AI-First Primitives */}
+          <div style={{ background: '#0D172A', border: '1px solid rgba(0, 207, 255, 0.25)', borderRadius: '16px', padding: '32px', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ width: '120px', height: '120px', margin: '0 auto 20px', borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(0, 207, 255, 0.3)' }}>
+              <Image src="/penguin_thinking.jpg" alt="Thinking Penguin Mascot" width={120} height={120} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
-            <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: '20px', fontWeight: 700, color: '#F0EDE8', marginBottom: '10px' }}>
+            <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: '22px', fontWeight: 700, color: '#F0EDE8', marginBottom: '12px', textAlign: 'center' }}>
               AI-First Primitives
             </h3>
-            <p style={{ color: '#9CA3AF', fontSize: '15px' }}>
-              First-class language keywords (<code style={{ color: '#A78BFA' }}>generate</code>, <code style={{ color: '#A78BFA' }}>reason</code>, <code style={{ color: '#A78BFA' }}>orchestrate</code>, <code style={{ color: '#A78BFA' }}>task</code>) lowered through BIR SSA to standard inference runtimes.
+            <p style={{ color: '#7A8FB0', fontSize: '15px', lineHeight: 1.6 }}>
+              First-class language keywords (<code style={{ color: '#00CFFF' }}>generate</code>, <code style={{ color: '#00CFFF' }}>reason</code>, <code style={{ color: '#00CFFF' }}>orchestrate</code>, <code style={{ color: '#00CFFF' }}>task</code>) lowered through BIR SSA directly to inference runtime bridges.
             </p>
           </div>
 
-          <div style={{ background: '#121118', border: '1px solid rgba(124, 58, 237, 0.2)', borderRadius: '12px', padding: '32px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '10px', background: 'rgba(124, 58, 237, 0.2)', color: '#A78BFA', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', marginBottom: '20px' }}>
-              🦀
+          {/* Card 2: Rust Engine Speed */}
+          <div style={{ background: '#0D172A', border: '1px solid rgba(0, 207, 255, 0.25)', borderRadius: '16px', padding: '32px', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ width: '120px', height: '120px', margin: '0 auto 20px', borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(255, 155, 59, 0.3)' }}>
+              <Image src="/penguin_crab_duo.jpg" alt="Penguin & Rust Crab Duo" width={120} height={120} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
-            <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: '20px', fontWeight: 700, color: '#F0EDE8', marginBottom: '10px' }}>
+            <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: '22px', fontWeight: 700, color: '#F0EDE8', marginBottom: '12px', textAlign: 'center' }}>
               Rust Engine Speed
             </h3>
-            <p style={{ color: '#9CA3AF', fontSize: '15px' }}>
-              Zero garbage collection pauses. Ownership &amp; lifetime analysis enforce data race safety and deterministic memory management.
+            <p style={{ color: '#7A8FB0', fontSize: '15px', lineHeight: 1.6 }}>
+              Zero garbage collection pauses. Ownership &amp; lifetime analysis enforce data race safety and deterministic memory management across high-concurrency loops.
             </p>
           </div>
 
-          <div style={{ background: '#121118', border: '1px solid rgba(124, 58, 237, 0.2)', borderRadius: '12px', padding: '32px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '10px', background: 'rgba(124, 58, 237, 0.2)', color: '#A78BFA', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', marginBottom: '20px' }}>
-              🎭
+          {/* Card 3: Inline GPU Accelerators */}
+          <div style={{ background: '#0D172A', border: '1px solid rgba(0, 207, 255, 0.25)', borderRadius: '16px', padding: '32px', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ width: '120px', height: '120px', margin: '0 auto 20px', borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(0, 207, 255, 0.3)' }}>
+              <Image src="/penguin_gpu.jpg" alt="GPU Penguin Mascot" width={120} height={120} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
-            <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: '20px', fontWeight: 700, color: '#F0EDE8', marginBottom: '10px' }}>
-              Lock-Free Actors
-            </h3>
-            <p style={{ color: '#9CA3AF', fontSize: '15px' }}>
-              Dedicated <code style={{ color: '#A78BFA' }}>actor</code> types with typed message channels backed by priority work-stealing thread schedulers.
-            </p>
-          </div>
-
-          <div style={{ background: '#121118', border: '1px solid rgba(124, 58, 237, 0.2)', borderRadius: '12px', padding: '32px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '10px', background: 'rgba(124, 58, 237, 0.2)', color: '#A78BFA', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', marginBottom: '20px' }}>
-              𝚯
-            </div>
-            <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: '20px', fontWeight: 700, color: '#F0EDE8', marginBottom: '10px' }}>
-              Static Tensor Types
-            </h3>
-            <p style={{ color: '#9CA3AF', fontSize: '15px' }}>
-              Statically dimensioned <code style={{ color: '#A78BFA' }}>tensor&lt;f32, D1, D2&gt;</code> types catch matrix rank and dimension mismatches at compile time.
-            </p>
-          </div>
-
-          <div style={{ background: '#121118', border: '1px solid rgba(124, 58, 237, 0.2)', borderRadius: '12px', padding: '32px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '10px', background: 'rgba(124, 58, 237, 0.2)', color: '#A78BFA', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', marginBottom: '20px' }}>
-              ⚡
-            </div>
-            <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: '20px', fontWeight: 700, color: '#F0EDE8', marginBottom: '10px' }}>
+            <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: '22px', fontWeight: 700, color: '#F0EDE8', marginBottom: '12px', textAlign: 'center' }}>
               Inline GPU Accelerators
             </h3>
-            <p style={{ color: '#9CA3AF', fontSize: '15px' }}>
-              Heterogeneous compute blocks <code style={{ color: '#A78BFA' }}>gpu &#123; ... &#125;</code> targeting SPIR-V and NVPTX GPU architectures natively.
+            <p style={{ color: '#7A8FB0', fontSize: '15px', lineHeight: 1.6 }}>
+              Heterogeneous compute blocks <code style={{ color: '#00CFFF' }}>gpu &#123; ... &#125;</code> targeting SPIR-V and NVPTX GPU architectures natively for inline tensor ops.
             </p>
           </div>
 
-          <div style={{ background: '#121118', border: '1px solid rgba(124, 58, 237, 0.2)', borderRadius: '12px', padding: '32px' }}>
-            <div style={{ width: '48px', height: '48px', borderRadius: '10px', background: 'rgba(124, 58, 237, 0.2)', color: '#A78BFA', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', marginBottom: '20px' }}>
-              🛠️
+          {/* Card 4: Coding & Dev Toolchain */}
+          <div style={{ background: '#0D172A', border: '1px solid rgba(0, 207, 255, 0.25)', borderRadius: '16px', padding: '32px', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ width: '120px', height: '120px', margin: '0 auto 20px', borderRadius: '16px', overflow: 'hidden', border: '1px solid rgba(0, 207, 255, 0.3)' }}>
+              <Image src="/penguin_coding.jpg" alt="Coding Penguin Mascot" width={120} height={120} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
-            <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: '20px', fontWeight: 700, color: '#F0EDE8', marginBottom: '10px' }}>
+            <h3 style={{ fontFamily: "'Inter', sans-serif", fontSize: '22px', fontWeight: 700, color: '#F0EDE8', marginBottom: '12px', textAlign: 'center' }}>
               Complete Toolchain
             </h3>
-            <p style={{ color: '#9CA3AF', fontSize: '15px' }}>
-              Includes <code style={{ color: '#A78BFA' }}>blyxc</code> compiler, <code style={{ color: '#A78BFA' }}>blyxpkg</code> package manager, <code style={{ color: '#A78BFA' }}>blyxfmt</code> formatter, and <code style={{ color: '#A78BFA' }}>blyx-analyzer</code> LSP.
+            <p style={{ color: '#7A8FB0', fontSize: '15px', lineHeight: 1.6 }}>
+              Includes <code style={{ color: '#00CFFF' }}>blyxc</code> compiler driver, <code style={{ color: '#00CFFF' }}>blyxpkg</code> package manager, <code style={{ color: '#00CFFF' }}>blyxfmt</code> formatter, and <code style={{ color: '#00CFFF' }}>blyx-analyzer</code> LSP.
             </p>
           </div>
+
         </div>
       </section>
     </div>
