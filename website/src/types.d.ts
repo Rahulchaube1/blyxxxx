@@ -1,3 +1,5 @@
+declare module 'framer-motion';
+
 declare module 'next' {
   export interface Metadata {
     title?: string;

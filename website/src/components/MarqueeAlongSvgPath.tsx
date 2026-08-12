@@ -48,10 +48,10 @@ interface MarqueeAlongSvgPathProps {
   easing?: (value: number) => number
   slowdownOnHover?: boolean
   slowDownFactor?: number
-  slowDownSpringConfig?: SpringOptions
+  slowDownSpringConfig?: any
   useScrollVelocity?: boolean
   scrollAwareDirection?: boolean
-  scrollSpringConfig?: SpringOptions
+  scrollSpringConfig?: any
   scrollContainer?: RefObject<HTMLElement | null> | HTMLElement | null
   repeat?: number
   draggable?: boolean
@@ -71,7 +71,7 @@ interface MarqueeItemProps {
   child: React.ReactNode
   itemIndex: number
   totalItems: number
-  baseOffset: ReturnType<typeof useMotionValue<number>>
+  baseOffset: any
   path: string
   easing?: (value: number) => number
   repeatIndex: number
@@ -92,7 +92,7 @@ function MarqueeItem({
   cssVariableInterpolation, isHovered, draggable, grabCursor,
   itemKey, itemRefs,
 }: MarqueeItemProps) {
-  const itemOffset = useTransform(baseOffset, (v) => {
+  const itemOffset = useTransform(baseOffset, (v: number) => {
     const position = (itemIndex * 100) / totalItems
     const wrappedValue = wrap(0, 100, v + position)
     return `${easing ? easing(wrappedValue / 100) * 100 : wrappedValue}%`
@@ -100,7 +100,7 @@ function MarqueeItem({
 
   const currentOffsetDistance = useMotionValue(0)
 
-  const zIndex = useTransform(currentOffsetDistance, (value) => {
+  const zIndex = useTransform(currentOffsetDistance, (value: number) => {
     if (!enableRollingZIndex) return undefined
     return Math.floor(zIndexBase + (value / 100) * zIndexRange)
   })
@@ -121,7 +121,7 @@ function MarqueeItem({
 
   return (
     <motion.div
-      ref={(el) => { if (el) itemRefs.current.set(itemKey, el) }}
+      ref={(el: HTMLDivElement | null) => { if (el) itemRefs.current.set(itemKey, el) }}
       className={cn("absolute top-0 left-0", draggable && grabCursor && "cursor-grab")}
       style={{
         offsetPath: `path('${path}')`,
@@ -238,7 +238,7 @@ const MarqueeAlongSvgPath = ({
     { clamp: false }
   )
 
-  useAnimationFrame((_, delta) => {
+  useAnimationFrame((_: number, delta: number) => {
     if (isDragging.current && draggable) {
       baseOffset.set(baseOffset.get() + dragVelocity.current)
       dragVelocity.current *= 0.9

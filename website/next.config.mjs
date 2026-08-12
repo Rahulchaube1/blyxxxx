@@ -10,7 +10,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  turbopack: {},
+  typescript: {
+    ignoreBuildErrors: false,
+  },
   webpack: (config) => {
     config.cache = false;
     config.resolve.alias['@'] = path.resolve(__dirname, 'src');
