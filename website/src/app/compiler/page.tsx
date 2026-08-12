@@ -2,8 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import Container from "@/components/ui/Container";
 
 const PIPELINE_STAGES = [
@@ -49,19 +47,17 @@ export default function CompilerPage() {
   const stage = PIPELINE_STAGES[selectedIdx];
 
   return (
-    <div style={{ background: "#ffffff", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-      <Navbar />
-
-      <Container size="xl" style={{ flex: 1, padding: "60px max(24px, calc((100% - 1400px) / 2))" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", color: "#586069", marginBottom: "24px" }}>
-            <Link href="/" style={{ color: "#0066cc", textDecoration: "none" }}>Home</Link> / Compiler Architecture
+    <div style={{ background: "#0A0908", color: "#F0EDE8", minHeight: "100vh", padding: "60px 24px" }}>
+      <Container size="xl" style={{ maxWidth: "1100px", margin: "0 auto" }}>
+        <div>
+          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", color: "#9CA3AF", marginBottom: "24px" }}>
+            <Link href="/" style={{ color: "#A78BFA", textDecoration: "none" }}>Home</Link> / Compiler Architecture
           </div>
 
-          <h1 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "40px", color: "#1a1a2e", marginBottom: "16px", letterSpacing: "-0.5px" }}>
-            Interactive Compiler Architecture & BIR Pipeline
+          <h1 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: "40px", color: "#F0EDE8", marginBottom: "16px", letterSpacing: "-0.5px" }}>
+            Interactive Compiler Architecture &amp; BIR Pipeline
           </h1>
-          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "18px", color: "#586069", lineHeight: 1.6, marginBottom: "40px" }}>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "18px", color: "#9CA3AF", lineHeight: 1.6, marginBottom: "40px" }}>
             Click through the stages below to inspect how Blyx source code transforms into optimized machine code and GPU assembly.
           </p>
 
@@ -74,9 +70,9 @@ export default function CompilerPage() {
                 style={{
                   padding: "16px",
                   borderRadius: "8px",
-                  border: selectedIdx === idx ? "2px solid #0066cc" : "1px solid #e1e4e8",
-                  background: selectedIdx === idx ? "#f0f4f8" : "#f8f9fa",
-                  color: selectedIdx === idx ? "#0066cc" : "#1a1a2e",
+                  border: selectedIdx === idx ? "2px solid #7C3AED" : "1px solid rgba(124, 58, 237, 0.2)",
+                  background: selectedIdx === idx ? "rgba(124, 58, 237, 0.2)" : "#121118",
+                  color: selectedIdx === idx ? "#A78BFA" : "#F0EDE8",
                   textAlign: "left",
                   cursor: "pointer",
                 }}
@@ -84,7 +80,7 @@ export default function CompilerPage() {
                 <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "15px" }}>
                   {st.name}
                 </div>
-                <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", color: "#586069", marginTop: "4px" }}>
+                <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", color: "#9CA3AF", marginTop: "4px" }}>
                   {st.desc.slice(0, 45)}...
                 </div>
               </button>
@@ -92,29 +88,29 @@ export default function CompilerPage() {
           </div>
 
           {/* Active Stage Inspection Box */}
-          <div style={{ padding: "32px", background: "#f8f9fa", borderRadius: "8px", border: "1px solid #e1e4e8" }}>
-            <h2 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "24px", color: "#1a1a2e", marginBottom: "8px" }}>
+          <div style={{ padding: "32px", background: "#121118", borderRadius: "12px", border: "1px solid rgba(124, 58, 237, 0.2)" }}>
+            <h2 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "24px", color: "#F0EDE8", marginBottom: "8px" }}>
               {stage.name}
             </h2>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", color: "#586069", marginBottom: "24px", lineHeight: 1.6 }}>
+            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", color: "#9CA3AF", marginBottom: "24px", lineHeight: 1.6 }}>
               {stage.desc}
             </p>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "20px" }}>
               <div>
-                <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "14px", color: "#1a1a2e", marginBottom: "8px" }}>
+                <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "14px", color: "#F0EDE8", marginBottom: "8px" }}>
                   Stage Input
                 </div>
-                <div style={{ background: "#1a1a2e", padding: "16px", borderRadius: "6px", color: "#e8edf5", fontFamily: "'Source Code Pro', monospace", fontSize: "13px" }}>
+                <div style={{ background: "#0A0908", padding: "16px", borderRadius: "6px", color: "#F0EDE8", fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", border: "1px solid rgba(124, 58, 237, 0.2)" }}>
                   {stage.input}
                 </div>
               </div>
 
               <div>
-                <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "14px", color: "#1a1a2e", marginBottom: "8px" }}>
+                <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "14px", color: "#F0EDE8", marginBottom: "8px" }}>
                   Stage Output Transformation
                 </div>
-                <div style={{ background: "#1a1a2e", padding: "16px", borderRadius: "6px", color: "#e8edf5", fontFamily: "'Source Code Pro', monospace", fontSize: "13px" }}>
+                <div style={{ background: "#0A0908", padding: "16px", borderRadius: "6px", color: "#A78BFA", fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", border: "1px solid rgba(124, 58, 237, 0.2)" }}>
                   <pre style={{ margin: 0 }}><code>{stage.output}</code></pre>
                 </div>
               </div>
@@ -122,8 +118,6 @@ export default function CompilerPage() {
           </div>
         </div>
       </Container>
-
-      <Footer />
     </div>
   );
 }

@@ -2,8 +2,6 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import Container from "@/components/ui/Container";
 
 const EXAMPLES = [
@@ -54,19 +52,17 @@ export default function ExamplesPage() {
   });
 
   return (
-    <div style={{ background: "#ffffff", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-      <Navbar />
-
-      <Container size="xl" style={{ flex: 1, padding: "60px max(24px, calc((100% - 1400px) / 2))" }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", color: "#586069", marginBottom: "24px" }}>
-            <Link href="/" style={{ color: "#0066cc", textDecoration: "none" }}>Home</Link> / Code Examples
+    <div style={{ background: "#0A0908", color: "#F0EDE8", minHeight: "100vh", padding: "60px 24px" }}>
+      <Container size="xl" style={{ maxWidth: "1000px", margin: "0 auto" }}>
+        <div>
+          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", color: "#9CA3AF", marginBottom: "24px" }}>
+            <Link href="/" style={{ color: "#A78BFA", textDecoration: "none" }}>Home</Link> / Code Examples
           </div>
 
-          <h1 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "40px", color: "#1a1a2e", marginBottom: "16px", letterSpacing: "-0.5px" }}>
+          <h1 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: "40px", color: "#F0EDE8", marginBottom: "16px", letterSpacing: "-0.5px" }}>
             Searchable Blyx Code Examples
           </h1>
-          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "18px", color: "#586069", lineHeight: 1.6, marginBottom: "40px" }}>
+          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "18px", color: "#9CA3AF", lineHeight: 1.6, marginBottom: "40px" }}>
             Explore practical code samples across AI, GPU kernels, actor concurrency, CLI binaries, and high-performance networking.
           </p>
 
@@ -82,10 +78,11 @@ export default function ExamplesPage() {
                 minWidth: "280px",
                 padding: "12px 18px",
                 borderRadius: "6px",
-                border: "1px solid #e1e4e8",
+                border: "1px solid rgba(124, 58, 237, 0.2)",
+                background: "#121118",
                 fontFamily: "'Inter', sans-serif",
                 fontSize: "15px",
-                color: "#1a1a2e",
+                color: "#F0EDE8",
               }}
             />
 
@@ -97,9 +94,9 @@ export default function ExamplesPage() {
                   style={{
                     padding: "10px 16px",
                     borderRadius: "6px",
-                    border: "1px solid #e1e4e8",
-                    background: filter === cat ? "#0066cc" : "#f8f9fa",
-                    color: filter === cat ? "#ffffff" : "#586069",
+                    border: "1px solid rgba(124, 58, 237, 0.2)",
+                    background: filter === cat ? "#7C3AED" : "#121118",
+                    color: filter === cat ? "#ffffff" : "#9CA3AF",
                     fontFamily: "'Inter', sans-serif",
                     fontWeight: 500,
                     fontSize: "14px",
@@ -115,20 +112,20 @@ export default function ExamplesPage() {
           {/* Examples Grid */}
           <div style={{ display: "grid", gap: "24px" }}>
             {filtered.map((item, idx) => (
-              <div key={idx} style={{ padding: "28px", background: "#f8f9fa", borderRadius: "8px", border: "1px solid #e1e4e8" }}>
+              <div key={idx} style={{ padding: "28px", background: "#121118", borderRadius: "12px", border: "1px solid rgba(124, 58, 237, 0.2)" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px" }}>
-                  <h3 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "20px", color: "#1a1a2e", margin: 0 }}>
+                  <h3 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "20px", color: "#F0EDE8", margin: 0 }}>
                     {item.title}
                   </h3>
-                  <span style={{ fontFamily: "monospace", fontSize: "12px", background: "#e1e4e8", padding: "2px 8px", borderRadius: "4px", color: "#586069" }}>
+                  <span style={{ fontFamily: "monospace", fontSize: "12px", background: "rgba(124, 58, 237, 0.2)", padding: "2px 8px", borderRadius: "4px", color: "#A78BFA" }}>
                     {item.category}
                   </span>
                 </div>
-                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", color: "#586069", lineHeight: 1.6, marginBottom: "16px" }}>
+                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", color: "#9CA3AF", lineHeight: 1.6, marginBottom: "16px" }}>
                   {item.desc}
                 </p>
-                <div style={{ background: "#1a1a2e", padding: "16px", borderRadius: "6px", overflowX: "auto" }}>
-                  <pre style={{ margin: 0, fontFamily: "'Source Code Pro', monospace", fontSize: "13px", color: "#e8edf5", lineHeight: 1.6 }}>
+                <div style={{ background: "#0A0908", padding: "16px", borderRadius: "6px", overflowX: "auto", border: "1px solid rgba(124, 58, 237, 0.2)" }}>
+                  <pre style={{ margin: 0, fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", color: "#F0EDE8", lineHeight: 1.6 }}>
                     <code>{item.code}</code>
                   </pre>
                 </div>
@@ -137,8 +134,6 @@ export default function ExamplesPage() {
           </div>
         </div>
       </Container>
-
-      <Footer />
     </div>
   );
 }

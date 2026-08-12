@@ -1,20 +1,16 @@
 import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 
 export default function BookIndex() {
   return (
-    <div style={{ background: '#ffffff', color: '#1f1f1f', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Navbar />
-
-      <main style={{ flex: 1, maxWidth: 800, width: '100%', margin: '0 auto', padding: '60px 24px' }}>
-        <div style={{ marginBottom: 8, fontSize: 12, color: '#616161', fontFamily: 'Inter, sans-serif', letterSpacing: '1px', textTransform: 'uppercase' }}>
+    <div style={{ background: '#0A0908', color: '#F0EDE8', minHeight: '100vh', padding: '60px 24px' }}>
+      <main style={{ maxWidth: 800, width: '100%', margin: '0 auto' }}>
+        <div style={{ marginBottom: 8, fontSize: 12, color: '#A78BFA', fontFamily: 'JetBrains Mono, monospace', letterSpacing: '1px', textTransform: 'uppercase' }}>
           The Blyx Book
         </div>
-        <h1 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 40, color: '#1f1f1f', marginBottom: 16 }}>
+        <h1 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 40, color: '#F0EDE8', marginBottom: 16 }}>
           The Blyx Programming Language
         </h1>
-        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 16, color: '#616161', lineHeight: 1.7, marginBottom: 48, maxWidth: 600 }}>
+        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 16, color: '#9CA3AF', lineHeight: 1.7, marginBottom: 48, maxWidth: 600 }}>
           A complete guide to Blyx — from your first program to writing GPU kernels, actor systems, and high-performance AI workloads. Written by Rahul Chaube.
         </p>
 
@@ -47,26 +43,24 @@ export default function BookIndex() {
               display: 'flex',
               gap: 20,
               padding: '20px 0',
-              borderBottom: '1px solid #e5e7eb',
+              borderBottom: '1px solid rgba(124, 58, 237, 0.2)',
               alignItems: 'flex-start',
             }}
           >
-            <span style={{ fontFamily: "'Source Code Pro', monospace", fontSize: 13, color: '#d34516', fontWeight: 700, minWidth: 28, paddingTop: 2 }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: '#A78BFA', fontWeight: 700, minWidth: 28, paddingTop: 2 }}>
               {ch.n}
             </span>
             <div>
-              <div style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 17, color: '#1f1f1f', marginBottom: 4 }}>
+              <div style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 17, color: '#F0EDE8', marginBottom: 4 }}>
                 {ch.title}
               </div>
-              <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#616161', lineHeight: 1.5 }}>
+              <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#9CA3AF', lineHeight: 1.5 }}>
                 {ch.desc}
               </div>
             </div>
           </Link>
         ))}
       </main>
-
-      <Footer />
     </div>
   );
 }

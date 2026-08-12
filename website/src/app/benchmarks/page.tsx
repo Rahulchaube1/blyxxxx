@@ -1,6 +1,4 @@
 import React from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 
 export default function BenchmarksPage() {
   const benchmarks = [
@@ -51,40 +49,38 @@ export default function BenchmarksPage() {
   ];
 
   return (
-    <div style={{ background: '#0a0e1a', color: '#e2e8f0', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Navbar />
-
-      <main style={{ flex: 1, maxWidth: 1000, width: '100%', margin: '0 auto', padding: '60px 24px' }}>
+    <div style={{ background: '#0A0908', color: '#F0EDE8', minHeight: '100vh', padding: '60px 24px' }}>
+      <main style={{ maxWidth: 1000, width: '100%', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <div style={{ display: 'inline-block', padding: '4px 12px', borderRadius: 9999, background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.3)', color: '#60a5fa', fontSize: 12, fontFamily: 'monospace', marginBottom: 16 }}>
+          <div style={{ display: 'inline-block', padding: '4px 12px', borderRadius: 9999, background: 'rgba(124,58,237,0.15)', border: '1px solid rgba(124,58,237,0.3)', color: '#A78BFA', fontSize: 12, fontFamily: 'monospace', marginBottom: 16 }}>
             EMPIRICAL BENCHMARKS &bull; HARDWARE TEST SUITE
           </div>
-          <h1 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 40, color: '#f1f5f9', marginBottom: 16 }}>
+          <h1 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 40, color: '#F0EDE8', marginBottom: 16 }}>
             Blyx Performance Metrics
           </h1>
-          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 16, color: '#94a3b8', maxWidth: 600, margin: '0 auto' }}>
+          <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 16, color: '#9CA3AF', maxWidth: 600, margin: '0 auto' }}>
             Empirical hardware benchmark measurements across matrix math, actor message throughput, compiler speed, and binary size.
           </p>
         </div>
 
         <div style={{ display: 'grid', gap: 32, marginBottom: 48 }}>
           {benchmarks.map((b, idx) => (
-            <div key={idx} style={{ background: '#111827', border: '1px solid #1e293b', borderRadius: 12, padding: 32 }}>
+            <div key={idx} style={{ background: '#121118', border: '1px solid rgba(124,58,237,0.2)', borderRadius: 12, padding: 32 }}>
               <div style={{ marginBottom: 16 }}>
-                <div style={{ fontSize: 12, fontFamily: 'monospace', color: '#60a5fa', textTransform: 'uppercase' }}>{b.unit}</div>
-                <h2 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 24, color: '#f1f5f9', margin: '4px 0 2px' }}>{b.title}</h2>
+                <div style={{ fontSize: 12, fontFamily: 'monospace', color: '#A78BFA', textTransform: 'uppercase' }}>{b.unit}</div>
+                <h2 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 24, color: '#F0EDE8', margin: '4px 0 2px' }}>{b.title}</h2>
                 <p style={{ fontSize: 14, fontWeight: 600, color: '#34d399' }}>{b.headline}</p>
               </div>
 
               <div style={{ display: 'grid', gap: 16 }}>
                 {b.items.map((item, iIdx) => (
-                  <div key={iIdx} style={{ fontFamily: "'Source Code Pro', monospace", fontSize: 12 }}>
+                  <div key={iIdx} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                      <span style={{ color: item.highlight ? '#60a5fa' : '#94a3b8', fontWeight: item.highlight ? 700 : 400 }}>{item.label}</span>
-                      <span style={{ color: item.highlight ? '#60a5fa' : '#94a3b8', fontWeight: item.highlight ? 700 : 400 }}>{item.value}</span>
+                      <span style={{ color: item.highlight ? '#A78BFA' : '#9CA3AF', fontWeight: item.highlight ? 700 : 400 }}>{item.label}</span>
+                      <span style={{ color: item.highlight ? '#A78BFA' : '#9CA3AF', fontWeight: item.highlight ? 700 : 400 }}>{item.value}</span>
                     </div>
-                    <div style={{ height: 12, width: '100%', background: '#0a0e1a', borderRadius: 9999, overflow: 'hidden', border: '1px solid #1e293b' }}>
-                      <div style={{ height: '100%', background: item.highlight ? '#3b82f6' : '#64748b', borderRadius: 9999, width: item.width }} />
+                    <div style={{ height: 12, width: '100%', background: '#0A0908', borderRadius: 9999, overflow: 'hidden', border: '1px solid rgba(124,58,237,0.2)' }}>
+                      <div style={{ height: '100%', background: item.highlight ? '#7C3AED' : '#4B5563', borderRadius: 9999, width: item.width }} />
                     </div>
                   </div>
                 ))}
@@ -93,14 +89,12 @@ export default function BenchmarksPage() {
           ))}
         </div>
 
-        <div style={{ background: '#111827', border: '1px solid #1e293b', borderRadius: 8, padding: 24, fontSize: 13, fontFamily: 'monospace', color: '#64748b' }}>
-          <div style={{ color: '#f1f5f9', fontWeight: 600, marginBottom: 4 }}>Benchmark Methodology & Environment</div>
+        <div style={{ background: '#121118', border: '1px solid rgba(124,58,237,0.2)', borderRadius: 8, padding: 24, fontSize: 13, fontFamily: 'monospace', color: '#9CA3AF' }}>
+          <div style={{ color: '#F0EDE8', fontWeight: 600, marginBottom: 4 }}>Benchmark Methodology & Environment</div>
           <div>All benchmarks measured on x86_64 Linux (Intel Core i9-13900K @ 5.8 GHz, 64GB DDR5 RAM, Ubuntu 24.04 LTS).</div>
           <div>Blyx compiler version v0.1.0-alpha built with BIR SSA passes and LLVM backend (-O3 optimization level).</div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
