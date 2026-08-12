@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ShaderBackground } from "./ShaderBackground";
 
 const NAV_LINKS: [string, string, boolean][] = [
   ["Docs",       "/docs",                          false],
@@ -41,11 +42,20 @@ export default function Navbar() {
 
       {/* Main Navbar */}
       <nav style={{
-        background: "rgba(10, 9, 8, 0.92)",
+        position: "relative",
+        background: "rgba(10, 9, 8, 0.85)",
         backdropFilter: "blur(16px)",
         borderBottom: "1px solid rgba(124, 58, 237, 0.2)",
+        overflow: "hidden",
       }}>
+        {/* Animated Shader Background Layer */}
+        <div style={{ position: "absolute", inset: 0, opacity: 0.35, pointerEvents: "none", zIndex: 0 }}>
+          <ShaderBackground />
+        </div>
+
         <div style={{
+          position: "relative",
+          zIndex: 1,
           maxWidth: "1280px",
           margin: "0 auto",
           padding: "0 24px",
