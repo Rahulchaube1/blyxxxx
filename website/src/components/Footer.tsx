@@ -1,7 +1,5 @@
-"use client";
 import React from "react";
 import Link from "next/link";
-import { ShaderBackground } from "./ShaderBackground";
 
 function IconGitHub() {
   return (
@@ -13,21 +11,8 @@ function IconGitHub() {
 
 export default function Footer() {
   return (
-    <footer style={{
-      position: "relative",
-      background: "#060505",
-      borderTop: "1px solid rgba(124, 58, 237, 0.2)",
-      color: "#9CA3AF",
-      overflow: "hidden",
-    }}>
-      {/* Animated Shader Background Layer */}
-      <div style={{ position: "absolute", inset: 0, opacity: 0.25, pointerEvents: "none", zIndex: 0 }}>
-        <ShaderBackground />
-      </div>
-
+    <footer style={{ background: "#060505", borderTop: "1px solid rgba(124, 58, 237, 0.2)", color: "#9CA3AF" }}>
       <div style={{
-        position: "relative",
-        zIndex: 1,
         maxWidth: "1280px",
         margin: "0 auto",
         padding: "60px 24px 40px",
@@ -88,7 +73,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div style={{ position: "relative", zIndex: 1, borderTop: "1px solid rgba(255, 255, 255, 0.05)", textAlign: "center", padding: "24px", fontSize: "13px", color: "#6B7280" }}>
+      <div style={{ borderTop: "1px solid rgba(255, 255, 255, 0.05)", textAlign: "center", padding: "24px", fontSize: "13px", color: "#6B7280" }}>
         &copy; 2026 The Blyx Project &bull; Created by <a href="https://github.com/Rahulchaube1" target="_blank" rel="noopener noreferrer" style={{ color: "#A78BFA", textDecoration: "underline" }}>Rahul Chaube</a>
       </div>
     </footer>
