@@ -57,3 +57,6 @@ The mask types have elements that are "truthy" values, like `bool`, but have an 
 [zulip-project-portable-simd]: https://rust-lang.zulipchat.com/#narrow/stream/257879-project-portable-simd
 [stdarch]: https://github.com/rust-lang/stdarch
 [docs]: https://rust-lang.github.io/portable-simd/core_simd
+
+
+

@@ -74,9 +74,6 @@ dependencies = [
 [[package]]
 name = "blyx-std"
 version = "0.1.0"
-dependencies = [
- "blyx",
-]
 
 [[package]]
 name = "blyx_ast"
@@ -89,7 +86,7 @@ dependencies = [
 name = "blyx_bir"
 version = "0.1.0"
 dependencies = [
- "serde",
+ "blyx_ast",
 ]
 
 [[package]]
@@ -148,9 +145,6 @@ dependencies = [
 [[package]]
 name = "blyxfmt"
 version = "0.1.0"
-dependencies = [
- "clap",
-]
 
 [[package]]
 name = "blyxpkg"

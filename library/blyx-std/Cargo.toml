@@ -2,7 +2,11 @@
 name = "blyx-std"
 version = "0.1.0"
 edition = "2024"
-description = "Official Blyx Standard Library (`blyx-std`)"
+description = "Blyx Standard Library — AI-native runtime, I/O, networking, and agent coordination"
 
 [dependencies]
-blyx = { path = "../blyx" }
+
+[features]
+default = []
+llm = []
+agents = []

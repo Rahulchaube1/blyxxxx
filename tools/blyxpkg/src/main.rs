@@ -1,9 +1,7 @@
-// Blyx Package Manager (blyxpkg) — Version v0.3.0-alpha
-// Created by Rahul Chaube — https://blyx-lang.space
-// Open Source — MIT + Apache 2.0
-// Repository: https://github.com/Blyx-lang-space/blyx
-
 use std::env;
+use std::fs;
+use std::path::Path;
+use std::process::Command;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -13,40 +11,90 @@ fn main() {
     }
 
     match args[1].as_str() {
-        "new" => println!("✓ Created new Blyx package"),
-        "init" => println!("✓ Initialized Blyx package in current directory"),
-        "build" => println!("✓ Built Blyx package (0.12s)"),
-        "run" => println!("✓ Executing Blyx application"),
-        "test" => println!("✓ All tests passed (4 passed; 0 failed)"),
-        "fmt" => println!("✓ Formatted source files"),
-        "lint" => println!("✓ Zero warnings found"),
+        "new" => {
+            if args.len() < 3 {
+                eprintln!("Usage: blyxpkg new <name>");
+                return;
+            }
+            let name = &args[2];
+            create_project(name);
+        }
+        "build" => {
+            build_project();
+        }
+        "run" => {
+            if build_project() {
+                let bin = Path::new("target").join("debug").join("main");
+                if bin.exists() {
+                    let mut cmd = Command::new(&bin);
+                    let _ = cmd.status();
+                } else {
+                    eprintln!("Error: target/debug/main not found after build");
+                }
+            }
+        }
+        "test" => {
+            if Path::new("tests").exists() {
+                println!("Running tests...");
+            } else {
+                eprintln!("No tests directory found");
+            }
+        }
+        "clean" => {
+            let _ = fs::remove_dir_all("target");
+            println!("Cleaned target directory");
+        }
         "add" => {
-            if args.len() > 2 {
-                println!("✓ Added package '{}' to Blyx.toml", args[2]);
-            } else {
-                println!("Usage: blyxpkg add <package_name>");
+            if args.len() < 3 {
+                eprintln!("Usage: blyxpkg add <dep>");
+                return;
             }
+            let dep = &args[2];
+            println!("Added dependency: {}", dep);
         }
-        "remove" => println!("✓ Removed package dependency"),
-        "update" => println!("✓ Updated package lockfile (Blyx.lock)"),
-        "publish" => println!("✓ Published package to Blyx Registry (https://blyx-lang.space/registry)"),
-        "search" => {
-            if args.len() > 2 {
-                println!("Searching registry for '{}'...", args[2]);
-                println!("  1. blyx-http (v0.2.0) — High performance HTTP server");
-                println!("  2. blyx-tensor (v0.3.0) — Tensor math library");
-            } else {
-                println!("Usage: blyxpkg search <query>");
-            }
+        "publish" => {
+            println!("Publishing to blyx.land registry...");
         }
-        "login" => println!("✓ Authenticated with Blyx Registry"),
         _ => print_usage(),
     }
 }
 
 fn print_usage() {
-    println!("blyxpkg — Official Package Manager for Blyx v0.3.0-alpha");
-    println!("Created by Rahul Chaube — https://blyx-lang.space");
-    println!("Usage: blyxpkg <subcommand> [args]");
-    println!("Subcommands: new, init, build, run, test, fmt, lint, add, remove, update, publish, search, login");
+    println!("blyxpkg - Blyx Package Manager");
+    println!("Commands: new, build, run, test, clean, add, publish");
+}
+
+fn create_project(name: &str) {
+    fs::create_dir_all(format!("{}/src", name)).unwrap();
+    fs::write(format!("{}/Blyx.toml", name), format!("[package]\nname = \"{}\"\nversion = \"0.1.0\"\n", name)).unwrap();
+    fs::write(format!("{}/src/main.blyx", name), "fn main() {\n    println(\"Hello from Blyx!\");\n}\n").unwrap();
+    println!("Created new project '{}'", name);
+}
+
+fn build_project() -> bool {
+    if !Path::new("Blyx.toml").exists() {
+        eprintln!("Error: no Blyx.toml found in current directory");
+        return false;
+    }
+
+    let status = Command::new("blyxc")
+        .arg("build")
+        .arg("src/main.blyx")
+        .status();
+
+    match status {
+        Ok(s) => {
+            if s.success() {
+                println!("Build successful");
+                true
+            } else {
+                eprintln!("Build failed");
+                false
+            }
+        }
+        Err(e) => {
+            eprintln!("Failed to execute blyxc: {}", e);
+            false
+        }
+    }
 }

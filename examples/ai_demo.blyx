@@ -1,0 +1,72 @@
+// Blyx Language — AI-Native Features Demo
+// Demonstrates: generate, reason, orchestrate, task, actor
+// Run: blyxc run examples/ai_demo.blyx
+
+use std::io;
+
+// Define an AI agent task
+task summarize(text: str) -> str {
+    let summary = generate("gpt-4o", "Summarize this text concisely: " + text);
+    return summary;
+}
+
+// Define a reasoning task
+task analyze_sentiment(review: str) -> str {
+    let analysis = reason("Analyze the sentiment of this review step by step: " + review);
+    return analysis;
+}
+
+// Multi-agent orchestration example
+actor ResearchAgent {
+    name: str,
+    topic: str,
+
+    fn run(self) -> str {
+        let result = generate("llama3", "Research the following topic thoroughly: " + self.topic);
+        return result;
+    }
+}
+
+actor WriterAgent {
+    name: str,
+
+    fn compose(self, research: str) -> str {
+        let article = generate("gpt-4o", "Write a professional article based on this research:\n" + research);
+        return article;
+    }
+}
+
+fn main() {
+    // Basic LLM generation
+    let model = "gpt-4o";
+    let prompt = "Explain quantum computing in simple terms.";
+    let response = generate(model, prompt);
+    println!("Generated: {}", response);
+
+    // Chain-of-thought reasoning
+    let problem = "What is the best approach to build a distributed system?";
+    let reasoning = reason(problem);
+    println!("Reasoning: {}", reasoning);
+
+    // Task-based AI operations
+    let summary = summarize("The Blyx programming language is an AI-native language designed for building intelligent systems.");
+    println!("Summary: {}", summary);
+
+    // Multi-agent orchestration
+    let research_agent = spawn ResearchAgent {
+        name: "Researcher",
+        topic: "Large Language Models",
+    };
+
+    let writer_agent = spawn WriterAgent {
+        name: "Writer",
+    };
+
+    let result = orchestrate(research_agent, writer_agent) {
+        let research_output = research_agent.run();
+        let article = writer_agent.compose(research_output);
+        article
+    };
+
+    println!("Orchestrated result: {}", result);
+}

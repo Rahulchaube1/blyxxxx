@@ -1,90 +1,77 @@
-// Blyx Collections Module (blyx-std::collections)
-// Created by Rahul Chaube — https://blyx-lang.space
-// Open Source — MIT + Apache 2.0
-// Repository: https://github.com/Blyx-lang-space/blyx
+pub use std::collections::{HashMap, HashSet, BTreeMap, BTreeSet, VecDeque, LinkedList};
+pub use std::collections::hash_map::Entry;
 
-pub struct Vec<T> {
-    data: std::vec::Vec<T>,
+pub struct OrderedMap<K: Eq, V> {
+    items: Vec<(K, V)>,
 }
 
-impl<T> Vec<T> {
+impl<K: Eq + Clone, V> Default for OrderedMap<K, V> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<K: Eq + Clone, V> OrderedMap<K, V> {
     pub fn new() -> Self {
-        Self { data: std::vec::Vec::new() }
+        Self { items: Vec::new() }
     }
 
-    pub fn push(&mut self, item: T) {
-        self.data.push(item);
+    pub fn insert(&mut self, key: K, val: V) -> Option<V> {
+        for item in &mut self.items {
+            if item.0 == key {
+                let old = std::mem::replace(&mut item.1, val);
+                return Some(old);
+            }
+        }
+        self.items.push((key, val));
+        None
     }
 
-    pub fn pop(&mut self) -> Option<T> {
-        self.data.pop()
+    pub fn get(&self, key: &K) -> Option<&V> {
+        for item in &self.items {
+            if &item.0 == key {
+                return Some(&item.1);
+            }
+        }
+        None
+    }
+
+    pub fn remove(&mut self, key: &K) -> Option<V> {
+        let mut idx = None;
+        for (i, item) in self.items.iter().enumerate() {
+            if &item.0 == key {
+                idx = Some(i);
+                break;
+            }
+        }
+        if let Some(i) = idx {
+            Some(self.items.remove(i).1)
+        } else {
+            None
+        }
+    }
+
+    pub fn iter(&self) -> impl Iterator<Item=(&K, &V)> {
+        self.items.iter().map(|(k, v)| (k, v))
     }
 
     pub fn len(&self) -> usize {
-        self.data.len()
+        self.items.len()
     }
 
     pub fn is_empty(&self) -> bool {
-        self.data.is_empty()
-    }
-}
-
-pub struct HashMap<K, V> {
-    data: std::collections::HashMap<K, V>,
-}
-
-impl<K: std::cmp::Eq + std::hash::Hash, V> HashMap<K, V> {
-    pub fn new() -> Self {
-        Self { data: std::collections::HashMap::new() }
+        self.items.is_empty()
     }
 
-    pub fn insert(&mut self, k: K, v: V) -> Option<V> {
-        self.data.insert(k, v)
+    pub fn contains_key(&self, key: &K) -> bool {
+        self.get(key).is_some()
     }
 
-    pub fn get(&self, k: &K) -> Option<&V> {
-        self.data.get(k)
+    pub fn keys(&self) -> impl Iterator<Item=&K> {
+        self.items.iter().map(|(k, _)| k)
     }
 
-    pub fn len(&self) -> usize {
-        self.data.len()
-    }
-}
-
-pub struct HashSet<T> {
-    data: std::collections::HashSet<T>,
-}
-
-impl<T: std::cmp::Eq + std::hash::Hash> HashSet<T> {
-    pub fn new() -> Self {
-        Self { data: std::collections::HashSet::new() }
-    }
-
-    pub fn insert(&mut self, value: T) -> bool {
-        self.data.insert(value)
-    }
-
-    pub fn contains(&self, value: &T) -> bool {
-        self.data.contains(value)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_vec_ops() {
-        let mut v = Vec::new();
-        v.push(42);
-        assert_eq!(v.len(), 1);
-        assert_eq!(v.pop(), Some(42));
-    }
-
-    #[test]
-    fn test_hashmap_ops() {
-        let mut map = HashMap::new();
-        map.insert("key", 100);
-        assert_eq!(map.get(&"key"), Some(&100));
+    pub fn values(&self) -> impl Iterator<Item=&V> {
+        self.items.iter().map(|(_, v)| v)
     }
 }

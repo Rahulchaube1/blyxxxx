@@ -2,7 +2,7 @@
 name = "blyx_bir"
 version = "0.1.0"
 edition = "2024"
-description = "Blyx Intermediate Representation (BIR) Compiler Crate"
+description = "Blyx Intermediate Representation (BIR) — SSA-form IR, optimizer passes, and LLVM IR emitter"
 
 [dependencies]
-serde = { version = "1.0", features = ["derive"] }
+blyx_ast = { path = "../blyx_ast" }
