@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description: 'Memory-safe, GPU-native, actor-concurrent systems language for the AI era.',
     url: 'https://blyx-lang.space',
     siteName: 'Blyx',
-    images: [{ url: '/blyx.png' }],
+    images: [{ url: '/blyxlogo.png' }],
   },
   twitter: {
     card: 'summary',
@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
-        <link rel="icon" href="/blyx.png" />
+        <link rel="icon" href="/blyxlogo.png" />
       </head>
       <body>
         <AppBackground />

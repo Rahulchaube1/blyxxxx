@@ -57,7 +57,7 @@ export default function Navbar() {
         }}>
           {/* Logo + Brand */}
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: "14px", textDecoration: "none" }}>
-            <Image src="/blyx.png" alt="Blyx Logo" width={48} height={48} priority />
+            <Image src="/blyxlogo.png" alt="Blyx Logo" width={48} height={48} priority />
             <span style={{
               fontFamily: "'Inter', sans-serif",
               fontWeight: 900,
