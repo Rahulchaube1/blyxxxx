@@ -82,19 +82,19 @@ export default function PlayPage() {
   };
 
   return (
-    <div style={{ background: "#0A0908", color: "#F0EDE8", minHeight: "100vh", padding: "40px 24px" }}>
+    <div style={{ background: "#0B0F19", color: "#F1F5F9", fontFamily: "'Inter', sans-serif", minHeight: "100vh", padding: "40px 24px" }}>
       <Container size="xl" style={{ maxWidth: "1400px", margin: "0 auto" }}>
-        <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", color: "#9CA3AF", marginBottom: "20px" }}>
-          <Link href="/" style={{ color: "#A78BFA", textDecoration: "none" }}>Home</Link> / Playground
+        <div style={{ fontSize: "14px", color: "#64748B", marginBottom: "20px" }}>
+          <Link href="/" style={{ color: "#38BDF8", textDecoration: "none" }}>Home</Link> / Playground
         </div>
 
         {/* Toolbar */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", flexWrap: "wrap", gap: "16px" }}>
           <div>
-            <h1 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: "32px", color: "#F0EDE8", margin: 0, letterSpacing: "-0.5px" }}>
+            <h1 style={{ fontWeight: 800, fontSize: "32px", color: "#F8FAFC", margin: 0, letterSpacing: "-0.5px" }}>
               Blyx Interactive IDE &amp; IR Inspector
             </h1>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", color: "#9CA3AF", margin: "4px 0 0" }}>
+            <p style={{ fontSize: "15px", color: "#94A3B8", margin: "4px 0 0" }}>
               Compile, format, inspect AST, BIR SSA, and LLVM IR directly in your browser.
             </p>
           </div>
@@ -105,11 +105,11 @@ export default function PlayPage() {
               style={{
                 padding: "8px 12px",
                 borderRadius: "6px",
-                border: "1px solid rgba(124, 58, 237, 0.2)",
-                background: "#121118",
+                border: "1px solid #1E293B",
+                background: "#0F172A",
                 fontFamily: "'JetBrains Mono', monospace",
                 fontSize: "13px",
-                color: "#F0EDE8",
+                color: "#F8FAFC",
               }}
             >
               <option value="hello">Sample: Hello World</option>
@@ -124,11 +124,10 @@ export default function PlayPage() {
               style={{
                 padding: "8px 12px",
                 borderRadius: "6px",
-                border: "1px solid rgba(124, 58, 237, 0.2)",
-                background: "#121118",
-                fontFamily: "'Inter', sans-serif",
+                border: "1px solid #1E293B",
+                background: "#0F172A",
                 fontSize: "13px",
-                color: "#F0EDE8",
+                color: "#F8FAFC",
               }}
             >
               <option value="vs-dark">Dark Editor</option>
@@ -138,14 +137,13 @@ export default function PlayPage() {
             <button
               onClick={handleFormat}
               style={{
-                background: "#121118",
-                border: "1px solid rgba(124, 58, 237, 0.2)",
+                background: "#0F172A",
+                border: "1px solid #1E293B",
                 padding: "8px 16px",
                 borderRadius: "6px",
-                fontFamily: "'Inter', sans-serif",
                 fontWeight: 500,
                 fontSize: "13px",
-                color: "#F0EDE8",
+                color: "#F8FAFC",
                 cursor: "pointer",
               }}
             >
@@ -155,14 +153,13 @@ export default function PlayPage() {
             <button
               onClick={handleShare}
               style={{
-                background: "#121118",
-                border: "1px solid rgba(124, 58, 237, 0.2)",
+                background: "#0F172A",
+                border: "1px solid #1E293B",
                 padding: "8px 16px",
                 borderRadius: "6px",
-                fontFamily: "'Inter', sans-serif",
                 fontWeight: 500,
                 fontSize: "13px",
-                color: "#F0EDE8",
+                color: "#F8FAFC",
                 cursor: "pointer",
               }}
             >
@@ -173,12 +170,11 @@ export default function PlayPage() {
               onClick={handleRun}
               disabled={running}
               style={{
-                background: "#7C3AED",
+                background: "#0EA5E9",
                 color: "#ffffff",
                 padding: "8px 24px",
                 borderRadius: "6px",
                 border: "none",
-                fontFamily: "'Inter', sans-serif",
                 fontWeight: 600,
                 fontSize: "14px",
                 cursor: "pointer",
@@ -192,8 +188,8 @@ export default function PlayPage() {
         {/* Editor & Multi-Tab Output Split */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))", gap: "20px", minHeight: "560px" }}>
           {/* Editor Panel */}
-          <div style={{ border: "1px solid rgba(124, 58, 237, 0.2)", borderRadius: "12px", overflow: "hidden", display: "flex", flexDirection: "column", background: "#121118" }}>
-            <div style={{ background: "#181622", padding: "10px 16px", borderBottom: "1px solid rgba(124, 58, 237, 0.2)", fontFamily: "monospace", fontSize: "13px", color: "#9CA3AF" }}>
+          <div style={{ border: "1px solid #1E293B", borderRadius: "8px", overflow: "hidden", display: "flex", flexDirection: "column", background: "#020617" }}>
+            <div style={{ background: "#0F172A", padding: "10px 16px", borderBottom: "1px solid #1E293B", fontFamily: "monospace", fontSize: "13px", color: "#64748B" }}>
               main.blyx
             </div>
             <div style={{ flex: 1, minHeight: "450px" }}>
@@ -215,9 +211,9 @@ export default function PlayPage() {
           </div>
 
           {/* IR & Console Output Panel */}
-          <div style={{ background: "#121118", borderRadius: "12px", border: "1px solid rgba(124, 58, 237, 0.2)", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+          <div style={{ background: "#020617", borderRadius: "8px", border: "1px solid #1E293B", overflow: "hidden", display: "flex", flexDirection: "column" }}>
             {/* View Tabs */}
-            <div style={{ background: "#181622", padding: "0 16px", borderBottom: "1px solid rgba(124, 58, 237, 0.2)", display: "flex", gap: "16px" }}>
+            <div style={{ background: "#0F172A", padding: "0 16px", borderBottom: "1px solid #1E293B", display: "flex", gap: "16px" }}>
               {[
                 ["console", "Console Output"],
                 ["ast", "AST Graph"],
@@ -231,9 +227,8 @@ export default function PlayPage() {
                     padding: "12px 4px",
                     background: "transparent",
                     border: "none",
-                    borderBottom: activeTab === tKey ? "2px solid #7C3AED" : "2px solid transparent",
-                    color: activeTab === tKey ? "#F0EDE8" : "#9CA3AF",
-                    fontFamily: "'Inter', sans-serif",
+                    borderBottom: activeTab === tKey ? "2px solid #0EA5E9" : "2px solid transparent",
+                    color: activeTab === tKey ? "#F8FAFC" : "#64748B",
                     fontWeight: activeTab === tKey ? 600 : 400,
                     fontSize: "13px",
                     cursor: "pointer",
@@ -245,9 +240,9 @@ export default function PlayPage() {
             </div>
 
             {/* Tab Viewport */}
-            <pre style={{ margin: 0, padding: "20px", fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", color: "#F0EDE8", flex: 1, overflow: "auto", lineHeight: 1.7 }}>
+            <pre style={{ margin: 0, padding: "20px", fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", color: "#F8FAFC", flex: 1, overflow: "auto", lineHeight: 1.7 }}>
               <code>
-                {activeTab === "console" && "Compiling main.blyx via blyxc v0.1.0-beta...\nPass 1: Lexical analysis OK\nPass 2: AST parsing OK\nPass 3: Type inference OK (0 shape errors)\nPass 4: BIR SSA emit OK\nPass 5: LLVM -O3 codegen OK\n\nHello, Blyx systems language!\n[Process exited cleanly with code 0]"}
+                {activeTab === "console" && "Compiling main.blyx via blyxc v0.1.0-alpha...\nPass 1: Lexical analysis OK\nPass 2: AST parsing OK\nPass 3: Type inference OK (0 shape errors)\nPass 4: BIR SSA emit OK\nPass 5: LLVM -O3 codegen OK\n\nHello, Blyx systems language!\n[Process exited cleanly with code 0]"}
                 {activeTab === "ast" && AST_DUMP}
                 {activeTab === "bir" && BIR_DUMP}
                 {activeTab === "llvm" && LLVM_DUMP}

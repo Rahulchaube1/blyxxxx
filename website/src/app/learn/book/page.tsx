@@ -1,16 +1,17 @@
+import React from 'react';
 import Link from 'next/link';
 
 export default function BookIndex() {
   return (
-    <div style={{ background: '#0A0908', color: '#F0EDE8', minHeight: '100vh', padding: '60px 24px' }}>
-      <main style={{ maxWidth: 800, width: '100%', margin: '0 auto' }}>
-        <div style={{ marginBottom: 8, fontSize: 12, color: '#A78BFA', fontFamily: 'JetBrains Mono, monospace', letterSpacing: '1px', textTransform: 'uppercase' }}>
+    <div style={{ background: '#0B0F19', color: '#F1F5F9', fontFamily: "'Inter', sans-serif", minHeight: '100vh', padding: '60px 24px' }}>
+      <main style={{ maxWidth: 860, width: '100%', margin: '0 auto' }}>
+        <div style={{ marginBottom: 8, fontSize: 12, color: '#38BDF8', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '1px', textTransform: 'uppercase' }}>
           The Blyx Book
         </div>
-        <h1 style={{ fontFamily: 'Inter, sans-serif', fontWeight: 800, fontSize: 40, color: '#F0EDE8', marginBottom: 16 }}>
+        <h1 style={{ fontWeight: 800, fontSize: 40, color: '#F8FAFC', marginBottom: 16 }}>
           The Blyx Programming Language
         </h1>
-        <p style={{ fontFamily: 'Inter, sans-serif', fontSize: 16, color: '#9CA3AF', lineHeight: 1.7, marginBottom: 48, maxWidth: 600 }}>
+        <p style={{ fontSize: 16, color: '#94A3B8', lineHeight: 1.7, marginBottom: 48, maxWidth: 640 }}>
           A complete guide to Blyx — from your first program to writing GPU kernels, actor systems, and high-performance AI workloads. Written by Rahul Chaube.
         </p>
 
@@ -43,18 +44,18 @@ export default function BookIndex() {
               display: 'flex',
               gap: 20,
               padding: '20px 0',
-              borderBottom: '1px solid rgba(124, 58, 237, 0.2)',
+              borderBottom: '1px solid #1E293B',
               alignItems: 'flex-start',
             }}
           >
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: '#A78BFA', fontWeight: 700, minWidth: 28, paddingTop: 2 }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: '#38BDF8', fontWeight: 700, minWidth: 28, paddingTop: 2 }}>
               {ch.n}
             </span>
             <div>
-              <div style={{ fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 17, color: '#F0EDE8', marginBottom: 4 }}>
+              <div style={{ fontWeight: 600, fontSize: 17, color: '#F8FAFC', marginBottom: 4 }}>
                 {ch.title}
               </div>
-              <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#9CA3AF', lineHeight: 1.5 }}>
+              <div style={{ fontSize: 14, color: '#94A3B8', lineHeight: 1.5 }}>
                 {ch.desc}
               </div>
             </div>

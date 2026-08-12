@@ -31,15 +31,15 @@ export default function BookLayout({ children, currentSlug }: { children: React.
 
   const sidebar = (
     <nav style={{
-      width: 260, minWidth: 260, background: '#fafafa',
-      borderRight: '1px solid #e5e7eb',
+      width: 270, minWidth: 270, background: '#0F172A',
+      borderRight: '1px solid #1E293B',
       height: '100vh', position: 'sticky', top: 0,
       overflowY: 'auto', padding: '24px 0', flexShrink: 0,
     }}>
-      <div style={{ padding: '0 20px 20px', borderBottom: '1px solid #e5e7eb', marginBottom: 16 }}>
+      <div style={{ padding: '0 20px 20px', borderBottom: '1px solid #1E293B', marginBottom: 16 }}>
         <Link href="/learn/book" style={{ textDecoration: 'none' }}>
-          <div style={{ fontSize: 11, fontWeight: 600, color: '#616161', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: 4 }}>The Blyx Book</div>
-          <div style={{ fontSize: 13, color: '#d34516', fontWeight: 600 }}>Table of Contents</div>
+          <div style={{ fontSize: 11, fontWeight: 600, color: '#64748B', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: 4 }}>The Blyx Book</div>
+          <div style={{ fontSize: 14, color: '#38BDF8', fontWeight: 600 }}>Table of Contents</div>
         </Link>
       </div>
       {CHAPTERS.map((ch, i) => {
@@ -50,19 +50,19 @@ export default function BookLayout({ children, currentSlug }: { children: React.
               <div style={{
                 padding: '8px 20px',
                 fontSize: 14,
-                color: active ? '#d34516' : '#616161',
-                background: active ? '#ffe3d5' : 'transparent',
-                borderLeft: active ? '3px solid #d34516' : '3px solid transparent',
+                color: active ? '#38BDF8' : '#94A3B8',
+                background: active ? '#1E293B' : 'transparent',
+                borderLeft: active ? '3px solid #0EA5E9' : '3px solid transparent',
                 fontWeight: active ? 600 : 400,
                 transition: 'all 0.15s',
                 display: 'block',
               }}>
-                <span style={{ color: '#9e9e9e', marginRight: 8, fontSize: 12 }}>{String(i + 1).padStart(2, '0')}.</span>
+                <span style={{ color: '#64748B', marginRight: 8, fontSize: 12 }}>{String(i + 1).padStart(2, '0')}.</span>
                 {ch.title}
               </div>
             </Link>
             {active && ch.sections.map(sec => (
-              <div key={sec} style={{ padding: '4px 20px 4px 44px', fontSize: 13, color: '#757575' }}>
+              <div key={sec} style={{ padding: '4px 20px 4px 44px', fontSize: 13, color: '#64748B' }}>
                 {sec}
               </div>
             ))}
@@ -73,34 +73,34 @@ export default function BookLayout({ children, currentSlug }: { children: React.
   );
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#ffffff' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#0B0F19', color: '#F1F5F9' }}>
       {/* Desktop sidebar */}
       <div style={{ display: 'none' }} className="desktop-sidebar">{sidebar}</div>
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 200 }}>
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)' }} onClick={() => setSidebarOpen(false)} />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.7)' }} onClick={() => setSidebarOpen(false)} />
           <div style={{ position: 'relative', zIndex: 201 }}>{sidebar}</div>
         </div>
       )}
       {/* Content */}
-      <main style={{ flex: 1, minWidth: 0, padding: '48px max(24px, 5vw)', maxWidth: 800 }}>
+      <main style={{ flex: 1, minWidth: 0, padding: '48px max(24px, 5vw)', maxWidth: 860 }}>
         {/* Mobile: show hamburger */}
-        <button onClick={() => setSidebarOpen(true)} style={{ display: 'none', marginBottom: 24, background: '#ffffff', border: '1px solid #e5e7eb', color: '#1f1f1f', padding: '8px 16px', borderRadius: 6, cursor: 'pointer', fontSize: 14, fontFamily: 'Inter, sans-serif' }} className="mobile-menu-btn">
+        <button onClick={() => setSidebarOpen(true)} style={{ display: 'none', marginBottom: 24, background: '#0F172A', border: '1px solid #1E293B', color: '#F8FAFC', padding: '8px 16px', borderRadius: 6, cursor: 'pointer', fontSize: 14, fontFamily: 'Inter, sans-serif' }} className="mobile-menu-btn">
           Menu [=] Table of Contents
         </button>
         {children}
         {/* Prev / Next */}
-        <div style={{ marginTop: 64, paddingTop: 32, borderTop: '1px solid #e5e7eb', display: 'flex', justifyContent: 'space-between', gap: 16 }}>
+        <div style={{ marginTop: 64, paddingTop: 32, borderTop: '1px solid #1E293B', display: 'flex', justifyContent: 'space-between', gap: 16 }}>
           {prev ? (
-            <Link href={`/learn/book/${prev.slug}`} style={{ textDecoration: 'none', padding: '12px 20px', border: '1px solid #e5e7eb', borderRadius: 6, color: '#1f1f1f', fontSize: 14, fontFamily: 'Inter, sans-serif', flex: 1, background: '#ffffff' }}>
-              <div style={{ fontSize: 11, color: '#616161', marginBottom: 4 }}>← Previous</div>
+            <Link href={`/learn/book/${prev.slug}`} style={{ textDecoration: 'none', padding: '12px 20px', border: '1px solid #1E293B', borderRadius: 6, color: '#F8FAFC', fontSize: 14, fontFamily: 'Inter, sans-serif', flex: 1, background: '#0F172A' }}>
+              <div style={{ fontSize: 11, color: '#64748B', marginBottom: 4 }}>← Previous</div>
               {prev.title}
             </Link>
           ) : <div />}
           {next ? (
-            <Link href={`/learn/book/${next.slug}`} style={{ textDecoration: 'none', padding: '12px 20px', border: '1px solid #e5e7eb', borderRadius: 6, color: '#1f1f1f', fontSize: 14, fontFamily: 'Inter, sans-serif', textAlign: 'right', flex: 1, background: '#ffffff' }}>
-              <div style={{ fontSize: 11, color: '#616161', marginBottom: 4 }}>Next →</div>
+            <Link href={`/learn/book/${next.slug}`} style={{ textDecoration: 'none', padding: '12px 20px', border: '1px solid #1E293B', borderRadius: 6, color: '#F8FAFC', fontSize: 14, fontFamily: 'Inter, sans-serif', textAlign: 'right', flex: 1, background: '#0F172A' }}>
+              <div style={{ fontSize: 11, color: '#64748B', marginBottom: 4 }}>Next →</div>
               {next.title}
             </Link>
           ) : <div />}
@@ -114,7 +114,7 @@ export default function BookLayout({ children, currentSlug }: { children: React.
         @media (max-width: 767px) {
           .mobile-menu-btn { display: block !important; }
         }
-        a:hover { color: #b93c12 !important; }
+        a:hover { color: #38BDF8 !important; }
       `}</style>
     </div>
   );

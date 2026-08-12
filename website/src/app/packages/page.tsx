@@ -3,17 +3,17 @@ import Link from "next/link";
 
 export default function PackagesPage() {
   return (
-    <div style={{ background: "#0A0908", color: "#F0EDE8", minHeight: "100vh", padding: "60px 24px" }}>
+    <div style={{ background: "#0B0F19", color: "#F1F5F9", fontFamily: "'Inter', sans-serif", minHeight: "100vh", padding: "60px 24px" }}>
       <main style={{ maxWidth: "900px", margin: "0 auto" }}>
-        <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", color: "#9CA3AF", marginBottom: "24px" }}>
-          <Link href="/" style={{ color: "#A78BFA", textDecoration: "none" }}>Home</Link> / Package Registry
+        <div style={{ fontSize: "14px", color: "#64748B", marginBottom: "24px" }}>
+          <Link href="/" style={{ color: "#38BDF8", textDecoration: "none" }}>Home</Link> / Package Registry
         </div>
 
-        <h1 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: "40px", color: "#F0EDE8", marginBottom: "16px", letterSpacing: "-0.5px" }}>
+        <h1 style={{ fontWeight: 800, fontSize: "40px", color: "#F8FAFC", marginBottom: "16px", letterSpacing: "-1px" }}>
           Blyx Package Registry
         </h1>
-        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "18px", color: "#9CA3AF", lineHeight: 1.6, marginBottom: "48px" }}>
-          Discover and publish packages for the Blyx ecosystem using <code style={{ background: "rgba(124, 58, 237, 0.2)", color: "#A78BFA", padding: "2px 6px", borderRadius: "4px", fontFamily: "monospace" }}>blyxpkg</code>.
+        <p style={{ fontSize: "18px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "48px" }}>
+          Discover and publish packages for the Blyx ecosystem using <code style={{ background: "#1E293B", color: "#38BDF8", padding: "2px 6px", borderRadius: "4px", fontFamily: "monospace" }}>blyxpkg</code>.
         </p>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
@@ -47,9 +47,9 @@ export default function PackagesPage() {
               key={idx}
               style={{
                 padding: "28px",
-                background: "#121118",
-                borderRadius: "12px",
-                border: "1px solid rgba(124, 58, 237, 0.2)",
+                background: "#0F172A",
+                borderRadius: "8px",
+                border: "1px solid #1E293B",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -57,18 +57,18 @@ export default function PackagesPage() {
             >
               <div>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: "16px", color: "#F0EDE8" }}>
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: "16px", color: "#F8FAFC" }}>
                     {pkg.name}
                   </span>
-                  <span style={{ fontFamily: "monospace", fontSize: "12px", background: "rgba(124, 58, 237, 0.2)", padding: "2px 6px", borderRadius: "4px", color: "#A78BFA" }}>
+                  <span style={{ fontFamily: "monospace", fontSize: "12px", background: "#1E293B", padding: "2px 6px", borderRadius: "4px", color: "#38BDF8" }}>
                     {pkg.ver}
                   </span>
                 </div>
-                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", color: "#9CA3AF", lineHeight: 1.6, margin: "0 0 16px" }}>
+                <p style={{ fontSize: "14px", color: "#94A3B8", lineHeight: 1.6, margin: "0 0 16px" }}>
                   {pkg.desc}
                 </p>
               </div>
-              <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "13px", color: "#9CA3AF", borderTop: "1px solid rgba(124, 58, 237, 0.2)", paddingTop: "12px" }}>
+              <div style={{ fontSize: "13px", color: "#64748B", borderTop: "1px solid #1E293B", paddingTop: "12px" }}>
                 Publisher: {pkg.author}
               </div>
             </div>

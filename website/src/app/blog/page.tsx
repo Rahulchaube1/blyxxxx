@@ -3,20 +3,20 @@ import Link from "next/link";
 
 export default function BlogPage() {
   return (
-    <div style={{ background: "#0A0908", color: "#F0EDE8", minHeight: "100vh", padding: "60px 24px" }}>
-      <main style={{ maxWidth: "800px", margin: "0 auto" }}>
-        <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", color: "#9CA3AF", marginBottom: "24px" }}>
-          <Link href="/" style={{ color: "#A78BFA", textDecoration: "none" }}>Home</Link> / Blog
+    <div style={{ background: "#0B0F19", color: "#F1F5F9", fontFamily: "'Inter', sans-serif", minHeight: "100vh", padding: "60px 24px" }}>
+      <main style={{ maxWidth: "860px", margin: "0 auto" }}>
+        <div style={{ fontSize: "14px", color: "#64748B", marginBottom: "24px" }}>
+          <Link href="/" style={{ color: "#38BDF8", textDecoration: "none" }}>Home</Link> / Blog
         </div>
 
-        <h1 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: "40px", color: "#F0EDE8", marginBottom: "16px", letterSpacing: "-0.5px" }}>
+        <h1 style={{ fontWeight: 800, fontSize: "40px", color: "#F8FAFC", marginBottom: "16px", letterSpacing: "-1px" }}>
           Blyx Engineering Blog
         </h1>
-        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "18px", color: "#9CA3AF", lineHeight: 1.6, marginBottom: "48px" }}>
+        <p style={{ fontSize: "18px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "48px" }}>
           Compiler architecture deep dives, release announcements, and language design notes.
         </p>
 
-        <div style={{ display: "grid", gap: "32px" }}>
+        <div style={{ display: "grid", gap: "24px" }}>
           {[
             {
               title: "Designing BIR: A Strongly-Typed SSA Intermediate Representation",
@@ -37,14 +37,14 @@ export default function BlogPage() {
               summary: "Bypassing C/C++ CUDA wrappers: How Blyx lowers GPU kernels directly to NVPTX instructions.",
             },
           ].map((post, idx) => (
-            <div key={idx} style={{ padding: "32px", background: "#121118", borderRadius: "12px", border: "1px solid rgba(124, 58, 237, 0.2)" }}>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", color: "#A78BFA", marginBottom: "8px" }}>
+            <div key={idx} style={{ padding: "32px", background: "#0F172A", borderRadius: "8px", border: "1px solid #1E293B" }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", color: "#38BDF8", marginBottom: "8px" }}>
                 {post.date} • By {post.author}
               </div>
-              <h2 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "22px", color: "#F0EDE8", marginBottom: "12px" }}>
+              <h2 style={{ fontWeight: 700, fontSize: "22px", color: "#F8FAFC", marginBottom: "12px" }}>
                 {post.title}
               </h2>
-              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", color: "#9CA3AF", lineHeight: 1.6, margin: 0 }}>
+              <p style={{ fontSize: "15px", color: "#94A3B8", lineHeight: 1.6, margin: 0 }}>
                 {post.summary}
               </p>
             </div>

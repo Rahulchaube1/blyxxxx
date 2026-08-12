@@ -52,17 +52,17 @@ export default function ExamplesPage() {
   });
 
   return (
-    <div style={{ background: "#0A0908", color: "#F0EDE8", minHeight: "100vh", padding: "60px 24px" }}>
+    <div style={{ background: "#0B0F19", color: "#F1F5F9", fontFamily: "'Inter', sans-serif", minHeight: "100vh", padding: "60px 24px" }}>
       <Container size="xl" style={{ maxWidth: "1000px", margin: "0 auto" }}>
         <div>
-          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", color: "#9CA3AF", marginBottom: "24px" }}>
-            <Link href="/" style={{ color: "#A78BFA", textDecoration: "none" }}>Home</Link> / Code Examples
+          <div style={{ fontSize: "14px", color: "#64748B", marginBottom: "24px" }}>
+            <Link href="/" style={{ color: "#38BDF8", textDecoration: "none" }}>Home</Link> / Code Examples
           </div>
 
-          <h1 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: "40px", color: "#F0EDE8", marginBottom: "16px", letterSpacing: "-0.5px" }}>
+          <h1 style={{ fontWeight: 800, fontSize: "40px", color: "#F8FAFC", marginBottom: "16px", letterSpacing: "-1px" }}>
             Searchable Blyx Code Examples
           </h1>
-          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "18px", color: "#9CA3AF", lineHeight: 1.6, marginBottom: "40px" }}>
+          <p style={{ fontSize: "18px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "40px" }}>
             Explore practical code samples across AI, GPU kernels, actor concurrency, CLI binaries, and high-performance networking.
           </p>
 
@@ -78,11 +78,11 @@ export default function ExamplesPage() {
                 minWidth: "280px",
                 padding: "12px 18px",
                 borderRadius: "6px",
-                border: "1px solid rgba(124, 58, 237, 0.2)",
-                background: "#121118",
+                border: "1px solid #1E293B",
+                background: "#0F172A",
                 fontFamily: "'Inter', sans-serif",
                 fontSize: "15px",
-                color: "#F0EDE8",
+                color: "#F8FAFC",
               }}
             />
 
@@ -94,10 +94,9 @@ export default function ExamplesPage() {
                   style={{
                     padding: "10px 16px",
                     borderRadius: "6px",
-                    border: "1px solid rgba(124, 58, 237, 0.2)",
-                    background: filter === cat ? "#7C3AED" : "#121118",
-                    color: filter === cat ? "#ffffff" : "#9CA3AF",
-                    fontFamily: "'Inter', sans-serif",
+                    border: "1px solid #1E293B",
+                    background: filter === cat ? "#0EA5E9" : "#0F172A",
+                    color: filter === cat ? "#ffffff" : "#94A3B8",
                     fontWeight: 500,
                     fontSize: "14px",
                     cursor: "pointer",
@@ -112,20 +111,20 @@ export default function ExamplesPage() {
           {/* Examples Grid */}
           <div style={{ display: "grid", gap: "24px" }}>
             {filtered.map((item, idx) => (
-              <div key={idx} style={{ padding: "28px", background: "#121118", borderRadius: "12px", border: "1px solid rgba(124, 58, 237, 0.2)" }}>
+              <div key={idx} style={{ padding: "28px", background: "#0F172A", borderRadius: "8px", border: "1px solid #1E293B" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px" }}>
-                  <h3 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "20px", color: "#F0EDE8", margin: 0 }}>
+                  <h3 style={{ fontWeight: 700, fontSize: "20px", color: "#F8FAFC", margin: 0 }}>
                     {item.title}
                   </h3>
-                  <span style={{ fontFamily: "monospace", fontSize: "12px", background: "rgba(124, 58, 237, 0.2)", padding: "2px 8px", borderRadius: "4px", color: "#A78BFA" }}>
+                  <span style={{ fontFamily: "monospace", fontSize: "12px", background: "#1E293B", padding: "2px 8px", borderRadius: "4px", color: "#38BDF8" }}>
                     {item.category}
                   </span>
                 </div>
-                <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", color: "#9CA3AF", lineHeight: 1.6, marginBottom: "16px" }}>
+                <p style={{ fontSize: "15px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "16px" }}>
                   {item.desc}
                 </p>
-                <div style={{ background: "#0A0908", padding: "16px", borderRadius: "6px", overflowX: "auto", border: "1px solid rgba(124, 58, 237, 0.2)" }}>
-                  <pre style={{ margin: 0, fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", color: "#F0EDE8", lineHeight: 1.6 }}>
+                <div style={{ background: "#020617", padding: "16px", borderRadius: "6px", overflowX: "auto", border: "1px solid #1E293B" }}>
+                  <pre style={{ margin: 0, fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", color: "#F8FAFC", lineHeight: 1.6 }}>
                     <code>{item.code}</code>
                   </pre>
                 </div>

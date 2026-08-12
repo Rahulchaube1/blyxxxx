@@ -3,16 +3,16 @@ import Link from "next/link";
 
 export default function DocsPage() {
   return (
-    <div style={{ background: "#0A0908", color: "#F0EDE8", minHeight: "100vh", padding: "60px 24px" }}>
-      <main style={{ maxWidth: "800px", margin: "0 auto" }}>
-        <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", color: "#9CA3AF", marginBottom: "24px" }}>
-          <Link href="/" style={{ color: "#A78BFA", textDecoration: "none" }}>Home</Link> / Documentation
+    <div style={{ background: "#0B0F19", color: "#F1F5F9", fontFamily: "'Inter', sans-serif", minHeight: "100vh", padding: "60px 24px" }}>
+      <main style={{ maxWidth: "860px", margin: "0 auto" }}>
+        <div style={{ fontSize: "14px", color: "#64748B", marginBottom: "24px" }}>
+          <Link href="/" style={{ color: "#38BDF8", textDecoration: "none" }}>Home</Link> / Documentation
         </div>
 
-        <h1 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: "40px", color: "#F0EDE8", marginBottom: "16px", letterSpacing: "-0.5px" }}>
+        <h1 style={{ fontWeight: 800, fontSize: "40px", color: "#F8FAFC", marginBottom: "16px", letterSpacing: "-1px" }}>
           Blyx Documentation
         </h1>
-        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "18px", color: "#9CA3AF", lineHeight: 1.6, marginBottom: "48px" }}>
+        <p style={{ fontSize: "18px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "48px" }}>
           Comprehensive guides, language specs, standard library references, and compiler tutorials.
         </p>
 
@@ -51,15 +51,15 @@ export default function DocsPage() {
               key={idx}
               style={{
                 padding: "32px",
-                background: "#121118",
-                borderRadius: "12px",
-                border: "1px solid rgba(124, 58, 237, 0.2)",
+                background: "#0F172A",
+                borderRadius: "8px",
+                border: "1px solid #1E293B",
               }}
             >
-              <h2 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "22px", color: "#F0EDE8", marginBottom: "8px" }}>
+              <h2 style={{ fontWeight: 700, fontSize: "22px", color: "#F8FAFC", marginBottom: "8px" }}>
                 {sec.title}
               </h2>
-              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", color: "#9CA3AF", marginBottom: "20px", lineHeight: 1.6 }}>
+              <p style={{ fontSize: "15px", color: "#94A3B8", marginBottom: "20px", lineHeight: 1.6 }}>
                 {sec.desc}
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
@@ -68,10 +68,9 @@ export default function DocsPage() {
                     key={lIdx}
                     href={href}
                     style={{
-                      fontFamily: "'Inter', sans-serif",
                       fontWeight: 600,
                       fontSize: "14px",
-                      color: "#A78BFA",
+                      color: "#38BDF8",
                       textDecoration: "none",
                     }}
                   >

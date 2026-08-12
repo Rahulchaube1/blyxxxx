@@ -47,17 +47,17 @@ export default function CompilerPage() {
   const stage = PIPELINE_STAGES[selectedIdx];
 
   return (
-    <div style={{ background: "#0A0908", color: "#F0EDE8", minHeight: "100vh", padding: "60px 24px" }}>
+    <div style={{ background: "#0B0F19", color: "#F1F5F9", fontFamily: "'Inter', sans-serif", minHeight: "100vh", padding: "60px 24px" }}>
       <Container size="xl" style={{ maxWidth: "1100px", margin: "0 auto" }}>
         <div>
-          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "14px", color: "#9CA3AF", marginBottom: "24px" }}>
-            <Link href="/" style={{ color: "#A78BFA", textDecoration: "none" }}>Home</Link> / Compiler Architecture
+          <div style={{ fontSize: "14px", color: "#64748B", marginBottom: "24px" }}>
+            <Link href="/" style={{ color: "#38BDF8", textDecoration: "none" }}>Home</Link> / Compiler Architecture
           </div>
 
-          <h1 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 800, fontSize: "40px", color: "#F0EDE8", marginBottom: "16px", letterSpacing: "-0.5px" }}>
+          <h1 style={{ fontWeight: 800, fontSize: "40px", color: "#F8FAFC", marginBottom: "16px", letterSpacing: "-1px" }}>
             Interactive Compiler Architecture &amp; BIR Pipeline
           </h1>
-          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "18px", color: "#9CA3AF", lineHeight: 1.6, marginBottom: "40px" }}>
+          <p style={{ fontSize: "18px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "40px" }}>
             Click through the stages below to inspect how Blyx source code transforms into optimized machine code and GPU assembly.
           </p>
 
@@ -69,18 +69,18 @@ export default function CompilerPage() {
                 onClick={() => setSelectedIdx(idx)}
                 style={{
                   padding: "16px",
-                  borderRadius: "8px",
-                  border: selectedIdx === idx ? "2px solid #7C3AED" : "1px solid rgba(124, 58, 237, 0.2)",
-                  background: selectedIdx === idx ? "rgba(124, 58, 237, 0.2)" : "#121118",
-                  color: selectedIdx === idx ? "#A78BFA" : "#F0EDE8",
+                  borderRadius: "6px",
+                  border: selectedIdx === idx ? "2px solid #0EA5E9" : "1px solid #1E293B",
+                  background: selectedIdx === idx ? "#0F172A" : "#020617",
+                  color: selectedIdx === idx ? "#38BDF8" : "#94A3B8",
                   textAlign: "left",
                   cursor: "pointer",
                 }}
               >
-                <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "15px" }}>
+                <div style={{ fontWeight: 700, fontSize: "15px" }}>
                   {st.name}
                 </div>
-                <div style={{ fontFamily: "'Inter', sans-serif", fontSize: "12px", color: "#9CA3AF", marginTop: "4px" }}>
+                <div style={{ fontSize: "12px", color: "#64748B", marginTop: "4px" }}>
                   {st.desc.slice(0, 45)}...
                 </div>
               </button>
@@ -88,29 +88,29 @@ export default function CompilerPage() {
           </div>
 
           {/* Active Stage Inspection Box */}
-          <div style={{ padding: "32px", background: "#121118", borderRadius: "12px", border: "1px solid rgba(124, 58, 237, 0.2)" }}>
-            <h2 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "24px", color: "#F0EDE8", marginBottom: "8px" }}>
+          <div style={{ padding: "32px", background: "#0F172A", borderRadius: "8px", border: "1px solid #1E293B" }}>
+            <h2 style={{ fontWeight: 700, fontSize: "24px", color: "#F8FAFC", marginBottom: "8px" }}>
               {stage.name}
             </h2>
-            <p style={{ fontFamily: "'Inter', sans-serif", fontSize: "15px", color: "#9CA3AF", marginBottom: "24px", lineHeight: 1.6 }}>
+            <p style={{ fontSize: "15px", color: "#94A3B8", marginBottom: "24px", lineHeight: 1.6 }}>
               {stage.desc}
             </p>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "20px" }}>
               <div>
-                <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "14px", color: "#F0EDE8", marginBottom: "8px" }}>
+                <div style={{ fontWeight: 600, fontSize: "14px", color: "#F8FAFC", marginBottom: "8px" }}>
                   Stage Input
                 </div>
-                <div style={{ background: "#0A0908", padding: "16px", borderRadius: "6px", color: "#F0EDE8", fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", border: "1px solid rgba(124, 58, 237, 0.2)" }}>
+                <div style={{ background: "#020617", padding: "16px", borderRadius: "6px", color: "#F8FAFC", fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", border: "1px solid #1E293B" }}>
                   {stage.input}
                 </div>
               </div>
 
               <div>
-                <div style={{ fontFamily: "'Inter', sans-serif", fontWeight: 600, fontSize: "14px", color: "#F0EDE8", marginBottom: "8px" }}>
+                <div style={{ fontWeight: 600, fontSize: "14px", color: "#F8FAFC", marginBottom: "8px" }}>
                   Stage Output Transformation
                 </div>
-                <div style={{ background: "#0A0908", padding: "16px", borderRadius: "6px", color: "#A78BFA", fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", border: "1px solid rgba(124, 58, 237, 0.2)" }}>
+                <div style={{ background: "#020617", padding: "16px", borderRadius: "6px", color: "#38BDF8", fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", border: "1px solid #1E293B" }}>
                   <pre style={{ margin: 0 }}><code>{stage.output}</code></pre>
                 </div>
               </div>
