@@ -19,21 +19,21 @@ export default function Navbar() {
     <header style={{ position: "sticky", top: 0, zIndex: 100 }}>
       {/* Release Banner */}
       <div style={{
-        background: "linear-gradient(90deg, #181028 0%, #2D1B4E 50%, #181028 100%)",
-        color: "#F0EDE8",
+        background: "#0F172A",
+        color: "#F8FAFC",
         textAlign: "center",
         padding: "8px 24px",
         fontSize: "13px",
         fontFamily: "'Inter', sans-serif",
         fontWeight: 500,
-        borderBottom: "1px solid rgba(124, 58, 237, 0.2)",
+        borderBottom: "1px solid #1E293B",
       }}>
         ⚡ Blyx v0.1.0-alpha: AI-Native Systems Language with Rust Runtime &bull;{" "}
         <a
           href="https://github.com/Rahulchaube1/blyxxxx"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: "#A78BFA", fontWeight: 700, textDecoration: "underline" }}
+          style={{ color: "#38BDF8", fontWeight: 700, textDecoration: "underline" }}
         >
           View on GitHub &rarr;
         </a>
@@ -41,9 +41,8 @@ export default function Navbar() {
 
       {/* Main Navbar */}
       <nav style={{
-        background: "rgba(10, 9, 8, 0.92)",
-        backdropFilter: "blur(16px)",
-        borderBottom: "1px solid rgba(124, 58, 237, 0.2)",
+        background: "#0B0F19",
+        borderBottom: "1px solid #1E293B",
       }}>
         <div style={{
           maxWidth: "1280px",
@@ -61,10 +60,10 @@ export default function Navbar() {
               fontFamily: "'Inter', sans-serif",
               fontWeight: 800,
               fontSize: "22px",
-              color: "#F0EDE8",
+              color: "#F8FAFC",
               letterSpacing: "-0.5px",
             }}>
-              Blyx<span style={{ color: "#7C3AED" }}>.</span>
+              Blyx<span style={{ color: "#0EA5E9" }}>.</span>
             </span>
           </Link>
 
@@ -81,7 +80,7 @@ export default function Navbar() {
                     fontFamily: "'Inter', sans-serif",
                     fontWeight: 500,
                     fontSize: "14px",
-                    color: "#9CA3AF",
+                    color: "#94A3B8",
                     textDecoration: "none",
                     transition: "color 0.2s",
                   }}
@@ -96,7 +95,7 @@ export default function Navbar() {
                     fontFamily: "'Inter', sans-serif",
                     fontWeight: 500,
                     fontSize: "14px",
-                    color: "#9CA3AF",
+                    color: "#94A3B8",
                     textDecoration: "none",
                     transition: "color 0.2s",
                   }}
@@ -115,10 +114,9 @@ export default function Navbar() {
                 fontSize: "14px",
                 color: "#ffffff",
                 textDecoration: "none",
-                background: "#7C3AED",
+                background: "#0EA5E9",
                 padding: "8px 18px",
                 borderRadius: "6px",
-                boxShadow: "0 0 15px rgba(124, 58, 237, 0.4)",
               }}
             >
               GitHub ↗
