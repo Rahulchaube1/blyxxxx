@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="blyx.png" alt="Blyx Logo" width="160" />
+  <img src="blyxlogo.png" alt="Blyx Logo" width="160" />
   <h1>Blyx Programming Language</h1>
   <p><b>AI-native systems programming language for high-performance, memory-safe, parallel computing.</b></p>
 
