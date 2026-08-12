@@ -1,0 +1,5 @@
+node_modules_old
+node_modules
+.next
+.git
+target
