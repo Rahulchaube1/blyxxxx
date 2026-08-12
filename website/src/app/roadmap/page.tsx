@@ -4,6 +4,18 @@ import Link from "next/link";
 export default function RoadmapPage() {
   return (
     <div style={{ background: "#0B0F19", color: "#F1F5F9", fontFamily: "'Inter', sans-serif", minHeight: "100vh", padding: "60px 24px" }}>
+      <style>{`
+        .blyx-card {
+          background: #101827;
+          border: 1px solid #1E293B;
+          border-radius: 8px;
+          transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .blyx-card:hover {
+          border-color: #334155;
+          transform: translateY(-1px);
+        }
+      `}</style>
       <main style={{ maxWidth: "860px", margin: "0 auto" }}>
         <div style={{ fontSize: "14px", color: "#64748B", marginBottom: "24px" }}>
           <Link href="/" style={{ color: "#38BDF8", textDecoration: "none" }}>Home</Link> / Roadmap
@@ -37,7 +49,7 @@ export default function RoadmapPage() {
               desc: "Standard library stabilization (std::tensor, std::actor), package registry launch, and production support.",
             },
           ].map((m, idx) => (
-            <div key={idx} style={{ padding: "32px", background: "#0F172A", borderRadius: "8px", border: "1px solid #1E293B" }}>
+            <div key={idx} className="blyx-card" style={{ padding: "32px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
                 <span style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: "16px", color: "#38BDF8" }}>
                   {m.phase}

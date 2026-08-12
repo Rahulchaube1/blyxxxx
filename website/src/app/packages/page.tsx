@@ -4,6 +4,18 @@ import Link from "next/link";
 export default function PackagesPage() {
   return (
     <div style={{ background: "#0B0F19", color: "#F1F5F9", fontFamily: "'Inter', sans-serif", minHeight: "100vh", padding: "60px 24px" }}>
+      <style>{`
+        .blyx-card {
+          background: #101827;
+          border: 1px solid #1E293B;
+          border-radius: 8px;
+          transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .blyx-card:hover {
+          border-color: #334155;
+          transform: translateY(-1px);
+        }
+      `}</style>
       <main style={{ maxWidth: "900px", margin: "0 auto" }}>
         <div style={{ fontSize: "14px", color: "#64748B", marginBottom: "24px" }}>
           <Link href="/" style={{ color: "#38BDF8", textDecoration: "none" }}>Home</Link> / Package Registry
@@ -45,11 +57,9 @@ export default function PackagesPage() {
           ].map((pkg, idx) => (
             <div
               key={idx}
+              className="blyx-card"
               style={{
                 padding: "28px",
-                background: "#0F172A",
-                borderRadius: "8px",
-                border: "1px solid #1E293B",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",

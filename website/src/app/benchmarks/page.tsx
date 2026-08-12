@@ -51,6 +51,18 @@ export default function BenchmarksPage() {
 
   return (
     <div style={{ background: '#0B0F19', color: '#F1F5F9', fontFamily: "'Inter', sans-serif", minHeight: '100vh', padding: '60px 24px' }}>
+      <style>{`
+        .blyx-card {
+          background: #101827;
+          border: 1px solid #1E293B;
+          border-radius: 8px;
+          transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .blyx-card:hover {
+          border-color: #334155;
+          transform: translateY(-1px);
+        }
+      `}</style>
       <main style={{ maxWidth: 1000, width: '100%', margin: '0 auto' }}>
         <div style={{ fontSize: "14px", color: "#64748B", marginBottom: "24px" }}>
           <Link href="/" style={{ color: "#38BDF8", textDecoration: "none" }}>Home</Link> / Benchmarks
@@ -70,7 +82,7 @@ export default function BenchmarksPage() {
 
         <div style={{ display: 'grid', gap: 32, marginBottom: 48 }}>
           {benchmarks.map((b, idx) => (
-            <div key={idx} style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: 8, padding: 32 }}>
+            <div key={idx} className="blyx-card" style={{ padding: 32 }}>
               <div style={{ marginBottom: 20 }}>
                 <div style={{ fontSize: 12, fontFamily: 'monospace', color: '#38BDF8', textTransform: 'uppercase' }}>{b.unit}</div>
                 <h2 style={{ fontWeight: 700, fontSize: 24, color: '#F8FAFC', margin: '4px 0 4px' }}>{b.title}</h2>
@@ -94,7 +106,7 @@ export default function BenchmarksPage() {
           ))}
         </div>
 
-        <div style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: 8, padding: 24, fontSize: 13, fontFamily: 'monospace', color: '#94A3B8' }}>
+        <div className="blyx-card" style={{ padding: 24, fontSize: 13, fontFamily: 'monospace', color: '#94A3B8' }}>
           <div style={{ color: '#F8FAFC', fontWeight: 600, marginBottom: 6 }}>Benchmark Methodology &amp; Environment</div>
           <div>All benchmarks measured on x86_64 Linux (Intel Core i9-13900K @ 5.8 GHz, 64GB DDR5 RAM, Ubuntu 24.04 LTS).</div>
           <div>Blyx compiler version v0.1.0-alpha built with BIR SSA passes and LLVM backend (-O3 optimization level).</div>

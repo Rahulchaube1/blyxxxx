@@ -53,6 +53,18 @@ export default function ExamplesPage() {
 
   return (
     <div style={{ background: "#0B0F19", color: "#F1F5F9", fontFamily: "'Inter', sans-serif", minHeight: "100vh", padding: "60px 24px" }}>
+      <style>{`
+        .blyx-card {
+          background: #101827;
+          border: 1px solid #1E293B;
+          border-radius: 8px;
+          transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .blyx-card:hover {
+          border-color: #334155;
+          transform: translateY(-1px);
+        }
+      `}</style>
       <Container size="xl" style={{ maxWidth: "1000px", margin: "0 auto" }}>
         <div>
           <div style={{ fontSize: "14px", color: "#64748B", marginBottom: "24px" }}>
@@ -111,7 +123,7 @@ export default function ExamplesPage() {
           {/* Examples Grid */}
           <div style={{ display: "grid", gap: "24px" }}>
             {filtered.map((item, idx) => (
-              <div key={idx} style={{ padding: "28px", background: "#0F172A", borderRadius: "8px", border: "1px solid #1E293B" }}>
+              <div key={idx} className="blyx-card" style={{ padding: "28px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px" }}>
                   <h3 style={{ fontWeight: 700, fontSize: "20px", color: "#F8FAFC", margin: 0 }}>
                     {item.title}

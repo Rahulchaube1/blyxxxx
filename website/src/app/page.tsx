@@ -82,6 +82,18 @@ export default function HomePage() {
 
   return (
     <div style={{ background: '#0B0F19', color: '#F1F5F9', fontFamily: "'Inter', sans-serif", minHeight: '100vh' }}>
+      <style>{`
+        .blyx-card {
+          background: #101827;
+          border: 1px solid #1E293B;
+          border-radius: 8px;
+          transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .blyx-card:hover {
+          border-color: #334155;
+          transform: translateY(-1px);
+        }
+      `}</style>
       
       {/* Hero Section — Inspired by Rust-lang.org */}
       <section style={{ borderBottom: '1px solid #1E293B', padding: '80px 24px 70px', maxWidth: '1280px', margin: '0 auto' }}>
@@ -212,7 +224,7 @@ export default function HomePage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px' }}>
           
           {/* Pillar 1: Performance */}
-          <div style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: '8px', padding: '36px' }}>
+          <div className="blyx-card" style={{ padding: '36px' }}>
             <div style={{ fontSize: '24px', marginBottom: '16px' }}>⚡</div>
             <h3 style={{ fontSize: '22px', fontWeight: 700, color: '#F8FAFC', marginBottom: '12px' }}>
               High Performance
@@ -223,7 +235,7 @@ export default function HomePage() {
           </div>
 
           {/* Pillar 2: Reliability & Safety */}
-          <div style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: '8px', padding: '36px' }}>
+          <div className="blyx-card" style={{ padding: '36px' }}>
             <div style={{ fontSize: '24px', marginBottom: '16px' }}>🛡️</div>
             <h3 style={{ fontSize: '22px', fontWeight: 700, color: '#F8FAFC', marginBottom: '12px' }}>
               Memory &amp; Thread Safety
@@ -234,7 +246,7 @@ export default function HomePage() {
           </div>
 
           {/* Pillar 3: AI-Native */}
-          <div style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: '8px', padding: '36px' }}>
+          <div className="blyx-card" style={{ padding: '36px' }}>
             <div style={{ fontSize: '24px', marginBottom: '16px' }}>🧠</div>
             <h3 style={{ fontSize: '22px', fontWeight: 700, color: '#F8FAFC', marginBottom: '12px' }}>
               AI-Native Primitives
@@ -284,7 +296,7 @@ export default function HomePage() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '32px', alignItems: 'center' }}>
           
           {/* Description Box */}
-          <div style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: '8px', padding: '36px' }}>
+          <div className="blyx-card" style={{ padding: '36px' }}>
             <h3 style={{ fontSize: '24px', fontWeight: 700, color: '#F8FAFC', marginBottom: '16px' }}>
               {CODE_EXAMPLES[activeTab].title}
             </h3>
@@ -335,7 +347,7 @@ export default function HomePage() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
           
-          <div style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: '8px', padding: '28px' }}>
+          <div className="blyx-card" style={{ padding: '28px' }}>
             <h4 style={{ fontSize: '18px', fontWeight: 700, color: '#38BDF8', marginBottom: '8px' }}>
               blyxc
             </h4>
@@ -344,7 +356,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: '8px', padding: '28px' }}>
+          <div className="blyx-card" style={{ padding: '28px' }}>
             <h4 style={{ fontSize: '18px', fontWeight: 700, color: '#38BDF8', marginBottom: '8px' }}>
               blyxpkg
             </h4>
@@ -353,7 +365,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: '8px', padding: '28px' }}>
+          <div className="blyx-card" style={{ padding: '28px' }}>
             <h4 style={{ fontSize: '18px', fontWeight: 700, color: '#38BDF8', marginBottom: '8px' }}>
               blyxfmt
             </h4>
@@ -362,7 +374,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div style={{ background: '#0F172A', border: '1px solid #1E293B', borderRadius: '8px', padding: '28px' }}>
+          <div className="blyx-card" style={{ padding: '28px' }}>
             <h4 style={{ fontSize: '18px', fontWeight: 700, color: '#38BDF8', marginBottom: '8px' }}>
               blyx-analyzer
             </h4>
