@@ -1,65 +1,38 @@
-# Blyx Repository Health & Technical Debt Audit
+# Blyx Repository Health
 
-This document is a point-in-time engineering audit of the Blyx repository. Blyx is an experimental alpha programming language; classifications below describe the current implementation maturity, not production-readiness claims.
+Blyx is an experimental alpha-stage programming language. This document summarizes current engineering maturity without treating planned architecture as implemented functionality.
 
-## 1. Component health matrix
+## Health matrix
 
-| Subsystem | Classification | Technical debt | Recommended action |
-| --- | --- | --- | --- |
-| `compiler/blyx_lexer` | Core | Low–Medium | Expand token coverage and diagnostics as the language evolves. |
-| `compiler/blyx_parser` | Core | Medium | Grow grammar coverage and parser recovery tests. |
-| `compiler/blyx_ast` | Core | Medium | Keep syntax representations stable and documented. |
-| `compiler/blyx_semantic` | Core | Medium–High | Add semantic validation and negative tests as features land. |
-| `compiler/blyx_typeck` | Core | Medium–High | Strengthen inference, diagnostics, and tensor-shape validation. |
-| `compiler/blyx_bir` | Core | Medium–High | Define and test BIR/SSA invariants before adding aggressive optimization. |
-| `compiler/blyxc` | Compiler driver | Medium | Improve CLI UX, diagnostics, and end-to-end compilation coverage. |
-| `library/blyx` | Runtime | Medium | Stabilize runtime APIs and add platform/concurrency tests. |
-| `library/blyx-std` | Standard library | Medium | Establish API conventions and compatibility guarantees. |
-| `tools/blyxpkg` | Tooling | Prototype / evolving | Define package metadata, registry, and reproducible-resolution behavior. |
-| `tools/blyxfmt` | Tooling | Prototype / evolving | Align formatting rules with the language grammar. |
-| `tools/blyx-analyzer` | Tooling | Prototype / evolving | Expand language-server coverage and editor diagnostics. |
-| `tools/blyxdoc` | Tooling | Prototype / evolving | Stabilize documentation generation and examples. |
-| `tools/blyxup` | Tooling | Prototype / evolving | Document supported installation/update channels. |
-| `tools/blyxdbg` | Tooling | Prototype | Establish debugger protocol and target support. |
-| `tools/blyxprof` | Tooling | Prototype | Establish profiling data formats and useful baseline workflows. |
+| Area | Status | Priority |
+| --- | --- | --- |
+| Compiler frontend | Active / evolving | High |
+| Semantic analysis | Active / evolving | High |
+| Type checking | Active / evolving | High |
+| BIR / SSA | Experimental | High |
+| Runtime and standard library | Experimental | High |
+| Package manager | Prototype | Medium |
+| Formatter | Prototype | Medium |
+| Language server | Prototype | Medium |
+| Documentation tooling | Prototype | Medium |
+| Debugger | Placeholder | Low |
+| Profiler | Placeholder | Low |
+| Cross-platform releases | In progress | Medium |
 
-## 2. Architecture health
+## Current engineering priorities
 
-The intended compilation path is:
+1. Keep the workspace buildable and testable.
+2. Increase end-to-end compiler coverage.
+3. Stabilize diagnostics and compiler UX.
+4. Define BIR invariants and test them before adding aggressive optimization.
+5. Separate implemented functionality from future backend/runtime architecture.
+6. Keep examples and documentation synchronized with actual compiler behavior.
+7. Establish reproducible benchmarks before making performance claims.
 
-```text
-Blyx source
-   ↓
-Lexer
-   ↓
-Parser / AST
-   ↓
-Semantic analysis
-   ↓
-Type checking + tensor validation
-   ↓
-BIR / SSA
-   ↓
-Optimization
-   ↓
-Backend / code generation
-   ↓
-Native and heterogeneous targets
-```
+## Definition of maturity
 
-The repository should document implemented stages separately from planned stages. A feature should not be described as production-ready until there is repeatable implementation evidence and automated coverage.
+A feature should not be labeled stable or production-ready merely because its syntax, architecture, or public API has been designed. A meaningful maturity upgrade requires implementation, tests, documentation, and evidence appropriate to the feature.
 
-## 3. Current priorities
+## Repository hygiene
 
-1. Keep the repository free of unrelated upstream compiler/source trees.
-2. Make the workspace build and test cleanly on supported platforms.
-3. Increase end-to-end compiler tests before expanding language surface area.
-4. Define stable BIR invariants and serialization/debugging expectations.
-5. Improve diagnostics and developer tooling.
-6. Establish reproducible benchmark methodology before publishing performance claims.
-
-## 4. Definition of done for maturity upgrades
-
-A subsystem should move from prototype/evolving to stable only when its public behavior is documented, covered by automated tests, exercised by real examples, and compatible with the project's release policy.
-
-This audit intentionally avoids claiming that Blyx is production-ready while it remains an alpha-stage project.
+Unrelated upstream source trees and obsolete implementation documentation should not be reintroduced. Historical documents must clearly identify themselves as historical and must not describe deleted components as current architecture.
