@@ -1,496 +1,87 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blyx Programming Language — AI-Native Systems & Parallel Computing</title>
-    <meta name="description" content="Official website for the Blyx Programming Language (blyx-lang.space). AI-native, high-performance systems language with static tensors, actors, and inline GPU acceleration.">
-    <link rel="icon" type="image/png" href="public/blyxlogo.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #07090e;
-            --card-bg: rgba(18, 23, 34, 0.75);
-            --border-color: rgba(0, 242, 254, 0.15);
-            --primary: #00f2fe;
-            --secondary: #7f00ff;
-            --accent-blue: #4facfe;
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
-            --font-heading: 'Space Grotesk', sans-serif;
-            --font-body: 'Inter', sans-serif;
-            --font-code: 'JetBrains Mono', monospace;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-body);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Ambient Glow Background */
-        .ambient-glow {
-            position: fixed;
-            top: -200px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1000px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(0,242,254,0.15) 0%, rgba(127,0,255,0.12) 40%, rgba(0,0,0,0) 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        header.navbar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1rem 3rem;
-            background: rgba(7, 9, 14, 0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: var(--text-main);
-            font-family: var(--font-heading);
-            font-weight: 700;
-            font-size: 1.35rem;
-        }
-
-        .nav-brand img {
-            width: 38px;
-            height: 38px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 24px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-            text-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
-        }
-
-        .btn-header {
-            padding: 8px 18px;
-            border-radius: 8px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #000;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-decoration: none;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .btn-header:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 0 25px rgba(0, 242, 254, 0.6);
-        }
-
-        /* Hero Section */
-        section.hero {
-            position: relative;
-            z-index: 1;
-            padding: 7rem 2rem 5rem;
-            text-align: center;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 16px;
-            border-radius: 20px;
-            background: rgba(0, 242, 254, 0.08);
-            border: 1px solid var(--border-color);
-            color: var(--primary);
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero h1 {
-            font-family: var(--font-heading);
-            font-size: 3.75rem;
-            line-height: 1.15;
-            font-weight: 700;
-            margin-bottom: 1.25rem;
-            background: linear-gradient(135deg, #ffffff 30%, var(--primary) 70%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 750px;
-            margin: 0 auto 2.5rem;
-        }
-
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 18px;
-            flex-wrap: wrap;
-        }
-
-        .btn-cta {
-            padding: 14px 32px;
-            border-radius: 10px;
-            font-size: 1.05rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-
-        .btn-cta-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: #000;
-            box-shadow: 0 4px 25px rgba(0, 242, 254, 0.4);
-        }
-
-        .btn-cta-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 35px rgba(0, 242, 254, 0.6);
-        }
-
-        .btn-cta-secondary {
-            background: var(--card-bg);
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-cta-secondary:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        /* Features Grid */
-        section.features {
-            position: relative;
-            z-index: 1;
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3.5rem;
-        }
-
-        .section-title h2 {
-            font-family: var(--font-heading);
-            font-size: 2.5rem;
-            color: var(--text-main);
-            margin-bottom: 0.75rem;
-        }
-
-        .section-title p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        .grid-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 24px;
-        }
-
-        .feature-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 2rem;
-            backdrop-filter: blur(12px);
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(0, 242, 254, 0.4);
-            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.1);
-        }
-
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 10px;
-            background: rgba(0, 242, 254, 0.1);
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .feature-card h3 {
-            font-family: var(--font-heading);
-            font-size: 1.35rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-main);
-        }
-
-        .feature-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        /* Toolchain Grid */
-        .toolchain-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-        }
-
-        .tool-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: border-color 0.2s ease;
-        }
-
-        .tool-card:hover {
-            border-color: var(--primary);
-        }
-
-        .tool-name {
-            font-family: var(--font-code);
-            font-weight: 600;
-            color: var(--primary);
-            font-size: 1.1rem;
-            margin-bottom: 6px;
-        }
-
-        .tool-desc {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Code & Syntax Section */
-        .code-preview {
-            background: #0d1117;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-            margin-top: 2rem;
-        }
-
-        .code-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 20px;
-            background: #161b22;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .code-title {
-            font-family: var(--font-code);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        pre code {
-            display: block;
-            padding: 1.5rem 2rem;
-            font-family: var(--font-code);
-            font-size: 0.95rem;
-            color: #e6edf3;
-            overflow-x: auto;
-        }
-
-        .kw { color: #ff7b72; font-weight: 600; }
-        .fn { color: #d2a8ff; }
-        .str { color: #a5d6ff; }
-        .ty { color: #79c0ff; }
-        .attr { color: #ffa657; }
-
-        footer {
-            text-align: center;
-            padding: 3rem 2rem;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        footer a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blyx — Open-Source AI-Native Systems Programming Language</title>
+  <meta name="description" content="Blyx is an experimental, open-source AI-native systems programming language exploring AI-oriented computation, concurrency, tensors, heterogeneous computing, and native compilation.">
+  <meta name="keywords" content="Blyx, Blyx programming language, AI-native systems programming language, compiler, systems programming, BIR SSA, tensor programming, open source">
+  <link rel="canonical" href="https://blyx-lang.space/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Blyx — Open-Source AI-Native Systems Programming Language">
+  <meta property="og:description" content="An experimental open-source language exploring AI-oriented computation and systems programming.">
+  <meta property="og:url" content="https://blyx-lang.space/">
+  <meta property="og:site_name" content="Blyx">
+  <meta property="og:image" content="https://blyx-lang.space/blyxlogo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Blyx — Open-Source AI-Native Systems Programming Language">
+  <meta name="twitter:description" content="Experimental open-source programming-language project.">
+  <meta name="twitter:image" content="https://blyx-lang.space/blyxlogo.png">
+  <link rel="icon" href="public/blyxlogo.png">
+  <style>
+    :root { color-scheme: dark; --bg:#070a10; --panel:#0f1724; --border:#223047; --text:#f8fafc; --muted:#94a3b8; --accent:#38bdf8; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; line-height:1.65; }
+    a { color:inherit; }
+    .wrap { width:min(1100px,calc(100% - 40px)); margin:auto; }
+    header { padding:20px 0; border-bottom:1px solid var(--border); }
+    nav { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .brand { display:flex; align-items:center; gap:10px; text-decoration:none; font-weight:800; font-size:20px; }
+    .brand img { width:36px; height:36px; border-radius:8px; }
+    .navlinks { display:flex; gap:18px; flex-wrap:wrap; color:var(--muted); font-size:14px; }
+    .navlinks a { text-decoration:none; }
+    .hero { padding:100px 0 80px; text-align:center; }
+    .badge { display:inline-block; border:1px solid var(--border); background:var(--panel); color:var(--accent); border-radius:999px; padding:6px 13px; font-size:13px; font-weight:700; }
+    h1 { max-width:900px; margin:25px auto 20px; font-size:clamp(44px,7vw,76px); line-height:1.02; letter-spacing:-2px; }
+    .lead { max-width:760px; margin:0 auto 32px; color:var(--muted); font-size:20px; }
+    .buttons { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+    .button { padding:12px 20px; border-radius:7px; text-decoration:none; font-weight:800; border:1px solid var(--border); background:var(--panel); }
+    .primary { background:#0ea5e9; border-color:#0ea5e9; color:white; }
+    section { padding:75px 0; border-top:1px solid var(--border); }
+    h2 { font-size:34px; margin:0 0 12px; }
+    .muted { color:var(--muted); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-top:35px; }
+    .card { background:var(--panel); border:1px solid var(--border); border-radius:12px; padding:24px; }
+    .card h3 { margin-top:0; font-size:19px; }
+    pre { overflow:auto; background:#020617; border:1px solid var(--border); border-radius:10px; padding:20px; }
+    footer { padding:45px 0; border-top:1px solid var(--border); color:var(--muted); font-size:14px; }
+    @media (max-width:700px) { .hero { padding-top:65px; } .navlinks { display:none; } h1 { letter-spacing:-1px; } }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"SoftwareApplication",
+    "name":"Blyx",
+    "applicationCategory":"DeveloperApplication",
+    "operatingSystem":"Cross-platform",
+    "description":"Experimental open-source AI-native systems programming language.",
+    "url":"https://blyx-lang.space/",
+    "codeRepository":"https://github.com/Rahulchaube1/blyxxxx"
+  }
+  </script>
 </head>
 <body>
-    <div class="ambient-glow"></div>
-
-    <header class="navbar">
-        <a href="https://blyx-lang.space" class="nav-brand">
-            <img src="public/blyxlogo.png" alt="Blyx Logo">
-            <span>Blyx</span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="#features">Features</a></li>
-            <li><a href="#toolchain">Tools</a></li>
-            <li><a href="#benchmarks">Benchmarks</a></li>
-            <li><a href="#download">Download</a></li>
-            <li><a href="playground/index.html">Playground</a></li>
-        </ul>
-        <a href="playground/index.html" class="btn-header">Try Online</a>
-    </header>
-
-    <section class="hero">
-        <div class="hero-badge">⚡ Blyx Beta v1.0 Release Candidate 1 Available</div>
-        <h1>AI-Native Systems & Parallel Computing</h1>
-        <p>Blyx is a high-performance programming language designed for memory safety without garbage collection, static tensor types, lock-free actor concurrency, and inline GPU acceleration.</p>
-        <div class="hero-buttons">
-            <a href="#download" class="btn-cta btn-cta-primary">Install Blyx</a>
-            <a href="playground/index.html" class="btn-cta btn-cta-secondary">Open Playground</a>
-        </div>
-    </section>
-
-    <section class="features" id="features">
-        <div class="section-title">
-            <h2>Why Blyx?</h2>
-            <p>Engineered for high-performance machine learning, systems programming, and parallel workloads.</p>
-        </div>
-
-        <div class="grid-features">
-            <div class="feature-card">
-                <div class="feature-icon">🔒</div>
-                <h3>Memory Safety Without GC</h3>
-                <p>Compile-time ownership verification enforces data race safety and automatic memory reclamation with zero garbage collection pause.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">𝚯</div>
-                <h3>Native Static Tensors</h3>
-                <p>Statically dimensioned tensor primitives <code>tensor&lt;T, D1, D2&gt;</code> catch matrix dimension mismatches at compile time.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎭</div>
-                <h3>Actor Concurrency</h3>
-                <p>Dedicated lock-free <code>actor</code> declarations backed by work-stealing execution pools in the core <code>blyx</code> runtime.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Inline GPU Kernels</h3>
-                <p>Heterogeneous compute blocks <code>gpu { ... }</code> targeting SPIR-V and NVPTX GPU architectures natively.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🚀</div>
-                <h3>BIR Compiler Pipeline</h3>
-                <p>SSA intermediate representation (BIR) and incremental fingerprinting cache for sub-second rebuilds.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🌐</div>
-                <h3>Cross-Platform Targets</h3>
-                <p>Native executable emission for Windows, Linux, macOS, and WebAssembly targets.</p>
-            </div>
-        </div>
-
-        <div class="code-preview">
-            <div class="code-header">
-                <span class="code-title">examples/tensor_math.blyx</span>
-                <span class="code-title">Blyx Syntax Preview</span>
-            </div>
-            <pre><code><span class="attr">#![feature(blyx_experimental)]</span>
-
-<span class="kw">actor</span> ComputeWorker {
-    worker_id: <span class="ty">u64</span>,
-}
-
-<span class="kw">fn</span> <span class="fn">main</span>() {
-    <span class="kw">let</span> weights: <span class="ty">tensor&lt;f32, 128, 64&gt;</span>;
-    
-    <span class="kw">gpu</span> {
-        <span class="comment">// Heterogeneous GPU accelerator kernel</span>
-    };
-
-    println!(<span class="str">"Blyx AI pipeline ready."</span>);
-}</code></pre>
-        </div>
-    </section>
-
-    <section class="features" id="toolchain">
-        <div class="section-title">
-            <h2>Ecosystem Toolchain</h2>
-            <p>Integrated tools designed for modern developer experience.</p>
-        </div>
-
-        <div class="toolchain-grid">
-            <div class="tool-card">
-                <div class="tool-name">blyxc</div>
-                <div class="tool-desc">Official compiler driver emitting BIR and native machine binaries.</div>
-            </div>
-            <div class="tool-card">
-                <div class="tool-name">blyxpkg</div>
-                <div class="tool-desc">Package manager managing dependencies and project builds.</div>
-            </div>
-            <div class="tool-card">
-                <div class="tool-name">blyxfmt</div>
-                <div class="tool-desc">Automated code formatting engine enforcing clean indentation.</div>
-            </div>
-            <div class="tool-card">
-                <div class="tool-name">blyxdoc</div>
-                <div class="tool-desc">HTML documentation generator.</div>
-            </div>
-            <div class="tool-card">
-                <div class="tool-name">blyx-analyzer</div>
-                <div class="tool-desc">Stdio JSON-RPC Language Server Protocol (LSP) for VS Code.</div>
-            </div>
-            <div class="tool-card">
-                <div class="tool-name">blyxdbg</div>
-                <div class="tool-desc">Interactive CLI debugger supporting breakpoint inspection.</div>
-            </div>
-            <div class="tool-card">
-                <div class="tool-name">blyxprof</div>
-                <div class="tool-desc">Performance profiler for CPU, memory, and GPU execution.</div>
-            </div>
-            <div class="tool-card">
-                <div class="tool-name">blyxup</div>
-                <div class="tool-desc">Toolchain installer managing stable, beta, and nightly channels.</div>
-            </div>
-        </div>
-    </section>
-
-    <footer id="download">
-        <p><img src="public/blyxlogo.png" alt="Blyx Logo" style="width:24px; height:24px; vertical-align:middle; margin-right:8px;"> &copy; 2026 <strong>Neuroblyx</strong> &bull; Blyx is an open-source product of Neuroblyx, created by Rahul Chaube (<a href="https://blyx-lang.space">https://blyx-lang.space</a>). Distributed under MIT / Apache-2.0. &bull; <a href="https://buymeacoffee.com/rahulchaube" style="color:#00f2fe; text-decoration:none;">☕ Sponsor via Buy Me A Coffee</a></p>
-    </footer>
+  <header><div class="wrap"><nav><a class="brand" href="/"><img src="public/blyxlogo.png" alt="Blyx logo"><span>Blyx</span></a><div class="navlinks"><a href="/learn">Learn</a><a href="/compiler">Compiler</a><a href="/examples">Examples</a><a href="/community">Community</a><a href="https://github.com/Rahulchaube1/blyxxxx">GitHub ↗</a></div></nav></div></header>
+  <main>
+    <section style="border-top:0"><div class="wrap hero">
+      <span class="badge">v0.1.0-alpha · experimental open source</span>
+      <h1>AI-native systems programming, explored in the open.</h1>
+      <p class="lead">Blyx explores how AI-oriented computation, systems programming, concurrency, tensors, heterogeneous computing, and native compilation can fit into one programming model.</p>
+      <div class="buttons"><a class="button primary" href="/learn">Learn Blyx</a><a class="button" href="/play">Try the Playground</a><a class="button" href="https://github.com/Rahulchaube1/blyxxxx">Explore GitHub ↗</a></div>
+      <p class="muted" style="margin-top:20px;font-size:14px">The compiler frontend is under active development. Native code generation and complete execution are still being built.</p>
+    </div></section>
+    <section><div class="wrap"><h2>What Blyx is exploring</h2><p class="muted">The project distinguishes implemented behavior from experimental and planned design.</p><div class="grid">
+      <article class="card"><h3>AI-oriented primitives</h3><p class="muted">Language-level concepts such as <code>generate</code>, <code>reason</code>, <code>orchestrate</code>, and <code>task</code>.</p></article>
+      <article class="card"><h3>Systems programming</h3><p class="muted">A native-oriented compiler and runtime experiment with explicit compiler stages and concurrency concepts.</p></article>
+      <article class="card"><h3>BIR / SSA</h3><p class="muted">An intermediate representation intended to separate language semantics from lower-level code generation.</p></article>
+      <article class="card"><h3>Tensors & heterogeneous compute</h3><p class="muted">Tensor-oriented types and accelerator-oriented execution are part of the evolving language design.</p></article>
+    </div></div></section>
+    <section><div class="wrap"><h2>See the language</h2><p class="muted">This example illustrates design direction; supported syntax should be verified against current compiler tests.</p><pre><code>fn main() {
+    let result = generate("Summarize this document");
+    print(result);
+}</code></pre></div></section>
+    <section><div class="wrap"><h2>Contribute</h2><p class="muted">Compiler engineering, parser and lexer tests, diagnostics, BIR/SSA, tooling, documentation, examples, and reproducible experiments are all useful contribution paths.</p><div class="buttons" style="justify-content:flex-start;margin-top:22px"><a class="button primary" href="https://github.com/Rahulchaube1/blyxxxx/issues">Browse issues ↗</a><a class="button" href="https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/CONTRIBUTING.md">Contributing guide ↗</a></div></div></section>
+  </main>
+  <footer><div class="wrap">Blyx · experimental open-source programming language · <a href="https://github.com/Rahulchaube1/blyxxxx">GitHub</a> · <a href="https://buymeacoffee.com/rahulchaube">Support development</a></div></footer>
 </body>
 </html>
