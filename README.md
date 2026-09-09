@@ -18,9 +18,11 @@
 
 ## ⚠️ Project status
 
-**Blyx is experimental alpha software.** APIs, syntax, compiler behavior, and tooling can change without notice. Some advertised language concepts are still being implemented or refined.
+**Blyx is experimental alpha software.** Syntax, compiler behavior, APIs, and tooling can change without notice.
 
-This repository is the engineering source of truth. Feature support should be evaluated from the compiler, tests, examples, and release artifacts—not from aspirational descriptions.
+The repository is the engineering source of truth. A feature should be considered implemented only when the corresponding source code and tests or reproducible examples support it.
+
+> **Current compiler reality:** the frontend can tokenize and parse Blyx source, while native code generation and program execution are still under development. `blyxc build` and `blyxc run` therefore report that the backend is not ready rather than producing simulated binaries or results.
 
 ## Why Blyx?
 
@@ -36,11 +38,11 @@ The goal is not to replace Rust, C++, Python, or CUDA overnight. The goal is to 
 - **Concurrency** — actor and asynchronous programming models are part of the language design.
 - **Heterogeneous computing** — GPU-oriented syntax and backend work are being explored.
 - **Explicit resource management** — ownership, borrowing, and lifetime-oriented safety are part of the design direction.
-- **Intermediate representation** — Blyx uses a BIR/SSA-oriented compiler architecture to separate language semantics from lower-level code generation.
+- **Intermediate representation** — Blyx uses a BIR/SSA-oriented architecture to separate language semantics from lower-level code generation.
 
 ## Example
 
-The syntax is evolving. Examples below illustrate the design direction and may not represent the complete supported surface of the current alpha compiler.
+The syntax is evolving. Examples below illustrate design direction and may not represent the complete supported surface of the current alpha compiler.
 
 ```blyx
 fn main() {
@@ -49,7 +51,7 @@ fn main() {
 }
 ```
 
-Tensor-oriented code:
+Tensor-oriented design:
 
 ```blyx
 tensor<f32, 128, 64> weights;
@@ -60,7 +62,7 @@ gpu {
 }
 ```
 
-For currently supported syntax, use the compiler tests and examples in this repository together with the official documentation.
+For currently supported syntax, use compiler tests and examples together with the official documentation.
 
 ## Compiler architecture
 
@@ -86,41 +88,39 @@ BIR / SSA
 Optimization
   │
   ▼
-Backend / Code Generation
+Backend / Code Generation   ← in development
   │
   ▼
 Native / Heterogeneous Targets
 ```
 
-The compiler is organized into separate crates for lexing, parsing, AST representation, semantic analysis, type checking, BIR, and the compiler driver. The workspace also contains runtime/library and developer-tooling crates.
+The compiler is organized into dedicated crates for lexing, parsing, AST representation, semantic analysis, type checking, BIR, and the compiler driver.
 
 ## Repository layout
 
 ```text
 compiler/       Compiler frontend, type system, BIR and compiler driver
 library/        Runtime and standard-library components
-tools/          Package manager, formatter, analyzer/LSP and developer tools
+tools/          Package, formatting, analysis and developer-tooling prototypes
 examples/       Language examples
-docs/            Architecture, specifications and project documentation
-RFC/             Language and ecosystem design proposals
-website/         Official web portal and playground
+docs/           Architecture, specifications and project documentation
+RFC/            Language and ecosystem design proposals
+website/        Official web portal and playground
 .github/        CI, issue templates, PR workflow and project automation
 ```
 
-## Toolchain
+## Toolchain maturity
 
-| Tool | Purpose |
-|---|---|
-| `blyxc` | Blyx compiler driver |
-| `blyxpkg` | Package and dependency management |
-| `blyxfmt` | Source formatting |
-| `blyx-analyzer` | Editor/LSP tooling |
-| `blyxdoc` | Documentation generation |
-| `blyxup` | Toolchain installation and management |
-| `blyxdbg` | Debugging tooling |
-| `blyxprof` | Performance profiling |
-
-Availability and maturity vary by component during alpha development.
+| Tool | Current role | Alpha status |
+|---|---|---|
+| `blyxc` | Compiler driver | Frontend validation available; native backend in development |
+| `blyxpkg` | Package management | Prototype |
+| `blyxfmt` | Source formatting | Prototype |
+| `blyx-analyzer` | Editor/LSP tooling | Prototype |
+| `blyxdoc` | Documentation generation | Prototype |
+| `blyxup` | Toolchain management | Prototype |
+| `blyxdbg` | Debugging | Prototype; backend not complete |
+| `blyxprof` | Performance profiling | No measurements until a real backend exists |
 
 ## Quick start
 
@@ -145,7 +145,15 @@ cargo build --workspace
 cargo test --workspace
 ```
 
-For contributor-specific requirements and workflows, see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+### Validate a Blyx source file
+
+After building `blyxc`, use its current supported frontend command:
+
+```bash
+cargo run -p blyxc -- check examples/hello.blyx
+```
+
+Native compilation and execution are tracked separately and are not advertised as complete yet.
 
 ## Testing and reproducibility
 
@@ -156,7 +164,7 @@ Blyx should earn performance and compatibility claims through reproducible evide
 3. Report methodology and variance rather than a single unexplained number.
 4. Make the benchmark runnable by another contributor.
 
-Performance numbers on the website should therefore be treated as project measurements, not universal guarantees, until the complete methodology and harness are independently reproducible.
+Performance numbers should therefore be treated as project measurements, not universal guarantees, until the complete methodology and harness are independently reproducible.
 
 ## Documentation
 
@@ -171,19 +179,7 @@ Performance numbers on the website should therefore be treated as project measur
 
 ## Contributing
 
-Blyx is intentionally open to criticism and experimentation. Useful contributions include:
-
-- compiler implementation
-- parser and diagnostics improvements
-- type-system design
-- BIR/SSA work
-- runtime and concurrency work
-- tensor and accelerator support
-- tooling and LSP development
-- examples and documentation
-- tests and fuzzing
-- reproducible benchmarks
-- language-design RFCs
+Blyx is intentionally open to criticism and experimentation. Useful contributions include compiler implementation, parser and diagnostics improvements, type-system design, BIR/SSA work, runtime and concurrency work, tensor and accelerator support, tooling, examples, documentation, tests, fuzzing, reproducible benchmarks, and language-design RFCs.
 
 For substantial language or compiler changes, start with an issue, discussion, or RFC before investing in a large implementation. See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`RFC/`](RFC/).
 
@@ -195,15 +191,16 @@ Please report security-sensitive vulnerabilities through [`SECURITY.md`](SECURIT
 
 ## Roadmap
 
-The alpha roadmap is organized around making the compiler and ecosystem increasingly useful and reproducible:
+The alpha roadmap focuses on making the compiler and ecosystem increasingly useful and reproducible:
 
 - [ ] stabilize the core language surface
 - [ ] expand semantic and type-system coverage
 - [ ] strengthen diagnostics and compiler UX
-- [ ] expand BIR/SSA optimization passes
+- [ ] define stable BIR/SSA invariants and optimization passes
+- [ ] implement a real native backend
 - [ ] improve runtime and concurrency primitives
 - [ ] mature tensor and heterogeneous-computing support
-- [ ] improve package management and developer tooling
+- [ ] replace tooling prototypes with tested implementations
 - [ ] expand cross-platform release coverage
 - [ ] publish reproducible benchmark harnesses
 - [ ] grow documentation, examples, and RFC coverage
@@ -218,25 +215,7 @@ Technical claims should be measurable. Experimental features should be labeled. 
 
 ## License
 
-Blyx is dual-licensed under:
+Blyx is dual-licensed under your choice of:
 
-- [MIT](LICENSE-MIT)
+- [MIT License](LICENSE-MIT)
 - [Apache License 2.0](LICENSE-APACHE)
-
-## Support the project
-
-If you find Blyx useful or interesting, the most valuable forms of support are:
-
-1. Try the compiler or playground.
-2. Report a reproducible bug.
-3. Open a thoughtful design discussion.
-4. Improve an example or document.
-5. Contribute an implementation or RFC.
-6. Star the repository if you want to follow its development.
-
----
-
-<div align="center">
-  <strong>Blyx — exploring AI-native systems programming.</strong><br />
-  <sub>Open source • Experimental • Built in public</sub>
-</div>
