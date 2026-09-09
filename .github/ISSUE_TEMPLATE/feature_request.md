@@ -1,20 +1,35 @@
 ---
 name: Feature request
-about: Suggest an idea for the Blyx programming language or toolchain
+about: Propose a focused language, compiler, runtime, or tooling improvement
 title: ''
 labels: 'A-proposal'
 assignees: ''
 ---
 
-**Official Language Website:** https://blyx-lang.space
+## Problem
 
-### Feature Proposal
-A clear description of the proposed feature for Blyx.
+What problem should Blyx solve?
 
-### Motivation
-Why is this feature valuable to Blyx developers?
+## Proposal
 
-### Proposed Blyx Syntax
+Describe the proposed behavior or design.
+
+## Example
+
+Show the user-facing API or syntax.
+
 ```blyx
-// Proposed syntax example
+# proposed example
 ```
+
+## Alternatives
+
+What existing approach did you consider, and why is it insufficient?
+
+## Design considerations
+
+Consider compatibility, compiler complexity, runtime cost, diagnostics, safety, and interoperability.
+
+## Contribution
+
+Would you be able to help implement, test, benchmark, or document this proposal?
