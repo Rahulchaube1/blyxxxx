@@ -1,76 +1,73 @@
-# Blyx Compiler Frontend Architecture (Phase 2 - Detailed Analysis)
+# Blyx Frontend Architecture
 
-This document provides a comprehensive breakdown of the Blyx compiler frontend components, their responsibilities, key files, data flows, and exact extension points for implementing new language features.
+This document describes the Blyx compiler frontend without coupling the project to another language compiler's internal implementation.
 
----
+> **Status:** Blyx is alpha software. The repository contains the Blyx frontend crates listed below; planned behavior is not presented as completed functionality.
 
-## 1. Subsystem Breakdown
+## 1. Frontend flow
 
-### `rustc_lexer`
-- **Responsibility**: Converts raw UTF-8 source strings into a stream of basic lexemes (`TokenKind`).
-- **Key Files**:
-  - `compiler/rustc_lexer/src/lib.rs` (main lexing algorithm, `TokenKind` enum)
-  - `compiler/rustc_lexer/src/cursor.rs` (UTF-8 character iterator)
-- **Data Flow**: `&str` -> `Cursor` -> `TokenKind` stream.
-- **Syntax Extension Point**: Low-level lexical tokens (e.g. operators, comment styles, number prefixes). Keywords are checked in `rustc_parse` / `rustc_span::symbol`.
+```text
+Source text
+    ↓
+`blyx_lexer`
+    ↓
+`blyx_parser`
+    ↓
+`blyx_ast`
+    ↓
+`blyx_semantic`
+    ↓
+`blyx_typeck`
+    ↓
+`blyx_bir`
+```
 
----
+## 2. Responsibilities
 
-### `rustc_parse`
-- **Responsibility**: Takes lexer tokens and builds the Abstract Syntax Tree (AST) using recursive-descent and Pratt expression parsing.
-- **Key Files**:
-  - `compiler/rustc_parse/src/lexer/mod.rs` (converts `rustc_lexer` tokens to `rustc_ast::token::Token`)
-  - `compiler/rustc_parse/src/parser/mod.rs` (main `Parser` struct)
-  - `compiler/rustc_parse/src/parser/item.rs` (parsing items: `fn`, `struct`, `enum`, `trait`, `actor`)
-  - `compiler/rustc_parse/src/parser/expr.rs` (parsing expressions: `gpu { ... }`, `parallel { ... }`)
-  - `compiler/rustc_parse/src/parser/ty.rs` (parsing type expressions: `tensor<f32, 4, 4>`)
-- **Data Flow**: `TokenKind` -> `rustc_ast::token::Token` -> AST Nodes (`ast::Item`, `ast::Expr`, `ast::Ty`).
-- **Syntax Extension Point**: Primary location for parsing Blyx keywords (`tensor`, `gpu`, `actor`, `parallel`, `kernel`).
+### Lexer — `compiler/blyx_lexer`
 
----
+Responsible for converting source text into tokens. It should handle identifiers, literals, punctuation, operators, comments, and language keywords while preserving enough source-location information for diagnostics.
 
-### `rustc_ast`
-- **Responsibility**: Definitive data structures for Abstract Syntax Tree nodes.
-- **Key Files**:
-  - `compiler/rustc_ast/src/ast.rs` (definitions of `ItemKind`, `ExprKind`, `TyKind`, `StmtKind`)
-  - `compiler/rustc_ast/src/visit.rs` (AST Visitor pattern for linting and expansion passes)
-  - `compiler/rustc_ast/src/mut_visit.rs` (mutable AST transformations)
-- **Data Flow**: Constructed by `rustc_parse`, consumed by macro expansion and lowering.
-- **Syntax Extension Point**: Adding new variants to `ItemKind` (e.g., `Actor`), `ExprKind` (e.g., `GpuBlock`, `ParallelBlock`), and `TyKind` (e.g., `Tensor`).
+### Parser — `compiler/blyx_parser`
 
----
+Responsible for converting tokens into syntactically valid AST structures. Grammar changes belong here rather than being hidden inside later semantic passes.
 
-### `rustc_ast_lowering`
-- **Responsibility**: Lowers macro-expanded AST into High-Level IR (HIR) and resolves lifetime scopes.
-- **Key Files**:
-  - `compiler/rustc_ast_lowering/src/lib.rs` (lowering context `LoweringContext`)
-  - `compiler/rustc_ast_lowering/src/item.rs`, `expr.rs`
-- **Data Flow**: `ast::Crate` -> `hir::Crate`.
-- **Syntax Extension Point**: Mapping Blyx AST nodes to corresponding HIR nodes.
+### AST — `compiler/blyx_ast`
 
----
+Defines the syntax-level data model consumed by the semantic and type-checking stages. The AST should represent the language directly rather than mirroring an unrelated compiler's internal types.
 
-### `rustc_hir`
-- **Responsibility**: High-Level Intermediate Representation optimized for type checking and item resolution.
-- **Key Files**:
-  - `compiler/rustc_hir/src/hir.rs` (`ItemKind`, `ExprKind`, `TyKind` for HIR)
-  - `compiler/rustc_hir/src/intravisit.rs` (HIR traversal)
-- **Data Flow**: Constructed by `rustc_ast_lowering`, queried during type checking.
+### Semantic analysis — `compiler/blyx_semantic`
 
----
+Validates relationships that cannot be established by parsing alone, such as declarations, name resolution, and language-specific semantic constraints.
 
-### `rustc_middle`
-- **Responsibility**: Type context (`TyCtxt`), semantic representations, query engine definitions, and MIR definitions.
-- **Key Files**:
-  - `compiler/rustc_middle/src/ty/mod.rs` (`Ty`, `TyKind` type representation)
-  - `compiler/rustc_middle/src/mir/mod.rs` (MIR basic blocks and statements)
-- **Data Flow**: Central query database accessible across type checking, borrow checking, and codegen.
+### Type checking — `compiler/blyx_typeck`
 
----
+Checks and infers types. This stage is also the natural boundary for compile-time tensor-shape validation and other static invariants that depend on typed expressions.
 
-### `rustc_hir_typeck`
-- **Responsibility**: Type inference, trait bound checking, and expression type assignment.
-- **Key Files**:
-  - `compiler/rustc_hir_typeck/src/lib.rs` (type checker entry)
-  - `compiler/rustc_hir_typeck/src/expr.rs` (expression type checking)
-- **Data Flow**: Evaluates `hir::Expr` -> validates types against `TyCtxt` -> records typed MIR assignments.
+### BIR lowering — `compiler/blyx_bir`
+
+Lowers the checked program into Blyx Intermediate Representation (BIR), an SSA-oriented representation intended to provide a stable boundary for optimization and backend work.
+
+## 3. Diagnostics
+
+Diagnostics should be treated as a first-class frontend API. Every stage should preserve source spans where practical and return errors that explain:
+
+1. what went wrong,
+2. where it happened,
+3. why the construct is invalid, and
+4. what the developer can do next when a useful correction is known.
+
+## 4. Adding a language feature
+
+A typical feature should be implemented in this order:
+
+1. Define the syntax and semantics in an RFC when the change affects the language design.
+2. Add lexer tokens only when required.
+3. Extend the parser and AST.
+4. Add semantic validation.
+5. Add type rules and static validation.
+6. Define the corresponding BIR representation or lowering behavior.
+7. Add unit, negative, and end-to-end tests.
+8. Update examples and user documentation.
+
+This keeps the frontend modular and makes language evolution reviewable by contributors.
