@@ -1,44 +1,46 @@
 ---
-name: Bug Report
-about: Create a bug report for Blyx.
+name: Bug report
+about: Report a reproducible problem in Blyx
 labels: C-bug
 ---
-<!--
-Thank you for filing a bug report! 🐛 Please provide a short summary of the bug,
-along with any information you feel relevant to replicating the bug.
--->
 
-I tried this code:
+## Summary
+
+Describe the problem in one or two sentences.
+
+## Environment
+
+- Blyx version:
+- OS:
+- Architecture:
+- Installation method:
+
+## Reproduction
+
+Provide the smallest reproducible program or command sequence.
 
 ```blyx
-<code>
+# minimal reproduction
 ```
 
-I expected to see this happen: *explanation*
+## Expected behavior
 
-Instead, this happened: *explanation*
+What did you expect to happen?
 
-### Meta
-<!--
-If you're using the stable version of the compiler, you should also check if the
-bug also exists in the beta or nightly versions.
--->
+## Actual behavior
 
-`blyxc --version --verbose`:
-```
-<version>
-```
+What happened instead? Include the complete compiler/runtime output.
 
-<!--
-Include a backtrace in the code block by setting `BLYX_BACKTRACE=1` in your
-environment. E.g. `BLYX_BACKTRACE=1 blyxpkg build`.
--->
-<details><summary>Backtrace</summary>
-<p>
+## Diagnostics
 
-```
-<backtrace>
+If relevant, include:
+
+```text
+blyxc --version --verbose
 ```
 
-</p>
-</details>
+For crashes, include a backtrace when available.
+
+## Additional context
+
+Add benchmark data, logs, screenshots, or related issues if useful.
