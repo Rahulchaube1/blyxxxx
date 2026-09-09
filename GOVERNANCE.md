@@ -1,43 +1,49 @@
-# Blyx Open Source Governance & Stewardship
+# Blyx Governance
 
-**Blyx** is governed through an open, transparent stewardship model led by **Neuroblyx** in close collaboration with the open-source community.
+Blyx is an experimental open-source programming-language project backed by Neuroblyx. The repository is intended to keep language design, compiler implementation, tests, tooling, and project decisions visible to contributors.
 
----
+## Principles
 
-## Stewardship Principles
+1. **Technical merit** — proposals are evaluated on correctness, maintainability, user impact, and evidence.
+2. **Transparency** — significant language and compiler changes should be discussed openly through issues, discussions, or RFCs.
+3. **Reproducibility** — performance and compatibility claims should be backed by reproducible tests or benchmarks.
+4. **Contributor accessibility** — contributors should be able to understand how decisions are made and how to participate.
+5. **Alpha-stage honesty** — experimental or incomplete functionality must not be presented as production-ready.
 
-1. **Open Source Commitment**: Blyx is and will always remain open source under permissive dual licensing (MIT and Apache 2.0).
-2. **Technical Meritocracy**: Decisions regarding language syntax, semantic features, and compiler optimizations are driven by rigorous benchmarking, RFC consensus, and engineering merit.
-3. **Stability & Backward Compatibility**: Production stability is paramount. Breaking changes must follow the formal deprecation and edition migration policies.
-4. **Community Accessibility**: Anyone can participate, propose changes, and contribute to the evolution of the language.
+## Maintainer responsibilities
 
----
+Maintainers are responsible for:
 
-## Governance Structure
+- reviewing contributions and keeping the codebase coherent;
+- protecting the project from security, supply-chain, and licensing risks;
+- maintaining CI, releases, documentation, and contribution workflows;
+- making implementation status and breaking changes clear;
+- helping contributors navigate design and implementation questions.
 
-### 1. Steering Committee (Led by Neuroblyx)
-- **Role**: Guides long-term technical vision, architectural roadmap, resource allocation, and ecosystem strategy.
-- **Lead**: Rahul Chaube (Founder & Lead Architect)
+The current repository owner and lead project architect is Rahul Chaube. Additional maintainers may be added as the contributor community develops.
 
-### 2. Specialized Working Groups
+## Decision making
 
-- **Compiler Team**: Responsible for `compiler/blyxc`, AST structures, type inference, SSA BIR lowering, and LLVM machine code generation.
-- **Standard Library & Runtime Team**: Responsible for `library/blyx` and `library/blyx-std`, including memory management, actor scheduling, and tensor arithmetic.
-- **Developer Experience & Tooling Team**: Oversees developer productivity utilities including `blyxpkg`, `blyx-analyzer` (LSP), `blyxfmt`, `blyxdoc`, and `blyxup`.
-- **Security & Integrity Team**: Evaluates vulnerability reports and coordinates patch disclosures under [SECURITY.md](SECURITY.md).
+Routine implementation decisions can be made by maintainers through code review. Significant changes to language semantics, public APIs, compiler architecture, or project policy should receive broader review.
 
----
+When consensus is unclear, maintainers should document the trade-offs and make a decision based on technical evidence, project direction, and contributor feedback.
 
-## Decision Making & RFC Process
+## RFC process
 
-All major language changes, new syntactic keywords, or standard library API modifications follow the **Blyx RFC (Request for Comments)** process:
+Use an RFC when a change is likely to affect language semantics, major compiler architecture, public APIs, or long-term ecosystem compatibility.
 
-1. **Discussion**: The proposal is published as a draft RFC in the `RFC/` folder via a pull request.
-2. **Community Review**: The community and maintainers evaluate trade-offs, ergonomic impacts, and implementation feasibility.
-3. **Decision**: The Steering Committee approves, requests modifications, or closes the RFC based on technical review.
+1. Open an issue or discussion describing the problem.
+2. Draft an RFC in `RFC/` when a formal proposal is warranted.
+3. Gather community and maintainer feedback.
+4. Revise the proposal and record the decision.
+5. Implement the accepted design with tests and documentation.
 
----
+RFC acceptance does not imply that the feature is already implemented or production-ready.
 
-## Commercial Stewardship
+## Commercial relationship
 
-**Neuroblyx** provides commercial backing, funding CI infrastructure, cloud runner matrices, and core research. Neuroblyx guarantees the continued independence, open-source licensing, and vendor-neutral availability of the Blyx compiler and core tooling.
+Neuroblyx provides project backing and resources. Commercial backing does not change the technical review expectations for contributions or the requirement to label experimental functionality accurately.
+
+## Changes to this policy
+
+Governance changes should be proposed publicly and reviewed before adoption. This document is intentionally simple while the project is in alpha and can evolve with the contributor community.
