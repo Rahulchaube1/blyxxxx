@@ -36,8 +36,6 @@ Blyx is currently **alpha software**. The project is intended for experimentatio
 
 ## Compiler Architecture
 
-The current architecture is organized around a compiler pipeline designed for experimentation with optimization and heterogeneous targets:
-
 ```text
 Blyx source
     │
