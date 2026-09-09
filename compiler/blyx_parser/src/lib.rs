@@ -536,13 +536,9 @@ impl BlyxParser {
                 self.advance();
                 Expr::Literal(Lit::Char(c), t.span)
             }
-            TokenKind::True => {
+            TokenKind::BoolLit(value) => {
                 self.advance();
-                Expr::Literal(Lit::Bool(true), t.span)
-            }
-            TokenKind::False => {
-                self.advance();
-                Expr::Literal(Lit::Bool(false), t.span)
+                Expr::Literal(Lit::Bool(value), t.span)
             }
             TokenKind::Ident(n) => {
                 self.advance();
@@ -727,13 +723,9 @@ impl BlyxParser {
                 self.advance();
                 Pattern::Literal(Lit::Char(c), t.span)
             }
-            TokenKind::True => {
+            TokenKind::BoolLit(value) => {
                 self.advance();
-                Pattern::Literal(Lit::Bool(true), t.span)
-            }
-            TokenKind::False => {
-                self.advance();
-                Pattern::Literal(Lit::Bool(false), t.span)
+                Pattern::Literal(Lit::Bool(value), t.span)
             }
             TokenKind::Ident(n) => {
                 self.advance();
