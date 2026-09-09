@@ -1,12 +1,38 @@
-<!-- homu-ignore:start -->
-<!--
-If this PR is related to an unstable feature or an otherwise tracked effort,
-please link to the relevant tracking issue here. If you don't know of a related
-tracking issue or there are none, feel free to ignore this.
+## Summary
 
-This PR will get automatically assigned to a reviewer. In case you would like
-a specific user to review your work, you can assign it to them by using
+<!-- What problem does this PR solve? Keep this concise. -->
 
-    r? <reviewer name>
--->
-<!-- homu-ignore:end -->
+## Changes
+
+<!-- List the important implementation or documentation changes. -->
+
+- 
+
+## Design / compatibility impact
+
+<!-- For language, compiler, runtime, or public API changes: explain semantics, compatibility, migrations, and any unresolved design questions. -->
+
+## Validation
+
+<!-- Describe the checks you ran. Include relevant commands and test results. -->
+
+- [ ] `cargo fmt --all -- --check`
+- [ ] `cargo build --workspace`
+- [ ] `cargo test --workspace`
+- [ ] Documentation/examples updated where needed
+
+## Performance
+
+<!-- Complete this section for performance-sensitive changes. Include reproducible before/after measurements, hardware, target, compiler version, and methodology. Otherwise write N/A. -->
+
+## Related issues / RFCs
+
+<!-- Link tracking issues, discussions, or RFCs when applicable. -->
+
+## Contributor checklist
+
+- [ ] The PR is focused and reviewable.
+- [ ] I have not included unrelated formatting or generated changes.
+- [ ] User-visible behavior is documented where appropriate.
+- [ ] New or changed behavior has tests where practical.
+- [ ] Experimental behavior is clearly identified.
