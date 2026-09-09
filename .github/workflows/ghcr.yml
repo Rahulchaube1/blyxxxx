@@ -24,7 +24,7 @@ jobs:
   mirror:
     name: DockerHub mirror
     runs-on: ubuntu-24.04
-    if: github.repository == 'Blyx-lang-space/blyx'
+    if: github.repository == 'Blyx-lang-space/blyx' || github.repository == 'Rahulchaube1/blyxxxx'
     permissions:
       # Needed to write to the ghcr.io registry
       packages: write

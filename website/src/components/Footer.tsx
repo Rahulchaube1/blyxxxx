@@ -54,27 +54,37 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Column 3 — Open Source */}
+        {/* Column 3 — Open Source & Neuroblyx */}
         <div>
           <h4 style={{ fontFamily: "'Inter', sans-serif", fontWeight: 700, fontSize: "16px", color: "#F8FAFC", marginBottom: "16px" }}>
-            Open Source
+            Open Source &amp; Neuroblyx
           </h4>
-          <p style={{ fontSize: "14px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "16px" }}>
-            Blyx is an open-source project licensed under dual MIT and Apache-2.0 licenses.
+          <p style={{ fontSize: "14px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "12px" }}>
+            Blyx is an open-source technology engineered and backed by <strong>Neuroblyx</strong> under dual MIT / Apache-2.0 licenses.
           </p>
-          <a
-            href="https://github.com/Rahulchaube1/blyxxxx"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#38BDF8", textDecoration: "none", fontWeight: 600, fontSize: "14px" }}
-          >
-            <IconGitHub /> GitHub Repository ↗
-          </a>
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <a
+              href="https://github.com/Rahulchaube1/blyxxxx"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#38BDF8", textDecoration: "none", fontWeight: 600, fontSize: "14px" }}
+            >
+              <IconGitHub /> GitHub Repository ↗
+            </a>
+            <a
+              href="https://buymeacoffee.com/rahulchaube"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "inline-flex", alignItems: "center", gap: "8px", color: "#FBBF24", textDecoration: "none", fontWeight: 600, fontSize: "14px" }}
+            >
+              ☕ Sponsor on Buy Me A Coffee ↗
+            </a>
+          </div>
         </div>
       </div>
 
       <div style={{ borderTop: "1px solid #1E293B", textAlign: "center", padding: "24px", fontSize: "13px", color: "#64748B" }}>
-        &copy; 2026 The Blyx Project &bull; Created by <a href="https://github.com/Rahulchaube1" target="_blank" rel="noopener noreferrer" style={{ color: "#38BDF8", textDecoration: "underline" }}>Rahul Chaube</a>
+        &copy; 2026 Neuroblyx &bull; Blyx is an open-source product of Neuroblyx &bull; Founded &amp; Lead by <a href="https://github.com/Rahulchaube1" target="_blank" rel="noopener noreferrer" style={{ color: "#38BDF8", textDecoration: "underline" }}>Rahul Chaube</a>
       </div>
     </footer>
   );

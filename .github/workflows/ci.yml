@@ -79,7 +79,7 @@ jobs:
     # access the environment.
     #
     # We only enable the environment for the Blyx repository, so that CI works on forks.
-    environment: ${{ ((github.repository == 'Blyx-lang-space/blyx' && (github.ref == 'refs/heads/try-perf' || github.ref == 'refs/heads/automation/bors/try' || github.ref == 'refs/heads/automation/bors/auto')) && 'bors') || '' }}
+    environment: ${{ (((github.repository == 'Blyx-lang-space/blyx' || github.repository == 'Rahulchaube1/blyxxxx') && (github.ref == 'refs/heads/try-perf' || github.ref == 'refs/heads/automation/bors/try' || github.ref == 'refs/heads/automation/bors/auto')) && 'bors') || '' }}
     env:
       CI_JOB_NAME: ${{ matrix.name }}
       CI_JOB_DOC_URL: ${{ matrix.doc_url }}

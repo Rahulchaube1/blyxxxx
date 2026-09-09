@@ -1,11 +1,11 @@
 blank_issues_enabled: true
 contact_links:
-  - name: Question
-    url: https://blyx-lang.space
-    about: Please ask and answer questions about Blyx on the community site.
-  - name: Feature Request
-    url: https://github.com/Blyx-lang-space/blyx/issues
-    about: Please discuss Blyx language feature requests in the issue tracker.
-  - name: Clippy Bug
-    url: https://github.com/Blyx-lang-space/blyx/issues/new/choose
-    about: Please report Blyx linter bugs such as false positives in the issue tracker.
+  - name: Ask Questions & Community
+    url: https://github.com/Rahulchaube1/blyxxxx/discussions
+    about: Ask questions, share ideas, and get support from the Blyx & Neuroblyx community.
+  - name: Feature Request & Ideas
+    url: https://github.com/Rahulchaube1/blyxxxx/issues/new?template=feature_request.md
+    about: Propose and discuss new features and language design improvements.
+  - name: Sponsor Neuroblyx / Blyx
+    url: https://buymeacoffee.com/rahulchaube
+    about: Support open source compiler engineering, test runners, and developer tooling.

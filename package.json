@@ -1,6 +1,19 @@
 {
   "name": "blyx-monorepo",
   "version": "3.0.0",
+  "description": "Blyx Programming Language Monorepo - A Flagship Product of Neuroblyx",
+  "author": "Rahul Chaube <rahulchaube1@gmail.com> (Neuroblyx)",
+  "homepage": "https://blyx-lang.space",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rahulchaube1/blyxxxx.git"
+  },
+  "funding": [
+    {
+      "type": "buy_me_a_coffee",
+      "url": "https://buymeacoffee.com/rahulchaube"
+    }
+  ],
   "private": true,
   "scripts": {
     "dev": "cd website && npm run dev",
