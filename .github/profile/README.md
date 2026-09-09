@@ -1,23 +1,33 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/Rahulchaube1/blyxxxx/blyx-main/blyx.png" alt="Blyx Logo" width="160" />
-  <h1>Blyx Programming Language</h1>
-  <p><b>AI-native systems programming language for high-performance, memory-safe, parallel computing.</b></p>
-  <p><i>A Flagship Open-Source Technology by <strong>Neuroblyx</strong> • Founded by Rahul Chaube</i></p>
+  <img src="https://raw.githubusercontent.com/Rahulchaube1/blyxxxx/blyx-main/blyx.png" alt="Blyx logo" width="160" />
+  <h1>Blyx</h1>
+  <p><strong>An open-source AI-native systems programming language.</strong></p>
+  <p>Experimental compiler and language research combining systems programming, concurrency, tensors, heterogeneous computing, and AI-oriented primitives.</p>
 
   <p>
-    <a href="https://blyx-lang.space"><img src="https://img.shields.io/badge/Website-blyx--lang.space-00f2fe?style=for-the-badge&logo=google-chrome&logoColor=black" alt="Website" /></a>
+    <a href="https://blyx-lang.space"><img src="https://img.shields.io/badge/Website-blyx--lang.space-0f172a?style=for-the-badge" alt="Website" /></a>
     <a href="https://github.com/Rahulchaube1/blyxxxx"><img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
-    <a href="https://buymeacoffee.com/rahulchaube"><img src="https://img.shields.io/badge/Sponsor-Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me A Coffee" /></a>
-    <a href="https://play.blyx-lang.space"><img src="https://img.shields.io/badge/Playground-Try_Online-38bdf8?style=for-the-badge&logo=codeforces&logoColor=white" alt="Playground" /></a>
+    <a href="https://play.blyx-lang.space"><img src="https://img.shields.io/badge/Playground-Try_Blyx-2563eb?style=for-the-badge" alt="Playground" /></a>
   </p>
 </div>
 
 ---
 
-## Neuroblyx & Blyx Repositories
+## Explore Blyx
 
-- **[Blyx Core Monorepo](https://github.com/Rahulchaube1/blyxxxx)**: Official Blyx Compiler (`blyxc`), Toolchain (`blyxpkg`, `blyxfmt`, `blyx-analyzer`), Standard Library (`blyx-std`), and Runtime (`blyx`).
-- **[Sponsor & Support](https://buymeacoffee.com/rahulchaube)**: Support open source compiler engineering at Neuroblyx.
-- **[Documentation & Portal](https://blyx-lang.space)**: Official manuals, benchmarks, and interactive playground.
+- **Repository:** compiler, runtime/library, tooling, tests, examples, RFCs, and project infrastructure.
+- **Playground:** experiment with Blyx without a local installation.
+- **Website:** language overview, installation, compiler architecture, and learning resources.
+- **Contributing:** compiler engineering, language design, diagnostics, runtime work, tooling, tests, documentation, benchmarks, and RFCs.
 
-Official Inquiries: [contact@neuroblyx.com](mailto:contact@neuroblyx.com)
+## Project status
+
+Blyx is **experimental alpha software**. Syntax, APIs, compiler behavior, and tooling are expected to evolve. Check the repository and release artifacts for the current implementation status.
+
+## Links
+
+- [Blyx repository](https://github.com/Rahulchaube1/blyxxxx)
+- [Official website](https://blyx-lang.space)
+- [Learn Blyx](https://blyx-lang.space/learn)
+- [Playground](https://play.blyx-lang.space)
+- [Installation](https://blyx-lang.space/download)
