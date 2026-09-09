@@ -1,145 +1,59 @@
-# The Blyx Programming Language Specification (v1.0-draft)
+# Blyx Language Specification (Draft)
 
----
+> **Status: draft / alpha.** This document describes the current language-design direction. It is not a claim that every listed feature is implemented in the compiler.
 
-## 1. Philosophy and Goals
+## 1. Goals
 
-Blyx is a modern, high-performance systems programming language designed for reliability, concurrency, performance, and native AI & heterogeneous compute acceleration.
+Blyx explores a programming model for systems software, AI-oriented computation, concurrency, tensors, and heterogeneous execution.
 
-### Core Goals
-1. **Memory Safety Without Garbage Collection**: Compile-time ownership, borrowing, and linear lifetime analysis ensure deterministic resource destruction and memory safety.
-2. **Predictable Performance**: Zero-cost abstractions, minimal runtime footprint, and bare-metal performance suitable for operating systems, game engines, and embedded microcontrollers.
-3. **Ecosystem & Toolchain First**: Integrated compiler diagnostics (`blyxc`), documentation generator (`blyxdoc`), code formatter (`blyxfmt`), and package manager (`blyx-pkg`).
-4. **AI & High-Performance Compute Native**: Built-in primitives for multi-dimensional tensors, compile-time dimension verification, and GPU kernel execution dispatch.
+The project prioritizes:
 
----
+1. explicit and inspectable language semantics;
+2. native-oriented execution;
+3. strong static analysis where practical;
+4. compiler diagnostics that help developers understand failures;
+5. language-level support for workloads that combine systems and compute concerns.
 
-## 2. Lexical Structure and Identifiers
+## 2. Syntax and semantics
 
-- **Source Encoding**: UTF-8.
-- **Identifiers**: Regex pattern `[a-zA-Z_][a-zA-Z0-9_]*`.
-- **Comments**:
-  - Line comments: `// ...`
-  - Block comments: `/* ... */` (nestable)
-  - Doc comments: `/// ...` (outer item) or `//! ...` (inner module)
+The authoritative implementation of currently supported syntax is the compiler source and test suite. Proposed syntax belongs in RFCs before it is treated as a language guarantee.
 
----
+## 3. Memory and resource model
 
-## 3. Keywords and Grammar
+Ownership, borrowing, lifetimes, and deterministic resource management are areas of the language design. Their exact semantics must be established through implementation and RFCs rather than inferred from similarities to another language.
 
-### Reserved Keywords
-- Declaration & Structure: `fn`, `let`, `mut`, `const`, `static`, `struct`, `enum`, `union`, `trait`, `impl`, `type`
-- Control Flow: `if`, `else`, `match`, `loop`, `while`, `for`, `in`, `break`, `continue`, `return`
-- Ownership & References: `ref`, `move`, `unsafe`
-- Modules & Visibility: `mod`, `use`, `pub`, `crate`, `super`, `self`, `Self`
-- Asynchronous & Parallel: `async`, `await`, `spawn`
-- AI & Compute Extensions (Planned): `tensor`, `gpu`, `actor`
+## 4. Types and tensors
 
----
+Blyx explores tensor-aware types and compile-time shape validation. Tensor syntax and semantics remain experimental until the corresponding lexer, parser, semantic, type-checking, BIR, and test coverage are established.
 
-## 4. Ownership, Borrowing, and Memory Model
+## 5. Concurrency
 
-1. **Ownership Rules**:
-   - Each value in Blyx has a single owner at any time.
-   - When the owner goes out of scope, the value is dropped automatically (`Drop` trait).
-   - Moving ownership transfers resource responsibility; access to moved values is rejected at compile time.
-2. **Borrowing Rules**:
-   - At any given time, an item may have either:
-     - Any number of immutable references (`&T`).
-     - Exactly one mutable reference (`&mut T`).
-   - References must always be valid for their declared lifetime `'a`.
+Actors, asynchronous execution, and parallel computation are areas under development. Their scheduling, memory-safety, cancellation, and failure semantics require explicit specification before being considered stable APIs.
 
----
+## 6. AI-oriented computation
 
-## 5. Modules, Imports, and Visibility
+Blyx explores language-level concepts for AI-oriented operations such as generation, reasoning, orchestration, and tasks. These names represent design directions unless the current compiler and runtime implement the corresponding semantics.
 
-- **Module Declaration**: `mod math;` or `mod math { ... }`.
-- **Imports**: `use std::collections::HashMap;`.
-- **Visibility Levels**:
-  - Private by default.
-  - `pub`: Publicly accessible across crates.
-  - `pub(crate)`: Visible within the current compilation unit.
-  - `pub(super)`: Visible to parent module.
+## 7. Heterogeneous computing
 
----
+GPU and accelerator execution are architectural goals. A backend should only be documented as supported when an implementation, target definition, and reproducible tests exist.
 
-## 6. Traits, Generics, and Type System
+## 8. Intermediate representation
 
-### Generics & Trait Bounds
-```blyx
-fn print_item<T: Display>(item: T) {
-    println!("{}", item);
-}
-```
+Blyx uses BIR as an intermediate-representation boundary. The BIR design is intended to be SSA-oriented and to separate frontend language semantics from optimization and backend concerns.
 
-### Trait Definitions and Implementations
-```blyx
-pub trait Summary {
-    fn summarize(&self) -> String;
-}
+## 9. Evolution
 
-impl Summary for MyStruct {
-    fn summarize(&self) -> String {
-        format!("Item: {}", self.name)
-    }
-}
-```
+Language changes that affect syntax, semantics, type rules, concurrency, tensors, BIR, or compatibility should follow the RFC process described in `docs/RFC_PROCESS.md`.
 
----
+## 10. Implementation status
 
-## 7. Error Handling
+For any feature, use this order of evidence:
 
-Blyx uses explicit, type-safe error handling without runtime exceptions:
-- `Result<T, E>` for recoverable operations.
-- `Option<T>` for nullable/optional values.
-- `?` operator for propagating errors up call stacks.
-- `panic!` for non-recoverable internal invariant failures.
+1. compiler implementation;
+2. automated tests;
+3. runnable examples;
+4. release artifacts;
+5. documentation.
 
----
-
-## 8. Concurrency & Async Execution
-
-- **Threads & Channels**: Memory-safe message passing (`std::sync::mpsc`) and thread spawning (`std::thread::spawn`).
-- **Async/Await**: Cooperative zero-allocation futures powered by `async fn` and `.await`.
-
----
-
-## 9. Standard Library Philosophy
-
-The Blyx standard library is structured into three tiers:
-1. `core`: Zero-dependency, heap-free intrinsic primitives.
-2. `alloc`: Smart pointers (`Box`, `Rc`, `Arc`) and dynamic collections (`Vec`, `HashMap`, `String`).
-3. `std`: Full OS runtime, networking, file I/O, and concurrency primitives.
-
----
-
-## 10. Experimental Blyx Syntax Constructs
-
-### Feature Gates
-Experimental Blyx extensions are guarded by language feature gates:
-- `#![feature(blyx_experimental)]` (umbrella feature gate)
-- `#![feature(blyx_tensor)]`
-- `#![feature(blyx_gpu)]`
-- `#![feature(blyx_actor)]`
-
-### Grammar Rules
-
-```ebnf
-TensorType ::= "tensor" "<" Type ("," Expression)* ">"
-GpuExpr    ::= "gpu" Block
-ParallelExpr ::= "parallel" Block
-ActorItem  ::= "actor" Ident StructFields
-```
-
-### AST Representation & Future Implementation Notes
-
-1. **`TensorType`**:
-   - `TyKind::Tensor(Box<Ty>, ThinVec<Expr>)`
-   - Represents statically dimensioned multi-dimensional arrays. Type checking verifies shape compatibility before lowering to BLAS / LLVM vector intrinsics.
-2. **`GpuExpr`**:
-   - `ExprKind::Gpu(Box<Block>)`
-   - Represents device kernel code blocks compiled via SPIR-V / NVPTX backends.
-3. **`ActorItem`**:
-   - `ItemKind::Actor(Ident, Generics, VariantData)`
-   - Isolated state unit with actor-isolated message channels.
-
+Architecture diagrams and roadmap entries alone are not evidence of implementation.
