@@ -1,39 +1,39 @@
 # Blyx Security Policy
 
-**Neuroblyx** and the **Blyx Project** take the security of our compiler, runtime, standard libraries, and developer toolchain seriously.
+Blyx is experimental alpha software. Security reports are welcome for the compiler, runtime, libraries, tooling, build/release infrastructure, and official project services.
 
----
+## Supported versions
 
-## Supported Versions
+| Version | Support |
+| --- | --- |
+| Current alpha development branch | Best effort |
+| Older releases | Not guaranteed |
 
-We provide security updates and patches for the following versions:
+Because Blyx is pre-1.0, security fixes and compatibility guarantees may change between releases.
 
-| Version | Supported |
-| :--- | :--- |
-| `0.1.0-alpha` (Main Branch) | :white_check_mark: |
-| Nightly builds | :white_check_mark: |
-| Older releases | :x: |
+## Reporting a vulnerability
 
----
+**Do not disclose security-sensitive vulnerabilities in a public GitHub issue.**
 
-## Reporting a Vulnerability
+Please report vulnerabilities privately to:
 
-If you discover a potential security vulnerability within `blyxc`, `blyxpkg`, `blyx_bir`, or official standard library crates (`library/blyx`, `library/blyx-std`):
+- `security@blyx-lang.space`
 
-1. **Do NOT open a public GitHub issue.**
-2. Send an email with details and reproduction steps to:
-   - **Primary Security Contact**: [security@blyx-lang.space](mailto:security@blyx-lang.space)
-   - **Neuroblyx Security Oversight**: [contact@neuroblyx.com](mailto:contact@neuroblyx.com)
-3. Include in your report:
-   - Description of the vulnerability and its potential impact.
-   - Minimal reproduction code or compiler flags.
-   - Operating system, architecture, and compiler version (`blyxc --version`).
+Include, where possible:
 
----
+- a clear description of the issue and impact;
+- a minimal reproduction or proof of concept;
+- affected Blyx version or Git commit;
+- operating system and architecture;
+- relevant compiler/tool versions;
+- any suggested mitigation.
 
-## Response & Disclosure Process
+## Response
 
-- **Acknowledgement**: We aim to acknowledge receipt of vulnerability reports within 48 hours.
-- **Assessment**: The Neuroblyx security and compiler team will verify and triage the issue.
-- **Resolution**: A patch will be authored, reviewed internally, and prepared for release.
-- **Coordinated Disclosure**: Once a fix is deployed, an advisory will be published thanking the reporter for their responsible disclosure.
+The maintainers will assess the report, determine affected components, and coordinate a fix and disclosure when appropriate.
+
+Security fixes may require changes to experimental APIs or behavior. Because Blyx is alpha software, users should not assume production-grade security guarantees for unreleased or experimental components.
+
+## Supply-chain issues
+
+Reports involving dependencies, release artifacts, CI credentials, package distribution, or compromised project infrastructure should also use the private security contact above.
