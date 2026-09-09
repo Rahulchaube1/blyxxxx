@@ -8,6 +8,8 @@
 ---
 
 - [Blyx API Reference](../api_reference.md)
-- [Blyx V1 Architecture](../blyx_v1_architecture.md)
+- [Blyx Compiler Architecture](../compiler_architecture.md)
 - [BIR Pipeline Specification](../bir_pipeline.md)
-- [Beta v1.0 Release Report](../beta_release_report.md)
+- [Language Specification](../specification.md)
+- [Reproducible Benchmarks](../REPRODUCIBLE_BENCHMARKS.md)
+- [RFC Process](../RFC_PROCESS.md)
