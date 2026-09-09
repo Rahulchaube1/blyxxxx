@@ -1,69 +1,79 @@
-# Blyx Compiler Repository Audit (Phase 1)
+# Blyx Repository Audit
 
-This report details the architectural audit of the Blyx compiler codebase (forked and rebranded from `rustc`), documenting current branding state, compiler subsystem locations, broken paths, build blockers, and the recommended migration roadmap.
+**Status:** Current alpha architecture review
 
----
+This document describes the repository as it exists today. It is intentionally separate from historical migration notes: current implementation status must be determined from the active source tree, tests, examples, and release artifacts.
 
-## 1. Compiler Architecture Subsystem Mapping
+## Current workspace
 
-| Subsystem | Location | Description |
-| :--- | :--- | :--- |
-| **Driver & CLI** | `compiler/blyxc`, `compiler/rustc_driver`, `compiler/rustc_driver_impl` | Main compiler executable entry point, CLI flags, session setup |
-| **Lexer** | `compiler/rustc_lexer` | Lexical analyzer, tokenizer, string literal parsing |
-| **Parser & AST** | `compiler/rustc_parse`, `compiler/rustc_ast`, `compiler/rustc_ast_lowering`, `compiler/rustc_ast_passes` | Recursive-descent & Pratt parser, AST data structures, lowering AST -> HIR |
-| **HIR & Analysis** | `compiler/rustc_hir`, `compiler/rustc_hir_analysis`, `compiler/rustc_hir_typeck` | High-Level IR, item resolution, type checking, type inference |
-| **Type System & Traits** | `compiler/rustc_infer`, `compiler/rustc_trait_selection`, `compiler/rustc_next_trait_solver`, `compiler/rustc_type_ir` | Type unification, trait bounds, obligation resolution |
-| **Borrow Checker** | `compiler/rustc_borrowck` | Region analysis, ownership verification, lifetime checking |
-| **MIR & Passes** | `compiler/rustc_middle`, `compiler/rustc_mir_build`, `compiler/rustc_mir_transform`, `compiler/rustc_mir_dataflow` | Mid-Level IR, dataflow analysis, MIR optimizations, drop elaboration |
-| **Macros & Expansion** | `compiler/rustc_expand`, `compiler/rustc_builtin_macros`, `compiler/rustc_proc_macro` | Macro expansion, proc-macro interface, hygiene |
-| **Backend & Codegen** | `compiler/rustc_codegen_ssa`, `compiler/rustc_codegen_llvm`, `compiler/rustc_codegen_cranelift`, `compiler/rustc_codegen_gcc` | SSA IR generation, LLVM/Cranelift/GCC code emission |
-| **Target & ABI** | `compiler/rustc_target`, `compiler/rustc_abi` | Machine target definitions, layout calculation, calling conventions |
-| **Errors & Session** | `compiler/rustc_errors`, `compiler/rustc_session`, `compiler/rustc_span` | Diagnostic emitter, source spans, session flags |
-| **Bootstrap System** | `src/bootstrap` | Python/Rust build orchestration script (`x.py`) for stage 0/1/2 builds |
-| **Standard Library** | `library/std`, `library/core`, `library/alloc`, `library/sysroot` | Standard runtime, core primitives, memory allocator |
+Blyx is organized as a native Cargo workspace with dedicated compiler, library, and tooling crates.
 
----
+| Area | Current location | Role |
+| --- | --- | --- |
+| Lexer | `compiler/blyx_lexer` | Tokenization and source spans |
+| Parser / AST | `compiler/blyx_parser`, `compiler/blyx_ast` | Syntax parsing and language representation |
+| Semantic analysis | `compiler/blyx_semantic` | Name and semantic analysis |
+| Type checking | `compiler/blyx_typeck` | Type-system validation |
+| BIR | `compiler/blyx_bir` | Blyx intermediate representation / SSA direction |
+| Compiler driver | `compiler/blyxc` | User-facing compiler command |
+| Runtime / library | `library/blyx`, `library/blyx-std` | Runtime and standard-library foundations |
+| Tooling | `tools/` | Package, formatting, analysis, docs, debug and profiling prototypes |
 
-## 2. Rebranding Audit Matrix
+## Repository cleanup completed
 
-### Already Rebranded
-- Root documentation: `README.md`, `CONTRIBUTING.md`, `INSTALL.md`, `bootstrap.example.toml`.
-- Driver crate directory: `compiler/blyxc`.
-- Package name in `compiler/blyxc/Cargo.toml`: `blyxc-main`.
-- ICE / Crash reporting URLs in `compiler/rustc_driver_impl/src/lib.rs` and `signal_handler.rs`.
-- Standard library headers in `library/std/src/lib.rs`, `library/core/src/lib.rs`, `library/alloc/src/lib.rs`.
-- Bootstrap binary targets `blyxc` and `blyxdoc` in `src/bootstrap/Cargo.toml`.
+The active compiler and library trees no longer depend on the large inherited Rust compiler/source layout that previously existed in this repository. The current workspace contains only the dedicated Blyx compiler crates listed above.
 
-### Still Referencing Rust Internals
-- 74 compiler crates retain `rustc_*` directory and package names (e.g. `rustc_lexer`, `rustc_parse`, `rustc_ast`).
-- Standard library workspace crates: `library/rustc-std-workspace-core`, `library/rustc-std-workspace-alloc`, `library/rustc-std-workspace-std`.
-- Environment variable references: `RUSTC`, `RUSTFLAGS`, `RUSTDOCFLAGS`, `RUST_LOG`, `RUST_BACKTRACE` across `src/bootstrap`.
-- Diagnostic lint prefixes (`clippy::*`, `rust_2024_compatibility`).
+The cleanup also removed obsolete Rust-specific repository infrastructure such as the upstream submodule configuration, inherited contributor mailmap, copied Rust CI tooling, and legacy Rust issue templates.
 
----
+## Current compiler maturity
 
-## 3. Broken Paths & Build Blockers
+The architecture is intentionally staged:
 
-1. **Bootstrap Compile Step Path Mismatch**:
-   - `src/bootstrap/src/core/build_steps/compile.rs` expects `compiler/rustc`. Needs to point to `compiler/blyxc`.
-2. **Library Patch Alignment**:
-   - `library/Cargo.toml` patches `rustc-std-workspace-*` crates.
+```text
+Source
+  → Lexer
+  → Parser / AST
+  → Semantic Analysis
+  → Type Checking
+  → BIR / SSA
+  → Optimization
+  → Backend / Code Generation
+  → Native / Heterogeneous Targets
+```
 
----
+The frontend and intermediate-representation crates are active areas of development. Native backend/code-generation work is not yet equivalent to a production compiler backend. The `blyxc` driver therefore reports unsupported build/run operations instead of fabricating binaries or execution results.
 
-## 4. Recommended Migration Roadmap
+## Tooling maturity
 
-1. **Phase 2 (Build & Driver Stability)**:
-   - Update `src/bootstrap` build steps to recognize `compiler/blyxc`.
-   - Verify `blyxc` driver executable creation.
-   - Document package manager strategy (`blyx-pkg` / `blyx`).
-2. **Phase 3 (Language Specification)**:
-   - Draft `docs/specification.md` defining Blyx philosophy, syntax, type system, ownership, error handling, and concurrency.
-3. **Phase 4 (Incremental Syntax & Compiler Migration)**:
-   - Implement Blyx keywords and syntax incrementally in `compiler/rustc_lexer` and `compiler/rustc_parse`.
-4. **Phase 5 (Ecosystem & Toolchain)**:
-   - Define `blyxdoc`, `blyxfmt`, `blyx-analyzer`, `blyxup`.
-5. **Phase 6 (AI-Native Extensions)**:
-   - Specify and design tensor primitives, GPU execution, and compile-time metadata.
-6. **Phase 7 & 8 (DX & Quality Assurance)**:
-   - Enhance error diagnostics, IDE support, test suites, and build verification.
+Several tools exist as alpha prototypes. Their command-line surfaces should be treated as experimental until implementation and integration tests demonstrate the advertised behavior.
+
+In particular:
+
+- `blyx-analyzer` is an evolving language-server prototype.
+- `blyxdoc` is a documentation-generation prototype.
+- `blyxup` is a toolchain-management prototype.
+- `blyxdbg` is a debugger prototype without a complete debugging backend.
+- `blyxprof` does not publish measurements until a real profiling backend exists.
+- `blyxpkg` is an evolving package-management prototype; registry publishing and dependency resolution must not be represented as complete until implemented.
+
+## Verification standard
+
+A feature is considered implemented only when there is corresponding source code and, where practical, automated tests or reproducible examples.
+
+A benchmark is considered publishable only when its methodology and environment are documented according to [`REPRODUCIBLE_BENCHMARKS.md`](REPRODUCIBLE_BENCHMARKS.md).
+
+Architecture documents describe intended or in-progress design unless they explicitly identify an implementation and its verification.
+
+## Remaining engineering priorities
+
+1. Expand lexer/parser/AST test coverage.
+2. Strengthen semantic analysis and type checking.
+3. Define and test stable BIR invariants.
+4. Build a real backend/code-generation pipeline.
+5. Replace tooling prototypes with tested implementations incrementally.
+6. Establish reproducible examples and benchmark harnesses.
+7. Keep documentation synchronized with the implementation.
+
+## Historical note
+
+Earlier repository states contained substantial upstream Rust compiler material. That history remains visible in Git history, but it is not the architecture of the current Blyx workspace and should not be used to infer current implementation status.
