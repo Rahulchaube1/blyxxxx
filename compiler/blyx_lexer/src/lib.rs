@@ -27,12 +27,51 @@ impl Token {
 #[derive(Debug, Clone, PartialEq)]
 pub enum TokenKind {
     // Keywords
-    Fn, Let, Const, Return, If, Else, While, For, In, Loop, Break, Continue,
-    Struct, Impl, Trait, Pub, Use, Mod, Enum, Type, Where, Match,
-    Actor, Gpu, Parallel, Tensor, Spawn, Await, Async, Move, Ref, Unsafe, Extern, As, Dyn,
-    True, False, Null, SelfKw, Super,
+    Fn,
+    Let,
+    Const,
+    Return,
+    If,
+    Else,
+    While,
+    For,
+    In,
+    Loop,
+    Break,
+    Continue,
+    Struct,
+    Impl,
+    Trait,
+    Pub,
+    Use,
+    Mod,
+    Enum,
+    Type,
+    Where,
+    Match,
+    Actor,
+    Gpu,
+    Parallel,
+    Tensor,
+    Spawn,
+    Await,
+    Async,
+    Move,
+    Ref,
+    Unsafe,
+    Extern,
+    As,
+    Dyn,
+    True,
+    False,
+    Null,
+    SelfKw,
+    Super,
     Mut,
-    Generate, Reason, Orchestrate, Task,
+    Generate,
+    Reason,
+    Orchestrate,
+    Task,
 
     // Literals
     IntLit(u64),
@@ -44,25 +83,61 @@ pub enum TokenKind {
     DocComment(String),
 
     // Operators
-    Plus, Minus, Star, Slash, Percent, EqEq, BangEq, Lt, Gt, LtEq, GtEq,
-    AmpAmp, PipePipe, Bang, Amp, Pipe, Caret, Tilde, LtLt, GtGt,
-    Eq, PlusEq, MinusEq, StarEq, SlashEq, PercentEq, AmpEq, PipeEq, CaretEq, LtLtEq, GtGtEq,
-    Arrow, // ->
-    FatArrow, // =>
+    Plus,
+    Minus,
+    Star,
+    Slash,
+    Percent,
+    EqEq,
+    BangEq,
+    Lt,
+    Gt,
+    LtEq,
+    GtEq,
+    AmpAmp,
+    PipePipe,
+    Bang,
+    Amp,
+    Pipe,
+    Caret,
+    Tilde,
+    LtLt,
+    GtGt,
+    Eq,
+    PlusEq,
+    MinusEq,
+    StarEq,
+    SlashEq,
+    PercentEq,
+    AmpEq,
+    PipeEq,
+    CaretEq,
+    LtLtEq,
+    GtGtEq,
+    Arrow,      // ->
+    FatArrow,   // =>
     ColonColon, // ::
-    DotDot, // ..
-    DotDotEq, // ..=
-    DotDotDot, // ...
-    At, // @
-    Hash, // #
-    Question, // ?
-    Dollar, // $
+    DotDot,     // ..
+    DotDotEq,   // ..=
+    DotDotDot,  // ...
+    At,         // @
+    Hash,       // #
+    Question,   // ?
+    Dollar,     // $
 
     // Delimiters
-    LBrace, RBrace, LParen, RParen, LBrack, RBrack,
+    LBrace,
+    RBrace,
+    LParen,
+    RParen,
+    LBrack,
+    RBrack,
 
     // Punctuation
-    Comma, Semi, Colon, Dot,
+    Comma,
+    Semi,
+    Colon,
+    Dot,
 
     Eof,
     Unknown(char),
@@ -129,23 +204,11 @@ pub struct BlyxLexer<'a> {
 
 impl<'a> BlyxLexer<'a> {
     pub fn new(input: &'a str) -> Self {
-        Self {
-            input,
-            pos: 0,
-            line: 1,
-            column: 1,
-            file: None,
-        }
+        Self { input, pos: 0, line: 1, column: 1, file: None }
     }
 
     pub fn with_file(input: &'a str, file: &'a str) -> Self {
-        Self {
-            input,
-            pos: 0,
-            line: 1,
-            column: 1,
-            file: Some(file),
-        }
+        Self { input, pos: 0, line: 1, column: 1, file: Some(file) }
     }
 
     fn peek(&self) -> Option<char> {
@@ -157,7 +220,7 @@ impl<'a> BlyxLexer<'a> {
         chars.next();
         chars.next()
     }
-    
+
     fn peek_nth(&self, n: usize) -> Option<char> {
         self.input[self.pos..].chars().nth(n)
     }
@@ -173,8 +236,8 @@ impl<'a> BlyxLexer<'a> {
         }
         Some(c)
     }
-    
-    fn advance_while<F>(&mut self, condition: F) 
+
+    fn advance_while<F>(&mut self, condition: F)
     where
         F: Fn(char) -> bool,
     {
@@ -280,10 +343,7 @@ impl<'a> BlyxLexer<'a> {
             }
         }
 
-        Token::new(
-            TokenKind::Eof,
-            Span::new(start_pos, start_pos, start_line, start_col),
-        )
+        Token::new(TokenKind::Eof, Span::new(start_pos, start_pos, start_line, start_col))
     }
 
     fn skip_whitespace(&mut self) {
@@ -314,11 +374,11 @@ impl<'a> BlyxLexer<'a> {
     fn read_number(&mut self, start: usize, line: usize, col: usize) -> Token {
         let mut num_str = String::new();
         let mut is_float = false;
-        
+
         let c = self.peek().unwrap();
         num_str.push(c);
         self.advance();
-        
+
         if c == '0' {
             if let Some(next) = self.peek() {
                 match next {
@@ -326,7 +386,9 @@ impl<'a> BlyxLexer<'a> {
                         self.advance();
                         while let Some(ch) = self.peek() {
                             if ch.is_ascii_hexdigit() || ch == '_' {
-                                if ch != '_' { num_str.push(ch); }
+                                if ch != '_' {
+                                    num_str.push(ch);
+                                }
                                 self.advance();
                             } else {
                                 break;
@@ -334,13 +396,18 @@ impl<'a> BlyxLexer<'a> {
                         }
                         self.read_type_suffix(); // Skip type suffix for now
                         let val = u64::from_str_radix(&num_str[1..], 16).unwrap_or(0);
-                        return Token::new(TokenKind::IntLit(val), Span::new(start, self.pos, line, col));
+                        return Token::new(
+                            TokenKind::IntLit(val),
+                            Span::new(start, self.pos, line, col),
+                        );
                     }
                     'o' | 'O' => {
                         self.advance();
                         while let Some(ch) = self.peek() {
                             if (ch >= '0' && ch <= '7') || ch == '_' {
-                                if ch != '_' { num_str.push(ch); }
+                                if ch != '_' {
+                                    num_str.push(ch);
+                                }
                                 self.advance();
                             } else {
                                 break;
@@ -348,13 +415,18 @@ impl<'a> BlyxLexer<'a> {
                         }
                         self.read_type_suffix();
                         let val = u64::from_str_radix(&num_str[1..], 8).unwrap_or(0);
-                        return Token::new(TokenKind::IntLit(val), Span::new(start, self.pos, line, col));
+                        return Token::new(
+                            TokenKind::IntLit(val),
+                            Span::new(start, self.pos, line, col),
+                        );
                     }
                     'b' | 'B' => {
                         self.advance();
                         while let Some(ch) = self.peek() {
                             if ch == '0' || ch == '1' || ch == '_' {
-                                if ch != '_' { num_str.push(ch); }
+                                if ch != '_' {
+                                    num_str.push(ch);
+                                }
                                 self.advance();
                             } else {
                                 break;
@@ -362,18 +434,24 @@ impl<'a> BlyxLexer<'a> {
                         }
                         self.read_type_suffix();
                         let val = u64::from_str_radix(&num_str[1..], 2).unwrap_or(0);
-                        return Token::new(TokenKind::IntLit(val), Span::new(start, self.pos, line, col));
+                        return Token::new(
+                            TokenKind::IntLit(val),
+                            Span::new(start, self.pos, line, col),
+                        );
                     }
                     _ => {}
                 }
             }
         }
-        
+
         while let Some(ch) = self.peek() {
             if ch.is_ascii_digit() || ch == '_' {
-                if ch != '_' { num_str.push(ch); }
+                if ch != '_' {
+                    num_str.push(ch);
+                }
                 self.advance();
-            } else if ch == '.' && self.peek_next() != Some('.') { // Avoid matching range ..
+            } else if ch == '.' && self.peek_next() != Some('.') {
+                // Avoid matching range ..
                 is_float = true;
                 num_str.push(ch);
                 self.advance();
@@ -390,7 +468,7 @@ impl<'a> BlyxLexer<'a> {
                 break;
             }
         }
-        
+
         self.read_type_suffix(); // Ignore type suffix
 
         let kind = if is_float {
@@ -401,7 +479,7 @@ impl<'a> BlyxLexer<'a> {
 
         Token::new(kind, Span::new(start, self.pos, line, col))
     }
-    
+
     fn read_type_suffix(&mut self) {
         if let Some(c) = self.peek() {
             if c == 'i' || c == 'u' || c == 'f' || c == 'i' || c == 'u' {
@@ -476,11 +554,11 @@ impl<'a> BlyxLexer<'a> {
         } else {
             '\0'
         };
-        
+
         if self.peek() == Some('\'') {
             self.advance();
         }
-        
+
         Token::new(TokenKind::CharLit(c), Span::new(start, self.pos, line, col))
     }
 
@@ -493,37 +571,148 @@ impl<'a> BlyxLexer<'a> {
         let mut advance_count = 0;
 
         match c1 {
-            '+' => if c2 == Some('=') { kind = TokenKind::PlusEq; advance_count = 1; } else { kind = TokenKind::Plus; },
-            '-' => if c2 == Some('>') { kind = TokenKind::Arrow; advance_count = 1; }
-                   else if c2 == Some('=') { kind = TokenKind::MinusEq; advance_count = 1; }
-                   else { kind = TokenKind::Minus; },
-            '*' => if c2 == Some('=') { kind = TokenKind::StarEq; advance_count = 1; } else { kind = TokenKind::Star; },
-            '/' => if c2 == Some('=') { kind = TokenKind::SlashEq; advance_count = 1; } else { kind = TokenKind::Slash; },
-            '%' => if c2 == Some('=') { kind = TokenKind::PercentEq; advance_count = 1; } else { kind = TokenKind::Percent; },
-            '=' => if c2 == Some('=') { kind = TokenKind::EqEq; advance_count = 1; }
-                   else if c2 == Some('>') { kind = TokenKind::FatArrow; advance_count = 1; }
-                   else { kind = TokenKind::Eq; },
-            '!' => if c2 == Some('=') { kind = TokenKind::BangEq; advance_count = 1; } else { kind = TokenKind::Bang; },
-            '<' => if c2 == Some('<') && c3 == Some('=') { kind = TokenKind::LtLtEq; advance_count = 2; }
-                   else if c2 == Some('<') { kind = TokenKind::LtLt; advance_count = 1; }
-                   else if c2 == Some('=') { kind = TokenKind::LtEq; advance_count = 1; }
-                   else { kind = TokenKind::Lt; },
-            '>' => if c2 == Some('>') && c3 == Some('=') { kind = TokenKind::GtGtEq; advance_count = 2; }
-                   else if c2 == Some('>') { kind = TokenKind::GtGt; advance_count = 1; }
-                   else if c2 == Some('=') { kind = TokenKind::GtEq; advance_count = 1; }
-                   else { kind = TokenKind::Gt; },
-            '&' => if c2 == Some('&') { kind = TokenKind::AmpAmp; advance_count = 1; }
-                   else if c2 == Some('=') { kind = TokenKind::AmpEq; advance_count = 1; }
-                   else { kind = TokenKind::Amp; },
-            '|' => if c2 == Some('|') { kind = TokenKind::PipePipe; advance_count = 1; }
-                   else if c2 == Some('=') { kind = TokenKind::PipeEq; advance_count = 1; }
-                   else { kind = TokenKind::Pipe; },
-            '^' => if c2 == Some('=') { kind = TokenKind::CaretEq; advance_count = 1; } else { kind = TokenKind::Caret; },
-            '.' => if c2 == Some('.') && c3 == Some('.') { kind = TokenKind::DotDotDot; advance_count = 2; }
-                   else if c2 == Some('.') && c3 == Some('=') { kind = TokenKind::DotDotEq; advance_count = 2; }
-                   else if c2 == Some('.') { kind = TokenKind::DotDot; advance_count = 1; }
-                   else { kind = TokenKind::Dot; },
-            ':' => if c2 == Some(':') { kind = TokenKind::ColonColon; advance_count = 1; } else { kind = TokenKind::Colon; },
+            '+' => {
+                if c2 == Some('=') {
+                    kind = TokenKind::PlusEq;
+                    advance_count = 1;
+                } else {
+                    kind = TokenKind::Plus;
+                }
+            }
+            '-' => {
+                if c2 == Some('>') {
+                    kind = TokenKind::Arrow;
+                    advance_count = 1;
+                } else if c2 == Some('=') {
+                    kind = TokenKind::MinusEq;
+                    advance_count = 1;
+                } else {
+                    kind = TokenKind::Minus;
+                }
+            }
+            '*' => {
+                if c2 == Some('=') {
+                    kind = TokenKind::StarEq;
+                    advance_count = 1;
+                } else {
+                    kind = TokenKind::Star;
+                }
+            }
+            '/' => {
+                if c2 == Some('=') {
+                    kind = TokenKind::SlashEq;
+                    advance_count = 1;
+                } else {
+                    kind = TokenKind::Slash;
+                }
+            }
+            '%' => {
+                if c2 == Some('=') {
+                    kind = TokenKind::PercentEq;
+                    advance_count = 1;
+                } else {
+                    kind = TokenKind::Percent;
+                }
+            }
+            '=' => {
+                if c2 == Some('=') {
+                    kind = TokenKind::EqEq;
+                    advance_count = 1;
+                } else if c2 == Some('>') {
+                    kind = TokenKind::FatArrow;
+                    advance_count = 1;
+                } else {
+                    kind = TokenKind::Eq;
+                }
+            }
+            '!' => {
+                if c2 == Some('=') {
+                    kind = TokenKind::BangEq;
+                    advance_count = 1;
+                } else {
+                    kind = TokenKind::Bang;
+                }
+            }
+            '<' => {
+                if c2 == Some('<') && c3 == Some('=') {
+                    kind = TokenKind::LtLtEq;
+                    advance_count = 2;
+                } else if c2 == Some('<') {
+                    kind = TokenKind::LtLt;
+                    advance_count = 1;
+                } else if c2 == Some('=') {
+                    kind = TokenKind::LtEq;
+                    advance_count = 1;
+                } else {
+                    kind = TokenKind::Lt;
+                }
+            }
+            '>' => {
+                if c2 == Some('>') && c3 == Some('=') {
+                    kind = TokenKind::GtGtEq;
+                    advance_count = 2;
+                } else if c2 == Some('>') {
+                    kind = TokenKind::GtGt;
+                    advance_count = 1;
+                } else if c2 == Some('=') {
+                    kind = TokenKind::GtEq;
+                    advance_count = 1;
+                } else {
+                    kind = TokenKind::Gt;
+                }
+            }
+            '&' => {
+                if c2 == Some('&') {
+                    kind = TokenKind::AmpAmp;
+                    advance_count = 1;
+                } else if c2 == Some('=') {
+                    kind = TokenKind::AmpEq;
+                    advance_count = 1;
+                } else {
+                    kind = TokenKind::Amp;
+                }
+            }
+            '|' => {
+                if c2 == Some('|') {
+                    kind = TokenKind::PipePipe;
+                    advance_count = 1;
+                } else if c2 == Some('=') {
+                    kind = TokenKind::PipeEq;
+                    advance_count = 1;
+                } else {
+                    kind = TokenKind::Pipe;
+                }
+            }
+            '^' => {
+                if c2 == Some('=') {
+                    kind = TokenKind::CaretEq;
+                    advance_count = 1;
+                } else {
+                    kind = TokenKind::Caret;
+                }
+            }
+            '.' => {
+                if c2 == Some('.') && c3 == Some('.') {
+                    kind = TokenKind::DotDotDot;
+                    advance_count = 2;
+                } else if c2 == Some('.') && c3 == Some('=') {
+                    kind = TokenKind::DotDotEq;
+                    advance_count = 2;
+                } else if c2 == Some('.') {
+                    kind = TokenKind::DotDot;
+                    advance_count = 1;
+                } else {
+                    kind = TokenKind::Dot;
+                }
+            }
+            ':' => {
+                if c2 == Some(':') {
+                    kind = TokenKind::ColonColon;
+                    advance_count = 1;
+                } else {
+                    kind = TokenKind::Colon;
+                }
+            }
             '~' => kind = TokenKind::Tilde,
             '@' => kind = TokenKind::At,
             '#' => kind = TokenKind::Hash,

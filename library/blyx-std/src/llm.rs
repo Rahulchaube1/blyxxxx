@@ -29,7 +29,13 @@ pub struct LlmResponse {
 }
 
 #[derive(Debug)]
-pub enum LlmErrorKind { NetworkError, ParseError, ApiError, Timeout, NotConfigured }
+pub enum LlmErrorKind {
+    NetworkError,
+    ParseError,
+    ApiError,
+    Timeout,
+    NotConfigured,
+}
 
 #[derive(Debug)]
 pub struct LlmError {
@@ -54,9 +60,15 @@ impl LlmClient {
 
     pub fn from_env() -> Self {
         let mut config = LlmConfig::default();
-        if let Ok(ep) = std::env::var("BLYX_LLM_ENDPOINT") { config.endpoint = ep; }
-        if let Ok(key) = std::env::var("BLYX_LLM_KEY") { config.api_key = key; }
-        if let Ok(m) = std::env::var("BLYX_LLM_MODEL") { config.model = m; }
+        if let Ok(ep) = std::env::var("BLYX_LLM_ENDPOINT") {
+            config.endpoint = ep;
+        }
+        if let Ok(key) = std::env::var("BLYX_LLM_KEY") {
+            config.api_key = key;
+        }
+        if let Ok(m) = std::env::var("BLYX_LLM_MODEL") {
+            config.model = m;
+        }
         Self { config }
     }
 
@@ -120,12 +132,18 @@ impl LlmClient {
                 .arg("-d")
                 .arg(body)
                 .output()
-                .map_err(|e| LlmError { kind: LlmErrorKind::NetworkError, message: e.to_string() })?;
+                .map_err(|e| LlmError {
+                    kind: LlmErrorKind::NetworkError,
+                    message: e.to_string(),
+                })?;
 
             if output.status.success() {
                 Ok(String::from_utf8_lossy(&output.stdout).to_string())
             } else {
-                Err(LlmError { kind: LlmErrorKind::ApiError, message: String::from_utf8_lossy(&output.stderr).to_string() })
+                Err(LlmError {
+                    kind: LlmErrorKind::ApiError,
+                    message: String::from_utf8_lossy(&output.stderr).to_string(),
+                })
             }
         } else {
             Err(LlmError { kind: LlmErrorKind::NotConfigured, message: "Invalid URL".into() })

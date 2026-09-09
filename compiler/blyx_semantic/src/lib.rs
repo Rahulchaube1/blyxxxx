@@ -2,8 +2,8 @@
 // Created by Rahul Chaube — https://blyx-lang.space
 // Open Source — MIT + Apache 2.0
 
-use std::collections::HashMap;
 use blyx_ast::*;
+use std::collections::HashMap;
 
 // ──────────────────────────────────────────────
 //  Errors
@@ -48,7 +48,17 @@ pub struct Symbol {
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum SymbolKind {
-    Variable, Function, Struct, Enum, Trait, Actor, Module, Const, TypeAlias, Task, Param,
+    Variable,
+    Function,
+    Struct,
+    Enum,
+    Trait,
+    Actor,
+    Module,
+    Const,
+    TypeAlias,
+    Task,
+    Param,
 }
 
 pub struct SymbolTable {
@@ -65,11 +75,7 @@ impl SymbolTable {
     }
 
     pub fn pop_scope(&mut self) -> Option<HashMap<String, Symbol>> {
-        if self.scopes.len() > 1 {
-            self.scopes.pop()
-        } else {
-            None
-        }
+        if self.scopes.len() > 1 { self.scopes.pop() } else { None }
     }
 
     pub fn define(&mut self, sym: Symbol) -> Result<(), SemanticError> {
@@ -127,7 +133,9 @@ pub struct SemanticAnalyzer {
 }
 
 impl Default for SemanticAnalyzer {
-    fn default() -> Self { Self::new() }
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl SemanticAnalyzer {
@@ -147,14 +155,24 @@ impl SemanticAnalyzer {
     fn register_builtins(&mut self) {
         // Built-in types
         let type_builtins: &[(&str, BlyxType)] = &[
-            ("i8", BlyxType::I8), ("i16", BlyxType::I16), ("i32", BlyxType::I32),
-            ("i64", BlyxType::I64), ("i128", BlyxType::I128),
-            ("u8", BlyxType::U8), ("u16", BlyxType::U16), ("u32", BlyxType::U32),
-            ("u64", BlyxType::U64), ("u128", BlyxType::U128),
-            ("f32", BlyxType::F32), ("f64", BlyxType::F64),
-            ("bool", BlyxType::Bool), ("char", BlyxType::Char),
-            ("str", BlyxType::Str), ("String", BlyxType::Named("String".to_string(), vec![])),
-            ("usize", BlyxType::Usize), ("isize", BlyxType::Isize),
+            ("i8", BlyxType::I8),
+            ("i16", BlyxType::I16),
+            ("i32", BlyxType::I32),
+            ("i64", BlyxType::I64),
+            ("i128", BlyxType::I128),
+            ("u8", BlyxType::U8),
+            ("u16", BlyxType::U16),
+            ("u32", BlyxType::U32),
+            ("u64", BlyxType::U64),
+            ("u128", BlyxType::U128),
+            ("f32", BlyxType::F32),
+            ("f64", BlyxType::F64),
+            ("bool", BlyxType::Bool),
+            ("char", BlyxType::Char),
+            ("str", BlyxType::Str),
+            ("String", BlyxType::Named("String".to_string(), vec![])),
+            ("usize", BlyxType::Usize),
+            ("isize", BlyxType::Isize),
             ("Agent", BlyxType::Agent),
         ];
 
@@ -235,7 +253,9 @@ impl SemanticAnalyzer {
                     let _ = self.symbol_table.define(Symbol {
                         name: t.name.clone(),
                         kind: SymbolKind::Task,
-                        ty: BlyxType::Promise(Box::new(t.return_type.clone().unwrap_or(BlyxType::Unit))),
+                        ty: BlyxType::Promise(Box::new(
+                            t.return_type.clone().unwrap_or(BlyxType::Unit),
+                        )),
                         span: t.span,
                         is_mutable: false,
                         is_used: false,
@@ -339,9 +359,12 @@ impl SemanticAnalyzer {
     fn analyze_stmt(&mut self, stmt: &Stmt) {
         match stmt {
             Stmt::Let { name, ty, value, span } => {
-                let expr_ty = value.as_ref().map(|e| self.analyze_expr(e)).unwrap_or(BlyxType::Infer);
+                let expr_ty =
+                    value.as_ref().map(|e| self.analyze_expr(e)).unwrap_or(BlyxType::Infer);
                 let actual_ty = if let Some(declared) = ty {
-                    if !matches!(expr_ty, BlyxType::Infer) && !self.types_compatible(declared, &expr_ty) {
+                    if !matches!(expr_ty, BlyxType::Infer)
+                        && !self.types_compatible(declared, &expr_ty)
+                    {
                         self.emit_error(
                             SemanticErrorKind::TypeMismatch,
                             &format!("Expected {:?}, found {:?}", declared, expr_ty),
@@ -365,14 +388,19 @@ impl SemanticAnalyzer {
                     self.errors.push(e);
                 }
             }
-            Stmt::Expr(e) => { self.analyze_expr(e); }
+            Stmt::Expr(e) => {
+                self.analyze_expr(e);
+            }
             Stmt::Return(opt_e, span) => {
                 let ret_ty = opt_e.as_ref().map(|e| self.analyze_expr(e)).unwrap_or(BlyxType::Unit);
                 if let Some(expected) = &self.current_return_type.clone() {
                     if !self.types_compatible(&ret_ty, expected) {
                         self.emit_error(
                             SemanticErrorKind::ReturnTypeMismatch,
-                            &format!("Return type mismatch: expected {:?}, found {:?}", expected, ret_ty),
+                            &format!(
+                                "Return type mismatch: expected {:?}, found {:?}",
+                                expected, ret_ty
+                            ),
                             *span,
                             None,
                         );
@@ -383,7 +411,9 @@ impl SemanticAnalyzer {
                 if !self.in_loop {
                     // break outside loop is a semantic error but we'll just warn
                 }
-                if let Some(e) = opt_e { self.analyze_expr(e); }
+                if let Some(e) = opt_e {
+                    self.analyze_expr(e);
+                }
             }
             Stmt::Continue(_span) => {
                 // continue outside loop: warning only
@@ -414,7 +444,9 @@ impl SemanticAnalyzer {
 
             Expr::Call(callee, args, span) => {
                 let callee_ty = self.analyze_expr(callee);
-                for arg in args { self.analyze_expr(arg); }
+                for arg in args {
+                    self.analyze_expr(arg);
+                }
                 // If it's a simple identifier call, look up return type
                 if let Expr::Ident(name, _) = &**callee {
                     if let Some(sym) = self.symbol_table.lookup(name) {
@@ -444,12 +476,20 @@ impl SemanticAnalyzer {
                 let model_ty = self.analyze_expr(model);
                 let prompt_ty = self.analyze_expr(prompt);
                 if !self.is_string_type(&model_ty) {
-                    self.emit_error(SemanticErrorKind::TypeMismatch,
-                        "generate() model argument must be a string type", *span, None);
+                    self.emit_error(
+                        SemanticErrorKind::TypeMismatch,
+                        "generate() model argument must be a string type",
+                        *span,
+                        None,
+                    );
                 }
                 if !self.is_string_type(&prompt_ty) {
-                    self.emit_error(SemanticErrorKind::TypeMismatch,
-                        "generate() prompt argument must be a string type", *span, None);
+                    self.emit_error(
+                        SemanticErrorKind::TypeMismatch,
+                        "generate() prompt argument must be a string type",
+                        *span,
+                        None,
+                    );
                 }
                 BlyxType::Promise(Box::new(BlyxType::Named("String".to_string(), vec![])))
             }
@@ -457,17 +497,24 @@ impl SemanticAnalyzer {
             Expr::Reason { context, span } => {
                 let ctx_ty = self.analyze_expr(context);
                 if !self.is_string_type(&ctx_ty) {
-                    self.emit_error(SemanticErrorKind::TypeMismatch,
-                        "reason() context must be a string type", *span, None);
+                    self.emit_error(
+                        SemanticErrorKind::TypeMismatch,
+                        "reason() context must be a string type",
+                        *span,
+                        None,
+                    );
                 }
                 BlyxType::Promise(Box::new(BlyxType::Named("String".to_string(), vec![])))
             }
 
             Expr::Orchestrate { agents, task, .. } => {
-                for agent in agents { self.analyze_expr(agent); }
+                for agent in agents {
+                    self.analyze_expr(agent);
+                }
                 self.analyze_expr(task);
                 BlyxType::Promise(Box::new(BlyxType::Named(
-                    "Vec".to_string(), vec![BlyxType::Agent]
+                    "Vec".to_string(),
+                    vec![BlyxType::Agent],
                 )))
             }
 
@@ -481,19 +528,31 @@ impl SemanticAnalyzer {
                 let rhs_ty = self.analyze_expr(rhs);
                 // For comparison operators, result is bool
                 match op {
-                    BinOp::Eq | BinOp::Ne | BinOp::Lt | BinOp::Le | BinOp::Gt | BinOp::Ge => BlyxType::Bool,
+                    BinOp::Eq | BinOp::Ne | BinOp::Lt | BinOp::Le | BinOp::Gt | BinOp::Ge => {
+                        BlyxType::Bool
+                    }
                     BinOp::And | BinOp::Or => {
                         if !self.types_compatible(&lhs_ty, &BlyxType::Bool) {
-                            self.emit_error(SemanticErrorKind::TypeMismatch,
-                                "Logical operator requires bool operands", *span, None);
+                            self.emit_error(
+                                SemanticErrorKind::TypeMismatch,
+                                "Logical operator requires bool operands",
+                                *span,
+                                None,
+                            );
                         }
                         BlyxType::Bool
                     }
                     _ => {
                         if !self.types_compatible(&lhs_ty, &rhs_ty) {
-                            self.emit_error(SemanticErrorKind::TypeMismatch,
-                                &format!("Incompatible operand types: {:?} and {:?}", lhs_ty, rhs_ty),
-                                *span, None);
+                            self.emit_error(
+                                SemanticErrorKind::TypeMismatch,
+                                &format!(
+                                    "Incompatible operand types: {:?} and {:?}",
+                                    lhs_ty, rhs_ty
+                                ),
+                                *span,
+                                None,
+                            );
                         }
                         lhs_ty
                     }
@@ -503,16 +562,26 @@ impl SemanticAnalyzer {
             Expr::If { cond, then_branch, else_branch, span } => {
                 let cond_ty = self.analyze_expr(cond);
                 if !self.types_compatible(&cond_ty, &BlyxType::Bool) {
-                    self.emit_error(SemanticErrorKind::TypeMismatch,
-                        "if condition must be bool", *span, None);
+                    self.emit_error(
+                        SemanticErrorKind::TypeMismatch,
+                        "if condition must be bool",
+                        *span,
+                        None,
+                    );
                 }
                 let then_ty = self.analyze_block(then_branch);
                 if let Some(else_e) = else_branch {
                     let else_ty = self.analyze_expr(else_e);
                     if !self.types_compatible(&then_ty, &else_ty) {
-                        self.emit_error(SemanticErrorKind::TypeMismatch,
-                            &format!("if/else branches have incompatible types: {:?} vs {:?}", then_ty, else_ty),
-                            *span, None);
+                        self.emit_error(
+                            SemanticErrorKind::TypeMismatch,
+                            &format!(
+                                "if/else branches have incompatible types: {:?} vs {:?}",
+                                then_ty, else_ty
+                            ),
+                            *span,
+                            None,
+                        );
                     }
                 }
                 then_ty
@@ -521,8 +590,12 @@ impl SemanticAnalyzer {
             Expr::While { cond, body, span } => {
                 let cond_ty = self.analyze_expr(cond);
                 if !self.types_compatible(&cond_ty, &BlyxType::Bool) {
-                    self.emit_error(SemanticErrorKind::TypeMismatch,
-                        "while condition must be bool", *span, None);
+                    self.emit_error(
+                        SemanticErrorKind::TypeMismatch,
+                        "while condition must be bool",
+                        *span,
+                        None,
+                    );
                 }
                 let prev_loop = self.in_loop;
                 self.in_loop = true;
@@ -545,7 +618,9 @@ impl SemanticAnalyzer {
                 self.analyze_expr(expr);
                 let mut arm_ty = BlyxType::Unit;
                 for arm in arms {
-                    if let Some(guard) = &arm.guard { self.analyze_expr(guard); }
+                    if let Some(guard) = &arm.guard {
+                        self.analyze_expr(guard);
+                    }
                     arm_ty = self.analyze_expr(&arm.body);
                 }
                 arm_ty
@@ -578,9 +653,15 @@ impl SemanticAnalyzer {
                 let ret_ty = opt_e.as_ref().map(|e| self.analyze_expr(e)).unwrap_or(BlyxType::Unit);
                 if let Some(expected) = &self.current_return_type.clone() {
                     if !self.types_compatible(&ret_ty, expected) {
-                        self.emit_error(SemanticErrorKind::ReturnTypeMismatch,
-                            &format!("Return type mismatch: expected {:?}, got {:?}", expected, ret_ty),
-                            *span, None);
+                        self.emit_error(
+                            SemanticErrorKind::ReturnTypeMismatch,
+                            &format!(
+                                "Return type mismatch: expected {:?}, got {:?}",
+                                expected, ret_ty
+                            ),
+                            *span,
+                            None,
+                        );
                     }
                 }
                 BlyxType::Never
@@ -591,9 +672,12 @@ impl SemanticAnalyzer {
                 if let Expr::Ident(name, _) = &**target {
                     if let Some(sym) = self.symbol_table.lookup(name) {
                         if !sym.is_mutable {
-                            self.emit_error(SemanticErrorKind::MutabilityError,
+                            self.emit_error(
+                                SemanticErrorKind::MutabilityError,
                                 &format!("Cannot assign to immutable variable '{}'", name),
-                                *span, Some("Declare with 'let mut' to allow mutation"));
+                                *span,
+                                Some("Declare with 'let mut' to allow mutation"),
+                            );
                         }
                     }
                 }
@@ -605,9 +689,12 @@ impl SemanticAnalyzer {
                 if let Expr::Ident(name, _) = &**target {
                     if let Some(sym) = self.symbol_table.lookup(name) {
                         if !sym.is_mutable {
-                            self.emit_error(SemanticErrorKind::MutabilityError,
+                            self.emit_error(
+                                SemanticErrorKind::MutabilityError,
                                 &format!("Cannot assign to immutable variable '{}'", name),
-                                *span, None);
+                                *span,
+                                None,
+                            );
                         }
                     }
                 }
@@ -620,7 +707,9 @@ impl SemanticAnalyzer {
                 // ? unwraps Result<T, E> -> T
                 match inner_ty {
                     BlyxType::Result(ok_ty, _) => *ok_ty,
-                    BlyxType::Named(ref n, ref args) if n == "Result" && !args.is_empty() => args[0].clone(),
+                    BlyxType::Named(ref n, ref args) if n == "Result" && !args.is_empty() => {
+                        args[0].clone()
+                    }
                     _ => inner_ty,
                 }
             }
@@ -651,14 +740,22 @@ impl SemanticAnalyzer {
             Expr::Neg(inner, _) => self.analyze_expr(inner),
 
             Expr::Range { from, to, .. } => {
-                if let Some(f) = from { self.analyze_expr(f); }
-                if let Some(t) = to { self.analyze_expr(t); }
+                if let Some(f) = from {
+                    self.analyze_expr(f);
+                }
+                if let Some(t) = to {
+                    self.analyze_expr(t);
+                }
                 BlyxType::Named("Range".to_string(), vec![])
             }
 
             Expr::StructLit { name, fields, rest, .. } => {
-                for (_, val) in fields { self.analyze_expr(val); }
-                if let Some(r) = rest { self.analyze_expr(r); }
+                for (_, val) in fields {
+                    self.analyze_expr(val);
+                }
+                if let Some(r) = rest {
+                    self.analyze_expr(r);
+                }
                 BlyxType::Custom(name.clone())
             }
 
@@ -672,7 +769,9 @@ impl SemanticAnalyzer {
                     BlyxType::Slice(Box::new(BlyxType::Infer))
                 } else {
                     let elem_ty = self.analyze_expr(&items[0]);
-                    for item in &items[1..] { self.analyze_expr(item); }
+                    for item in &items[1..] {
+                        self.analyze_expr(item);
+                    }
                     BlyxType::Array(Box::new(elem_ty), items.len())
                 }
             }
@@ -697,7 +796,9 @@ impl SemanticAnalyzer {
             }
 
             Expr::Break { value, .. } => {
-                if let Some(v) = value { self.analyze_expr(v); }
+                if let Some(v) = value {
+                    self.analyze_expr(v);
+                }
                 BlyxType::Never
             }
 
@@ -726,20 +827,46 @@ impl SemanticAnalyzer {
     }
 
     fn types_compatible(&self, a: &BlyxType, b: &BlyxType) -> bool {
-        if a == b { return true; }
+        if a == b {
+            return true;
+        }
         // Infer is compatible with anything
-        if matches!(a, BlyxType::Infer) || matches!(b, BlyxType::Infer) { return true; }
+        if matches!(a, BlyxType::Infer) || matches!(b, BlyxType::Infer) {
+            return true;
+        }
         // Never is compatible with anything (unreachable code)
-        if matches!(a, BlyxType::Never) || matches!(b, BlyxType::Never) { return true; }
+        if matches!(a, BlyxType::Never) || matches!(b, BlyxType::Never) {
+            return true;
+        }
         // String / str compatibility
-        if self.is_string_type(a) && self.is_string_type(b) { return true; }
+        if self.is_string_type(a) && self.is_string_type(b) {
+            return true;
+        }
         // Numeric widening (simplified)
-        let is_int = |t: &BlyxType| matches!(t, BlyxType::I8 | BlyxType::I16 | BlyxType::I32 | BlyxType::I64 | BlyxType::I128
-            | BlyxType::U8 | BlyxType::U16 | BlyxType::U32 | BlyxType::U64 | BlyxType::U128
-            | BlyxType::Usize | BlyxType::Isize);
+        let is_int = |t: &BlyxType| {
+            matches!(
+                t,
+                BlyxType::I8
+                    | BlyxType::I16
+                    | BlyxType::I32
+                    | BlyxType::I64
+                    | BlyxType::I128
+                    | BlyxType::U8
+                    | BlyxType::U16
+                    | BlyxType::U32
+                    | BlyxType::U64
+                    | BlyxType::U128
+                    | BlyxType::Usize
+                    | BlyxType::Isize
+            )
+        };
         let is_float = |t: &BlyxType| matches!(t, BlyxType::F32 | BlyxType::F64 | BlyxType::F16);
-        if is_int(a) && is_int(b) { return true; }
-        if is_float(a) && is_float(b) { return true; }
+        if is_int(a) && is_int(b) {
+            return true;
+        }
+        if is_float(a) && is_float(b) {
+            return true;
+        }
         false
     }
 
@@ -781,7 +908,9 @@ impl SemanticAnalyzer {
 mod tests {
     use super::*;
 
-    fn dummy_span() -> Span { Span::default() }
+    fn dummy_span() -> Span {
+        Span::default()
+    }
 
     fn make_file(items: Vec<Item>) -> BlyxFile {
         BlyxFile { items }
@@ -810,9 +939,11 @@ mod tests {
     #[test]
     fn test_undeclared_variable() {
         let mut a = SemanticAnalyzer::new();
-        let file = make_file(vec![make_fn("test", vec![
-            Stmt::Expr(Expr::Ident("undeclared".into(), dummy_span())),
-        ], None)]);
+        let file = make_file(vec![make_fn(
+            "test",
+            vec![Stmt::Expr(Expr::Ident("undeclared".into(), dummy_span()))],
+            None,
+        )]);
         let errors = a.analyze(&file);
         assert!(errors.iter().any(|e| e.kind == SemanticErrorKind::UndeclaredVariable));
     }
@@ -820,10 +951,19 @@ mod tests {
     #[test]
     fn test_declared_variable_no_error() {
         let mut a = SemanticAnalyzer::new();
-        let file = make_file(vec![make_fn("test", vec![
-            Stmt::Let { name: "x".into(), ty: None, value: Some(Expr::Literal(Lit::Int(42), dummy_span())), span: dummy_span() },
-            Stmt::Expr(Expr::Ident("x".into(), dummy_span())),
-        ], None)]);
+        let file = make_file(vec![make_fn(
+            "test",
+            vec![
+                Stmt::Let {
+                    name: "x".into(),
+                    ty: None,
+                    value: Some(Expr::Literal(Lit::Int(42), dummy_span())),
+                    span: dummy_span(),
+                },
+                Stmt::Expr(Expr::Ident("x".into(), dummy_span())),
+            ],
+            None,
+        )]);
         let errors = a.analyze(&file);
         assert!(!errors.iter().any(|e| e.kind == SemanticErrorKind::UndeclaredVariable));
     }
@@ -864,9 +1004,16 @@ mod tests {
     #[test]
     fn test_unused_variable_warning() {
         let mut a = SemanticAnalyzer::new();
-        let file = make_file(vec![make_fn("test", vec![
-            Stmt::Let { name: "unused".into(), ty: None, value: Some(Expr::Literal(Lit::Int(5), dummy_span())), span: dummy_span() },
-        ], None)]);
+        let file = make_file(vec![make_fn(
+            "test",
+            vec![Stmt::Let {
+                name: "unused".into(),
+                ty: None,
+                value: Some(Expr::Literal(Lit::Int(5), dummy_span())),
+                span: dummy_span(),
+            }],
+            None,
+        )]);
         let errors = a.analyze(&file);
         assert!(errors.iter().any(|e| e.kind == SemanticErrorKind::UnusedVariable));
     }
@@ -874,9 +1021,16 @@ mod tests {
     #[test]
     fn test_underscore_prefix_suppresses_unused() {
         let mut a = SemanticAnalyzer::new();
-        let file = make_file(vec![make_fn("test", vec![
-            Stmt::Let { name: "_unused".into(), ty: None, value: Some(Expr::Literal(Lit::Int(5), dummy_span())), span: dummy_span() },
-        ], None)]);
+        let file = make_file(vec![make_fn(
+            "test",
+            vec![Stmt::Let {
+                name: "_unused".into(),
+                ty: None,
+                value: Some(Expr::Literal(Lit::Int(5), dummy_span())),
+                span: dummy_span(),
+            }],
+            None,
+        )]);
         let errors = a.analyze(&file);
         assert!(!errors.iter().any(|e| e.kind == SemanticErrorKind::UnusedVariable));
     }

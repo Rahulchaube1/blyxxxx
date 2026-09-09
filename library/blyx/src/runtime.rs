@@ -15,10 +15,7 @@ pub struct BlyxRuntime {
 
 impl BlyxRuntime {
     fn new(num_threads: usize) -> Self {
-        Self {
-            num_threads,
-            thread_pool: Mutex::new(Vec::new()),
-        }
+        Self { num_threads, thread_pool: Mutex::new(Vec::new()) }
     }
 }
 
@@ -27,9 +24,7 @@ impl BlyxRuntime {
 pub fn init_runtime(num_threads: Option<usize>) {
     let n = num_threads.unwrap_or_else(|| {
         // Fallback to 4 if we can't determine CPU count
-        std::thread::available_parallelism()
-            .map(|n| n.get())
-            .unwrap_or(4)
+        std::thread::available_parallelism().map(|n| n.get()).unwrap_or(4)
     });
 
     RUNTIME.get_or_init(|| Arc::new(BlyxRuntime::new(n)));
@@ -37,18 +32,12 @@ pub fn init_runtime(num_threads: Option<usize>) {
 
 /// Get the global runtime. Panics if init_runtime() hasn't been called.
 pub fn runtime() -> Arc<BlyxRuntime> {
-    RUNTIME
-        .get()
-        .expect("Blyx runtime not initialized. Call init_runtime() first.")
-        .clone()
+    RUNTIME.get().expect("Blyx runtime not initialized. Call init_runtime() first.").clone()
 }
 
 /// Returns the number of worker threads in the runtime pool.
 pub fn num_threads() -> usize {
-    RUNTIME
-        .get()
-        .map(|r| r.num_threads)
-        .unwrap_or(1)
+    RUNTIME.get().map(|r| r.num_threads).unwrap_or(1)
 }
 
 /// Check whether the runtime has been initialized.

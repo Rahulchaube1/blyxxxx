@@ -9,7 +9,9 @@ fn main() {
         let Ok(message) = line else { continue };
 
         if message.contains("\"method\":\"initialize\"") {
-            println!("{{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":{{\"capabilities\":{{\"textDocumentSync\":1}}}}}}");
+            println!(
+                "{{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":{{\"capabilities\":{{\"textDocumentSync\":1}}}}}}"
+            );
         } else if message.contains("\"method\":\"shutdown\"") {
             println!("{{\"jsonrpc\":\"2.0\",\"id\":2,\"result\":null}}");
             break;

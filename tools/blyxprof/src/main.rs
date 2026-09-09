@@ -10,5 +10,7 @@ fn main() {
     }
 
     println!("blyxprof: profiling support for '{}' is not implemented yet.", args[1]);
-    println!("No performance measurements are reported until a real profiling backend is available.");
+    println!(
+        "No performance measurements are reported until a real profiling backend is available."
+    );
 }

@@ -2,9 +2,9 @@
 // Created by Rahul Chaube — https://blyx-lang.space
 // Open Source — MIT + Apache 2.0
 
-use std::time::{Duration, Instant};
-use std::thread;
 use std::sync::{Arc, Mutex};
+use std::thread;
+use std::time::{Duration, Instant};
 
 /// Sleep for the given duration (blocking).
 pub fn sleep(duration: Duration) {

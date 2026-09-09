@@ -10,5 +10,7 @@ fn main() {
     }
 
     eprintln!("blyxup: '{}' is not implemented yet.", args[1]);
-    eprintln!("Published installation artifacts are currently distributed through the official Blyx release/download flow.");
+    eprintln!(
+        "Published installation artifacts are currently distributed through the official Blyx release/download flow."
+    );
 }

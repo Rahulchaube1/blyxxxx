@@ -10,7 +10,9 @@ pub struct BlyxTypeChecker {
 }
 
 impl Default for BlyxTypeChecker {
-    fn default() -> Self { Self::new() }
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl BlyxTypeChecker {
@@ -22,11 +24,7 @@ impl BlyxTypeChecker {
     /// Returns Ok(()) on success, Err(errors) if any errors were found.
     pub fn check_file(&mut self, file: &BlyxFile) -> Result<(), Vec<SemanticError>> {
         let errors = self.analyzer.analyze(file);
-        if errors.is_empty() {
-            Ok(())
-        } else {
-            Err(errors)
-        }
+        if errors.is_empty() { Ok(()) } else { Err(errors) }
     }
 
     /// Access accumulated errors (may include warnings).
@@ -40,7 +38,9 @@ mod tests {
     use super::*;
     use blyx_ast::*;
 
-    fn dummy_span() -> Span { Span::default() }
+    fn dummy_span() -> Span {
+        Span::default()
+    }
 
     fn empty_file() -> BlyxFile {
         BlyxFile { items: vec![] }
@@ -69,30 +69,38 @@ mod tests {
     fn test_valid_main_fn() {
         let mut tc = BlyxTypeChecker::new();
         let file = BlyxFile {
-            items: vec![make_fn("main", vec![
-                Stmt::Expr(Expr::MacroCall {
+            items: vec![make_fn(
+                "main",
+                vec![Stmt::Expr(Expr::MacroCall {
                     name: "println".into(),
                     bang: true,
                     args: "\"Hello, Blyx!\"".into(),
                     span: dummy_span(),
-                }),
-            ], None)],
+                })],
+                None,
+            )],
         };
         // No undeclared variable errors expected
         let result = tc.check_file(&file);
         // println is a builtin macro, no errors
-        assert!(result.is_ok() || tc.errors().iter().all(|e| {
-            e.kind != blyx_semantic::SemanticErrorKind::UndeclaredVariable
-        }));
+        assert!(
+            result.is_ok()
+                || tc
+                    .errors()
+                    .iter()
+                    .all(|e| { e.kind != blyx_semantic::SemanticErrorKind::UndeclaredVariable })
+        );
     }
 
     #[test]
     fn test_undeclared_variable_fails() {
         let mut tc = BlyxTypeChecker::new();
         let file = BlyxFile {
-            items: vec![make_fn("test", vec![
-                Stmt::Expr(Expr::Ident("does_not_exist".into(), dummy_span())),
-            ], None)],
+            items: vec![make_fn(
+                "test",
+                vec![Stmt::Expr(Expr::Ident("does_not_exist".into(), dummy_span()))],
+                None,
+            )],
         };
         let result = tc.check_file(&file);
         assert!(result.is_err());
@@ -102,25 +110,34 @@ mod tests {
     fn test_generate_expr_valid() {
         let mut tc = BlyxTypeChecker::new();
         let file = BlyxFile {
-            items: vec![make_fn("test", vec![
-                Stmt::Let {
-                    name: "result".into(),
-                    ty: None,
-                    value: Some(Expr::Generate {
-                        model: Box::new(Expr::Literal(Lit::String("gpt-4".into()), dummy_span())),
-                        prompt: Box::new(Expr::Literal(Lit::String("hello".into()), dummy_span())),
+            items: vec![make_fn(
+                "test",
+                vec![
+                    Stmt::Let {
+                        name: "result".into(),
+                        ty: None,
+                        value: Some(Expr::Generate {
+                            model: Box::new(Expr::Literal(
+                                Lit::String("gpt-4".into()),
+                                dummy_span(),
+                            )),
+                            prompt: Box::new(Expr::Literal(
+                                Lit::String("hello".into()),
+                                dummy_span(),
+                            )),
+                            span: dummy_span(),
+                        }),
                         span: dummy_span(),
-                    }),
-                    span: dummy_span(),
-                },
-                Stmt::Expr(Expr::Ident("result".into(), dummy_span())),
-            ], None)],
+                    },
+                    Stmt::Expr(Expr::Ident("result".into(), dummy_span())),
+                ],
+                None,
+            )],
         };
         let result = tc.check_file(&file);
         // Should have no TypeMismatch errors for generate
-        let has_mismatch = tc.errors().iter().any(|e| {
-            e.kind == blyx_semantic::SemanticErrorKind::TypeMismatch
-        });
+        let has_mismatch =
+            tc.errors().iter().any(|e| e.kind == blyx_semantic::SemanticErrorKind::TypeMismatch);
         assert!(!has_mismatch);
     }
 
@@ -128,23 +145,29 @@ mod tests {
     fn test_reason_expr_valid() {
         let mut tc = BlyxTypeChecker::new();
         let file = BlyxFile {
-            items: vec![make_fn("test", vec![
-                Stmt::Let {
-                    name: "r".into(),
-                    ty: None,
-                    value: Some(Expr::Reason {
-                        context: Box::new(Expr::Literal(Lit::String("think about this".into()), dummy_span())),
+            items: vec![make_fn(
+                "test",
+                vec![
+                    Stmt::Let {
+                        name: "r".into(),
+                        ty: None,
+                        value: Some(Expr::Reason {
+                            context: Box::new(Expr::Literal(
+                                Lit::String("think about this".into()),
+                                dummy_span(),
+                            )),
+                            span: dummy_span(),
+                        }),
                         span: dummy_span(),
-                    }),
-                    span: dummy_span(),
-                },
-                Stmt::Expr(Expr::Ident("r".into(), dummy_span())),
-            ], None)],
+                    },
+                    Stmt::Expr(Expr::Ident("r".into(), dummy_span())),
+                ],
+                None,
+            )],
         };
         let _ = tc.check_file(&file);
-        let has_type_error = tc.errors().iter().any(|e| {
-            e.kind == blyx_semantic::SemanticErrorKind::TypeMismatch
-        });
+        let has_type_error =
+            tc.errors().iter().any(|e| e.kind == blyx_semantic::SemanticErrorKind::TypeMismatch);
         assert!(!has_type_error);
     }
 

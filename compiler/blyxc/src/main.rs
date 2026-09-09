@@ -81,10 +81,7 @@ fn cmd_check(args: &[String]) {
 
     if parser.has_errors() {
         for error in parser.errors() {
-            eprintln!(
-                "error[{}:{}]: {}",
-                error.span.line, error.span.column, error.message
-            );
+            eprintln!("error[{}:{}]: {}", error.span.line, error.span.column, error.message);
             if let Some(hint) = &error.hint {
                 eprintln!("  help: {hint}");
             }
@@ -106,7 +103,9 @@ fn cmd_build(args: &[String]) {
 fn cmd_run(args: &[String]) {
     let path = input_file(args);
     cmd_check(std::slice::from_ref(&path));
-    print_error("execution is not implemented in v0.1.0-alpha because the native backend is not ready");
+    print_error(
+        "execution is not implemented in v0.1.0-alpha because the native backend is not ready",
+    );
     exit(3);
 }
 
@@ -133,9 +132,7 @@ fn cmd_new(args: &[String]) {
     let manifest = format!(
         "[package]\nname = \"{name}\"\nversion = \"0.1.0\"\nedition = \"2024\"\n\n[dependencies]\n"
     );
-    let main_source = format!(
-        "// {name} — Blyx project\n\nfn main() {{\n}}\n"
-    );
+    let main_source = format!("// {name} — Blyx project\n\nfn main() {{\n}}\n");
 
     if let Err(error) = fs::write(dir.join("Blyx.toml"), manifest) {
         print_error(&format!("cannot write Blyx.toml: {error}"));

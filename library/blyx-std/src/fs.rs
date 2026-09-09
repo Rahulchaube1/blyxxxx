@@ -3,7 +3,12 @@ use std::io;
 use std::path::Path;
 
 #[derive(Debug)]
-pub enum FsErrorKind { NotFound, PermissionDenied, AlreadyExists, Other }
+pub enum FsErrorKind {
+    NotFound,
+    PermissionDenied,
+    AlreadyExists,
+    Other,
+}
 
 #[derive(Debug)]
 pub struct FsError {
@@ -19,10 +24,7 @@ impl From<io::Error> for FsError {
             io::ErrorKind::AlreadyExists => FsErrorKind::AlreadyExists,
             _ => FsErrorKind::Other,
         };
-        Self {
-            kind,
-            message: err.to_string(),
-        }
+        Self { kind, message: err.to_string() }
     }
 }
 

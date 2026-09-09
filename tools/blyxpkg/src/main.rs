@@ -27,7 +27,9 @@ fn main() {
         }
         "build" | "run" | "test" | "add" | "publish" => {
             eprintln!("blyxpkg: '{}' is not implemented yet.", args[1]);
-            eprintln!("The command is reserved for the evolving Blyx package-management interface.");
+            eprintln!(
+                "The command is reserved for the evolving Blyx package-management interface."
+            );
         }
         _ => print_usage(),
     }

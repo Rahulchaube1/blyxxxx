@@ -2,8 +2,8 @@
 // Created by Rahul Chaube — https://blyx-lang.space
 // Open Source — MIT + Apache 2.0
 
+use std::sync::mpsc::{Receiver, Sender, channel};
 use std::sync::{Arc, Mutex};
-use std::sync::mpsc::{channel, Sender, Receiver};
 use std::thread;
 
 /// Core Actor trait — implement this to define actor behaviour.
@@ -31,9 +31,7 @@ enum ActorMessage<M> {
 impl<M: Send + 'static> ActorHandle<M> {
     /// Send a message to the actor. Non-blocking.
     pub fn send(&self, msg: M) -> Result<(), ActorError> {
-        self.sender
-            .send(ActorMessage::User(msg))
-            .map_err(|_| ActorError::Disconnected)
+        self.sender.send(ActorMessage::User(msg)).map_err(|_| ActorError::Disconnected)
     }
 
     /// Send a stop signal and wait for the actor to finish.
@@ -56,10 +54,7 @@ impl<M: Send + 'static> ActorHandle<M> {
 
     /// Check if the actor thread is still alive.
     pub fn is_alive(&self) -> bool {
-        self.thread
-            .as_ref()
-            .map(|t| !t.is_finished())
-            .unwrap_or(false)
+        self.thread.as_ref().map(|t| !t.is_finished()).unwrap_or(false)
     }
 }
 
@@ -96,10 +91,7 @@ pub fn spawn_actor<A: Actor>(mut actor: A) -> ActorHandle<A::Message> {
         actor.on_stop();
     });
 
-    ActorHandle {
-        sender,
-        thread: Some(handle),
-    }
+    ActorHandle { sender, thread: Some(handle) }
 }
 
 /// Spawn multiple identical actors and return a round-robin dispatcher.
@@ -108,14 +100,10 @@ where
     A: Actor,
     F: Fn(usize) -> A,
 {
-    let handles: Vec<ActorHandle<A::Message>> = (0..count)
-        .map(|i| spawn_actor(factory(i)))
-        .collect();
+    let handles: Vec<ActorHandle<A::Message>> =
+        (0..count).map(|i| spawn_actor(factory(i))).collect();
 
-    ActorPool {
-        handles,
-        next: Arc::new(Mutex::new(0)),
-    }
+    ActorPool { handles, next: Arc::new(Mutex::new(0)) }
 }
 
 /// A pool of actors with round-robin dispatch.
@@ -193,16 +181,17 @@ mod tests {
         impl Actor for LifecycleActor {
             type Message = ();
             fn handle(&mut self, _: ()) {}
-            fn on_start(&mut self) { *self.started.lock().unwrap() = true; }
-            fn on_stop(&mut self) { *self.stopped.lock().unwrap() = true; }
+            fn on_start(&mut self) {
+                *self.started.lock().unwrap() = true;
+            }
+            fn on_stop(&mut self) {
+                *self.stopped.lock().unwrap() = true;
+            }
         }
 
         let started = Arc::new(Mutex::new(false));
         let stopped = Arc::new(Mutex::new(false));
-        let a = LifecycleActor {
-            started: Arc::clone(&started),
-            stopped: Arc::clone(&stopped),
-        };
+        let a = LifecycleActor { started: Arc::clone(&started), stopped: Arc::clone(&stopped) };
         let h = spawn_actor(a);
         h.stop().unwrap();
 

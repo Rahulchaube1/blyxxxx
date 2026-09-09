@@ -8,7 +8,7 @@ pub struct BlyxFile {
 #[derive(Debug, Clone, PartialEq)]
 pub enum Item {
     Fn(FnDef),
-    Function(FnDef),   // alias for parser compat
+    Function(FnDef), // alias for parser compat
     Struct(StructDef),
     Enum(EnumDef),
     Task(TaskDef),
@@ -138,12 +138,7 @@ pub struct Block {
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Stmt {
-    Let {
-        name: String,
-        ty: Option<BlyxType>,
-        value: Option<Expr>,
-        span: Span,
-    },
+    Let { name: String, ty: Option<BlyxType>, value: Option<Expr>, span: Span },
     Expr(Expr),
     Return(Option<Expr>, Span),
     Break(Option<Expr>, Span),
@@ -153,8 +148,25 @@ pub enum Stmt {
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum BlyxType {
-    U8, U16, U32, U64, U128, I8, I16, I32, I64, I128, F32, F64, F16,
-    Bool, Char, Str, String, Usize, Isize,
+    U8,
+    U16,
+    U32,
+    U64,
+    U128,
+    I8,
+    I16,
+    I32,
+    I64,
+    I128,
+    F32,
+    F64,
+    F16,
+    Bool,
+    Char,
+    Str,
+    String,
+    Usize,
+    Isize,
     Named(String, Vec<BlyxType>),
     Tensor(Box<BlyxType>, Vec<usize>),
     Ref(Box<BlyxType>, bool),
@@ -164,7 +176,10 @@ pub enum BlyxType {
     Array(Box<BlyxType>, usize),
     Tuple(Vec<BlyxType>),
     Fn(Vec<BlyxType>, Box<BlyxType>),
-    Unit, Infer, Inferred, Never,
+    Unit,
+    Infer,
+    Inferred,
+    Never,
     Actor(String),
     Agent,
     Stream(Box<BlyxType>),
@@ -210,30 +225,112 @@ pub enum Expr {
         body: Block,
         span: Span,
     },
-    Generate { model: Box<Expr>, prompt: Box<Expr>, span: Span },
-    Reason { context: Box<Expr>, span: Span },
-    Orchestrate { agents: Vec<Expr>, task: Box<Expr>, span: Span },
-    TaskExpr { name: String, body: Block, span: Span },
-    Match { expr: Box<Expr>, arms: Vec<MatchArm>, span: Span },
-    Loop { body: Block, label: Option<String>, span: Span },
-    Break { label: Option<String>, value: Option<Box<Expr>>, span: Span },
-    Continue { label: Option<String>, span: Span },
-    Closure { params: Vec<ClosureParam>, body: Box<Expr>, is_async: bool, is_move: bool, span: Span },
+    Generate {
+        model: Box<Expr>,
+        prompt: Box<Expr>,
+        span: Span,
+    },
+    Reason {
+        context: Box<Expr>,
+        span: Span,
+    },
+    Orchestrate {
+        agents: Vec<Expr>,
+        task: Box<Expr>,
+        span: Span,
+    },
+    TaskExpr {
+        name: String,
+        body: Block,
+        span: Span,
+    },
+    Match {
+        expr: Box<Expr>,
+        arms: Vec<MatchArm>,
+        span: Span,
+    },
+    Loop {
+        body: Block,
+        label: Option<String>,
+        span: Span,
+    },
+    Break {
+        label: Option<String>,
+        value: Option<Box<Expr>>,
+        span: Span,
+    },
+    Continue {
+        label: Option<String>,
+        span: Span,
+    },
+    Closure {
+        params: Vec<ClosureParam>,
+        body: Box<Expr>,
+        is_async: bool,
+        is_move: bool,
+        span: Span,
+    },
     Try(Box<Expr>, Span),
-    Range { from: Option<Box<Expr>>, to: Option<Box<Expr>>, inclusive: bool, span: Span },
-    Assign { target: Box<Expr>, value: Box<Expr>, span: Span },
-    AssignOp { target: Box<Expr>, op: BinOp, value: Box<Expr>, span: Span },
-    Cast { expr: Box<Expr>, ty: BlyxType, span: Span },
-    StructLit { name: String, fields: Vec<(String, Expr)>, rest: Option<Box<Expr>>, span: Span },
+    Range {
+        from: Option<Box<Expr>>,
+        to: Option<Box<Expr>>,
+        inclusive: bool,
+        span: Span,
+    },
+    Assign {
+        target: Box<Expr>,
+        value: Box<Expr>,
+        span: Span,
+    },
+    AssignOp {
+        target: Box<Expr>,
+        op: BinOp,
+        value: Box<Expr>,
+        span: Span,
+    },
+    Cast {
+        expr: Box<Expr>,
+        ty: BlyxType,
+        span: Span,
+    },
+    StructLit {
+        name: String,
+        fields: Vec<(String, Expr)>,
+        rest: Option<Box<Expr>>,
+        span: Span,
+    },
     TupleLit(Vec<Expr>, Span),
     ArrayLit(Vec<Expr>, Span),
-    ArrayRepeat { value: Box<Expr>, count: Box<Expr>, span: Span },
-    MacroCall { name: String, bang: bool, args: String, span: Span },
-    Reference { inner: Box<Expr>, is_mut: bool, span: Span },
-    Deref { inner: Box<Expr>, span: Span },
+    ArrayRepeat {
+        value: Box<Expr>,
+        count: Box<Expr>,
+        span: Span,
+    },
+    MacroCall {
+        name: String,
+        bang: bool,
+        args: String,
+        span: Span,
+    },
+    Reference {
+        inner: Box<Expr>,
+        is_mut: bool,
+        span: Span,
+    },
+    Deref {
+        inner: Box<Expr>,
+        span: Span,
+    },
     Neg(Box<Expr>, Span),
-    Path { segments: Vec<String>, span: Span },
-    As { expr: Box<Expr>, ty: BlyxType, span: Span },
+    Path {
+        segments: Vec<String>,
+        span: Span,
+    },
+    As {
+        expr: Box<Expr>,
+        ty: BlyxType,
+        span: Span,
+    },
     Return(Option<Box<Expr>>, Span),
     Unary(UnOp, Box<Expr>, Span),
 }
@@ -274,15 +371,33 @@ pub struct ClosureParam {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum BinOp {
-    Add, Sub, Mul, Div, Rem,
-    Eq, Ne, Lt, Gt, Le, Ge,
-    And, Or,
-    Shl, Shr, BitAnd, BitOr, BitXor,
+    Add,
+    Sub,
+    Mul,
+    Div,
+    Rem,
+    Eq,
+    Ne,
+    Lt,
+    Gt,
+    Le,
+    Ge,
+    And,
+    Or,
+    Shl,
+    Shr,
+    BitAnd,
+    BitOr,
+    BitXor,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum UnOp {
-    Neg, Not, Deref, Ref, RefMut,
+    Neg,
+    Not,
+    Deref,
+    Ref,
+    RefMut,
 }
 
 pub trait AstVisitor {
@@ -308,10 +423,12 @@ pub trait AstVisitor {
     fn visit_fn(&mut self, f: &FnDef) {
         self.visit_block(&f.body);
     }
-    
+
     fn visit_struct(&mut self, _s: &StructDef) {}
     fn visit_enum(&mut self, _e: &EnumDef) {}
-    fn visit_task_def(&mut self, t: &TaskDef) { self.visit_block(&t.body); }
+    fn visit_task_def(&mut self, t: &TaskDef) {
+        self.visit_block(&t.body);
+    }
     fn visit_actor_def(&mut self, _a: &ActorDef) {}
     fn visit_trait_def(&mut self, _t: &TraitDef) {}
     fn visit_impl_block(&mut self, _i: &ImplBlock) {}
@@ -397,8 +514,12 @@ pub trait AstVisitor {
             Expr::Closure { body, .. } => self.visit_expr(body),
             Expr::Try(e, _) => self.visit_expr(e),
             Expr::Range { from, to, .. } => {
-                if let Some(f) = from { self.visit_expr(f); }
-                if let Some(t) = to { self.visit_expr(t); }
+                if let Some(f) = from {
+                    self.visit_expr(f);
+                }
+                if let Some(t) = to {
+                    self.visit_expr(t);
+                }
             }
             Expr::Assign { target, value, .. } => {
                 self.visit_expr(target);
@@ -410,14 +531,22 @@ pub trait AstVisitor {
             }
             Expr::Cast { expr, .. } => self.visit_expr(expr),
             Expr::StructLit { fields, rest, .. } => {
-                for (_, e) in fields { self.visit_expr(e); }
-                if let Some(r) = rest { self.visit_expr(r); }
+                for (_, e) in fields {
+                    self.visit_expr(e);
+                }
+                if let Some(r) = rest {
+                    self.visit_expr(r);
+                }
             }
             Expr::TupleLit(v, _) => {
-                for e in v { self.visit_expr(e); }
+                for e in v {
+                    self.visit_expr(e);
+                }
             }
             Expr::ArrayLit(v, _) => {
-                for e in v { self.visit_expr(e); }
+                for e in v {
+                    self.visit_expr(e);
+                }
             }
             Expr::ArrayRepeat { value, count, .. } => {
                 self.visit_expr(value);
@@ -430,7 +559,9 @@ pub trait AstVisitor {
             Expr::Path { .. } => {}
             Expr::As { expr, .. } => self.visit_expr(expr),
             Expr::Return(opt_e, _) => {
-                if let Some(e) = opt_e { self.visit_expr(e); }
+                if let Some(e) = opt_e {
+                    self.visit_expr(e);
+                }
             }
             Expr::Unary(_, inner, _) => self.visit_expr(inner),
             Expr::Literal(_, _) | Expr::Ident(_, _) => {}

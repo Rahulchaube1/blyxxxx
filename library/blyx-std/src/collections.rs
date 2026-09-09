@@ -1,5 +1,5 @@
-pub use std::collections::{HashMap, HashSet, BTreeMap, BTreeSet, VecDeque, LinkedList};
 pub use std::collections::hash_map::Entry;
+pub use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet, LinkedList, VecDeque};
 
 pub struct OrderedMap<K: Eq, V> {
     items: Vec<(K, V)>,
@@ -44,14 +44,10 @@ impl<K: Eq + Clone, V> OrderedMap<K, V> {
                 break;
             }
         }
-        if let Some(i) = idx {
-            Some(self.items.remove(i).1)
-        } else {
-            None
-        }
+        if let Some(i) = idx { Some(self.items.remove(i).1) } else { None }
     }
 
-    pub fn iter(&self) -> impl Iterator<Item=(&K, &V)> {
+    pub fn iter(&self) -> impl Iterator<Item = (&K, &V)> {
         self.items.iter().map(|(k, v)| (k, v))
     }
 
@@ -67,11 +63,11 @@ impl<K: Eq + Clone, V> OrderedMap<K, V> {
         self.get(key).is_some()
     }
 
-    pub fn keys(&self) -> impl Iterator<Item=&K> {
+    pub fn keys(&self) -> impl Iterator<Item = &K> {
         self.items.iter().map(|(k, _)| k)
     }
 
-    pub fn values(&self) -> impl Iterator<Item=&V> {
+    pub fn values(&self) -> impl Iterator<Item = &V> {
         self.items.iter().map(|(_, v)| v)
     }
 }

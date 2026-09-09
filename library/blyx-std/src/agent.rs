@@ -10,7 +10,12 @@ pub enum AgentMessage {
 }
 
 #[derive(Debug)]
-pub enum AgentErrorKind { Disconnected, Timeout, ExecutionError, LlmError }
+pub enum AgentErrorKind {
+    Disconnected,
+    Timeout,
+    ExecutionError,
+    LlmError,
+}
 
 #[derive(Debug)]
 pub struct AgentError {
@@ -27,11 +32,17 @@ pub struct AgentHandle {
 
 impl AgentHandle {
     pub fn send(&self, msg: AgentMessage) -> Result<(), AgentError> {
-        self.sender.send(msg).map_err(|e| AgentError { kind: AgentErrorKind::Disconnected, message: e.to_string() })
+        self.sender
+            .send(msg)
+            .map_err(|e| AgentError { kind: AgentErrorKind::Disconnected, message: e.to_string() })
     }
 
     pub fn receive(&self) -> Result<AgentMessage, AgentError> {
-        self.receiver.lock().unwrap().recv().map_err(|e| AgentError { kind: AgentErrorKind::Disconnected, message: e.to_string() })
+        self.receiver
+            .lock()
+            .unwrap()
+            .recv()
+            .map_err(|e| AgentError { kind: AgentErrorKind::Disconnected, message: e.to_string() })
     }
 
     pub fn try_receive(&self) -> Option<AgentMessage> {
@@ -74,17 +85,11 @@ pub struct Agent {
 
 impl Agent {
     pub fn new(name: &str) -> Self {
-        Self {
-            name: name.to_string(),
-            config: AgentConfig::default(),
-        }
+        Self { name: name.to_string(), config: AgentConfig::default() }
     }
 
     pub fn with_config(name: &str, config: AgentConfig) -> Self {
-        Self {
-            name: name.to_string(),
-            config,
-        }
+        Self { name: name.to_string(), config }
     }
 
     pub fn spawn(self, task: String) -> AgentHandle {
@@ -98,7 +103,7 @@ impl Agent {
                     AgentMessage::Terminate => break,
                     AgentMessage::Text(t) => {
                         let _ = tx2.send(AgentMessage::Text(format!("Echo: {}", t)));
-                    },
+                    }
                     _ => {}
                 }
             }

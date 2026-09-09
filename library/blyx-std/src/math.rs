@@ -1,5 +1,11 @@
 pub fn clamp<T: PartialOrd>(v: T, min: T, max: T) -> T {
-    if v < min { min } else if v > max { max } else { v }
+    if v < min {
+        min
+    } else if v > max {
+        max
+    } else {
+        v
+    }
 }
 
 pub fn lerp(a: f64, b: f64, t: f64) -> f64 {
@@ -24,12 +30,20 @@ pub fn lcm(a: u64, b: u64) -> u64 {
 }
 
 pub fn is_prime(n: u64) -> bool {
-    if n <= 1 { return false; }
-    if n <= 3 { return true; }
-    if n % 2 == 0 || n % 3 == 0 { return false; }
+    if n <= 1 {
+        return false;
+    }
+    if n <= 3 {
+        return true;
+    }
+    if n % 2 == 0 || n % 3 == 0 {
+        return false;
+    }
     let mut i = 5;
     while i * i <= n {
-        if n % i == 0 || n % (i + 2) == 0 { return false; }
+        if n % i == 0 || n % (i + 2) == 0 {
+            return false;
+        }
         i += 6;
     }
     true

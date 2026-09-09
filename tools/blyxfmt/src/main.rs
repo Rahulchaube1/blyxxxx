@@ -63,8 +63,8 @@ fn format_code(code: &str) -> String {
         let normalized_indent = " ".repeat((spaces_count / 4) * 4);
 
         if !t.is_empty() {
-             result.push_str(&normalized_indent);
-             result.push_str(t.trim_start());
+            result.push_str(&normalized_indent);
+            result.push_str(t.trim_start());
         }
         result.push('\n');
     }

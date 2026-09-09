@@ -36,11 +36,19 @@ pub fn format_table(headers: &[&str], rows: &[Vec<String>]) -> String {
 }
 
 pub fn pad_left(s: &str, width: usize) -> String {
-    if s.len() >= width { s.to_string() } else { format!("{}{}", repeat_str(" ", width - s.len()), s) }
+    if s.len() >= width {
+        s.to_string()
+    } else {
+        format!("{}{}", repeat_str(" ", width - s.len()), s)
+    }
 }
 
 pub fn pad_right(s: &str, width: usize) -> String {
-    if s.len() >= width { s.to_string() } else { format!("{}{}", s, repeat_str(" ", width - s.len())) }
+    if s.len() >= width {
+        s.to_string()
+    } else {
+        format!("{}{}", s, repeat_str(" ", width - s.len()))
+    }
 }
 
 pub fn truncate(s: &str, max_len: usize) -> String {

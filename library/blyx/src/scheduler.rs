@@ -3,7 +3,7 @@
 // Open Source — MIT + Apache 2.0
 
 use std::collections::BinaryHeap;
-use std::sync::{Arc, Mutex, Condvar};
+use std::sync::{Arc, Condvar, Mutex};
 use std::thread;
 use std::time::Duration;
 
@@ -14,7 +14,9 @@ struct PriorityTask {
 }
 
 impl PartialEq for PriorityTask {
-    fn eq(&self, other: &Self) -> bool { self.priority == other.priority }
+    fn eq(&self, other: &Self) -> bool {
+        self.priority == other.priority
+    }
 }
 impl Eq for PriorityTask {}
 impl PartialOrd for PriorityTask {
@@ -140,7 +142,9 @@ mod tests {
 
         for _ in 0..10 {
             let c = Arc::clone(&counter);
-            sched.schedule(move || { c.fetch_add(1, Ordering::SeqCst); });
+            sched.schedule(move || {
+                c.fetch_add(1, Ordering::SeqCst);
+            });
         }
 
         // Give workers time to drain
@@ -160,9 +164,15 @@ mod tests {
         let l2 = Arc::clone(&log);
         let l3 = Arc::clone(&log);
 
-        sched.schedule_priority(200, move || { l1.lock().unwrap().push("low"); });
-        sched.schedule_priority(50, move || { l2.lock().unwrap().push("high"); });
-        sched.schedule_priority(100, move || { l3.lock().unwrap().push("medium"); });
+        sched.schedule_priority(200, move || {
+            l1.lock().unwrap().push("low");
+        });
+        sched.schedule_priority(50, move || {
+            l2.lock().unwrap().push("high");
+        });
+        sched.schedule_priority(100, move || {
+            l3.lock().unwrap().push("medium");
+        });
 
         thread::sleep(Duration::from_millis(100));
         sched.shutdown();

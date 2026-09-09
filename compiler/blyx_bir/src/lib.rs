@@ -15,9 +15,27 @@ pub struct FuncId(pub usize);
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum BirType {
-    I8, I16, I32, I64, I128, U8, U16, U32, U64, U128, F16, F32, F64, Usize, Isize,
-    Bool, Char, Str, String_,
-    Ptr(Box<BirType>), MutPtr(Box<BirType>),
+    I8,
+    I16,
+    I32,
+    I64,
+    I128,
+    U8,
+    U16,
+    U32,
+    U64,
+    U128,
+    F16,
+    F32,
+    F64,
+    Usize,
+    Isize,
+    Bool,
+    Char,
+    Str,
+    String_,
+    Ptr(Box<BirType>),
+    MutPtr(Box<BirType>),
     Slice(Box<BirType>),
     Array(Box<BirType>, usize),
     Tensor(Box<BirType>, Vec<usize>),
@@ -28,7 +46,8 @@ pub enum BirType {
     Stream(Box<BirType>),
     Promise(Box<BirType>),
     Closure(Vec<BirType>, Box<BirType>),
-    Unit, Never,
+    Unit,
+    Never,
     Opaque(String),
 }
 
@@ -143,17 +162,20 @@ impl BirBuilder {
             args.push((val, ty));
         }
 
-        self.cfg.functions.insert(func_id, FunctionData {
-            id: func_id,
-            name: f.name.clone(),
-            blocks: vec![BasicBlock {
-                id: entry_block,
-                instructions: Vec::new(),
-                terminator: None,
-            }],
-            args,
-            return_type: ret_ty,
-        });
+        self.cfg.functions.insert(
+            func_id,
+            FunctionData {
+                id: func_id,
+                name: f.name.clone(),
+                blocks: vec![BasicBlock {
+                    id: entry_block,
+                    instructions: Vec::new(),
+                    terminator: None,
+                }],
+                args,
+                return_type: ret_ty,
+            },
+        );
 
         self.build_block(&f.body);
         if let Some(func_data) = self.cfg.functions.get_mut(&func_id) {
@@ -180,17 +202,20 @@ impl BirBuilder {
             args.push((val, ty));
         }
 
-        self.cfg.functions.insert(func_id, FunctionData {
-            id: func_id,
-            name: t.name.clone(),
-            blocks: vec![BasicBlock {
-                id: entry_block,
-                instructions: Vec::new(),
-                terminator: None,
-            }],
-            args,
-            return_type: ret_ty,
-        });
+        self.cfg.functions.insert(
+            func_id,
+            FunctionData {
+                id: func_id,
+                name: t.name.clone(),
+                blocks: vec![BasicBlock {
+                    id: entry_block,
+                    instructions: Vec::new(),
+                    terminator: None,
+                }],
+                args,
+                return_type: ret_ty,
+            },
+        );
 
         self.build_block(&t.body);
     }
@@ -264,7 +289,9 @@ impl BirBuilder {
             }
             blyx_ast::Expr::Generate { model, prompt, .. } => self.build_generate(model, prompt),
             blyx_ast::Expr::Reason { context, .. } => self.build_reason(context),
-            blyx_ast::Expr::Orchestrate { agents, task, .. } => self.build_orchestrate(agents, task),
+            blyx_ast::Expr::Orchestrate { agents, task, .. } => {
+                self.build_orchestrate(agents, task)
+            }
             blyx_ast::Expr::Call(callee, args, _) => {
                 let val = self.new_value();
                 let mut arg_vals = Vec::new();
@@ -287,7 +314,11 @@ impl BirBuilder {
         }
     }
 
-    pub fn build_generate(&mut self, model: &blyx_ast::Expr, prompt: &blyx_ast::Expr) -> (ValueId, BirType) {
+    pub fn build_generate(
+        &mut self,
+        model: &blyx_ast::Expr,
+        prompt: &blyx_ast::Expr,
+    ) -> (ValueId, BirType) {
         let (model_val, _) = self.build_expr(model);
         let (prompt_val, _) = self.build_expr(prompt);
         let dest = self.new_value();
@@ -302,7 +333,11 @@ impl BirBuilder {
         (dest, BirType::String_)
     }
 
-    pub fn build_orchestrate(&mut self, agents: &[blyx_ast::Expr], task: &blyx_ast::Expr) -> (ValueId, BirType) {
+    pub fn build_orchestrate(
+        &mut self,
+        agents: &[blyx_ast::Expr],
+        task: &blyx_ast::Expr,
+    ) -> (ValueId, BirType) {
         let mut agent_vals = Vec::new();
         for a in agents {
             agent_vals.push(self.build_expr(a).0);
@@ -368,10 +403,7 @@ pub struct LlvmIrEmitter {
 
 impl LlvmIrEmitter {
     pub fn new(cfg: ControlFlowGraph) -> Self {
-        Self {
-            cfg,
-            output: String::new(),
-        }
+        Self { cfg, output: String::new() }
     }
 
     pub fn emit_all(&mut self) -> String {
@@ -412,27 +444,48 @@ impl LlvmIrEmitter {
             args_str.push(format!("{} %v{}", Self::type_to_llvm(ty), vid.0));
         }
 
-        self.output.push_str(&format!("define {} @{}({}) {{\n", ret_ty, func.name, args_str.join(", ")));
+        self.output.push_str(&format!(
+            "define {} @{}({}) {{\n",
+            ret_ty,
+            func.name,
+            args_str.join(", ")
+        ));
 
         for block in &func.blocks {
             self.output.push_str(&format!("b{}:\n", block.id.0));
             for instr in &block.instructions {
                 match instr {
                     Instruction::LlmGenerate(dest, model, prompt) => {
-                        self.output.push_str(&format!("  %v{} = call ptr @blyx_rt_llm_generate(ptr %v{}, ptr %v{})\n", dest.0, model.0, prompt.0));
+                        self.output.push_str(&format!(
+                            "  %v{} = call ptr @blyx_rt_llm_generate(ptr %v{}, ptr %v{})\n",
+                            dest.0, model.0, prompt.0
+                        ));
                     }
                     Instruction::LlmReason(dest, ctx) => {
-                        self.output.push_str(&format!("  %v{} = call ptr @blyx_rt_llm_reason(ptr %v{})\n", dest.0, ctx.0));
+                        self.output.push_str(&format!(
+                            "  %v{} = call ptr @blyx_rt_llm_reason(ptr %v{})\n",
+                            dest.0, ctx.0
+                        ));
                     }
                     Instruction::AgentOrchestrate(dest, agents, task) => {
                         self.output.push_str(&format!("  %v{} = call ptr @blyx_rt_agent_orchestrate(ptr null, i64 {}, ptr %v{})\n", dest.0, agents.len(), task.0));
                     }
                     Instruction::CallDirect(dest, name, args, _) => {
-                        let arg_list: Vec<String> = args.iter().map(|a| format!("ptr %v{}", a.0)).collect();
+                        let arg_list: Vec<String> =
+                            args.iter().map(|a| format!("ptr %v{}", a.0)).collect();
                         if let Some(d) = dest {
-                            self.output.push_str(&format!("  %v{} = call void @{}({})\n", d.0, name, arg_list.join(", ")));
+                            self.output.push_str(&format!(
+                                "  %v{} = call void @{}({})\n",
+                                d.0,
+                                name,
+                                arg_list.join(", ")
+                            ));
                         } else {
-                            self.output.push_str(&format!("  call void @{}({})\n", name, arg_list.join(", ")));
+                            self.output.push_str(&format!(
+                                "  call void @{}({})\n",
+                                name,
+                                arg_list.join(", ")
+                            ));
                         }
                     }
                     Instruction::MacroCall(name, _) => {
@@ -444,7 +497,11 @@ impl LlvmIrEmitter {
                         self.output.push_str(&format!("  %v{} = add i64 0, {}\n", dest.0, val));
                     }
                     Instruction::ConstBool(dest, val) => {
-                        self.output.push_str(&format!("  %v{} = add i8 0, {}\n", dest.0, if *val { 1 } else { 0 }));
+                        self.output.push_str(&format!(
+                            "  %v{} = add i8 0, {}\n",
+                            dest.0,
+                            if *val { 1 } else { 0 }
+                        ));
                     }
                     _ => {}
                 }
@@ -452,7 +509,9 @@ impl LlvmIrEmitter {
 
             match &block.terminator {
                 Some(Terminator::Return) => self.output.push_str("  ret void\n"),
-                Some(Terminator::ReturnVal(v)) => self.output.push_str(&format!("  ret {} %v{}\n", ret_ty, v.0)),
+                Some(Terminator::ReturnVal(v)) => {
+                    self.output.push_str(&format!("  ret {} %v{}\n", ret_ty, v.0))
+                }
                 _ => self.output.push_str("  ret void\n"),
             }
         }
