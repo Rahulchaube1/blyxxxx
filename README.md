@@ -92,7 +92,7 @@ Backend / Code Generation
 Native / Heterogeneous Targets
 ```
 
-The compiler is organized into separate crates for lexing, parsing, AST representation, semantic analysis, type checking, BIR, and the compiler driver. The workspace also contains runtime/library and developer-tooling crates. fileciteturn68file0
+The compiler is organized into separate crates for lexing, parsing, AST representation, semantic analysis, type checking, BIR, and the compiler driver. The workspace also contains runtime/library and developer-tooling crates.
 
 ## Repository layout
 
