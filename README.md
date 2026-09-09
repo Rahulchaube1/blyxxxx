@@ -1,55 +1,81 @@
 <div align="center">
-  <img src="blyxlogo.png" alt="Blyx Logo" width="160" />
-  <h1>Blyx Programming Language</h1>
-  <p><b>AI-Native Systems Programming Language for High-Performance, Memory-Safe Heterogeneous Computing.</b></p>
-  <p><i>A flagship open-source technology engineered and backed by <strong>Neuroblyx</strong>.</i></p>
+  <img src="blyxlogo.png" alt="Blyx logo" width="140" />
+  <h1>Blyx</h1>
+  <p><strong>An open-source AI-native systems programming language.</strong></p>
+  <p>Exploring a programming model where AI, systems programming, concurrency, tensors, heterogeneous computing, and native compilation are designed together.</p>
 
   <p>
-    <a href="https://blyx-lang.space"><img src="https://img.shields.io/badge/Website-blyx--lang.space-00f2fe?style=for-the-badge&logo=google-chrome&logoColor=black" alt="Website" /></a>
-    <a href="https://github.com/Rahulchaube1/blyxxxx"><img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
-    <a href="https://buymeacoffee.com/rahulchaube"><img src="https://img.shields.io/badge/Sponsor-Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me A Coffee" /></a>
-    <a href="https://blyx-lang.space/docs"><img src="https://img.shields.io/badge/Docs-Reference-4facfe?style=for-the-badge&logo=book&logoColor=white" alt="Documentation" /></a>
-    <a href="https://play.blyx-lang.space"><img src="https://img.shields.io/badge/Playground-Try_Online-38bdf8?style=for-the-badge&logo=codeforces&logoColor=white" alt="Playground" /></a>
-    <img src="https://img.shields.io/badge/License-MIT%20%2F%20Apache--2.0-22c55e?style=for-the-badge" alt="License" />
-    <img src="https://img.shields.io/badge/Company-Neuroblyx-7f00ff?style=for-the-badge&logo=shield&logoColor=white" alt="Neuroblyx" />
+    <a href="https://www.blyx-lang.space/"><img src="https://img.shields.io/badge/Website-Blyx-111827?style=for-the-badge" alt="Blyx website" /></a>
+    <a href="https://www.blyx-lang.space/docs"><img src="https://img.shields.io/badge/Docs-Read-2563eb?style=for-the-badge" alt="Documentation" /></a>
+    <a href="https://play.blyx-lang.space"><img src="https://img.shields.io/badge/Playground-Try%20Blyx-0891b2?style=for-the-badge" alt="Playground" /></a>
+    <img src="https://img.shields.io/badge/Status-v0.1.0--alpha-f59e0b?style=for-the-badge" alt="Alpha status" />
+    <img src="https://img.shields.io/badge/License-MIT%20%2F%20Apache--2.0-16a34a?style=for-the-badge" alt="License" />
   </p>
 </div>
 
 ---
 
-## Executive Overview
+## What is Blyx?
 
-**Blyx** is an open-source, AI-native systems programming language built from the ground up to combine the high-level expressiveness of modern machine learning frameworks with the raw speed, deterministic memory control, and safety of low-level systems languages.
+**Blyx is an experimental open-source programming language for AI-oriented systems software.** It investigates how language and compiler design can make AI workloads, numerical computation, concurrency, heterogeneous execution, and native systems programming work together instead of being separate layers.
 
-Blyx is developed, stewarded, and maintained by **Neuroblyx**, an organization dedicated to pioneering next-generation intelligent systems software, compiler engineering, and high-performance computing infrastructure.
+Blyx is currently **alpha software**. The project is intended for experimentation, compiler research, systems programming exploration, and community feedback. APIs, syntax, tooling, and implementation details may change.
 
-Whether you are authoring high-throughput microservices, running multi-agent distributed actor topologies, training deep learning models with statically dimensioned tensors, or writing heterogeneous accelerator kernels, Blyx provides compile-time guarantees with zero runtime garbage collection overhead.
+### Design goals
 
----
+- **AI-native primitives** — language constructs such as `generate`, `reason`, `orchestrate`, and `task` explore how AI operations could become programmable language concepts.
+- **Static tensor types** — tensor rank and dimensions can be represented in the type system for experiments in compile-time validation.
+- **Systems-level control** — ownership, lifetimes, deterministic resource management, and native compilation are core design directions.
+- **Parallel and actor-oriented execution** — concurrency primitives explore safe, scalable parallel workloads.
+- **Heterogeneous computing** — the compiler architecture explores CPU, GPU, and accelerator-oriented execution.
+- **Native compilation** — Blyx uses an intermediate representation and LLVM-oriented compilation pipeline rather than requiring a managed runtime.
 
-## Why Blyx?
-
-- 🔒 **Memory Safety Without GC**: Strict affine ownership and lifetime semantics eliminate memory leaks, use-after-free errors, and data races at compile time without a runtime garbage collector.
-- ⚡ **Zero-Cost Abstractions**: Modern ergonomic constructs compile down directly to highly optimized LLVM machine code.
-- 𝚯 **Native Tensor Primitives**: First-class `tensor<T, D1, D2>` types with rank and shape verification verified statically by the compiler.
-- 🖥️ **Inline Heterogeneous GPU Execution**: Native `gpu { ... }` blocks compile seamlessly to SPIR-V and NVPTX target kernels without foreign function call penalties.
-- 🎭 **Lock-Free Actor Concurrency**: Work-stealing thread pools and lock-free message channels provide massive parallelism with zero deadlock hazards.
-- 🤖 **AI-Native Language Architecture**: Syntactic primitives designed for AI workloads, numerical computing, and autonomous multi-agent systems.
-- 🚀 **SSA-Driven Intermediate Representation (`blyx_bir`)**: An optimizing Static Single Assignment (SSA) pipeline coupled with the `IncrementalCacheEngine` for sub-second rebuilds.
-- 🌐 **Ubiquitous Cross-Platform Deployment**: Target Linux (x86_64, aarch64), Windows, macOS (Apple Silicon & Intel), and WebAssembly (WASM).
+> **Important:** Blyx is an evolving research/engineering project. Please verify feature availability against the current compiler and documentation rather than assuming every design goal is production-ready.
 
 ---
 
-## Language Syntax & Features
+## Compiler Architecture
 
-### 1. Hello World
+The current architecture is organized around a compiler pipeline designed for experimentation with optimization and heterogeneous targets:
+
+```text
+Blyx source
+    │
+    ▼
+Lexer / Parser
+    │
+    ▼
+AST + Type Checking
+    │
+    ├── Tensor shape/type analysis
+    │
+    ▼
+BIR / SSA
+    │
+    ▼
+LLVM-oriented code generation
+    │
+    ├── Native CPU targets
+    ├── GPU / accelerator targets (where implemented)
+    └── Other experimental targets
+```
+
+The repository contains the language implementation, compiler components, tooling, and supporting project infrastructure.
+
+---
+
+## Language Examples
+
+### Hello World
+
 ```blyx
 fn main() {
-    println!("Hello, World from Blyx & Neuroblyx!");
+    println!("Hello, World from Blyx!");
 }
 ```
 
-### 2. Statically Typed Functions & Value Returning
+### Functions
+
 ```blyx
 fn compute_sum(a: i32, b: i32) -> i32 {
     a + b
@@ -61,165 +87,142 @@ fn main() {
 }
 ```
 
-### 3. Native Tensor Types with Compile-Time Shapes
+### Tensor-oriented syntax
+
 ```blyx
 #![feature(blyx_experimental)]
 
 fn main() {
-    // Statically dimensioned 128x64 matrix tensor
     let weights: tensor<f32, 128, 64>;
-    println!("Weights tensor initialized with static shape [128, 64].");
 }
 ```
 
-### 4. Heterogeneous GPU Execution Blocks
-```blyx
-#![feature(blyx_experimental)]
-
-fn main() {
-    gpu {
-        // Heterogeneous compute kernel targeting GPU hardware
-        println!("Kernel executing on accelerator unit.");
-    };
-}
-```
-
-### 5. Actor Concurrency & Work-Stealing
-```blyx
-#![feature(blyx_experimental)]
-
-actor NetworkWorker {
-    worker_id: u64,
-}
-
-fn main() {
-    let _worker = NetworkWorker { worker_id: 1 };
-    println!("Actor instantiated with zero lock overhead.");
-}
-```
-
-### 6. Parallel Execution Blocks
-```blyx
-#![feature(blyx_experimental)]
-
-fn main() {
-    parallel {
-        // High-performance work-stealing parallel loop block
-    };
-}
-```
+Additional experimental examples are available in the documentation and playground.
 
 ---
 
-## Installation & Quick Start
+## Toolchain
 
-### 1. Install via `blyxup` Toolchain Manager
-The recommended way to install Blyx is via `blyxup`, the unified toolchain installer:
+The Blyx ecosystem is designed around a small set of focused developer tools. Availability and maturity vary by release.
 
-```bash
-# Install the stable toolchain channel
-blyxup install stable
+| Tool | Purpose |
+| --- | --- |
+| `blyxc` | Blyx compiler driver |
+| `blyxpkg` | Package and project management |
+| `blyxfmt` | Source formatting |
+| `blyxdoc` | Documentation generation |
+| `blyx-analyzer` | Language tooling / LSP |
+| `blyxdbg` | Debugging tooling |
+| `blyxprof` | Profiling tooling |
+| `blyxup` | Toolchain management |
 
-# Verify installation
-blyxc --version
-blyxpkg --version
-```
-
-### 2. Building & Running Programs
-
-#### Direct Compiler Execution (`blyxc`):
-```bash
-blyxc hello.blyx -o hello
-./hello
-```
-
-#### Package Manager Workflow (`blyxpkg`):
-```bash
-# Create a new Blyx project
-blyxpkg new my_ai_service
-cd my_ai_service
-
-# Build and run the project
-blyxpkg run
-```
+See the official documentation for the current implementation status of each component.
 
 ---
 
-## Ecosystem Toolchain
+## Installation
 
-The Blyx ecosystem delivers an integrated suite of developer tooling engineered for enterprise productivity:
+Official installation instructions and platform-specific binaries are maintained on the Blyx website:
 
-| Binary | Description |
-| :--- | :--- |
-| **`blyxc`** | The official compiler driver targeting LLVM IR, BIR, and native binaries. |
-| **`blyxpkg`** | Official package manager managing `Blyx.toml` dependencies, workspaces, and builds. |
-| **`blyxfmt`** | Deterministic code formatter enforcing consistent, idiomatic code formatting. |
-| **`blyxdoc`** | Automated HTML documentation generator from source doc comments. |
-| **`blyx-analyzer`** | Official Language Server Protocol (LSP) providing diagnostics, autocomplete, and go-to-definition. |
-| **`blyxdbg`** | Interactive debugger with breakpoint, register, and thread inspection support. |
-| **`blyxprof`** | Profiler analyzing CPU cycles, heap allocations, and GPU accelerator execution. |
-| **`blyxup`** | Toolchain version manager supporting `stable`, `beta`, and `nightly` release tracks. |
+**https://www.blyx-lang.space/download**
+
+For a quick introduction, start with the official learning resources:
+
+**https://www.blyx-lang.space/learn**
 
 ---
 
-## ☕ Support & Sponsorship
+## Try Blyx
 
-Blyx is an independent, community-driven open-source initiative powered by **Neuroblyx** and founded by **Rahul Chaube**. 
+You can explore the language through the online playground:
 
-If you or your company benefit from Blyx, please consider supporting ongoing development, compiler research, test farm infrastructure, and community tooling:
+**https://play.blyx-lang.space**
 
-<div align="center">
-  <a href="https://buymeacoffee.com/rahulchaube">
-    <img src="https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support%20Blyx-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Support on Buy Me A Coffee" height="50" />
-  </a>
-  <p><b>👉 Sponsor directly: <a href="https://buymeacoffee.com/rahulchaube">https://buymeacoffee.com/rahulchaube</a></b></p>
-</div>
-
-Your sponsorship directly funds:
-- Dedicated continuous integration runners and GPU build matrices.
-- Continuous maintenance of the `blyxc` compiler, `blyx_bir` SSA optimizations, and standard library.
-- Documentation, tutorials, and online interactive playground hosting.
-- Bounties and grants for open-source contributors.
+The playground is the fastest way to experiment without setting up the complete local toolchain.
 
 ---
 
-## Enterprise & Commercial Solutions
+## Documentation
 
-For organizations seeking dedicated enterprise support, custom compiler target backends, performance auditing, or on-premise deployments:
-
-- **Enterprise Inquiries**: [contact@neuroblyx.com](mailto:contact@neuroblyx.com)
-- **Official Web Portal**: [https://blyx-lang.space](https://blyx-lang.space)
-- **Interactive Playground**: [https://play.blyx-lang.space](https://play.blyx-lang.space)
-
----
-
-## Open Source Governance & Contributing
-
-We welcome contributions from developers, researchers, and systems enthusiasts worldwide!
-
-- 📖 Review [CONTRIBUTING.md](CONTRIBUTING.md) for pull request guidelines, developer setup, and coding conventions.
-- 🤝 Follow our [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) to maintain an inclusive and respectful environment.
-- 🏛️ Read our [GOVERNANCE.md](GOVERNANCE.md) to understand the Neuroblyx project leadership model and working groups.
-- 📝 Participate in language evolution via the [RFC Process](RFC/template.md).
-- 🛡️ Report security vulnerabilities responsibly in accordance with [SECURITY.md](SECURITY.md).
+- **Website:** https://www.blyx-lang.space/
+- **Documentation:** https://www.blyx-lang.space/docs
+- **Learn Blyx:** https://www.blyx-lang.space/learn
+- **Compiler architecture:** https://www.blyx-lang.space/compiler
+- **Playground:** https://play.blyx-lang.space
+- **Community & RFCs:** https://www.blyx-lang.space/community
 
 ---
 
-## Maintainers & Leadership
+## Contributing
 
-- **Rahul Chaube** ([@Rahulchaube1](https://github.com/Rahulchaube1)) — Co-Founder & Lead Compiler Architect
-- **Neuroblyx Core Team** — Systems, Tooling, and Runtime Engineering
-- **Ujjwal Chaudhary** ([@oyyPoodles](https://github.com/oyyPoodles/)) — Co-Founder & COO
-- **Neuroblyx Core Team**
-- **Gautam Yadav** ([@ydvGautam](https://github.com/ydvGautam)) — Co-Founder 
-- **Neuroblyx Core Team**
+Blyx is built in public and welcomes developers interested in programming languages, compilers, AI systems, numerical computing, GPU programming, runtimes, tooling, and developer infrastructure.
+
+Good places to start:
+
+1. Read the documentation and run an example.
+2. Explore open issues and current compiler limitations.
+3. Propose language or compiler changes through the project's RFC process.
+4. Submit focused pull requests with tests and documentation where appropriate.
+5. Share reproducible benchmarks, bugs, and implementation feedback.
+
+Before contributing, please read the repository contribution and security guidelines.
+
+---
+
+## Project Status
+
+**Current release: `v0.1.0-alpha`**
+
+Blyx is early-stage. The roadmap includes continued work across the compiler, type system, runtime, standard library, tooling, package ecosystem, documentation, and heterogeneous execution.
+
+If you are evaluating Blyx seriously, treat the repository and official documentation as the source of truth for what is currently implemented.
+
+---
+
+## Benchmarks
+
+Performance measurements are useful only when they are reproducible. Benchmark results for Blyx should therefore be accompanied by the benchmark source, compiler version, target hardware, compiler flags, and methodology.
+
+See the project's benchmark documentation for current results and methodology:
+
+**https://www.blyx-lang.space/benchmarks**
+
+---
+
+## Community
+
+Blyx is looking for people who want to challenge its design—not just agree with it.
+
+We especially welcome feedback on:
+
+- AI-native language primitives
+- type-system design for tensor workloads
+- ownership and resource management
+- compiler architecture and IR design
+- concurrency models
+- GPU / heterogeneous execution
+- package management and tooling
+- language ergonomics
+
+Open an issue or discussion with a concrete example, proposal, benchmark, or critique.
+
+---
+
+## Maintainers
+
+- **Rahul Chaube** — Lead Compiler Architect
+- **Ujjwal Chaudhary** — Core Contributor / Systems Engineering
+- **Gautam Yadav** — Core Contributor
+
+The project is developed within the broader Neuroblyx ecosystem.
 
 ---
 
 ## License
 
-Blyx is free, open-source software dual-licensed under:
-- **MIT License** ([LICENSE-MIT](LICENSE-MIT))
-- **Apache License, Version 2.0** ([LICENSE-APACHE](LICENSE-APACHE))
+Blyx is dual-licensed under:
 
-Copyright &copy; 2026 Neuroblyx and The Blyx Project Contributors.
+- [MIT License](LICENSE-MIT)
+- [Apache License 2.0](LICENSE-APACHE)
+
+Copyright © 2026 The Blyx Project Contributors.
