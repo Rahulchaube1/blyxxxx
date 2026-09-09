@@ -4,17 +4,29 @@ title: Blyx Programming Language Documentation
 nav_order: 1
 ---
 
-# The Blyx Programming Language Documentation
+# Blyx Programming Language Documentation
 
-Official Website: [https://blyx-lang.space](https://blyx-lang.space)
-Playground: [https://play.blyx-lang.space](https://play.blyx-lang.space)
+Blyx is an experimental, open-source AI-native systems programming language.
 
----
+Official website: https://blyx-lang.space
+Playground: https://play.blyx-lang.space
 
-## Quick Links
+## Start here
 
 - [The Blyx Book](book/01_introduction.md)
+- [Installation](../INSTALL.md)
 - [API Reference](api_reference.md)
-- [Blyx V1 Architecture](blyx_v1_architecture.md)
-- [BIR Pipeline Specification](bir_pipeline.md)
-- [Beta v1.0 Release Checklist](beta_release_checklist.md)
+- [Compiler Architecture](compiler_architecture.md)
+- [Frontend Architecture](frontend_architecture.md)
+- [BIR Pipeline](bir_pipeline.md)
+- [Language Specification](specification.md)
+- [Repository Health](repository_health.md)
+- [Reproducible Benchmarks](REPRODUCIBLE_BENCHMARKS.md)
+- [RFC Process](RFC_PROCESS.md)
+- [Contributing](../CONTRIBUTING.md)
+
+## Project status
+
+Blyx is currently `v0.1.0-alpha`. The frontend can tokenize and parse Blyx source, while native code generation and complete program execution remain under development.
+
+Documentation should distinguish implemented behavior from design proposals and roadmap work.
