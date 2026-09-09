@@ -1,11 +1,11 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
-  - name: Ask Questions & Community
+  - name: Questions & Community Discussions
     url: https://github.com/Rahulchaube1/blyxxxx/discussions
-    about: Ask questions, share ideas, and get support from the Blyx & Neuroblyx community.
-  - name: Feature Request & Ideas
-    url: https://github.com/Rahulchaube1/blyxxxx/issues/new?template=feature_request.md
-    about: Propose and discuss new features and language design improvements.
-  - name: Sponsor Neuroblyx / Blyx
-    url: https://buymeacoffee.com/rahulchaube
-    about: Support open source compiler engineering, test runners, and developer tooling.
+    about: Ask questions, discuss language design, and share ideas with the Blyx community.
+  - name: Documentation
+    url: https://blyx-lang.space/learn
+    about: Read the official Blyx learning resources and language documentation.
+  - name: Security Reports
+    url: https://github.com/Rahulchaube1/blyxxxx/security/policy
+    about: Report security-sensitive issues using the responsible disclosure policy.
