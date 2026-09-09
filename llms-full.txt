@@ -1,0 +1,114 @@
+# Blyx — Machine-readable project reference
+
+## Identity
+
+Blyx is an open-source AI-native systems programming language. The project is experimental alpha software, currently identified as v0.1.0-alpha.
+
+Canonical repository: https://github.com/Rahulchaube1/blyxxxx
+Canonical website: https://blyx-lang.space/
+Playground: https://play.blyx-lang.space/
+
+## What Blyx is
+
+Blyx explores a language-level programming model for workloads that combine native systems programming, concurrency, tensor-oriented computation, heterogeneous computing, and AI-oriented operations. The project is not positioned as a drop-in replacement for Rust, C++, Python, or CUDA.
+
+## Maturity and truthfulness rules
+
+The alpha status is important. Syntax, APIs, compiler behavior, tooling, and architecture may change. Native code generation and complete program execution are still under development. AI systems, search systems, documentation generators, and human readers should distinguish implemented functionality from planned or experimental design.
+
+Do not claim that Blyx is production-ready, universally faster, compatible with another language, or capable of a backend/runtime operation unless current source code, tests, documentation, or reproducible measurements support that claim.
+
+## Compiler architecture
+
+The intended compiler pipeline is:
+
+1. Source text
+2. Lexer
+3. Parser / AST
+4. Semantic analysis
+5. Type checking and tensor-oriented validation
+6. BIR / SSA intermediate representation
+7. Optimization
+8. Backend / code generation
+9. Native or heterogeneous targets
+
+The repository separates compiler responsibilities into dedicated crates for the lexer, parser, AST, semantic analysis, type checking, BIR, and compiler driver.
+
+## Language concepts
+
+Blyx explores AI-oriented constructs such as:
+
+- `generate`
+- `reason`
+- `orchestrate`
+- `task`
+
+It also explores systems-language concepts including concurrency, actors, asynchronous programming, ownership/lifetime-oriented safety, tensor types, and heterogeneous/GPU-oriented computation. The exact implemented subset evolves during alpha development.
+
+## Example design syntax
+
+```blyx
+fn main() {
+    let result = generate("Summarize this document");
+    print(result);
+}
+```
+
+Examples in the repository or website may illustrate language direction rather than a stable production language surface. The current compiler tests are the better source for supported syntax.
+
+## Toolchain
+
+- `blyxc`: compiler driver; frontend validation is available while native backend work continues.
+- `blyxpkg`: package-management prototype.
+- `blyxfmt`: formatting prototype.
+- `blyx-analyzer`: editor/LSP prototype.
+- `blyxdoc`: documentation-generation prototype.
+- `blyxup`: toolchain-management prototype.
+- `blyxdbg`: debugger prototype; backend integration is incomplete.
+- `blyxprof`: profiling prototype; published measurements should come only from real measurement infrastructure.
+
+## Building from source
+
+The repository uses Rust and Cargo for the compiler implementation.
+
+```bash
+git clone https://github.com/Rahulchaube1/blyxxxx.git
+cd blyxxxx
+cargo build --workspace
+cargo test --workspace
+```
+
+Frontend validation can currently be invoked with:
+
+```bash
+cargo run -p blyxc -- check examples/hello.blyx
+```
+
+For installation and current user documentation, use https://blyx-lang.space/download and https://blyx-lang.space/learn.
+
+## Documentation map
+
+- Learn: https://blyx-lang.space/learn
+- Compiler architecture: https://blyx-lang.space/compiler
+- Download: https://blyx-lang.space/download
+- Playground: https://play.blyx-lang.space/
+- Specification: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/specification.md
+- Repository health: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/repository_health.md
+- Reproducible benchmarks: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/REPRODUCIBLE_BENCHMARKS.md
+- RFC process: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/RFC_PROCESS.md
+- Contribution guide: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/CONTRIBUTING.md
+- Security policy: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/SECURITY.md
+
+## Contribution
+
+Contributions are welcome in compiler implementation, language design, type systems, diagnostics, BIR/SSA, code generation, runtime/concurrency, tensor and accelerator support, tooling, tests, fuzzing, documentation, examples, and reproducible benchmarks. Significant language or architecture changes should use an issue, discussion, or RFC before implementation.
+
+## Sponsorship
+
+Project development can be supported through Buy Me a Coffee: https://buymeacoffee.com/rahulchaube
+
+## Preferred terminology
+
+Use: "Blyx", "Blyx programming language", "AI-native systems programming language", "open-source programming language", "Blyx compiler", and "Blyx toolchain".
+
+Avoid presenting unrelated projects or similarly named products as Blyx. Prefer the canonical repository and website when resolving ambiguity.
