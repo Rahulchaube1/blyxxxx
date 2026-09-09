@@ -1,10 +1,10 @@
 use std::env;
 use std::fs;
 use std::path::Path;
-use std::process::Command;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
+
     if args.len() < 2 {
         print_usage();
         return;
@@ -16,85 +16,46 @@ fn main() {
                 eprintln!("Usage: blyxpkg new <name>");
                 return;
             }
-            let name = &args[2];
-            create_project(name);
-        }
-        "build" => {
-            build_project();
-        }
-        "run" => {
-            if build_project() {
-                let bin = Path::new("target").join("debug").join("main");
-                if bin.exists() {
-                    let mut cmd = Command::new(&bin);
-                    let _ = cmd.status();
-                } else {
-                    eprintln!("Error: target/debug/main not found after build");
-                }
-            }
-        }
-        "test" => {
-            if Path::new("tests").exists() {
-                println!("Running tests...");
-            } else {
-                eprintln!("No tests directory found");
-            }
+            create_project(&args[2]);
         }
         "clean" => {
-            let _ = fs::remove_dir_all("target");
-            println!("Cleaned target directory");
-        }
-        "add" => {
-            if args.len() < 3 {
-                eprintln!("Usage: blyxpkg add <dep>");
-                return;
+            if fs::remove_dir_all("target").is_ok() {
+                println!("Cleaned target directory");
+            } else {
+                println!("No target directory to clean");
             }
-            let dep = &args[2];
-            println!("Added dependency: {}", dep);
         }
-        "publish" => {
-            println!("Publishing to blyx.land registry...");
+        "build" | "run" | "test" | "add" | "publish" => {
+            eprintln!("blyxpkg: '{}' is not implemented yet.", args[1]);
+            eprintln!("The command is reserved for the evolving Blyx package-management interface.");
         }
         _ => print_usage(),
     }
 }
 
 fn print_usage() {
-    println!("blyxpkg - Blyx Package Manager");
+    println!("blyxpkg — Blyx package manager prototype");
     println!("Commands: new, build, run, test, clean, add, publish");
 }
 
 fn create_project(name: &str) {
-    fs::create_dir_all(format!("{}/src", name)).unwrap();
-    fs::write(format!("{}/Blyx.toml", name), format!("[package]\nname = \"{}\"\nversion = \"0.1.0\"\n", name)).unwrap();
-    fs::write(format!("{}/src/main.blyx", name), "fn main() {\n    println(\"Hello from Blyx!\");\n}\n").unwrap();
-    println!("Created new project '{}'", name);
-}
-
-fn build_project() -> bool {
-    if !Path::new("Blyx.toml").exists() {
-        eprintln!("Error: no Blyx.toml found in current directory");
-        return false;
+    let root = Path::new(name);
+    if let Err(error) = fs::create_dir_all(root.join("src")) {
+        eprintln!("Failed to create project: {error}");
+        return;
     }
 
-    let status = Command::new("blyxc")
-        .arg("build")
-        .arg("src/main.blyx")
-        .status();
+    let manifest = format!("[package]\nname = \"{name}\"\nversion = \"0.1.0\"\n");
+    let main = "fn main() {\n    print(\"Hello from Blyx!\");\n}\n";
 
-    match status {
-        Ok(s) => {
-            if s.success() {
-                println!("Build successful");
-                true
-            } else {
-                eprintln!("Build failed");
-                false
-            }
-        }
-        Err(e) => {
-            eprintln!("Failed to execute blyxc: {}", e);
-            false
-        }
+    if let Err(error) = fs::write(root.join("Blyx.toml"), manifest) {
+        eprintln!("Failed to write Blyx.toml: {error}");
+        return;
     }
+    if let Err(error) = fs::write(root.join("src/main.blyx"), main) {
+        eprintln!("Failed to write src/main.blyx: {error}");
+        return;
+    }
+
+    println!("Created Blyx project '{name}'");
 }
