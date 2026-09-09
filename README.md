@@ -168,6 +168,7 @@ Native compilation and execution are tracked separately and are not advertised a
 - **Repository health:** [`docs/repository_health.md`](docs/repository_health.md)
 - **Reproducible benchmarks:** [`docs/REPRODUCIBLE_BENCHMARKS.md`](docs/REPRODUCIBLE_BENCHMARKS.md)
 - **RFC process:** [`docs/RFC_PROCESS.md`](docs/RFC_PROCESS.md)
+- **Marketing & community kit:** [`docs/MARKETING_KIT.md`](docs/MARKETING_KIT.md)
 - **AI-readable project index:** [`llms.txt`](llms.txt)
 - **Detailed AI-readable reference:** [`llms-full.txt`](llms-full.txt)
 - **Citation metadata:** [`CITATION.cff`](CITATION.cff)
@@ -197,11 +198,23 @@ Performance numbers should therefore be treated as project measurements, not uni
 
 Blyx is intentionally open to criticism and experimentation. Useful contributions include compiler implementation, parser and diagnostics improvements, type-system design, BIR/SSA work, runtime and concurrency work, tensor and accelerator support, tooling, examples, documentation, tests, fuzzing, reproducible benchmarks, and language-design RFCs.
 
-For substantial language or compiler changes, start with an issue, discussion, or RFC before investing in a large implementation. See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`RFC/`](RFC/).
+For substantial language or compiler changes, start with an issue or RFC before investing in a large implementation. See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`RFC/`](RFC/).
+
+### Good first contributions
+
+New contributors can start with focused work that is easy to review:
+
+- [Parser regression tests](https://github.com/Rahulchaube1/blyxxxx/issues/5)
+- [Formatter idempotence tests](https://github.com/Rahulchaube1/blyxxxx/issues/6)
+- [A verified minimal example](https://github.com/Rahulchaube1/blyxxxx/issues/7)
+- [Lexer edge-case tests](https://github.com/Rahulchaube1/blyxxxx/issues/8)
+- [Compiler diagnostic tests](https://github.com/Rahulchaube1/blyxxxx/issues/9)
+
+For larger compiler work, see [the native-backend milestone discussion](https://github.com/Rahulchaube1/blyxxxx/issues/10).
 
 ## Community
 
-Questions, design discussions, feature proposals, and implementation feedback are welcome through GitHub Discussions and Issues.
+Questions, design proposals, feature requests, implementation feedback, and bug reports are welcome through GitHub Issues.
 
 Please report security-sensitive vulnerabilities through [`SECURITY.md`](SECURITY.md), not a public issue.
 
