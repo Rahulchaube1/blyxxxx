@@ -1,226 +1,242 @@
 <div align="center">
   <img src="blyxlogo.png" alt="Blyx logo" width="140" />
-  <h1>Blyx</h1>
-  <p><strong>An open-source AI-native systems programming language.</strong></p>
-  <p>Exploring a programming model where AI, systems programming, concurrency, tensors, heterogeneous computing, and native compilation are designed together.</p>
 
-  <p>
-    <a href="https://www.blyx-lang.space/"><img src="https://img.shields.io/badge/Website-Blyx-111827?style=for-the-badge" alt="Blyx website" /></a>
-    <a href="https://www.blyx-lang.space/docs"><img src="https://img.shields.io/badge/Docs-Read-2563eb?style=for-the-badge" alt="Documentation" /></a>
-    <a href="https://play.blyx-lang.space"><img src="https://img.shields.io/badge/Playground-Try%20Blyx-0891b2?style=for-the-badge" alt="Playground" /></a>
-    <img src="https://img.shields.io/badge/Status-v0.1.0--alpha-f59e0b?style=for-the-badge" alt="Alpha status" />
-    <img src="https://img.shields.io/badge/License-MIT%20%2F%20Apache--2.0-16a34a?style=for-the-badge" alt="License" />
-  </p>
+  # Blyx
+
+  **An open-source AI-native systems programming language.**
+
+  Explore a programming model where AI-oriented computation, systems programming, concurrency, tensors, heterogeneous computing, and native compilation are designed together.
+
+  [![Website](https://img.shields.io/badge/Website-blyx--lang.space-0f172a?style=flat-square)](https://blyx-lang.space)
+  [![Status](https://img.shields.io/badge/status-v0.1.0--alpha-orange?style=flat-square)](https://blyx-lang.space)
+  [![License](https://img.shields.io/badge/license-MIT%20%2F%20Apache--2.0-blue?style=flat-square)](LICENSE-MIT)
+  [![Rust](https://img.shields.io/badge/compiler%20implementation-Rust-black?style=flat-square&logo=rust)](https://www.rust-lang.org/)
+  [![Playground](https://img.shields.io/badge/Playground-Try%20Blyx-2563eb?style=flat-square)](https://play.blyx-lang.space)
 </div>
 
 ---
 
-## What is Blyx?
+## ⚠️ Project status
 
-**Blyx is an experimental open-source programming language for AI-oriented systems software.** It investigates how language and compiler design can make AI workloads, numerical computation, concurrency, heterogeneous execution, and native systems programming work together instead of being separate layers.
+**Blyx is experimental alpha software.** APIs, syntax, compiler behavior, and tooling can change without notice. Some advertised language concepts are still being implemented or refined.
 
-Blyx is currently **alpha software**. The project is intended for experimentation, compiler research, systems programming exploration, and community feedback. APIs, syntax, tooling, and implementation details may change.
+This repository is the engineering source of truth. Feature support should be evaluated from the compiler, tests, examples, and release artifacts—not from aspirational descriptions.
 
-### Design goals
+## Why Blyx?
 
-- **AI-native primitives** — language constructs such as `generate`, `reason`, `orchestrate`, and `task` explore how AI operations could become programmable language concepts.
-- **Static tensor types** — tensor rank and dimensions can be represented in the type system for experiments in compile-time validation.
-- **Systems-level control** — ownership, lifetimes, deterministic resource management, and native compilation are core design directions.
-- **Parallel and actor-oriented execution** — concurrency primitives explore safe, scalable parallel workloads.
-- **Heterogeneous computing** — the compiler architecture explores CPU, GPU, and accelerator-oriented execution.
-- **Native compilation** — Blyx uses an intermediate representation and LLVM-oriented compilation pipeline rather than requiring a managed runtime.
+AI workloads increasingly combine native systems code, parallel execution, tensor computation, accelerators, and model-oriented operations. Blyx explores whether those concerns can be represented as language-level concepts rather than assembled entirely through separate libraries and runtimes.
 
-> **Important:** Blyx is an evolving research/engineering project. Please verify feature availability against the current compiler and documentation rather than assuming every design goal is production-ready.
+The goal is not to replace Rust, C++, Python, or CUDA overnight. The goal is to investigate a different programming model and make the implementation open to scrutiny and contribution.
 
----
+## Design pillars
 
-## Compiler Architecture
+- **Native compilation** — a Rust-based compiler implementation with a path toward native machine-code generation.
+- **AI-oriented primitives** — language constructs such as `generate`, `reason`, `orchestrate`, and `task` are explored as first-class concepts.
+- **Static tensor concepts** — tensor shape and type information can participate in compile-time validation where implemented.
+- **Concurrency** — actor and asynchronous programming models are part of the language design.
+- **Heterogeneous computing** — GPU-oriented syntax and backend work are being explored.
+- **Explicit resource management** — ownership, borrowing, and lifetime-oriented safety are part of the design direction.
+- **Intermediate representation** — Blyx uses a BIR/SSA-oriented compiler architecture to separate language semantics from lower-level code generation.
+
+## Example
+
+The syntax is evolving. Examples below illustrate the design direction and may not represent the complete supported surface of the current alpha compiler.
+
+```blyx
+fn main() {
+    let result = generate("Summarize this document");
+    print(result);
+}
+```
+
+Tensor-oriented code:
+
+```blyx
+tensor<f32, 128, 64> weights;
+tensor<f32, 64, 32> inputs;
+
+gpu {
+    let output = weights * inputs;
+}
+```
+
+For currently supported syntax, use the compiler tests and examples in this repository together with the official documentation.
+
+## Compiler architecture
 
 ```text
-Blyx source
-    │
-    ▼
-Lexer / Parser
-    │
-    ▼
-AST + Type Checking
-    │
-    ├── Tensor shape/type analysis
-    │
-    ▼
+Source
+  │
+  ▼
+Lexer
+  │
+  ▼
+Parser / AST
+  │
+  ▼
+Semantic Analysis
+  │
+  ▼
+Type Checking / Tensor Validation
+  │
+  ▼
 BIR / SSA
-    │
-    ▼
-LLVM-oriented code generation
-    │
-    ├── Native CPU targets
-    ├── GPU / accelerator targets (where implemented)
-    └── Other experimental targets
+  │
+  ▼
+Optimization
+  │
+  ▼
+Backend / Code Generation
+  │
+  ▼
+Native / Heterogeneous Targets
 ```
 
-The repository contains the language implementation, compiler components, tooling, and supporting project infrastructure.
+The compiler is organized into separate crates for lexing, parsing, AST representation, semantic analysis, type checking, BIR, and the compiler driver. The workspace also contains runtime/library and developer-tooling crates. fileciteturn68file0
 
----
+## Repository layout
 
-## Language Examples
-
-### Hello World
-
-```blyx
-fn main() {
-    println!("Hello, World from Blyx!");
-}
+```text
+compiler/       Compiler frontend, type system, BIR and compiler driver
+library/        Runtime and standard-library components
+tools/          Package manager, formatter, analyzer/LSP and developer tools
+examples/       Language examples
+docs/            Architecture, specifications and project documentation
+RFC/             Language and ecosystem design proposals
+website/         Official web portal and playground
+.github/        CI, issue templates, PR workflow and project automation
 ```
-
-### Functions
-
-```blyx
-fn compute_sum(a: i32, b: i32) -> i32 {
-    a + b
-}
-
-fn main() {
-    let result = compute_sum(20, 22);
-    println!("Result: {}", result);
-}
-```
-
-### Tensor-oriented syntax
-
-```blyx
-#![feature(blyx_experimental)]
-
-fn main() {
-    let weights: tensor<f32, 128, 64>;
-}
-```
-
-Additional experimental examples are available in the documentation and playground.
-
----
 
 ## Toolchain
 
-The Blyx ecosystem is designed around a small set of focused developer tools. Availability and maturity vary by release.
-
 | Tool | Purpose |
-| --- | --- |
+|---|---|
 | `blyxc` | Blyx compiler driver |
-| `blyxpkg` | Package and project management |
+| `blyxpkg` | Package and dependency management |
 | `blyxfmt` | Source formatting |
+| `blyx-analyzer` | Editor/LSP tooling |
 | `blyxdoc` | Documentation generation |
-| `blyx-analyzer` | Language tooling / LSP |
+| `blyxup` | Toolchain installation and management |
 | `blyxdbg` | Debugging tooling |
-| `blyxprof` | Profiling tooling |
-| `blyxup` | Toolchain management |
+| `blyxprof` | Performance profiling |
 
-See the official documentation for the current implementation status of each component.
+Availability and maturity vary by component during alpha development.
 
----
+## Quick start
 
-## Installation
+### Try without installing
 
-Official installation instructions and platform-specific binaries are maintained on the Blyx website:
-
-**https://www.blyx-lang.space/download**
-
-For a quick introduction, start with the official learning resources:
-
-**https://www.blyx-lang.space/learn**
-
----
-
-## Try Blyx
-
-You can explore the language through the online playground:
+Use the online playground:
 
 **https://play.blyx-lang.space**
 
-The playground is the fastest way to experiment without setting up the complete local toolchain.
+### Install
 
----
+Official installation instructions and release artifacts:
+
+**https://blyx-lang.space/download**
+
+### Build from source
+
+```bash
+git clone https://github.com/Rahulchaube1/blyxxxx.git
+cd blyxxxx
+cargo build --workspace
+cargo test --workspace
+```
+
+For contributor-specific requirements and workflows, see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+## Testing and reproducibility
+
+Blyx should earn performance and compatibility claims through reproducible evidence. When adding or changing a benchmark:
+
+1. Keep the benchmark source in the repository where practical.
+2. Document compiler version, commit, target, operating system, hardware, and build flags.
+3. Report methodology and variance rather than a single unexplained number.
+4. Make the benchmark runnable by another contributor.
+
+Performance numbers on the website should therefore be treated as project measurements, not universal guarantees, until the complete methodology and harness are independently reproducible.
 
 ## Documentation
 
-- **Website:** https://www.blyx-lang.space/
-- **Documentation:** https://www.blyx-lang.space/docs
-- **Learn Blyx:** https://www.blyx-lang.space/learn
-- **Compiler architecture:** https://www.blyx-lang.space/compiler
+- **Website:** https://blyx-lang.space
+- **Learn:** https://blyx-lang.space/learn
+- **Compiler architecture:** https://blyx-lang.space/compiler
+- **Download:** https://blyx-lang.space/download
 - **Playground:** https://play.blyx-lang.space
-- **Community & RFCs:** https://www.blyx-lang.space/community
-
----
+- **RFCs:** [`RFC/`](RFC/)
+- **Contributing:** [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- **Security:** [`SECURITY.md`](SECURITY.md)
 
 ## Contributing
 
-Blyx is built in public and welcomes developers interested in programming languages, compilers, AI systems, numerical computing, GPU programming, runtimes, tooling, and developer infrastructure.
+Blyx is intentionally open to criticism and experimentation. Useful contributions include:
 
-Good places to start:
+- compiler implementation
+- parser and diagnostics improvements
+- type-system design
+- BIR/SSA work
+- runtime and concurrency work
+- tensor and accelerator support
+- tooling and LSP development
+- examples and documentation
+- tests and fuzzing
+- reproducible benchmarks
+- language-design RFCs
 
-1. Read the documentation and run an example.
-2. Explore open issues and current compiler limitations.
-3. Propose language or compiler changes through the project's RFC process.
-4. Submit focused pull requests with tests and documentation where appropriate.
-5. Share reproducible benchmarks, bugs, and implementation feedback.
-
-Before contributing, please read the repository contribution and security guidelines.
-
----
-
-## Project Status
-
-**Current release: `v0.1.0-alpha`**
-
-Blyx is early-stage. The roadmap includes continued work across the compiler, type system, runtime, standard library, tooling, package ecosystem, documentation, and heterogeneous execution.
-
-If you are evaluating Blyx seriously, treat the repository and official documentation as the source of truth for what is currently implemented.
-
----
-
-## Benchmarks
-
-Performance measurements are useful only when they are reproducible. Benchmark results for Blyx should therefore be accompanied by the benchmark source, compiler version, target hardware, compiler flags, and methodology.
-
-See the project's benchmark documentation for current results and methodology:
-
-**https://www.blyx-lang.space/benchmarks**
-
----
+For substantial language or compiler changes, start with an issue, discussion, or RFC before investing in a large implementation. See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`RFC/`](RFC/).
 
 ## Community
 
-Blyx is looking for people who want to challenge its design—not just agree with it.
+Questions, design discussions, feature proposals, and implementation feedback are welcome through GitHub Discussions and Issues.
 
-We especially welcome feedback on:
+Please report security-sensitive vulnerabilities through [`SECURITY.md`](SECURITY.md), not a public issue.
 
-- AI-native language primitives
-- type-system design for tensor workloads
-- ownership and resource management
-- compiler architecture and IR design
-- concurrency models
-- GPU / heterogeneous execution
-- package management and tooling
-- language ergonomics
+## Roadmap
 
-Open an issue or discussion with a concrete example, proposal, benchmark, or critique.
+The alpha roadmap is organized around making the compiler and ecosystem increasingly useful and reproducible:
 
----
+- [ ] stabilize the core language surface
+- [ ] expand semantic and type-system coverage
+- [ ] strengthen diagnostics and compiler UX
+- [ ] expand BIR/SSA optimization passes
+- [ ] improve runtime and concurrency primitives
+- [ ] mature tensor and heterogeneous-computing support
+- [ ] improve package management and developer tooling
+- [ ] expand cross-platform release coverage
+- [ ] publish reproducible benchmark harnesses
+- [ ] grow documentation, examples, and RFC coverage
 
-## Maintainers
+The roadmap is intentionally subject to change as implementation and community feedback evolve.
 
-- **Rahul Chaube** — Lead Compiler Architect
-- **Ujjwal Chaudhary** — Core Contributor / Systems Engineering
-- **Gautam Yadav** — Core Contributor
+## Governance and project philosophy
 
-The project is developed within the broader Neuroblyx ecosystem.
+Blyx is developed as an open-source project backed by Neuroblyx. The public repository is intended to make language design, implementation, testing, and discussion visible to contributors.
 
----
+Technical claims should be measurable. Experimental features should be labeled. Breaking changes should be discussed openly. Contributions should be reviewed on technical merit.
 
 ## License
 
 Blyx is dual-licensed under:
 
-- [MIT License](LICENSE-MIT)
+- [MIT](LICENSE-MIT)
 - [Apache License 2.0](LICENSE-APACHE)
 
-Copyright © 2026 The Blyx Project Contributors.
+## Support the project
+
+If you find Blyx useful or interesting, the most valuable forms of support are:
+
+1. Try the compiler or playground.
+2. Report a reproducible bug.
+3. Open a thoughtful design discussion.
+4. Improve an example or document.
+5. Contribute an implementation or RFC.
+6. Star the repository if you want to follow its development.
+
+---
+
+<div align="center">
+  <strong>Blyx — exploring AI-native systems programming.</strong><br />
+  <sub>Open source • Experimental • Built in public</sub>
+</div>
