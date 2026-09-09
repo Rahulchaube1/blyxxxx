@@ -2,11 +2,11 @@
 
 **Status:** Current alpha architecture review
 
-This document describes the repository as it exists today. It is intentionally separate from historical migration notes: current implementation status must be determined from the active source tree, tests, examples, and release artifacts.
+This document describes the repository as it exists today. Current implementation status must be determined from the active source tree, tests, examples, and release artifacts.
 
 ## Current workspace
 
-Blyx is organized as a native Cargo workspace with dedicated compiler, library, and tooling crates.
+Blyx is organized as a Cargo workspace with dedicated compiler, library, and tooling crates.
 
 | Area | Current location | Role |
 | --- | --- | --- |
@@ -19,15 +19,13 @@ Blyx is organized as a native Cargo workspace with dedicated compiler, library, 
 | Runtime / library | `library/blyx`, `library/blyx-std` | Runtime and standard-library foundations |
 | Tooling | `tools/` | Package, formatting, analysis, docs, debug and profiling prototypes |
 
-## Repository cleanup completed
+## Repository cleanup
 
-The active compiler and library trees no longer depend on the large inherited Rust compiler/source layout that previously existed in this repository. The current workspace contains only the dedicated Blyx compiler crates listed above.
-
-The cleanup also removed obsolete Rust-specific repository infrastructure such as the upstream submodule configuration, inherited contributor mailmap, copied Rust CI tooling, and legacy Rust issue templates.
+The active compiler and library trees no longer depend on the large inherited Rust compiler/source layout that previously existed in this repository. Obsolete upstream submodule configuration, inherited contributor mailmap, copied Rust CI tooling, and legacy Rust issue templates have also been removed.
 
 ## Current compiler maturity
 
-The architecture is intentionally staged:
+The intended architecture is staged:
 
 ```text
 Source
@@ -41,26 +39,24 @@ Source
   → Native / Heterogeneous Targets
 ```
 
-The frontend and intermediate-representation crates are active areas of development. Native backend/code-generation work is not yet equivalent to a production compiler backend. The `blyxc` driver therefore reports unsupported build/run operations instead of fabricating binaries or execution results.
+The frontend and intermediate-representation crates are active development areas. Native backend/code-generation work is not yet equivalent to a production compiler backend. The `blyxc` driver reports unsupported build/run operations rather than fabricating binaries or execution results.
 
 ## Tooling maturity
 
-Several tools exist as alpha prototypes. Their command-line surfaces should be treated as experimental until implementation and integration tests demonstrate the advertised behavior.
+Several tools are alpha prototypes and should be treated as experimental until implementation and integration tests demonstrate the advertised behavior.
 
-In particular:
-
-- `blyx-analyzer` is an evolving language-server prototype.
-- `blyxdoc` is a documentation-generation prototype.
-- `blyxup` is a toolchain-management prototype.
-- `blyxdbg` is a debugger prototype without a complete debugging backend.
-- `blyxprof` does not publish measurements until a real profiling backend exists.
-- `blyxpkg` is an evolving package-management prototype; registry publishing and dependency resolution must not be represented as complete until implemented.
+- `blyx-analyzer` — evolving language-server prototype.
+- `blyxdoc` — documentation-generation prototype.
+- `blyxup` — toolchain-management prototype.
+- `blyxdbg` — debugger prototype without a complete debugging backend.
+- `blyxprof` — no performance measurements until a real profiling backend exists.
+- `blyxpkg` — evolving package-management prototype; registry publishing and dependency resolution are not complete.
 
 ## Verification standard
 
-A feature is considered implemented only when there is corresponding source code and, where practical, automated tests or reproducible examples.
+A feature is implemented only when corresponding source code and, where practical, automated tests or reproducible examples support it.
 
-A benchmark is considered publishable only when its methodology and environment are documented according to [`REPRODUCIBLE_BENCHMARKS.md`](REPRODUCIBLE_BENCHMARKS.md).
+A benchmark is publishable only when its methodology and environment are documented according to [`REPRODUCIBLE_BENCHMARKS.md`](REPRODUCIBLE_BENCHMARKS.md).
 
 Architecture documents describe intended or in-progress design unless they explicitly identify an implementation and its verification.
 
@@ -70,9 +66,9 @@ Architecture documents describe intended or in-progress design unless they expli
 2. Strengthen semantic analysis and type checking.
 3. Define and test stable BIR invariants.
 4. Build a real backend/code-generation pipeline.
-5. Replace tooling prototypes with tested implementations incrementally.
+5. Replace tooling prototypes with tested implementations.
 6. Establish reproducible examples and benchmark harnesses.
-7. Keep documentation synchronized with the implementation.
+7. Keep documentation synchronized with implementation.
 
 ## Historical note
 
