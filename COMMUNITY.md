@@ -7,7 +7,8 @@ Blyx is an open-source experiment in AI-native systems programming. The communit
 1. Try the playground: https://play.blyx-lang.space
 2. Read the documentation: https://www.blyx-lang.space/learn
 3. Browse open issues: https://github.com/Rahulchaube1/blyxxxx/issues
-4. Join design discussions: https://github.com/Rahulchaube1/blyxxxx/discussions
+4. Find beginner-friendly work: https://github.com/Rahulchaube1/blyxxxx/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
+5. Review the contribution guide: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/CONTRIBUTING.md
 
 ## What we want from contributors
 
