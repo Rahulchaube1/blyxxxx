@@ -1,11 +1,14 @@
 # Change Log
 
-All notable changes to the **BLYX Language** extension will be documented in this file.
+All notable changes to the **Blyx Language** extension are documented here.
 
-## [1.1.0] - 2026-08-01
+## [0.1.0-alpha]
 
 ### Added
-- **Language Features**: Complete syntax highlighting for `actor`, `gpu`, `parallel`, `tensor`, `spawn`, `await`, `async`, `match`, `enum`, `trait`, and `struct` constructs.
-- **Snippets**: Production code snippets for `fn`, `main`, `actor`, `gpu`, `parallel`, `tensor`, `struct`, `enum`, and `match`.
-- **Publisher Metadata**: Configured official Marketplace publisher `RahulChaube` and display name `BLYX Language`.
-- **Language Server Protocol**: Enhanced integration with `blyx-analyzer` for diagnostics, hover, definition, and formatting.
+- Blyx syntax highlighting for `.blyx` source files.
+- Starter snippets for common Blyx declarations and language constructs.
+- Repository and marketplace metadata aligned with the open-source Blyx project.
+
+### Status
+
+The extension currently provides language syntax and snippets. Full LSP diagnostics, navigation, formatting, debugging, and other editor features depend on the maturity of the corresponding Blyx tooling and are not advertised here as complete.
