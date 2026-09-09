@@ -1,7 +1,11 @@
-# Blyx Project Code Owners - Neuroblyx
+# Blyx project code ownership
+
 * @Rahulchaube1
 
 /compiler/ @Rahulchaube1
-/library/  @Rahulchaube1
-/tools/    @Rahulchaube1
-/website/  @Rahulchaube1
+/library/ @Rahulchaube1
+/tools/ @Rahulchaube1
+/website/ @Rahulchaube1
+/RFC/ @Rahulchaube1
+/docs/ @Rahulchaube1
+/.github/ @Rahulchaube1
