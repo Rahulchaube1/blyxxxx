@@ -35,8 +35,8 @@ jobs:
           # Find PR for the current commit
           HEAD_PR=`gh pr list --search "${{ github.sha }}" --state merged --json number --jq '.[0].number'`
           if [ -z "${HEAD_PR}" ]; then
-            echo "PR for commit SHA ${{ github.sha }} not found, exiting"
-            exit 1
+            echo "Direct push detected without an associated PR. Skipping post-merge analysis."
+            exit 0
           fi
           echo "HEAD: ${{ github.sha }} (#${HEAD_PR})"
 
