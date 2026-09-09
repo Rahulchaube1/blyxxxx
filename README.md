@@ -207,8 +207,10 @@ We welcome contributions from developers, researchers, and systems enthusiasts w
 
 ## Maintainers & Leadership
 
-- **Rahul Chaube** ([@Rahulchaube1](https://github.com/Rahulchaube1)) — Founder & Lead Compiler Architect
+- **Rahul Chaube** ([@Rahulchaube1](https://github.com/Rahulchaube1)) — Co-Founder & Lead Compiler Architect
 - **Neuroblyx Core Team** — Systems, Tooling, and Runtime Engineering
+- **Ujjwal Chaudhary** ([@oyyPoodles](https://github.com/oyyPoodles/)) — Co-Founder & COO
+- **Neuroblyx Core Team** 
 
 ---
 
