@@ -12,6 +12,8 @@
   [![License](https://img.shields.io/badge/license-MIT%20%2F%20Apache--2.0-blue?style=flat-square)](LICENSE-MIT)
   [![Rust](https://img.shields.io/badge/compiler%20implementation-Rust-black?style=flat-square&logo=rust)](https://www.rust-lang.org/)
   [![Playground](https://img.shields.io/badge/Playground-Try%20Blyx-2563eb?style=flat-square)](https://play.blyx-lang.space)
+  [![♥ Sponsor](https://img.shields.io/badge/%E2%99%A5%20Sponsor-Support%20Blyx-ff69b4?style=flat-square)](https://buymeacoffee.com/rahulchaube)
+  [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support%20Development-ffdd00?style=flat-square&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/rahulchaube)
 </div>
 
 ---
@@ -176,7 +178,7 @@ These files provide stable project context for documentation tools, search syste
 
 Blyx is open source and community-supported. If you find the project useful or want to help fund compiler, tooling, documentation, infrastructure, and ecosystem development, you can support it here:
 
-**☕ Buy Me a Coffee:** https://buymeacoffee.com/rahulchaube
+**[♥ Sponsor Blyx](https://buymeacoffee.com/rahulchaube)** · **[☕ Buy Me a Coffee](https://buymeacoffee.com/rahulchaube)**
 
 Sponsorship is optional and does not grant special influence over technical decisions or project governance.
 
