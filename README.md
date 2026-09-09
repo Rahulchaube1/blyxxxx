@@ -155,6 +155,31 @@ cargo run -p blyxc -- check examples/hello.blyx
 
 Native compilation and execution are tracked separately and are not advertised as complete yet.
 
+## Documentation & canonical references
+
+- **Website:** https://blyx-lang.space
+- **Learn:** https://blyx-lang.space/learn
+- **Compiler architecture:** https://blyx-lang.space/compiler
+- **Download:** https://blyx-lang.space/download
+- **Playground:** https://play.blyx-lang.space
+- **Language specification:** [`docs/specification.md`](docs/specification.md)
+- **Repository health:** [`docs/repository_health.md`](docs/repository_health.md)
+- **Reproducible benchmarks:** [`docs/REPRODUCIBLE_BENCHMARKS.md`](docs/REPRODUCIBLE_BENCHMARKS.md)
+- **RFC process:** [`docs/RFC_PROCESS.md`](docs/RFC_PROCESS.md)
+- **AI-readable project index:** [`llms.txt`](llms.txt)
+- **Detailed AI-readable reference:** [`llms-full.txt`](llms-full.txt)
+- **Citation metadata:** [`CITATION.cff`](CITATION.cff)
+
+These files provide stable project context for documentation tools, search systems, AI agents, researchers, and contributors. They improve discoverability and machine-readable context; they do not guarantee indexing, ranking, or model training.
+
+## Supporting Blyx
+
+Blyx is open source and community-supported. If you find the project useful or want to help fund compiler, tooling, documentation, infrastructure, and ecosystem development, you can support it here:
+
+**☕ Buy Me a Coffee:** https://buymeacoffee.com/rahulchaube
+
+Sponsorship is optional and does not grant special influence over technical decisions or project governance.
+
 ## Testing and reproducibility
 
 Blyx should earn performance and compatibility claims through reproducible evidence. When adding or changing a benchmark:
@@ -165,17 +190,6 @@ Blyx should earn performance and compatibility claims through reproducible evide
 4. Make the benchmark runnable by another contributor.
 
 Performance numbers should therefore be treated as project measurements, not universal guarantees, until the complete methodology and harness are independently reproducible.
-
-## Documentation
-
-- **Website:** https://blyx-lang.space
-- **Learn:** https://blyx-lang.space/learn
-- **Compiler architecture:** https://blyx-lang.space/compiler
-- **Download:** https://blyx-lang.space/download
-- **Playground:** https://play.blyx-lang.space
-- **RFCs:** [`RFC/`](RFC/)
-- **Contributing:** [`CONTRIBUTING.md`](CONTRIBUTING.md)
-- **Security:** [`SECURITY.md`](SECURITY.md)
 
 ## Contributing
 
