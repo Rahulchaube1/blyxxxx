@@ -1,0 +1,46 @@
+// Blyx Coin Dash
+//
+// A first game example written in Blyx syntax.
+// The current alpha compiler can parse this source, while native execution
+// remains blocked on the compiler backend. The game-state implementation
+// lives in blyx-std::game and is deliberately deterministic.
+
+fn move_left(position: i32) -> i32 {
+    if position > 0 {
+        return position - 1;
+    }
+    return position;
+}
+
+fn move_right(position: i32) -> i32 {
+    if position < 2 {
+        return position + 1;
+    }
+    return position;
+}
+
+fn coin_points(position: i32, coin: i32) -> i32 {
+    if position == coin {
+        return 10;
+    }
+    return 0;
+}
+
+fn main() {
+    println!("=== BLYX COIN DASH ===");
+    println!("Three lanes. Reach each coin and collect it.");
+
+    let start: i32 = 1;
+    let left: i32 = move_left(start);
+    let right: i32 = move_right(left);
+
+    let first_score: i32 = coin_points(left, 0);
+    let second_score: i32 = coin_points(start, 1);
+    let third_score: i32 = coin_points(right, 2);
+
+    let score: i32 = first_score + second_score + third_score;
+
+    println!("All three coins collected.");
+    println!("Final score:");
+    println!(score);
+}
