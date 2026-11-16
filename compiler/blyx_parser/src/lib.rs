@@ -428,7 +428,7 @@ impl BlyxParser {
     fn parse_stmt(&mut self) -> Option<Stmt> {
         if self.match_token(&TokenKind::Let) {
             let span = self.peek().span;
-            let _is_mut = self.match_token(&TokenKind::Mut);
+            let is_mut = self.match_token(&TokenKind::Mut);
             let name = match self.parse_ident() {
                 Some(n) => n,
                 None => {
@@ -444,7 +444,7 @@ impl BlyxParser {
                 self.error_at(span, "Expected a type or initializer in let declaration")
             }
             self.match_token(&TokenKind::Semi);
-            return Some(Stmt::Let { name, ty, value, span });
+            return Some(Stmt::Let { name, is_mut, ty, value, span });
         }
         if self.match_token(&TokenKind::Return) {
             let span = self.previous_span();
@@ -472,8 +472,15 @@ impl BlyxParser {
             return Some(Stmt::Continue(span));
         }
         let expr = self.parse_expr(0);
-        self.match_token(&TokenKind::Semi);
-        Some(Stmt::Expr(expr))
+        if self.match_token(&TokenKind::Semi) {
+            Some(Stmt::Semi(expr))
+        } else {
+            if !self.check(&TokenKind::RBrace) && !self.is_at_end()
+                && !matches!(expr, Expr::Block(_) | Expr::If { .. } | Expr::While { .. } | Expr::Loop { .. } | Expr::Match { .. }) {
+                self.error("Expected ';' between expressions");
+            }
+            Some(Stmt::Expr(expr))
+        }
     }
     fn previous_span(&self) -> Span {
         self.tokens.get(self.pos.saturating_sub(1)).map(|t| t.span).unwrap_or_default()
@@ -491,6 +498,29 @@ impl BlyxParser {
             self.advance();
             let right = self.parse_expr(prec + 1);
             left = Expr::Binary(op, Box::new(left), Box::new(right), self.previous_span())
+        }
+        // Assignment has lower precedence than every binary operator and is right-associative.
+        if min_prec == 0 {
+            let op = match self.peek().kind {
+                TokenKind::Eq => Some(None),
+                TokenKind::PlusEq => Some(Some(BinOp::Add)),
+                TokenKind::MinusEq => Some(Some(BinOp::Sub)),
+                TokenKind::StarEq => Some(Some(BinOp::Mul)),
+                TokenKind::SlashEq => Some(Some(BinOp::Div)),
+                TokenKind::PercentEq => Some(Some(BinOp::Rem)),
+                _ => None,
+            };
+            if let Some(op) = op {
+                let span = self.advance().span;
+                if !matches!(left, Expr::Ident(_, _)) {
+                    self.error_at(span, "Assignment target must be a variable");
+                }
+                let value = Box::new(self.parse_expr(0));
+                left = match op {
+                    Some(op) => Expr::AssignOp { target: Box::new(left), op, value, span },
+                    None => Expr::Assign { target: Box::new(left), value, span },
+                };
+            }
         }
         left
     }
@@ -904,5 +934,32 @@ mod tests {
         let a = p.parse_file("test.blyx");
         assert!(p.errors().len() > 0);
         assert_eq!(a.items.len(), 2)
+    }
+}
+
+
+#[cfg(test)]
+mod assignment_tests {
+    use super::*;
+
+    #[test]
+    fn preserves_mutability_semicolons_and_assignment_precedence() {
+        let mut parser = BlyxParser::new("fn main() { let mut x = 0; x = 2 + 3 * 4; x }");
+        let file = parser.parse_file("test.blyx");
+        assert!(!parser.has_errors(), "{:?}", parser.errors());
+        let Item::Fn(function) = &file.items[0] else { panic!("expected function"); };
+        assert!(matches!(&function.body.stmts[0], Stmt::Let { is_mut: true, .. }));
+        let Stmt::Semi(Expr::Assign { value, .. }) = &function.body.stmts[1] else { panic!("expected assignment statement"); };
+        assert!(matches!(value.as_ref(), Expr::Binary(BinOp::Add, _, right, _) if matches!(right.as_ref(), Expr::Binary(BinOp::Mul, _, _, _))));
+        assert!(matches!(&function.body.stmts[2], Stmt::Expr(Expr::Ident(_, _))));
+    }
+
+    #[test]
+    fn rejects_invalid_targets_and_missing_expression_separators() {
+        for source in ["fn main() { 1 = 2; }", "fn main() { (a + b) += 2; }", "fn main() { 1 2 }"] {
+            let mut parser = BlyxParser::new(source);
+            parser.parse_file("test.blyx");
+            assert!(parser.has_errors(), "{source}");
+        }
     }
 }

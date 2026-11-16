@@ -138,8 +138,9 @@ pub struct Block {
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Stmt {
-    Let { name: String, ty: Option<BlyxType>, value: Option<Expr>, span: Span },
+    Let { name: String, is_mut: bool, ty: Option<BlyxType>, value: Option<Expr>, span: Span },
     Expr(Expr),
+    Semi(Expr),
     Return(Option<Expr>, Span),
     Break(Option<Expr>, Span),
     Continue(Span),
@@ -446,7 +447,7 @@ pub trait AstVisitor {
                     self.visit_expr(v);
                 }
             }
-            Stmt::Expr(e) => self.visit_expr(e),
+            Stmt::Expr(e) | Stmt::Semi(e) => self.visit_expr(e),
             Stmt::Return(e, _) => {
                 if let Some(v) = e {
                     self.visit_expr(v);
@@ -575,3 +576,4 @@ pub trait AstVisitor {
         self.visit_expr(&arm.body);
     }
 }
+

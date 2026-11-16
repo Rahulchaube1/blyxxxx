@@ -24,7 +24,7 @@
 
 The repository is the engineering source of truth. A feature should be considered implemented only when the corresponding source code and tests or reproducible examples support it.
 
-> **Current compiler reality:** `blyxc run` provides an experimental tree-walking interpreter for integers, booleans, strings, local bindings, direct function calls, recursion, conditionals, blocks, returns, and zero/one-expression `print!`/`println!` macros. `check` parses syntax only; `build` validates syntax but does not emit a native executable. This is not yet a production-ready systems language. See [the executable subset](docs/executable-subset.md).
+> **Current compiler reality:** `blyxc run` provides an experimental tree-walking interpreter for integers, booleans, strings, lexically scoped immutable/mutable bindings, assignment, direct function calls, bounded recursion, conditionals, while/loop, break/continue, blocks, returns, and zero/one-expression `print!`/`println!` macros. `check` parses syntax only; `build` validates syntax but does not emit a native executable. This is not yet a production-ready systems language. See [the executable subset](docs/executable-subset.md).
 
 ## Why Blyx?
 
@@ -254,3 +254,4 @@ Blyx is dual-licensed under your choice of:
 
 - [MIT License](LICENSE-MIT)
 - [Apache License 2.0](LICENSE-APACHE)
+
