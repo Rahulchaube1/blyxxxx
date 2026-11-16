@@ -189,4 +189,3 @@ mod tests {
         assert!(tc.check_file(&file).is_ok());
     }
 }
-

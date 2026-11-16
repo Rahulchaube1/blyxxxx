@@ -519,4 +519,3 @@ impl LlvmIrEmitter {
         self.output.push_str("}\n\n");
     }
 }
-

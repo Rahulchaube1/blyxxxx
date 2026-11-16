@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use std::cell::Cell;
+use std::collections::HashMap;
 use std::env;
 use std::fs;
 use std::path::Path;
@@ -166,14 +166,22 @@ struct Env {
 }
 
 impl Env {
-    fn new() -> Self { Self { scopes: vec![HashMap::new()], loop_depth: 0 } }
+    fn new() -> Self {
+        Self { scopes: vec![HashMap::new()], loop_depth: 0 }
+    }
 
     fn define(&mut self, name: String, value: Value, is_mut: bool) {
-        self.scopes.last_mut().expect("function scope exists").insert(name, Binding { value, is_mut });
+        self.scopes
+            .last_mut()
+            .expect("function scope exists")
+            .insert(name, Binding { value, is_mut });
     }
 
     fn binding(&self, name: &str) -> Result<&Binding, String> {
-        self.scopes.iter().rev().find_map(|scope| scope.get(name))
+        self.scopes
+            .iter()
+            .rev()
+            .find_map(|scope| scope.get(name))
             .ok_or_else(|| format!("unknown variable '{name}'"))
     }
 
@@ -182,7 +190,11 @@ impl Env {
     }
 
     fn assign(&mut self, name: &str, value: Value) -> Result<(), String> {
-        let binding = self.scopes.iter_mut().rev().find_map(|scope| scope.get_mut(name))
+        let binding = self
+            .scopes
+            .iter_mut()
+            .rev()
+            .find_map(|scope| scope.get_mut(name))
             .ok_or_else(|| format!("unknown variable '{name}'"))?;
         if !binding.is_mut {
             return Err(format!("cannot assign to immutable variable '{name}'; use let mut"));
@@ -227,8 +239,9 @@ impl<'a> Interpreter<'a> {
     }
 
     fn tick(&self) -> Result<(), String> {
-        let remaining = self.steps_left.get().checked_sub(1)
-            .ok_or("execution step limit exceeded; use --max-steps <positive integer> for a larger budget")?;
+        let remaining = self.steps_left.get().checked_sub(1).ok_or(
+            "execution step limit exceeded; use --max-steps <positive integer> for a larger budget",
+        )?;
         self.steps_left.set(remaining);
         Ok(())
     }
@@ -267,7 +280,9 @@ impl<'a> Interpreter<'a> {
         self.call_depth.set(self.call_depth.get() - 1);
         match result? {
             Flow::Value(value) | Flow::Return(value) => Ok(value),
-            Flow::Break(_) | Flow::Continue => Err("loop control cannot cross a function boundary".into()),
+            Flow::Break(_) | Flow::Continue => {
+                Err("loop control cannot cross a function boundary".into())
+            }
         }
     }
 
@@ -289,26 +304,41 @@ impl<'a> Interpreter<'a> {
         result
     }
 
-    fn eval_loop(&self, condition: Option<&Expr>, body: &Block, env: &mut Env) -> Result<Flow, String> {
+    fn eval_loop(
+        &self,
+        condition: Option<&Expr>,
+        body: &Block,
+        env: &mut Env,
+    ) -> Result<Flow, String> {
         env.loop_depth += 1;
         let result = (|| {
             loop {
                 self.tick()?;
                 if let Some(condition) = condition {
                     match self.eval_expr(condition, env)? {
-                        Flow::Value(value) => if !value.as_bool()? { return Ok(Flow::Value(Value::Unit)); },
+                        Flow::Value(value) => {
+                            if !value.as_bool()? {
+                                return Ok(Flow::Value(Value::Unit));
+                            }
+                        }
                         Flow::Return(value) => return Ok(Flow::Return(value)),
                         Flow::Break(None) => return Ok(Flow::Value(Value::Unit)),
-                        Flow::Break(Some(_)) => return Err("break with a value is only supported in loop, not while".into()),
+                        Flow::Break(Some(_)) => {
+                            return Err(
+                                "break with a value is only supported in loop, not while".into()
+                            );
+                        }
                         Flow::Continue => continue,
                     }
                 }
                 match self.eval_block(body, env)? {
-                    Flow::Value(_) | Flow::Continue => {},
+                    Flow::Value(_) | Flow::Continue => {}
                     Flow::Return(value) => return Ok(Flow::Return(value)),
                     Flow::Break(value) => {
                         if condition.is_some() && value.is_some() {
-                            return Err("break with a value is only supported in loop, not while".into());
+                            return Err(
+                                "break with a value is only supported in loop, not while".into()
+                            );
                         }
                         return Ok(Flow::Value(value.unwrap_or(Value::Unit)));
                     }
@@ -342,7 +372,9 @@ impl<'a> Interpreter<'a> {
                 Ok(Flow::Return(value))
             }
             Stmt::Break(value, _) => {
-                if env.loop_depth == 0 { return Err("break outside a loop".into()); }
+                if env.loop_depth == 0 {
+                    return Err("break outside a loop".into());
+                }
                 let value = match value {
                     Some(expr) => Some(value_or_return!(self.eval_expr(expr, env))),
                     None => None,
@@ -350,7 +382,9 @@ impl<'a> Interpreter<'a> {
                 Ok(Flow::Break(value))
             }
             Stmt::Continue(_) => {
-                if env.loop_depth == 0 { return Err("continue outside a loop".into()); }
+                if env.loop_depth == 0 {
+                    return Err("continue outside a loop".into());
+                }
                 Ok(Flow::Continue)
             }
             Stmt::Item(_) => {
@@ -370,7 +404,9 @@ impl<'a> Interpreter<'a> {
                     return Err("assignment target must be a variable".into());
                 };
                 if !env.binding(name)?.is_mut {
-                    return Err(format!("cannot assign to immutable variable '{name}'; use let mut"));
+                    return Err(format!(
+                        "cannot assign to immutable variable '{name}'; use let mut"
+                    ));
                 }
                 // Read compound-assignment LHS before evaluating its RHS (left-to-right).
                 let previous = env.binding(name)?.value.clone();
@@ -382,7 +418,9 @@ impl<'a> Interpreter<'a> {
                 Ok(Flow::Value(Value::Unit))
             }
             Expr::Literal(lit, _) => Ok(Flow::Value(match lit {
-                Lit::Int(value) => Value::Int(i64::try_from(*value).map_err(|_| "integer literal exceeds i64 range")?),
+                Lit::Int(value) => Value::Int(
+                    i64::try_from(*value).map_err(|_| "integer literal exceeds i64 range")?,
+                ),
                 Lit::Float(value) => {
                     return Err(format!(
                         "floating-point execution is not implemented yet: {value}"
@@ -468,7 +506,8 @@ impl<'a> Interpreter<'a> {
                 Ok(Flow::Value(Value::Unit))
             }
             Expr::Neg(inner, _) => {
-                if matches!(inner.as_ref(), Expr::Literal(Lit::Int(value), _) if *value == (1u64 << 63)) {
+                if matches!(inner.as_ref(), Expr::Literal(Lit::Int(value), _) if *value == (1u64 << 63))
+                {
                     return Ok(Flow::Value(Value::Int(i64::MIN)));
                 }
                 let value = value_or_return!(self.eval_expr(inner, env)).as_int()?;
@@ -571,9 +610,15 @@ fn cmd_run(args: &[String]) {
         [] => DEFAULT_MAX_STEPS,
         [flag, value] if flag == "--max-steps" => match value.parse::<u64>() {
             Ok(value) if value > 0 => value,
-            _ => { print_error("--max-steps requires a positive integer"); exit(2); }
+            _ => {
+                print_error("--max-steps requires a positive integer");
+                exit(2);
+            }
         },
-        _ => { print_error("usage: blyxc run <file.blyx> [--max-steps <positive integer>]"); exit(2); }
+        _ => {
+            print_error("usage: blyxc run <file.blyx> [--max-steps <positive integer>]");
+            exit(2);
+        }
     };
     let file = parse_source(&path);
     let interpreter = Interpreter::new(&file);
@@ -702,7 +747,6 @@ mod tests {
     }
 }
 
-
 #[cfg(test)]
 mod control_flow_tests {
     use super::*;
@@ -716,7 +760,9 @@ mod control_flow_tests {
         interpreter.run_main()
     }
 
-    fn run(source: &str) -> Result<Value, String> { execute(source, DEFAULT_MAX_STEPS) }
+    fn run(source: &str) -> Result<Value, String> {
+        execute(source, DEFAULT_MAX_STEPS)
+    }
 
     #[test]
     fn while_updates_outer_bindings() {
@@ -725,15 +771,33 @@ mod control_flow_tests {
 
     #[test]
     fn assignment_precedence_and_compound_operations() {
-        assert_eq!(run("fn main() { let mut n = 0; n = 2 + 3 * 4; n -= 2; n *= 3; n /= 4; n %= 5; n }").unwrap(), Value::Int(4));
-        assert_eq!(run("fn main() { let mut n = 2; n += { n = 10; 3 }; n }").unwrap(), Value::Int(5));
+        assert_eq!(
+            run("fn main() { let mut n = 0; n = 2 + 3 * 4; n -= 2; n *= 3; n /= 4; n %= 5; n }")
+                .unwrap(),
+            Value::Int(4)
+        );
+        assert_eq!(
+            run("fn main() { let mut n = 2; n += { n = 10; 3 }; n }").unwrap(),
+            Value::Int(5)
+        );
     }
 
     #[test]
     fn mutation_respects_shadowing_and_block_lifetime() {
-        assert_eq!(run("fn main() { let mut x = 1; { x = 2; let mut x = 8; x += 1; } x }").unwrap(), Value::Int(2));
-        assert!(run("fn main() { let mut x = 1; { let x = 2; x = 3; } }").unwrap_err().contains("immutable"));
-        assert!(run("fn main() { loop { let local = 1; break; } local }").unwrap_err().contains("unknown variable"));
+        assert_eq!(
+            run("fn main() { let mut x = 1; { x = 2; let mut x = 8; x += 1; } x }").unwrap(),
+            Value::Int(2)
+        );
+        assert!(
+            run("fn main() { let mut x = 1; { let x = 2; x = 3; } }")
+                .unwrap_err()
+                .contains("immutable")
+        );
+        assert!(
+            run("fn main() { loop { let local = 1; break; } local }")
+                .unwrap_err()
+                .contains("unknown variable")
+        );
     }
 
     #[test]
@@ -745,7 +809,9 @@ mod control_flow_tests {
             ("fn main() { let mut x: i64; x = 1; }", "initializer"),
             ("fn main() { let mut x = 1; x /= 0; }", "division by zero"),
             ("fn main() { let mut x = 9223372036854775807; x += 1; }", "overflow"),
-        ] { assert!(run(source).unwrap_err().contains(message), "{source}"); }
+        ] {
+            assert!(run(source).unwrap_err().contains(message), "{source}");
+        }
     }
 
     #[test]
@@ -756,9 +822,16 @@ mod control_flow_tests {
 
     #[test]
     fn loop_returns_break_value_and_while_returns_unit() {
-        assert_eq!(run("fn main() { let answer = loop { break 42; }; answer }").unwrap(), Value::Int(42));
+        assert_eq!(
+            run("fn main() { let answer = loop { break 42; }; answer }").unwrap(),
+            Value::Int(42)
+        );
         assert_eq!(run("fn main() { while false { missing(); } }").unwrap(), Value::Unit);
-        assert!(run("fn main() { while true { break 1; } }").unwrap_err().contains("only supported in loop"));
+        assert!(
+            run("fn main() { while true { break 1; } }")
+                .unwrap_err()
+                .contains("only supported in loop")
+        );
         assert!(run("fn main() { while 1 {} }").unwrap_err().contains("boolean"));
     }
 
@@ -776,7 +849,9 @@ mod control_flow_tests {
             "fn main() { continue; }",
             "fn helper() { break; } fn main() { loop { helper(); } }",
             "fn helper() { continue; } fn main() { loop { helper(); } }",
-        ] { assert!(run(source).unwrap_err().contains("outside a loop")); }
+        ] {
+            assert!(run(source).unwrap_err().contains("outside a loop"));
+        }
     }
 
     #[test]
@@ -789,14 +864,22 @@ mod control_flow_tests {
 
     #[test]
     fn execution_budget_stops_empty_and_nonempty_infinite_loops() {
-        for source in ["fn main() { loop {} }", "fn main() { while true { continue; } }", "fn main() { while { continue; } {} }"] {
+        for source in [
+            "fn main() { loop {} }",
+            "fn main() { while true { continue; } }",
+            "fn main() { while { continue; } {} }",
+        ] {
             assert!(execute(source, 50).unwrap_err().contains("step limit"));
         }
     }
 
     #[test]
     fn recursion_is_bounded_and_counters_are_restored() {
-        assert!(run("fn recurse() { recurse() } fn main() { recurse() }").unwrap_err().contains("call depth"));
+        assert!(
+            run("fn recurse() { recurse() } fn main() { recurse() }")
+                .unwrap_err()
+                .contains("call depth")
+        );
         let mut parser = BlyxParser::new("fn main() { loop { let local = 1; missing(); } }");
         let file = parser.parse_file("test.blyx");
         let interpreter = Interpreter::new(&file);

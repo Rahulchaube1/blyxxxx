@@ -475,8 +475,17 @@ impl BlyxParser {
         if self.match_token(&TokenKind::Semi) {
             Some(Stmt::Semi(expr))
         } else {
-            if !self.check(&TokenKind::RBrace) && !self.is_at_end()
-                && !matches!(expr, Expr::Block(_) | Expr::If { .. } | Expr::While { .. } | Expr::Loop { .. } | Expr::Match { .. }) {
+            if !self.check(&TokenKind::RBrace)
+                && !self.is_at_end()
+                && !matches!(
+                    expr,
+                    Expr::Block(_)
+                        | Expr::If { .. }
+                        | Expr::While { .. }
+                        | Expr::Loop { .. }
+                        | Expr::Match { .. }
+                )
+            {
                 self.error("Expected ';' between expressions");
             }
             Some(Stmt::Expr(expr))
@@ -937,7 +946,6 @@ mod tests {
     }
 }
 
-
 #[cfg(test)]
 mod assignment_tests {
     use super::*;
@@ -947,10 +955,16 @@ mod assignment_tests {
         let mut parser = BlyxParser::new("fn main() { let mut x = 0; x = 2 + 3 * 4; x }");
         let file = parser.parse_file("test.blyx");
         assert!(!parser.has_errors(), "{:?}", parser.errors());
-        let Item::Fn(function) = &file.items[0] else { panic!("expected function"); };
+        let Item::Fn(function) = &file.items[0] else {
+            panic!("expected function");
+        };
         assert!(matches!(&function.body.stmts[0], Stmt::Let { is_mut: true, .. }));
-        let Stmt::Semi(Expr::Assign { value, .. }) = &function.body.stmts[1] else { panic!("expected assignment statement"); };
-        assert!(matches!(value.as_ref(), Expr::Binary(BinOp::Add, _, right, _) if matches!(right.as_ref(), Expr::Binary(BinOp::Mul, _, _, _))));
+        let Stmt::Semi(Expr::Assign { value, .. }) = &function.body.stmts[1] else {
+            panic!("expected assignment statement");
+        };
+        assert!(
+            matches!(value.as_ref(), Expr::Binary(BinOp::Add, _, right, _) if matches!(right.as_ref(), Expr::Binary(BinOp::Mul, _, _, _)))
+        );
         assert!(matches!(&function.body.stmts[2], Stmt::Expr(Expr::Ident(_, _))));
     }
 

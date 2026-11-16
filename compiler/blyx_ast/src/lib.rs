@@ -576,4 +576,3 @@ pub trait AstVisitor {
         self.visit_expr(&arm.body);
     }
 }
-

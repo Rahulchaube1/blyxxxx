@@ -955,7 +955,7 @@ mod tests {
             "test",
             vec![
                 Stmt::Let {
-                        is_mut: false,
+                    is_mut: false,
                     name: "x".into(),
                     ty: None,
                     value: Some(Expr::Literal(Lit::Int(42), dummy_span())),
@@ -1008,7 +1008,7 @@ mod tests {
         let file = make_file(vec![make_fn(
             "test",
             vec![Stmt::Let {
-                        is_mut: false,
+                is_mut: false,
                 name: "unused".into(),
                 ty: None,
                 value: Some(Expr::Literal(Lit::Int(5), dummy_span())),
@@ -1026,7 +1026,7 @@ mod tests {
         let file = make_file(vec![make_fn(
             "test",
             vec![Stmt::Let {
-                        is_mut: false,
+                is_mut: false,
                 name: "_unused".into(),
                 ty: None,
                 value: Some(Expr::Literal(Lit::Int(5), dummy_span())),
@@ -1069,4 +1069,3 @@ mod tests {
         assert!(a.symbol_table.lookup("my_task").is_some());
     }
 }
-
