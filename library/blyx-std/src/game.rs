@@ -32,12 +32,7 @@ impl Default for CoinDash {
 
 impl CoinDash {
     pub fn new() -> Self {
-        Self {
-            player: 1,
-            coins: [true, true, true],
-            score: 0,
-            over: false,
-        }
+        Self { player: 1, coins: [true, true, true], score: 0, over: false }
     }
 
     pub fn step(&mut self, action: Action) -> bool {
@@ -70,7 +65,13 @@ impl CoinDash {
             if lane > 0 {
                 cells.push_str(" | ");
             }
-            let marker = if self.player == lane { 'P' } else if self.coins[lane] { 'C' } else { '.' };
+            let marker = if self.player == lane {
+                'P'
+            } else if self.coins[lane] {
+                'C'
+            } else {
+                '.'
+            };
             cells.push(marker);
         }
         format!("[{}] score={}{}", cells, self.score, if self.over { "  YOU WIN!" } else { "" })

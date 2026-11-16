@@ -37,7 +37,7 @@ jobs:
         run: cargo test --workspace
 
   cross-platform:
-    name: Cross-platform build
+    name: Cross-platform build and interpreter tests
     strategy:
       fail-fast: false
       matrix:
@@ -58,3 +58,12 @@ jobs:
 
       - name: Build workspace
         run: cargo build --workspace
+
+      - name: Test interpreter
+        run: cargo test --locked -p blyxc
+
+      - name: Test release arithmetic
+        run: cargo test --locked -p blyxc --release
+
+      - name: Run Fibonacci example
+        run: cargo run --locked -p blyxc -- run examples/basic/fibonacci.blyx
