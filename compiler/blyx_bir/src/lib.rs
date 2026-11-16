@@ -235,7 +235,7 @@ impl BirBuilder {
                     self.var_map.insert(name.clone(), (val, ty));
                 }
             }
-            blyx_ast::Stmt::Expr(expr) => {
+            blyx_ast::Stmt::Expr(expr) | blyx_ast::Stmt::Semi(expr) => {
                 self.build_expr(expr);
             }
             blyx_ast::Stmt::Return(opt_expr, _) => {

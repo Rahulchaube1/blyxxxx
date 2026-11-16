@@ -1,0 +1,21 @@
+fn factorial(n: i64) {
+    let mut result = 1;
+    let mut i = 2;
+    while i <= n {
+        result *= i;
+        i += 1;
+    }
+    result
+}
+
+fn main() {
+    println!("Factorial(6):");
+    println!(factorial(6));
+    let mut n = 0;
+    let answer = loop {
+        n += 1;
+        if n < 5 { continue; }
+        break n * 2;
+    };
+    println!(answer);
+}

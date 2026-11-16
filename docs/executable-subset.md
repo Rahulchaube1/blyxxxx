@@ -18,16 +18,50 @@ blyxc run hello/src/main.blyx
 
 `println!(expression)` prints one evaluated value plus a newline. `print!(expression)` omits the newline. Both permit no arguments. Format strings and multiple arguments are not implemented; braces in strings are literal. Unicode strings and lexer-supported escapes are preserved.
 
+## Mutation and control flow
+
+```blyx
+fn main() {
+    let mut n = 0;
+    let mut sum = 0;
+    while n < 10 {
+        n += 1;
+        if n % 2 == 0 { continue; }
+        sum += n;
+    }
+    println!(sum);
+    let answer = loop { break 42; };
+    println!(answer);
+}
+```
+
+This prints `25` and `42`. Run `examples/basic/loops.blyx` for factorial and loop-result examples (outputs `Factorial(6):`, `720`, `10`).
+
+`let` bindings are immutable; use `let mut` for assignment. Supported assignment operators are `=`, `+=`, `-=`, `*=`, `/=`, `%=` and return unit. They require a variable target and preserve its runtime value kind. Compound assignment reads the old LHS before evaluating the RHS. Inner bindings shadow outer ones; updating an outer mutable binding survives block exit. Parameters are immutable. Initializers are required during execution.
+
+`while` requires a boolean condition and evaluates to unit. `loop` repeats until `break` or `return`. `break value` is supported only in `loop`; `continue` starts the next iteration of the nearest loop. A called function cannot break or continue its caller's loop.
+
+A block/function's last expression supplies its value only without a semicolon: `{ 42 }` yields 42, while `{ 42; }` yields unit. Explicit return works with either style.
+
+## Execution limits
+
+Execution defaults to 1,000,000 evaluation steps and at most 64 simultaneous function calls. Steps count expression evaluation, block entry and loop iterations, including empty loops. Exceeding either limit reports a runtime error (exit 4). These are deterministic operation limits, not wall-clock or memory limits. Source parsing is not covered by this budget.
+
+```sh
+blyxc run examples/basic/loops.blyx --max-steps 2000000
+```
+
+The budget must be a positive u64 integer; malformed/unknown run arguments return exit 2. Signed integer literals must fit i64, including `-9223372036854775808`.
+
 ## Limits
 
-Type annotations are parsed but not enforced by this interpreter. `check` is syntax validation, not a complete static type checker. Floating-point execution, mutation, loops, collections, imports, structs, ownership checking, async, GPU and AI operations are not implemented in this execution path. Recursion is limited by the host stack and execution has no instruction budget. Non-function declarations are not executed. The parser does not distinguish tail expressions from semicolon-terminated expressions; use explicit `return` for function results. Signed literal edge cases and the full type system need further work.
+Type annotations are parsed but not enforced by this interpreter. Runtime value-kind checks are not a static type system. `check` performs syntax validation. Floating-point execution, for/range loops, labels, collections, imports, structs, ownership checking, async, GPU and AI operations remain unsupported in this execution path. Non-function declarations are not executed. BIR/native lowering of the new control flow remains separate work.
 
 ## Next release gates
 
-1. Preserve mutability and semicolon information in the AST; define and test assignment and loop semantics.
-2. Integrate name resolution and type checking so unsupported programs fail before execution.
-3. Add source-located runtime errors, stack/instruction limits and module loading.
-4. Stabilize collections, file/console I/O, package manifests and cross-platform installation tests.
-5. Implement and compare a native backend against interpreter conformance tests.
+1. Integrate name resolution and type checking so unsupported programs fail before execution.
+2. Add source-located runtime errors, parser-depth limits and module loading.
+3. Stabilize collections, file/console I/O, package manifests and installation tests.
+4. Implement and compare a native backend against interpreter conformance tests.
 
-Performance comparisons with Rust, Python or C require reproducible programs and measurements. This patch adds foundational interpreter regression coverage, not language parity.
+Performance comparisons with Rust, Python or C require reproducible measurements. This is an experimental interpreter, not language parity.

@@ -114,6 +114,7 @@ mod tests {
                 "test",
                 vec![
                     Stmt::Let {
+                        is_mut: false,
                         name: "result".into(),
                         ty: None,
                         value: Some(Expr::Generate {
@@ -149,6 +150,7 @@ mod tests {
                 "test",
                 vec![
                     Stmt::Let {
+                        is_mut: false,
                         name: "r".into(),
                         ty: None,
                         value: Some(Expr::Reason {

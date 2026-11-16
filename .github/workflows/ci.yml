@@ -67,3 +67,6 @@ jobs:
 
       - name: Run Fibonacci example
         run: cargo run --locked -p blyxc -- run examples/basic/fibonacci.blyx
+
+      - name: Run mutation and loops example
+        run: cargo run --locked -p blyxc -- run examples/basic/loops.blyx
