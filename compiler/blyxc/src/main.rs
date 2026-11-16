@@ -243,7 +243,10 @@ impl<'a> Interpreter<'a> {
             Stmt::Break(_, _) | Stmt::Continue(_) => {
                 Err("break/continue are not supported by the alpha interpreter yet".to_string())
             }
-            Stmt::Item(_) => Err("nested item execution is not supported by the alpha interpreter yet".to_string()),
+            Stmt::Item(_) => {
+                Err("nested item execution is not supported by the alpha interpreter yet"
+                    .to_string())
+            }
         }
     }
 
@@ -251,7 +254,9 @@ impl<'a> Interpreter<'a> {
         match expr {
             Expr::Literal(lit, _) => Ok(Flow::Value(match lit {
                 Lit::Int(value) => Value::Int(*value as i64),
-                Lit::Float(value) => return Err(format!("floating-point execution is not implemented yet: {value}")),
+                Lit::Float(value) => {
+                    return Err(format!("floating-point execution is not implemented yet: {value}"));
+                }
                 Lit::String(value) => Value::Str(value.clone()),
                 Lit::Char(value) => Value::Str(value.to_string()),
                 Lit::Bool(value) => Value::Bool(*value),
@@ -276,7 +281,12 @@ impl<'a> Interpreter<'a> {
                 let name = match callee.as_ref() {
                     Expr::Ident(name, _) => name,
                     Expr::Path { segments, .. } if segments.len() == 1 => &segments[0],
-                    _ => return Err("only direct function calls are supported by the alpha interpreter".to_string()),
+                    _ => {
+                        return Err(
+                            "only direct function calls are supported by the alpha interpreter"
+                                .to_string(),
+                        );
+                    }
                 };
                 if name == "print!" || name == "println!" {
                     if args.len() > 1 {
@@ -286,14 +296,15 @@ impl<'a> Interpreter<'a> {
                         Some(arg) => value_or_return!(self.eval_expr(arg, env)).display(),
                         None => String::new(),
                     };
-                    if name == "println!" { println!("{output}"); }
-                    else { print!("{output}"); }
+                    if name == "println!" {
+                        println!("{output}");
+                    } else {
+                        print!("{output}");
+                    }
                     return Ok(Flow::Value(Value::Unit));
                 }
-                let function = self
-                    .functions
-                    .get(name)
-                    .ok_or_else(|| format!("unknown function '{name}'"))?;
+                let function =
+                    self.functions.get(name).ok_or_else(|| format!("unknown function '{name}'"))?;
                 let mut values = Vec::with_capacity(args.len());
                 for arg in args {
                     values.push(value_or_return!(self.eval_expr(arg, env)));
@@ -313,7 +324,9 @@ impl<'a> Interpreter<'a> {
             Expr::Block(block) => self.eval_block(block, env),
             Expr::MacroCall { name, args, .. } => {
                 if name != "println" && name != "print" {
-                    return Err(format!("macro '{name}!' is not supported by the alpha interpreter"));
+                    return Err(format!(
+                        "macro '{name}!' is not supported by the alpha interpreter"
+                    ));
                 }
                 let output = self.eval_macro_args(args, env)?;
                 if name == "println" {
@@ -330,9 +343,12 @@ impl<'a> Interpreter<'a> {
             Expr::Unary(op, inner, _) => {
                 let value = value_or_return!(self.eval_expr(inner, env));
                 match op {
-                    blyx_ast::UnOp::Neg => Ok(Flow::Value(Value::Int(value.as_int()?.checked_neg().ok_or("integer overflow")?))),
+                    blyx_ast::UnOp::Neg => Ok(Flow::Value(Value::Int(
+                        value.as_int()?.checked_neg().ok_or("integer overflow")?,
+                    ))),
                     blyx_ast::UnOp::Not => Ok(Flow::Value(Value::Bool(!value.as_bool()?))),
-                    _ => Err("references/dereferences are not supported by the alpha interpreter".to_string()),
+                    _ => Err("references/dereferences are not supported by the alpha interpreter"
+                        .to_string()),
                 }
             }
             _ => Err(format!("expression kind {expr:?} is not supported by the alpha interpreter")),
@@ -341,11 +357,31 @@ impl<'a> Interpreter<'a> {
 
     fn binary(&self, op: BinOp, left: Value, right: Value) -> Result<Value, String> {
         match op {
-            BinOp::Add => Ok(Value::Int(left.as_int()?.checked_add(right.as_int()?).ok_or("integer overflow or division by zero")?)),
-            BinOp::Sub => Ok(Value::Int(left.as_int()?.checked_sub(right.as_int()?).ok_or("integer overflow or division by zero")?)),
-            BinOp::Mul => Ok(Value::Int(left.as_int()?.checked_mul(right.as_int()?).ok_or("integer overflow or division by zero")?)),
-            BinOp::Div => Ok(Value::Int(left.as_int()?.checked_div(right.as_int()?).ok_or("integer overflow or division by zero")?)),
-            BinOp::Rem => Ok(Value::Int(left.as_int()?.checked_rem(right.as_int()?).ok_or("integer overflow or division by zero")?)),
+            BinOp::Add => Ok(Value::Int(
+                left.as_int()?
+                    .checked_add(right.as_int()?)
+                    .ok_or("integer overflow or division by zero")?,
+            )),
+            BinOp::Sub => Ok(Value::Int(
+                left.as_int()?
+                    .checked_sub(right.as_int()?)
+                    .ok_or("integer overflow or division by zero")?,
+            )),
+            BinOp::Mul => Ok(Value::Int(
+                left.as_int()?
+                    .checked_mul(right.as_int()?)
+                    .ok_or("integer overflow or division by zero")?,
+            )),
+            BinOp::Div => Ok(Value::Int(
+                left.as_int()?
+                    .checked_div(right.as_int()?)
+                    .ok_or("integer overflow or division by zero")?,
+            )),
+            BinOp::Rem => Ok(Value::Int(
+                left.as_int()?
+                    .checked_rem(right.as_int()?)
+                    .ok_or("integer overflow or division by zero")?,
+            )),
             BinOp::Eq => Ok(Value::Bool(left == right)),
             BinOp::Ne => Ok(Value::Bool(left != right)),
             BinOp::Lt => Ok(Value::Bool(left.as_int()? < right.as_int()?)),
@@ -386,9 +422,7 @@ impl<'a> Interpreter<'a> {
         if text == "false" {
             return Ok(Value::Bool(false));
         }
-        env.get(text)
-            .cloned()
-            .ok_or_else(|| format!("unknown value '{text}' in print macro"))
+        env.get(text).cloned().ok_or_else(|| format!("unknown value '{text}' in print macro"))
     }
 }
 
@@ -485,14 +519,24 @@ mod tests {
 
     #[test]
     fn arithmetic_errors_do_not_panic() {
-        for expression in ["1 / 0", "1 % 0", "9223372036854775807 + 1", "9223372036854775807 * 2", "(-9223372036854775807 - 1) / -1", "-(-9223372036854775807 - 1)"] {
+        for expression in [
+            "1 / 0",
+            "1 % 0",
+            "9223372036854775807 + 1",
+            "9223372036854775807 * 2",
+            "(-9223372036854775807 - 1) / -1",
+            "-(-9223372036854775807 - 1)",
+        ] {
             assert!(run(&format!("fn main() {{ return {expression}; }}")).is_err(), "{expression}");
         }
     }
 
     #[test]
     fn block_bindings_do_not_leak() {
-        assert_eq!(run("fn main() { let x = 7; if true { let x = 9; } return x; }").unwrap(), Value::Int(7));
+        assert_eq!(
+            run("fn main() { let x = 7; if true { let x = 9; } return x; }").unwrap(),
+            Value::Int(7)
+        );
         assert!(run("fn main() { if true { let hidden = 9; } return hidden; }").is_err());
     }
 

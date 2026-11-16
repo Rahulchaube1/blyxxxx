@@ -604,7 +604,9 @@ impl BlyxParser {
                     let mut args = Vec::new();
                     while !self.check(&TokenKind::RParen) && !self.is_at_end() {
                         args.push(self.parse_expr(0));
-                        if !self.match_token(&TokenKind::Comma) { break; }
+                        if !self.match_token(&TokenKind::Comma) {
+                            break;
+                        }
                     }
                     self.expect(&TokenKind::RParen, "Expected ')' after print arguments");
                     expr = Expr::Call(Box::new(Expr::Ident(format!("{name}!"), span)), args, span);
