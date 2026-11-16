@@ -598,6 +598,18 @@ impl BlyxParser {
                     Expr::Ident(n, _) => n,
                     _ => "macro".into(),
                 };
+                // Print macros use ordinary expression arguments, not lossy token counts.
+                if name == "print" || name == "println" {
+                    self.expect(&TokenKind::LParen, "Expected '(' after print macro");
+                    let mut args = Vec::new();
+                    while !self.check(&TokenKind::RParen) && !self.is_at_end() {
+                        args.push(self.parse_expr(0));
+                        if !self.match_token(&TokenKind::Comma) { break; }
+                    }
+                    self.expect(&TokenKind::RParen, "Expected ')' after print arguments");
+                    expr = Expr::Call(Box::new(Expr::Ident(format!("{name}!"), span)), args, span);
+                    continue;
+                }
                 let args = if self.match_token(&TokenKind::LParen) {
                     let mut depth = 1usize;
                     let start = self.pos;

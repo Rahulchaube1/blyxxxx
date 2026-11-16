@@ -24,7 +24,7 @@
 
 The repository is the engineering source of truth. A feature should be considered implemented only when the corresponding source code and tests or reproducible examples support it.
 
-> **Current compiler reality:** the frontend can tokenize and parse Blyx source, while native code generation and program execution are still under development. `blyxc build` and `blyxc run` therefore report that the backend is not ready rather than producing simulated binaries or results.
+> **Current compiler reality:** `blyxc run` provides an experimental tree-walking interpreter for integers, booleans, strings, local bindings, direct function calls, recursion, conditionals, blocks, returns, and zero/one-expression `print!`/`println!` macros. `check` parses syntax only; `build` validates syntax but does not emit a native executable. This is not yet a production-ready systems language. See [the executable subset](docs/executable-subset.md).
 
 ## Why Blyx?
 
@@ -155,7 +155,13 @@ After building `blyxc`, use its current supported frontend command:
 cargo run -p blyxc -- check examples/hello.blyx
 ```
 
-Native compilation and execution are tracked separately and are not advertised as complete yet.
+Run the interpreter example:
+
+```bash
+cargo run -p blyxc -- run examples/basic/fibonacci.blyx
+```
+
+Expected output is `Fibonacci(10):` followed by `55`. Native compilation remains under development.
 
 ## Documentation & canonical references
 

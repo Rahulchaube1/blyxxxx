@@ -142,6 +142,16 @@ impl Value {
     }
 }
 
+// A return inside any expression must escape to the enclosing function.
+macro_rules! value_or_return {
+    ($flow:expr) => {
+        match $flow? {
+            Flow::Value(value) => value,
+            flow @ Flow::Return(_) => return Ok(flow),
+        }
+    };
+}
+
 type Env = HashMap<String, Value>;
 
 struct Interpreter<'a> {
@@ -200,6 +210,8 @@ impl<'a> Interpreter<'a> {
     }
 
     fn eval_block(&self, block: &Block, env: &mut Env) -> Result<Flow, String> {
+        let mut local = env.clone();
+        let env = &mut local;
         let mut last = Value::Unit;
         for stmt in &block.stmts {
             match self.eval_stmt(stmt, env)? {
@@ -214,7 +226,7 @@ impl<'a> Interpreter<'a> {
         match stmt {
             Stmt::Let { name, value, .. } => {
                 let value = match value {
-                    Some(expr) => self.eval_expr(expr, env)?,
+                    Some(expr) => value_or_return!(self.eval_expr(expr, env)),
                     None => Value::Unit,
                 };
                 env.insert(name.clone(), value);
@@ -223,7 +235,7 @@ impl<'a> Interpreter<'a> {
             Stmt::Expr(expr) => self.eval_expr(expr, env),
             Stmt::Return(expr, _) => {
                 let value = match expr {
-                    Some(expr) => self.eval_expr(expr, env)?,
+                    Some(expr) => value_or_return!(self.eval_expr(expr, env)),
                     None => Value::Unit,
                 };
                 Ok(Flow::Return(value))
@@ -250,8 +262,14 @@ impl<'a> Interpreter<'a> {
                 .map(Flow::Value)
                 .ok_or_else(|| format!("unknown variable '{name}'")),
             Expr::Binary(op, left, right, _) => {
-                let left = self.expect_value(self.eval_expr(left, env)?)?;
-                let right = self.expect_value(self.eval_expr(right, env)?)?;
+                let left = value_or_return!(self.eval_expr(left, env));
+                if matches!(op, BinOp::And) && !left.as_bool()? {
+                    return Ok(Flow::Value(Value::Bool(false)));
+                }
+                if matches!(op, BinOp::Or) && left.as_bool()? {
+                    return Ok(Flow::Value(Value::Bool(true)));
+                }
+                let right = value_or_return!(self.eval_expr(right, env));
                 Ok(Flow::Value(self.binary(*op, left, right)?))
             }
             Expr::Call(callee, args, _) => {
@@ -260,18 +278,30 @@ impl<'a> Interpreter<'a> {
                     Expr::Path { segments, .. } if segments.len() == 1 => &segments[0],
                     _ => return Err("only direct function calls are supported by the alpha interpreter".to_string()),
                 };
+                if name == "print!" || name == "println!" {
+                    if args.len() > 1 {
+                        return Err("print macros currently accept zero or one expression".into());
+                    }
+                    let output = match args.first() {
+                        Some(arg) => value_or_return!(self.eval_expr(arg, env)).display(),
+                        None => String::new(),
+                    };
+                    if name == "println!" { println!("{output}"); }
+                    else { print!("{output}"); }
+                    return Ok(Flow::Value(Value::Unit));
+                }
                 let function = self
                     .functions
                     .get(name)
                     .ok_or_else(|| format!("unknown function '{name}'"))?;
                 let mut values = Vec::with_capacity(args.len());
                 for arg in args {
-                    values.push(self.expect_value(self.eval_expr(arg, env)?)?);
+                    values.push(value_or_return!(self.eval_expr(arg, env)));
                 }
                 Ok(Flow::Value(self.call_function(function, values)?))
             }
             Expr::If { cond, then_branch, else_branch, .. } => {
-                let condition = self.expect_value(self.eval_expr(cond, env)?)?.as_bool()?;
+                let condition = value_or_return!(self.eval_expr(cond, env)).as_bool()?;
                 if condition {
                     self.eval_block(then_branch, env)
                 } else if let Some(else_expr) = else_branch {
@@ -294,13 +324,13 @@ impl<'a> Interpreter<'a> {
                 Ok(Flow::Value(Value::Unit))
             }
             Expr::Neg(inner, _) => {
-                let value = self.expect_value(self.eval_expr(inner, env)?)?.as_int()?;
-                Ok(Flow::Value(Value::Int(-value)))
+                let value = value_or_return!(self.eval_expr(inner, env)).as_int()?;
+                Ok(Flow::Value(Value::Int(value.checked_neg().ok_or("integer overflow")?)))
             }
             Expr::Unary(op, inner, _) => {
-                let value = self.expect_value(self.eval_expr(inner, env)?)?;
+                let value = value_or_return!(self.eval_expr(inner, env));
                 match op {
-                    blyx_ast::UnOp::Neg => Ok(Flow::Value(Value::Int(-value.as_int()?))),
+                    blyx_ast::UnOp::Neg => Ok(Flow::Value(Value::Int(value.as_int()?.checked_neg().ok_or("integer overflow")?))),
                     blyx_ast::UnOp::Not => Ok(Flow::Value(Value::Bool(!value.as_bool()?))),
                     _ => Err("references/dereferences are not supported by the alpha interpreter".to_string()),
                 }
@@ -309,20 +339,13 @@ impl<'a> Interpreter<'a> {
         }
     }
 
-    fn expect_value(&self, flow: Flow) -> Result<Value, String> {
-        match flow {
-            Flow::Value(value) => Ok(value),
-            Flow::Return(value) => Ok(value),
-        }
-    }
-
     fn binary(&self, op: BinOp, left: Value, right: Value) -> Result<Value, String> {
         match op {
-            BinOp::Add => Ok(Value::Int(left.as_int()? + right.as_int()?)),
-            BinOp::Sub => Ok(Value::Int(left.as_int()? - right.as_int()?)),
-            BinOp::Mul => Ok(Value::Int(left.as_int()? * right.as_int()?)),
-            BinOp::Div => Ok(Value::Int(left.as_int()? / right.as_int()?)),
-            BinOp::Rem => Ok(Value::Int(left.as_int()? % right.as_int()?)),
+            BinOp::Add => Ok(Value::Int(left.as_int()?.checked_add(right.as_int()?).ok_or("integer overflow or division by zero")?)),
+            BinOp::Sub => Ok(Value::Int(left.as_int()?.checked_sub(right.as_int()?).ok_or("integer overflow or division by zero")?)),
+            BinOp::Mul => Ok(Value::Int(left.as_int()?.checked_mul(right.as_int()?).ok_or("integer overflow or division by zero")?)),
+            BinOp::Div => Ok(Value::Int(left.as_int()?.checked_div(right.as_int()?).ok_or("integer overflow or division by zero")?)),
+            BinOp::Rem => Ok(Value::Int(left.as_int()?.checked_rem(right.as_int()?).ok_or("integer overflow or division by zero")?)),
             BinOp::Eq => Ok(Value::Bool(left == right)),
             BinOp::Ne => Ok(Value::Bool(left != right)),
             BinOp::Lt => Ok(Value::Bool(left.as_int()? < right.as_int()?)),
@@ -435,4 +458,59 @@ fn cmd_fmt(args: &[String]) {
     }
 
     print_success(&format!("normalized {path}"));
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn run(source: &str) -> Result<Value, String> {
+        let mut parser = BlyxParser::new(source);
+        let file = parser.parse_file("test.blyx");
+        assert!(!parser.has_errors(), "{:?}", parser.errors());
+        Interpreter::new(&file).run_main()
+    }
+
+    #[test]
+    fn executes_bindings_and_recursive_functions() {
+        assert_eq!(run("fn fib(n: i64) { if n < 2 { return n; } return fib(n - 1) + fib(n - 2); } fn main() { let answer = fib(10); return answer; }").unwrap(), Value::Int(55));
+    }
+
+    #[test]
+    fn short_circuits_boolean_expressions() {
+        assert_eq!(run("fn main() { return false && (1 / 0 == 0); }").unwrap(), Value::Bool(false));
+        assert_eq!(run("fn main() { return true || missing(); }").unwrap(), Value::Bool(true));
+        assert!(run("fn main() { return true && 1; }").is_err());
+    }
+
+    #[test]
+    fn arithmetic_errors_do_not_panic() {
+        for expression in ["1 / 0", "1 % 0", "9223372036854775807 + 1", "9223372036854775807 * 2", "(-9223372036854775807 - 1) / -1", "-(-9223372036854775807 - 1)"] {
+            assert!(run(&format!("fn main() {{ return {expression}; }}")).is_err(), "{expression}");
+        }
+    }
+
+    #[test]
+    fn block_bindings_do_not_leak() {
+        assert_eq!(run("fn main() { let x = 7; if true { let x = 9; } return x; }").unwrap(), Value::Int(7));
+        assert!(run("fn main() { if true { let hidden = 9; } return hidden; }").is_err());
+    }
+
+    #[test]
+    fn nested_returns_escape_expressions() {
+        for source in [
+            "fn main() { let x = { return 42; }; return 0; }",
+            "fn main() { return 1 + { return 42; }; }",
+            "fn identity(x: i64) { return x; } fn main() { identity({ return 42; }); return 0; }",
+        ] {
+            assert_eq!(run(source).unwrap(), Value::Int(42));
+        }
+    }
+
+    #[test]
+    fn print_macros_evaluate_expressions() {
+        assert_eq!(run("fn main() { println!(\"Hello, Blyx!\"); println!(1 + 2); print!(true); println!(); }").unwrap(), Value::Unit);
+        assert!(run("fn main() { println!(missing); }").is_err());
+        assert!(run("fn main() { println!(1, 2); }").is_err());
+    }
 }
