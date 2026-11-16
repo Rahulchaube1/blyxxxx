@@ -255,7 +255,9 @@ impl<'a> Interpreter<'a> {
             Expr::Literal(lit, _) => Ok(Flow::Value(match lit {
                 Lit::Int(value) => Value::Int(*value as i64),
                 Lit::Float(value) => {
-                    return Err(format!("floating-point execution is not implemented yet: {value}"));
+                    return Err(format!(
+                        "floating-point execution is not implemented yet: {value}"
+                    ));
                 }
                 Lit::String(value) => Value::Str(value.clone()),
                 Lit::Char(value) => Value::Str(value.to_string()),
