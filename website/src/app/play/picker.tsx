@@ -1,13 +1,16 @@
 "use client";
+import { useHydrated } from "@/lib/useHydrated";
 import { useRouter } from "next/navigation";
 import samples from "@/lib/samples.json";
 export default function ExamplePicker({ id }: { id: string }) {
+    const ready = useHydrated();
     const router = useRouter();
     return (
         <div className="filters">
             <label>
                 Example
                 <select
+                    disabled={!ready}
                     aria-label="Example"
                     value={id}
                     onChange={(e) =>

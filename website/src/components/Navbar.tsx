@@ -1,8 +1,10 @@
 "use client";
+import { useHydrated } from "@/lib/useHydrated";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { bookEdition, mainLink, guideLink } from "@/lib/site";
 export default function Navbar() {
+    const ready = useHydrated();
     const [open, setOpen] = useState(false);
     const path = usePathname();
     const links = [
@@ -26,6 +28,7 @@ export default function Navbar() {
                 <button
                     className="menu-toggle"
                     aria-expanded={open}
+                    disabled={!ready}
                     aria-controls="primary-nav"
                     onClick={() => setOpen(!open)}
                 >

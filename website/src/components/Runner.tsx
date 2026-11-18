@@ -1,4 +1,5 @@
 "use client";
+import { useHydrated } from "@/lib/useHydrated";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import "../app/play/play.css";
 type Result = {
@@ -15,6 +16,7 @@ export default function Runner({
     filename: string;
     checkOnly?: boolean;
 }) {
+    const ready = useHydrated();
     const id = useId();
     const [source, setSource] = useState(code),
         [live, setLive] = useState(true),
@@ -80,6 +82,7 @@ export default function Runner({
             <div className="run-toolbar">
                 <label>
                     <input
+                        disabled={!ready}
                         type="checkbox"
                         checked={live}
                         onChange={(e) => {
@@ -92,7 +95,7 @@ export default function Runner({
                 </label>
                 <button
                     className="button secondary"
-                    disabled={source === code}
+                    disabled={!ready || source === code}
                     onClick={() => {
                         cancel();
                         setSource(code);
@@ -113,7 +116,7 @@ export default function Runner({
                         Stop
                     </button>
                 ) : (
-                    <button className="primary" onClick={run}>
+                    <button className="primary" onClick={run} disabled={!ready}>
                         {checkOnly ? "Check syntax" : "Run program"}
                     </button>
                 )}
@@ -124,6 +127,7 @@ export default function Runner({
                         {filename.split("/").pop()}
                     </label>
                     <textarea
+                        disabled={!ready}
                         id={id}
                         aria-label="Blyx source"
                         spellCheck={false}

@@ -1,8 +1,10 @@
 "use client";
+import { useHydrated } from "@/lib/useHydrated";
 import { useState } from "react";
 import samples from "@/lib/samples.json";
 import { playLink, repository } from "@/lib/site";
 export default function Catalog() {
+    const ready = useHydrated();
     const [query, setQuery] = useState(""),
         [category, setCategory] = useState("");
     const results = samples.filter(
@@ -19,6 +21,7 @@ export default function Catalog() {
                 <label>
                     Search examples
                     <input
+                        disabled={!ready}
                         type="search"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
@@ -28,6 +31,7 @@ export default function Catalog() {
                 <label>
                     Topic
                     <select
+                        disabled={!ready}
                         aria-label="Topic"
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
@@ -53,7 +57,7 @@ export default function Catalog() {
                                 Open program
                             </a>
                             <a href={repository + "/blob/blyx-main/" + s.file}>
-                                Source â†—
+                                Source Ã¢â€ â€”
                             </a>
                         </div>
                     </article>

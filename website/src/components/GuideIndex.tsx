@@ -1,8 +1,10 @@
 "use client";
+import { useHydrated } from "@/lib/useHydrated";
 import { useState } from "react";
 import guides from "@/lib/guides.json";
 import { guideLink, docs } from "@/lib/site";
 export default function GuideIndex() {
+    const ready = useHydrated();
     const [query, setQuery] = useState("");
     const words = query.toLowerCase().trim().split(/\s+/);
     const results = guides.filter((g) => {
@@ -30,6 +32,7 @@ export default function GuideIndex() {
                 <label>
                     Search documentation
                     <input
+                        disabled={!ready}
                         type="search"
                         placeholder="Search the guide"
                         value={query}
@@ -54,7 +57,7 @@ export default function GuideIndex() {
                                 >
                                     <h3>{g.title}</h3>
                                     <p>{g.summary}</p>
-                                    <span>Read guide →</span>
+                                    <span>Read guide â†’</span>
                                 </a>
                             ))}
                     </div>
@@ -67,7 +70,7 @@ export default function GuideIndex() {
                 </p>
             )}
             <p className="block">
-                <a href={docs + "/guide/print"}>Printable guide →</a>
+                <a href={docs + "/guide/print"}>Printable guide â†’</a>
             </p>
         </main>
     );
