@@ -31,6 +31,15 @@ export default function Download() {
             </div>
             <div className="prose block">
                 <section>
+                    <h2>Install with Homebrew</h2>
+                    <p>
+                        On Apple Silicon macOS or x86-64 Linux, Homebrew installs
+                        the release binary and checks its SHA-256 checksum.
+                    </p>
+                    <pre>brew install rahulchaube1/blyx/blyx</pre>
+                    <a href="https://github.com/Rahulchaube1/homebrew-blyx">Homebrew formula</a>
+                </section>
+                <section>
                     <h2>Verify and run</h2>
                     <p>
                         Compare the archive’s SHA-256 hash with the release
@@ -44,17 +53,16 @@ export default function Download() {
                     </div>
                 </section>
                 <section>
-                    <h2>Install from source</h2>
+                    <h2>Install with Cargo</h2>
                     <p>
-                        Use Cargo with a host linker to install the tagged
-                        version. Native builds also require rustc.
+                        With Rust and a host linker installed, Cargo can build
+                        the compiler from its published source package.
                     </p>
-                    <pre>
-                        cargo install --locked --git
-                        https://github.com/Rahulchaube1/blyxxxx --tag v0.2.0
-                        blyxc
-                    </pre>
-                    <a href={guideLink("installation")}>Installation guide →</a>
+                    <pre>cargo install --locked --version 0.2.0 blyxc</pre>
+                    <div className="actions">
+                        <a href="https://crates.io/crates/blyxc/0.2.0">Compiler on crates.io</a>
+                        <a href={guideLink("installation")}>Installation guide →</a>
+                    </div>
                 </section>
             </div>
         </main>

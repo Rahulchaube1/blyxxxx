@@ -32,14 +32,19 @@
                 "text": "The 0.2.0 release ships archives for Windows x86-64, Linux x86-64 and macOS Apple Silicon. Extract the archive and place the executable in a directory on PATH. With PowerShell you can also run .\\blyxc.exe from the extracted directory."
             },
             {
+                "heading": "Install with Homebrew",
+                "text": "On Apple Silicon macOS or x86-64 Linux, Homebrew can install the release binary and verify its checksum.",
+                "command": "brew install rahulchaube1/blyx/blyx"
+            },
+            {
                 "heading": "Check your installation",
                 "text": "Run the version command. For the guide’s release the response is blyxc 0.2.0.",
                 "command": "blyxc --version"
             },
             {
-                "heading": "Install from source",
-                "text": "With Cargo and a host linker installed, select the release tag to reproduce this guide’s compiler.",
-                "command": "cargo install --locked --git https://github.com/Rahulchaube1/blyxxxx --tag v0.2.0 blyxc"
+                "heading": "Install with Cargo",
+                "text": "With Rust, Cargo, and a host linker installed, build the published compiler from crates.io. This command selects the version used in this guide.",
+                "command": "cargo install --locked --version 0.2.0 blyxc"
             },
             {
                 "heading": "Choose an execution path",

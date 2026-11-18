@@ -28,6 +28,12 @@ On Apple Silicon macOS and x86-64 Linux, install the compiler with Homebrew:
 brew install rahulchaube1/blyx/blyx
 ```
 
+With Rust and a host linker installed, build the released compiler from crates.io:
+
+```sh
+cargo install --locked --version 0.2.0 blyxc
+```
+
 Download the **Blyx 0.2.0** archive for Windows x86-64, Linux x86-64, or macOS on Apple Silicon. Verify it against the release’s `SHA256SUMS`, extract the archive, and put the directory containing `blyxc` on your `PATH`. [Release archives and checksums](https://github.com/Rahulchaube1/blyxxxx/releases/tag/v0.2.0)
 
 ```sh

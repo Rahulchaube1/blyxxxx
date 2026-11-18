@@ -17,10 +17,10 @@ brew install rahulchaube1/blyx/blyx
 blyxc --version
 ```
 
-With Rust installed, Cargo can also build the compiler from the published Git tag:
+With Rust and a host linker installed, Cargo can also build the compiler from crates.io:
 
 ```sh
-cargo install --locked --git https://github.com/Rahulchaube1/blyxxxx --tag v0.2.0 blyxc
+cargo install --locked --version 0.2.0 blyxc
 ```
 
 Published binaries and installation instructions are maintained at:
