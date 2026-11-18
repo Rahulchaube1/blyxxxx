@@ -55,6 +55,7 @@ export default function VSCodePage() {
           >
             Install from Marketplace ↗
           </a>
+          <a href="https://github.com/Rahulchaube1/blyxxxx/releases/download/v0.2.0/blyx-language-1.2.0.vsix" style={{ marginLeft: 20, color: "#7dd3fc" }}>Download version 1.2.0 (.vsix)</a>
           <a href="https://open-vsx.org/extension/RahulChaube/blyx-language" style={{ marginLeft: 20, color: "#7dd3fc" }}>Open VSX ↗</a>
         </div>
       </main>

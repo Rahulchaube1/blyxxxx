@@ -60,7 +60,7 @@ export default function HomePage() {
             <a href="https://github.com/Rahulchaube1/blyxxxx" target="_blank" rel="noreferrer" style={{ padding: '13px 24px', borderRadius: 7, background: '#1E293B', border: '1px solid #334155', color: '#F8FAFC', fontWeight: 700, textDecoration: 'none' }}>Explore GitHub ↗</a>
           </div>
           <p style={{ marginTop: 22, color: '#64748B', fontSize: 14 }}>
-            Alpha status is intentional: the frontend is under active development and native code generation/execution are not yet complete.
+            The native compiler supports typed functions, control flow and numerical vectors. GPU kernels and model-serving syntax are experimental designs.
           </p>
         </div>
       </section>
