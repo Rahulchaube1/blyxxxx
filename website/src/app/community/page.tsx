@@ -1,48 +1,87 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
 import { repository } from "@/lib/site";
-import ResourcePage from "@/components/ResourcePage";
+import { boards, forumLink, isBoard, isPostId, type Board, type Post } from "./forum";
+import { Composer, LiveUpdates } from "./composer";
+import { getPage, getPost } from "./storage";
+import "./community.css";
+
+export const dynamic = "force-dynamic";
 export const metadata = {
     title: "Blyx community",
-    description:
-        "Rahul Chaube leads the Blyx project. Ujjwal Chaudhury is a core contributor. Development, proposals and issue tracking take place in the project repository.",
+    description: "Ask questions about Blyx, propose changes, and share feedback with other language users.",
 };
-const sections = [
-    {
-        heading: "Contribute a change",
-        body: "Build the workspace, reproduce the issue you want to address and follow the contribution guide when preparing a change.",
-        label: "Contribution guide",
-        href: repository + "/blob/blyx-main/CONTRIBUTING.md",
-    },
-    {
-        heading: "Report a bug",
-        body: "Include your Blyx version, the smallest program that demonstrates the problem, the command you used, and the observed output.",
-        label: "Open the issue tracker",
-        href: repository + "/issues",
-    },
-    {
-        heading: "Discuss a language feature",
-        body: "Review the existing language proposals before opening a design discussion.",
-        label: "Browse proposals",
-        href: repository + "/tree/blyx-main/RFC",
-    },
-    {
-        heading: "Community standards",
-        body: "The code of conduct describes how participants are expected to work together.",
-        label: "Read the code of conduct",
-        href: repository + "/blob/blyx-main/CODE_OF_CONDUCT.md",
-    },
-    {
-        heading: "Support development",
-        body: "The project accepts community sponsorship through its existing funding page.",
-        label: "Support Blyx",
-        href: "https://buymeacoffee.com/rahulchaube",
-    },
-];
-export default function Page() {
+
+function Byline({ post }: { post: Post }) {
+    const date = new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" }).format(new Date(post.published));
+    return <p className="byline"><strong>{post.name}</strong> <span title="Guest ID">#{post.tag}</span><span aria-hidden="true"> · </span><time dateTime={post.published}>{date} UTC</time></p>;
+}
+
+function Resources() {
     return (
-        <ResourcePage
-            title={metadata.title}
-            intro={metadata.description}
-            sections={sections}
-        />
+        <aside className="forum-resources" aria-label="Community resources">
+            <h2>Project resources</h2>
+            <a href={repository + "/issues"}>Report a compiler bug ↗</a>
+            <a href={repository + "/tree/blyx-main/RFC"}>Language proposals ↗</a>
+            <a href={repository + "/blob/blyx-main/CONTRIBUTING.md"}>Contribution guide ↗</a>
+            <a href={repository + "/blob/blyx-main/CODE_OF_CONDUCT.md"}>Code of conduct ↗</a>
+            <a href="mailto:conduct@blyx-lang.space">Report a community concern</a>
+            <a href="https://buymeacoffee.com/rahulchaube">Support Blyx ↗</a>
+        </aside>
+    );
+}
+
+export default async function Community({ searchParams }: {
+    searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+    const params = await searchParams;
+    const board = params.board ?? "questions", topic = params.topic, cursor = params.cursor;
+    if (!isBoard(board) || (topic !== undefined && !isPostId(topic)) ||
+        (cursor !== undefined && (typeof cursor !== "string" || cursor.length > 2048))) notFound();
+    let parent: Post | null = null;
+    let page: Awaited<ReturnType<typeof getPage>> | undefined;
+    try {
+        if (topic) parent = await getPost(board, topic);
+        if (!topic || parent) page = await getPage(board, topic, cursor);
+    } catch (error) {
+        console.error("Blyx community read failed", error instanceof Error ? error.name : "unknown");
+        return <main className="wrap"><header className="page-head"><h1>Blyx community</h1><p>We couldn’t load these discussions. Please try again.</p><a href={forumLink(board, topic)}>Reload discussions</a></header></main>;
+    }
+    if (!page) notFound();
+    return (
+        <main className="wrap community">
+            <header className="page-head">
+                {topic ? <><Link href={forumLink(board)}>← Back to {boards[board].label.toLowerCase()}</Link><h1>{parent!.title}</h1></> :
+                    <><h1>Blyx community</h1><p>Ask about a Blyx program, suggest a language change, or tell other developers what you learned.</p></>}
+            </header>
+            <div className="forum-layout"><div className="forum-main">
+                {!topic && <nav className="forum-tabs" aria-label="Discussion boards">
+                    {(Object.keys(boards) as Board[]).map(key => <Link href={forumLink(key)} key={key} aria-current={board === key ? "page" : undefined}>{boards[key].label}</Link>)}
+                </nav>}
+                {parent ? <article className="forum-original"><Byline post={parent} /><p className="post-body">{parent.body}</p></article> :
+                    <div className="board-intro"><h2>{boards[board].label}</h2><p>{boards[board].prompt}</p></div>}
+                <details className="forum-compose" key={board + (topic || "")}>
+                    <summary>{topic ? "Write a reply" : "Start a discussion"}</summary>
+                    <Composer board={board} topic={topic} serverTime={Date.now()} />
+                </details>
+                <section aria-label={topic ? "Replies" : "Discussions"}>
+                    {topic && <h2 className="reply-heading">Replies</h2>}
+                    {page.posts.length === 0 ? <div className="forum-empty">
+                        <h3>{cursor ? "End of this page" : topic ? "No replies yet" : "No discussions yet"}</h3>
+                        <p>{cursor ? "Return to the newest posts." : topic ? "Add your experience or a follow-up question." : "Start the first conversation on this board."}</p>
+                    </div> :
+                        <ol className="forum-posts">{page.posts.map(post => <li key={post.id} id={"post-" + post.id}>
+                            {!topic && <h3><Link href={forumLink(board, post.id)}>{post.title}</Link></h3>}
+                            <Byline post={post} />
+                            {topic && <p className="post-body">{post.body}</p>}
+                        </li>)}</ol>}
+                    <nav className="forum-pages" aria-label="Discussion pages">
+                        {cursor && <Link href={forumLink(board, topic)}>Newest {topic ? "replies" : "discussions"}</Link>}
+                        {page.next && <Link href={forumLink(board, topic, page.next)}>Older {topic ? "replies" : "discussions"} →</Link>}
+                    </nav>
+                </section>
+                {!cursor && <LiveUpdates />}
+            </div><Resources /></div>
+        </main>
     );
 }

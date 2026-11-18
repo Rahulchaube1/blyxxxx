@@ -13,6 +13,7 @@ export default function Navbar() {
         ["Examples", mainLink("/examples")],
         ["Playground", mainLink("/play")],
         ["Download", mainLink("/download")],
+        ["Community", mainLink("/community")],
     ];
     return (
         <header className="mast">

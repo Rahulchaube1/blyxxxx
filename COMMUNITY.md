@@ -2,6 +2,8 @@
 
 Blyx is an open-source experiment in AI-native systems programming. The community is where language design, compiler engineering, runtime work, benchmarks, and real-world feedback meet.
 
+Join the [Blyx community forum](https://www.blyx-lang.space/community) to ask a question, suggest a language change, share feedback, or reply to another developer. Anyone can read the discussions and post with a nickname. For a reproducible compiler bug, use the issue tracker below.
+
 ## Start here
 
 1. Try the playground: https://play.blyx-lang.space
