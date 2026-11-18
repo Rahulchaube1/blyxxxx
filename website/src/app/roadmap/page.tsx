@@ -1,73 +1,36 @@
-import React from "react";
-import Link from "next/link";
-
-export default function RoadmapPage() {
-  return (
-    <div style={{ background: "#0B0F19", color: "#F1F5F9", fontFamily: "'Inter', sans-serif", minHeight: "100vh", padding: "60px 24px" }}>
-      <style>{`
-        .blyx-card {
-          background: #101827;
-          border: 1px solid #1E293B;
-          border-radius: 8px;
-          transition: border-color 0.2s ease, transform 0.2s ease;
-        }
-        .blyx-card:hover {
-          border-color: #334155;
-          transform: translateY(-1px);
-        }
-      `}</style>
-      <main style={{ maxWidth: "860px", margin: "0 auto" }}>
-        <div style={{ fontSize: "14px", color: "#64748B", marginBottom: "24px" }}>
-          <Link href="/" style={{ color: "#38BDF8", textDecoration: "none" }}>Home</Link> / Roadmap
-        </div>
-
-        <h1 style={{ fontWeight: 800, fontSize: "40px", color: "#F8FAFC", marginBottom: "16px", letterSpacing: "-1px" }}>
-          Development Roadmap
-        </h1>
-        <p style={{ fontSize: "18px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "48px" }}>
-          Milestones tracking compiler stabilization, language specs, and standard library releases.
-        </p>
-
-        <div style={{ display: "grid", gap: "24px" }}>
-          {[
-            {
-              phase: "v0.1.0-alpha",
-              status: "Completed",
-              title: "Language Foundation & BIR SSA",
-              desc: "Recursive descent parser, AST lowering, BIR SSA format, static type checking, and LLVM IR codegen.",
-            },
-            {
-              phase: "v0.1.0-beta",
-              status: "Active",
-              title: "Native Tensors & GPU Compilation",
-              desc: "Static multidimensional tensor inference, lock-free actor model, direct PTX/SPIR-V GPU lowering, and VS Code extension.",
-            },
-            {
-              phase: "v1.0.0-stable",
-              status: "Upcoming",
-              title: "Production Release",
-              desc: "Standard library stabilization (std::tensor, std::actor), package registry launch, and production support.",
-            },
-          ].map((m, idx) => (
-            <div key={idx} className="blyx-card" style={{ padding: "32px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontWeight: 700, fontSize: "16px", color: "#38BDF8" }}>
-                  {m.phase}
-                </span>
-                <span style={{ fontFamily: "monospace", fontSize: "12px", background: m.status === "Active" ? "#1E293B" : "#020617", color: m.status === "Active" ? "#38BDF8" : "#94A3B8", padding: "2px 8px", borderRadius: "4px", fontWeight: 600 }}>
-                  {m.status}
-                </span>
-              </div>
-              <h2 style={{ fontWeight: 700, fontSize: "20px", color: "#F8FAFC", marginBottom: "8px" }}>
-                {m.title}
-              </h2>
-              <p style={{ fontSize: "15px", color: "#94A3B8", lineHeight: 1.6, margin: 0 }}>
-                {m.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-      </main>
-    </div>
-  );
+import { repository } from "@/lib/site";
+import ResourcePage from "@/components/ResourcePage";
+export const metadata = {
+    title: "Blyx roadmap",
+    description:
+        "Track what ships in the current release and what is still being explored.",
+};
+const sections = [
+    {
+        heading: "Available in 0.2.0",
+        body: "Run source on the CLI, in the browser and through the VS Code extension. Build supported typed programs into native executables and perform CPU vector operations.",
+        label: "Read the release",
+        href: repository + "/releases/tag/v0.2.0",
+    },
+    {
+        heading: "Compiler development",
+        body: "The public roadmap describes the work on analysis, diagnostics, optimizer infrastructure and backends. Proposals and experiments can change as implementation progresses.",
+        label: "Read the engineering roadmap",
+        href: repository + "/blob/blyx-main/ROADMAP.md",
+    },
+    {
+        heading: "Language proposals",
+        body: "Actors, GPU execution, general-purpose modules and richer tensor support remain development topics. Follow individual proposals in the project’s RFC directory.",
+        label: "Browse RFCs",
+        href: repository + "/tree/blyx-main/RFC",
+    },
+];
+export default function Page() {
+    return (
+        <ResourcePage
+            title={metadata.title}
+            intro={metadata.description}
+            sections={sections}
+        />
+    );
 }

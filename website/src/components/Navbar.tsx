@@ -1,129 +1,52 @@
 "use client";
-import React, { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-
-const NAV_LINKS: [string, string, boolean][] = [
-  ["Docs",       "/docs",                          false],
-  ["Learn",      "/learn",                         false],
-  ["Playground", "/play",                          false],
-  ["Compiler",   "/compiler",                      false],
-  ["Benchmarks", "/benchmarks",                    false],
-  ["Community",  "/community",                     false],
-];
-
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { bookEdition, mainLink, guideLink } from "@/lib/site";
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <header style={{ position: "sticky", top: 0, zIndex: 100 }}>
-      {/* Release Banner */}
-      <div style={{
-        background: "#0F172A",
-        color: "#F8FAFC",
-        textAlign: "center",
-        padding: "8px 24px",
-        fontSize: "13px",
-        fontFamily: "'Inter', sans-serif",
-        fontWeight: 500,
-        borderBottom: "1px solid #1E293B",
-      }}>
-        Blyx 0.2.0 · Native builds and an executable playground &bull;{" "}
-        <a
-          href="https://github.com/Rahulchaube1/blyxxxx"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: "#38BDF8", fontWeight: 700, textDecoration: "underline" }}
-        >
-          View on GitHub &rarr;
-        </a>
-      </div>
-
-      {/* Main Navbar */}
-      <nav style={{
-        background: "#0B0F19",
-        borderBottom: "1px solid #1E293B",
-      }}>
-        <div style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          padding: "0 24px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          height: "72px",
-        }}>
-          {/* Logo + Brand */}
-          <Link href="/" style={{ display: "flex", alignItems: "center", gap: "12px", textDecoration: "none" }}>
-            <Image src="/blyxlogo.png" alt="Blyx Logo" width={40} height={40} priority />
-            <span style={{
-              fontFamily: "'Inter', sans-serif",
-              fontWeight: 800,
-              fontSize: "22px",
-              color: "#F8FAFC",
-              letterSpacing: "-0.5px",
-            }}>
-              Blyx<span style={{ color: "#0EA5E9" }}>.</span>
-            </span>
-          </Link>
-
-          {/* Desktop Nav Links */}
-          <div style={{ display: "flex", gap: "28px", alignItems: "center" }}>
-            {NAV_LINKS.map(([label, href, external]) => (
-              external ? (
-                <a
-                  key={href}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontWeight: 500,
-                    fontSize: "14px",
-                    color: "#94A3B8",
-                    textDecoration: "none",
-                    transition: "color 0.2s",
-                  }}
-                >
-                  {label} ↗
+    const [open, setOpen] = useState(false);
+    const path = usePathname();
+    const links = [
+        ["Documentation", guideLink()],
+        ["Examples", mainLink("/examples")],
+        ["Playground", mainLink("/play")],
+        ["Download", mainLink("/download")],
+    ];
+    return (
+        <header className="mast">
+            <div className="mast-inner">
+                <a className="brand" href={mainLink("/")}>
+                    <img src="/blyxlogo.png" alt="" width="38" height="38" />
+                    Blyx
                 </a>
-              ) : (
-                <Link
-                  key={href}
-                  href={href}
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontWeight: 500,
-                    fontSize: "14px",
-                    color: "#94A3B8",
-                    textDecoration: "none",
-                    transition: "color 0.2s",
-                  }}
+                {bookEdition && (
+                    <a className="book-mark" href="/">
+                        Documentation
+                    </a>
+                )}
+                <button
+                    className="menu-toggle"
+                    aria-expanded={open}
+                    aria-controls="primary-nav"
+                    onClick={() => setOpen(!open)}
                 >
-                  {label}
-                </Link>
-              )
-            ))}
-            <a
-              href="https://github.com/Rahulchaube1/blyxxxx"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontWeight: 600,
-                fontSize: "14px",
-                color: "#ffffff",
-                textDecoration: "none",
-                background: "#0EA5E9",
-                padding: "8px 18px",
-                borderRadius: "6px",
-              }}
-            >
-              GitHub ↗
-            </a>
-          </div>
-        </div>
-      </nav>
-    </header>
-  );
+                    Menu
+                </button>
+                <nav
+                    aria-label="Main"
+                    id="primary-nav"
+                    className={open ? "nav open" : "nav"}
+                >
+                    {links.map(([label, href]) => (
+                        <a
+                            key={label}
+                            href={href}
+                            aria-current={path === href ? "page" : undefined}
+                        >
+                            {label}
+                        </a>
+                    ))}
+                </nav>
+            </div>
+        </header>
+    );
 }

@@ -1,18 +1,110 @@
 [
-  {
-    "title": "Fit a line",
-    "code": "// Fit y = slope * x by least squares through the origin.\nfn fit(samples: vector, targets: vector) -> f64 {\n    dot(samples, targets) / dot(samples, samples)\n}\n\nfn main() {\n    let samples = [1.0, 2.0, 3.0, 4.0];\n    let targets = [2.0, 4.0, 6.0, 8.0];\n    let slope = fit(samples, targets);\n    println!(slope);\n    println!(slope * 5.0);\n}\n"
-  },
-  {
-    "title": "Fibonacci",
-    "code": "fn fibonacci(n: i64) -> i64 {\n    if n < 2 { return n; }\n    return fibonacci(n - 1) + fibonacci(n - 2);\n}\n\nfn main() {\n    println!(\"Fibonacci(10):\");\n    println!(fibonacci(10));\n}\n"
-  },
-  {
-    "title": "Loops and mutation",
-    "code": "fn factorial(n: i64) -> i64 {\n    let mut result = 1;\n    let mut i = 2;\n    while i <= n {\n        result *= i;\n        i += 1;\n    }\n    result\n}\n\nfn main() {\n    println!(\"Factorial(6):\");\n    println!(factorial(6));\n    let mut n = 0;\n    let answer = loop {\n        n += 1;\n        if n < 5 { continue; }\n        break n * 2;\n    };\n    println!(answer);\n}\n"
-  },
-  {
-    "title": "Hello, Blyx",
-    "code": "// Blyx Example 1: Hello World\n// Official Domain: https://blyx-lang.space\n\nfn main() {\n    println!(\"Hello, World from Blyx!\");\n}\n"
-  }
+    {
+        "id": "linear-fit",
+        "title": "Fit a line",
+        "category": "Machine learning",
+        "description": "Fit a slope through the origin and predict the response at x = 5.",
+        "file": "examples/ml/linear_fit.blyx",
+        "expected": "2\n10\n",
+        "code": "// Fit y = slope * x by least squares through the origin.\nfn fit(samples: vector, targets: vector) -> f64 {\n    dot(samples, targets) / dot(samples, samples)\n}\n\nfn main() {\n    let samples = [1.0, 2.0, 3.0, 4.0];\n    let targets = [2.0, 4.0, 6.0, 8.0];\n    let slope = fit(samples, targets);\n    println!(slope);\n    println!(slope * 5.0);\n}\n"
+    },
+    {
+        "id": "fibonacci",
+        "title": "Fibonacci",
+        "category": "Control flow",
+        "description": "Use a base case and two recursive calls to find the tenth Fibonacci number.",
+        "file": "examples/basic/fibonacci.blyx",
+        "expected": "Fibonacci(10):\n55\n",
+        "code": "fn fibonacci(n: i64) -> i64 {\n    if n < 2 { return n; }\n    return fibonacci(n - 1) + fibonacci(n - 2);\n}\n\nfn main() {\n    println!(\"Fibonacci(10):\");\n    println!(fibonacci(10));\n}\n"
+    },
+    {
+        "id": "loops",
+        "title": "Loops and mutation",
+        "category": "Control flow",
+        "description": "Accumulate a factorial, skip iterations, and return a value from a loop.",
+        "file": "examples/basic/loops.blyx",
+        "expected": "Factorial(6):\n720\n10\n",
+        "code": "fn factorial(n: i64) -> i64 {\n    let mut result = 1;\n    let mut i = 2;\n    while i <= n {\n        result *= i;\n        i += 1;\n    }\n    result\n}\n\nfn main() {\n    println!(\"Factorial(6):\");\n    println!(factorial(6));\n    let mut n = 0;\n    let answer = loop {\n        n += 1;\n        if n < 5 { continue; }\n        break n * 2;\n    };\n    println!(answer);\n}\n"
+    },
+    {
+        "id": "hello",
+        "title": "Hello, Blyx",
+        "category": "Basics",
+        "description": "Write a greeting to standard output from the main function.",
+        "file": "examples/basic/hello.blyx",
+        "expected": "Hello, World from Blyx!\n",
+        "code": "// Blyx Example 1: Hello World\n// Official Domain: https://blyx-lang.space\n\nfn main() {\n    println!(\"Hello, World from Blyx!\");\n}\n"
+    },
+    {
+        "id": "weighted-mean",
+        "title": "Weighted mean",
+        "category": "Numerics",
+        "description": "Combine three measurements with different weights. Change a weight and observe the mean.",
+        "file": "examples/numerics/weighted_mean.blyx",
+        "expected": "7.5\n",
+        "code": "fn main() {\n    let readings = [5.0, 7.0, 9.0];\n    let weights = [1.0, 1.0, 2.0];\n    println!(dot(readings, weights) / sum(weights));\n}\n"
+    },
+    {
+        "id": "threshold",
+        "title": "Threshold classifier",
+        "category": "Machine learning",
+        "description": "Combine two features and a bias, then assign a label from the sign of the score.",
+        "file": "examples/ml/threshold.blyx",
+        "expected": "positive\n",
+        "code": "fn classify(features: vector, weights: vector, bias: f64) -> str {\n    if dot(features, weights) + bias >= 0.0 {\n        \"positive\"\n    } else {\n        \"negative\"\n    }\n}\n\nfn main() {\n    println!(classify([2.0, 3.0], [0.5, -0.25], 0.0));\n}\n"
+    },
+    {
+        "id": "prediction-error",
+        "title": "Mean squared error",
+        "category": "Machine learning",
+        "description": "Measure the squared residuals of three predictions against their targets.",
+        "file": "examples/ml/prediction_error.blyx",
+        "expected": "2\n",
+        "code": "fn main() {\n    let predicted = [2.0, 3.0, 5.0];\n    let target = [1.0, 4.0, 3.0];\n    let mut squares = 0.0;\n    let mut count = 0.0;\n    let mut i = 0;\n    while i < len(target) {\n        let error = at(predicted, i) - at(target, i);\n        squares += error * error;\n        count += 1.0;\n        i += 1;\n    }\n    println!(squares / count);\n}\n"
+    },
+    {
+        "id": "smoothing",
+        "title": "Smooth a signal",
+        "category": "Numerics",
+        "description": "Blend each new observation with the previous estimate using a smoothing factor of 0.5.",
+        "file": "examples/numerics/smoothing.blyx",
+        "expected": "10\n12\n15\n",
+        "code": "fn main() {\n    let signal = [10.0, 14.0, 18.0];\n    let mut estimate = at(signal, 0);\n    println!(estimate);\n    let mut i = 1;\n    while i < len(signal) {\n        estimate = 0.5 * at(signal, i) + 0.5 * estimate;\n        println!(estimate);\n        i += 1;\n    }\n}\n"
+    },
+    {
+        "id": "gcd",
+        "title": "Greatest common divisor",
+        "category": "Control flow",
+        "description": "Apply Euclid’s remainder algorithm until the second operand reaches zero.",
+        "file": "examples/basic/gcd.blyx",
+        "expected": "6\n",
+        "code": "fn gcd(a: i64, b: i64) -> i64 {\n    let mut x = a;\n    let mut y = b;\n    while y != 0 {\n        let remainder = x % y;\n        x = y;\n        y = remainder;\n    }\n    x\n}\n\nfn main() {\n    println!(gcd(48, 18));\n}\n"
+    },
+    {
+        "id": "vector-peak",
+        "title": "Find the peak",
+        "category": "Numerics",
+        "description": "Scan a nonempty vector and keep the largest reading, including negative readings.",
+        "file": "examples/numerics/vector_peak.blyx",
+        "expected": "-1\n",
+        "code": "fn main() {\n    let readings = [-8.0, -1.0, -3.0];\n    let mut peak = at(readings, 0);\n    let mut i = 1;\n    while i < len(readings) {\n        let reading = at(readings, i);\n        if reading > peak { peak = reading; }\n        i += 1;\n    }\n    println!(peak);\n}\n"
+    },
+    {
+        "id": "scope",
+        "title": "Block scope",
+        "category": "Basics",
+        "description": "Compare a shadowed binding inside a block with the original value outside it.",
+        "file": "examples/basic/scope.blyx",
+        "expected": "8\n3\n",
+        "code": "fn main() {\n    let level = 3;\n    {\n        let level = 8;\n        println!(level);\n    }\n    println!(level);\n}\n"
+    },
+    {
+        "id": "short-circuit",
+        "title": "Guard a division",
+        "category": "Basics",
+        "description": "Use a short-circuit boolean expression to check a divisor before evaluating a ratio.",
+        "file": "examples/basic/short_circuit.blyx",
+        "expected": "false\ntrue\n",
+        "code": "fn above_limit(total: i64, count: i64) -> bool {\n    count != 0 && total / count > 3\n}\n\nfn main() {\n    println!(above_limit(12, 0));\n    println!(above_limit(12, 2));\n}\n"
+    }
 ]

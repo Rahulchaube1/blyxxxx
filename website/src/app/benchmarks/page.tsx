@@ -1,16 +1,67 @@
 import data from "../../../public/data/benchmarks.json";
-
+import { repository } from "@/lib/site";
+export const metadata = { title: "Performance measurements" };
 export default function Benchmarks() {
-  return <main style={{maxWidth: 900, margin: "0 auto", padding: "64px 24px", lineHeight: 1.7}}>
-    <h1>Performance measurements</h1>
-    <p>Each process computes Fibonacci(22) recursively and prints 17711. Timings include process startup. Compilation takes place before measurement.</p>
-    <table style={{width:"100%", textAlign:"left", margin:"24px 0"}}>
-      <caption style={{textAlign:"left"}}>Elapsed time across nine runs, after two warm-ups</caption>
-      <thead><tr><th>Runtime</th><th>Median</th><th>Range</th></tr></thead>
-      <tbody>{data.results.map(row => <tr key={row.name}><th>{row.name}</th><td>{row.median_ms} ms</td><td>{row.min_ms}–{row.max_ms} ms</td></tr>)}</tbody>
-    </table>
-    <p>{data.os} · {data.cpu}<br/>{data.blyxc} · {data.rustc} · Python {data.python}</p>
-    <p>This small integer program measures command-line latency on one machine. Tensor throughput, memory use and GPU training need separate workloads.</p>
-    <a href="https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/tools/bench_fibonacci.py">Benchmark source</a> · <a href="/data/benchmarks.json">Download all measurements</a>
-  </main>;
+    return (
+        <main className="wrap">
+            <header className="page-head">
+                <h1>Performance measurements</h1>
+                <p>
+                    Recursive Fibonacci(22) on one Windows machine. Each run
+                    starts a new process and checks for the result 17711.
+                </p>
+            </header>
+            <div className="card table-box">
+                <table>
+                    <caption>
+                        Elapsed time across nine runs after two warm-ups
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th>Runtime</th>
+                            <th>Median</th>
+                            <th>Range</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.results.map((r) => (
+                            <tr key={r.name}>
+                                <th>{r.name}</th>
+                                <td>{r.median_ms} ms</td>
+                                <td>
+                                    {r.min_ms}–{r.max_ms} ms
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            <div className="prose block">
+                <section>
+                    <h2>Environment and method</h2>
+                    <p>
+                        {data.os} · {data.cpu}
+                        <br />
+                        {data.blyxc} · {data.rustc} · Python {data.python}
+                    </p>
+                    <p>
+                        Compilation happens before measurement. Timing includes
+                        process startup. This workload measures command-line
+                        latency on one host.
+                    </p>
+                    <div className="actions">
+                        <a
+                            href={
+                                repository +
+                                "/blob/blyx-main/tools/bench_fibonacci.py"
+                            }
+                        >
+                            Benchmark source
+                        </a>
+                        <a href="/data/benchmarks.json">Raw measurements</a>
+                    </div>
+                </section>
+            </div>
+        </main>
+    );
 }

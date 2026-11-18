@@ -1,64 +1,42 @@
-import React from "react";
-import Link from "next/link";
-
-export default function VSCodePage() {
-  return (
-    <div style={{ background: "#0B0F19", color: "#F1F5F9", fontFamily: "'Inter', sans-serif", minHeight: "100vh", padding: "60px 24px" }}>
-      <style>{`
-        .blyx-card {
-          background: #101827;
-          border: 1px solid #1E293B;
-          border-radius: 8px;
-          transition: border-color 0.2s ease, transform 0.2s ease;
-        }
-        .blyx-card:hover {
-          border-color: #334155;
-          transform: translateY(-1px);
-        }
-      `}</style>
-      <main style={{ maxWidth: "860px", margin: "0 auto" }}>
-        <div style={{ fontSize: "14px", color: "#64748B", marginBottom: "24px" }}>
-          <Link href="/" style={{ color: "#38BDF8", textDecoration: "none" }}>Home</Link> / VS Code Extension
-        </div>
-
-        <h1 style={{ fontWeight: 800, fontSize: "40px", color: "#F8FAFC", marginBottom: "16px", letterSpacing: "-1px" }}>
-          BLYX Language VS Code Extension
-        </h1>
-        <p style={{ fontSize: "18px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "48px" }}>
-          Official language extension for Visual Studio Code published by RahulChaube. Version 1.2.0 runs the current file and shows parser diagnostics as you edit. Its WebAssembly runtime is bundled.
-        </p>
-
-        <div className="blyx-card" style={{ padding: "32px", marginBottom: "32px" }}>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", color: "#38BDF8", fontWeight: 700, marginBottom: "8px" }}>
-            Publisher: RahulChaube
-          </div>
-          <h2 style={{ fontWeight: 700, fontSize: "22px", color: "#F8FAFC", marginBottom: "12px" }}>
-            Marketplace Release
-          </h2>
-          <p style={{ fontSize: "15px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "20px" }}>
-            Full TextMate grammar highlighting keywords, static tensor types, actor primitives, and GPU kernels.
-          </p>
-          <a
-            href="https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-language"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              background: "#0EA5E9",
-              color: "#ffffff",
-              padding: "10px 24px",
-              borderRadius: "6px",
-              fontWeight: 600,
-              fontSize: "14px",
-              textDecoration: "none",
-              display: "inline-block",
-            }}
-          >
-            Install from Marketplace ↗
-          </a>
-          <a href="https://github.com/Rahulchaube1/blyxxxx/releases/download/v0.2.0/blyx-language-1.2.0.vsix" style={{ marginLeft: 20, color: "#7dd3fc" }}>Download version 1.2.0 (.vsix)</a>
-          <a href="https://open-vsx.org/extension/RahulChaube/blyx-language" style={{ marginLeft: 20, color: "#7dd3fc" }}>Open VSX ↗</a>
-        </div>
-      </main>
-    </div>
-  );
+import { guideLink, repository } from "@/lib/site";
+import ResourcePage from "@/components/ResourcePage";
+export const metadata = {
+    title: "Blyx for VS Code",
+    description:
+        "Run the current Blyx buffer, see parser diagnostics while editing, and use syntax highlighting and snippets.",
+};
+const sections = [
+    {
+        heading: "Install the 1.2.0 extension",
+        body: "Download the versioned VSIX from the Blyx release. Choose Extensions → Install from VSIX in desktop VS Code and select the downloaded file.",
+        label: "Download Blyx Language 1.2.0",
+        href: repository + "/releases/download/v0.2.0/blyx-language-1.2.0.vsix",
+    },
+    {
+        heading: "Run a file",
+        body: "Open a .blyx file and choose Blyx: Run File. The bundled interpreter runs locally and writes to the Blyx output channel.",
+        label: "Editor walkthrough",
+        href: guideLink("editor"),
+    },
+    {
+        heading: "Extension registries",
+        body: "Each registry displays its currently published version. Use the release download above to install 1.2.0 directly.",
+        label: "Visual Studio Marketplace",
+        href: "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-language",
+    },
+    {
+        heading: "Open VSX",
+        body: "Blyx Language also has an Open VSX listing under the RahulChaube namespace.",
+        label: "View Open VSX listing",
+        href: "https://open-vsx.org/extension/RahulChaube/blyx-language",
+    },
+];
+export default function Page() {
+    return (
+        <ResourcePage
+            title={metadata.title}
+            intro={metadata.description}
+            sections={sections}
+        />
+    );
 }

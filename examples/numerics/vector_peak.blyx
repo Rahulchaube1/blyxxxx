@@ -1,0 +1,11 @@
+fn main() {
+    let readings = [-8.0, -1.0, -3.0];
+    let mut peak = at(readings, 0);
+    let mut i = 1;
+    while i < len(readings) {
+        let reading = at(readings, i);
+        if reading > peak { peak = reading; }
+        i += 1;
+    }
+    println!(peak);
+}

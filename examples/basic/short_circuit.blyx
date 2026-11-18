@@ -1,0 +1,8 @@
+fn above_limit(total: i64, count: i64) -> bool {
+    count != 0 && total / count > 3
+}
+
+fn main() {
+    println!(above_limit(12, 0));
+    println!(above_limit(12, 2));
+}

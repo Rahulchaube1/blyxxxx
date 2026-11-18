@@ -1,0 +1,11 @@
+fn main() {
+    let signal = [10.0, 14.0, 18.0];
+    let mut estimate = at(signal, 0);
+    println!(estimate);
+    let mut i = 1;
+    while i < len(signal) {
+        estimate = 0.5 * at(signal, i) + 0.5 * estimate;
+        println!(estimate);
+        i += 1;
+    }
+}

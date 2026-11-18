@@ -1,0 +1,14 @@
+fn main() {
+    let predicted = [2.0, 3.0, 5.0];
+    let target = [1.0, 4.0, 3.0];
+    let mut squares = 0.0;
+    let mut count = 0.0;
+    let mut i = 0;
+    while i < len(target) {
+        let error = at(predicted, i) - at(target, i);
+        squares += error * error;
+        count += 1.0;
+        i += 1;
+    }
+    println!(squares / count);
+}

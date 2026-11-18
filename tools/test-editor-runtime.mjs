@@ -5,9 +5,11 @@ import { evaluate } from "../website/public/runtime/engine.mjs";
 
 const wasm = await WebAssembly.compile(await readFile(new URL("../website/public/runtime/blyx.wasm", import.meta.url)));
 const examples = JSON.parse(await readFile(new URL("../website/src/lib/samples.json", import.meta.url), "utf8"));
-for (const [i, output] of ["2\n10\n", "Fibonacci(10):\n55\n", "Factorial(6):\n720\n10\n", "Hello, World from Blyx!\n"].entries()) {
-  const result = await evaluate(wasm, examples[i].code, true);
-  assert.deepEqual(result, { status: 0, output, diagnostics: [] });
+for (const sample of examples) {
+  const source = await readFile(new URL("../" + sample.file, import.meta.url), "utf8");
+  assert.equal(sample.code, source.replaceAll("\r\n", "\n"), sample.id + " source");
+  const result = await evaluate(wasm, sample.code, true);
+  assert.deepEqual(result, { status: 0, output: sample.expected, diagnostics: [] }, sample.id);
 }
 for (const [expr, status] of [["1e-2", 0], ["0b2", 1], ["1 / 0", 4], ["loop {}", 4]]) {
   assert.equal((await evaluate(wasm, "fn main() { println!(" + expr + "); }", true)).status, status);

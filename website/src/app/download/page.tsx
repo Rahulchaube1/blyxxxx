@@ -1,101 +1,62 @@
-import React from "react";
-import Link from "next/link";
-
-export default function DownloadPage() {
-  return (
-    <div style={{ background: "#0B0F19", color: "#F1F5F9", fontFamily: "'Inter', sans-serif", minHeight: "100vh", padding: "60px 24px" }}>
-      <style>{`
-        .blyx-card {
-          background: #101827;
-          border: 1px solid #1E293B;
-          border-radius: 8px;
-          transition: border-color 0.2s ease, transform 0.2s ease;
-        }
-        .blyx-card:hover {
-          border-color: #334155;
-          transform: translateY(-1px);
-        }
-      `}</style>
-      <main style={{ maxWidth: "860px", margin: "0 auto" }}>
-        <div style={{ fontSize: "14px", color: "#64748B", marginBottom: "24px" }}>
-          <Link href="/" style={{ color: "#38BDF8", textDecoration: "none" }}>Home</Link> / Install
-        </div>
-
-        <h1 style={{ fontWeight: 800, fontSize: "40px", color: "#F8FAFC", marginBottom: "16px", letterSpacing: "-1px" }}>
-          Install Blyx
-        </h1>
-        <p style={{ fontSize: "18px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "48px" }}>
-          Download blyxc for your platform or install from source with Cargo. The interpreter runs on its own. Native builds also require rustc and a host linker.
-        </p>
-
-        {/* Quick Terminal Command */}
-        <div
-          style={{
-            background: "#020617",
-            borderRadius: "8px",
-            overflow: "hidden",
-            border: "1px solid #1E293B",
-            marginBottom: "48px",
-          }}
-        >
-          <div style={{ background: "#0F172A", padding: "10px 16px", borderBottom: "1px solid #1E293B", color: "#64748B", fontSize: "13px", fontFamily: "monospace" }}>
-            Install from source with Cargo
-          </div>
-          <pre style={{ margin: 0, padding: "20px 24px", fontFamily: "'JetBrains Mono', monospace", fontSize: "14px", lineHeight: 1.8, color: "#F8FAFC" }}>
-            <span style={{ color: "#0EA5E9" }}>$</span> cargo install --locked --git https://github.com/Rahulchaube1/blyxxxx --tag v0.2.0 blyxc
-          </pre>
-        </div>
-
-        {/* OS Packages Table */}
-        <h2 style={{ fontWeight: 700, fontSize: "24px", color: "#F8FAFC", marginBottom: "20px" }}>
-          Standalone Binary Packages
-        </h2>
-        <div style={{ display: "grid", gap: "16px" }}>
-          {[
-            { os: "Linux", arch: "x86_64", file: "blyx-v0.2.0-x86_64-unknown-linux-gnu.tar.gz" },
-            { os: "macOS", arch: "Apple Silicon (aarch64)", file: "blyx-v0.2.0-aarch64-apple-darwin.tar.gz" },
-            { os: "Windows", arch: "x64", file: "blyx-v0.2.0-x86_64-pc-windows-msvc.zip" },
-          ].map((pkg, idx) => (
-            <div
-              key={idx}
-              className="blyx-card"
-              style={{
-                padding: "20px 24px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                flexWrap: "wrap",
-                gap: "12px",
-              }}
-            >
-              <div>
-                <div style={{ fontWeight: 600, fontSize: "16px", color: "#F8FAFC" }}>
-                  {pkg.os} — <span style={{ fontSize: "14px", color: "#94A3B8", fontWeight: 400 }}>{pkg.arch}</span>
-                </div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "12px", color: "#38BDF8", marginTop: "4px" }}>
-                  {pkg.file}
-                </div>
-              </div>
-              <a
-                href={"https://github.com/Rahulchaube1/blyxxxx/releases/download/v0.2.0/" + pkg.file}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  background: "#0EA5E9",
-                  color: "#fff",
-                  padding: "8px 20px",
-                  borderRadius: "6px",
-                  fontWeight: 600,
-                  fontSize: "14px",
-                  textDecoration: "none",
-                }}
-              >
-                Download Package
-              </a>
+import { assets, guideLink, release } from "@/lib/site";
+export const metadata = { title: "Download Blyx" };
+const targets = [
+    ["Windows", "x86-64", "x86_64-pc-windows-msvc.zip"],
+    ["macOS", "Apple Silicon", "aarch64-apple-darwin.tar.gz"],
+    ["Linux", "x86-64", "x86_64-unknown-linux-gnu.tar.gz"],
+];
+export default function Download() {
+    return (
+        <main className="wrap">
+            <header className="page-head">
+                <h1>Download Blyx</h1>
+                <p>
+                    Choose a Blyx 0.2.0 compiler for your machine. Each archive
+                    contains the standalone blyxc CLI.
+                </p>
+            </header>
+            <div className="grid">
+                {targets.map(([os, arch, suffix]) => (
+                    <article className="card" key={os}>
+                        <h2>{os}</h2>
+                        <p>{arch}</p>
+                        <a
+                            className="button"
+                            href={assets + "blyx-v0.2.0-" + suffix}
+                        >
+                            Download for {os}
+                        </a>
+                    </article>
+                ))}
             </div>
-          ))}
-        </div>
-      </main>
-    </div>
-  );
+            <div className="prose block">
+                <section>
+                    <h2>Verify and run</h2>
+                    <p>
+                        Compare the archive’s SHA-256 hash with the release
+                        checksums. Extract it, add the executable to PATH, and
+                        check the version.
+                    </p>
+                    <pre>blyxc --version</pre>
+                    <div className="actions">
+                        <a href={assets + "SHA256SUMS"}>Release checksums</a>
+                        <a href={release}>Release on GitHub</a>
+                    </div>
+                </section>
+                <section>
+                    <h2>Install from source</h2>
+                    <p>
+                        Use Cargo with a host linker to install the tagged
+                        version. Native builds also require rustc.
+                    </p>
+                    <pre>
+                        cargo install --locked --git
+                        https://github.com/Rahulchaube1/blyxxxx --tag v0.2.0
+                        blyxc
+                    </pre>
+                    <a href={guideLink("installation")}>Installation guide →</a>
+                </section>
+            </div>
+        </main>
+    );
 }

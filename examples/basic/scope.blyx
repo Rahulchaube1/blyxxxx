@@ -1,0 +1,8 @@
+fn main() {
+    let level = 3;
+    {
+        let level = 8;
+        println!(level);
+    }
+    println!(level);
+}

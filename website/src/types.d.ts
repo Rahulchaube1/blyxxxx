@@ -1,40 +1,5 @@
 declare module 'framer-motion';
 
-declare module 'next' {
-  export interface Metadata {
-    title?: string;
-    description?: string;
-    authors?: Array<{ name: string; url?: string }>;
-    metadataBase?: URL;
-    openGraph?: any;
-    twitter?: any;
-    [key: string]: any;
-  }
-}
-
-declare module 'next/link' {
-  import React from 'react';
-  const Link: React.ComponentType<any>;
-  export default Link;
-}
-
-declare module 'next/image' {
-  import React from 'react';
-  const Image: React.ComponentType<any>;
-  export default Image;
-}
-
-declare module 'next/navigation' {
-  export function usePathname(): string;
-  export function useRouter(): any;
-  export function useSearchParams(): any;
-}
-
-declare module 'next/dynamic' {
-  import React from 'react';
-  export default function dynamic(loader: () => Promise<any>, options?: any): React.ComponentType<any>;
-}
-
 declare module 'lucide-react' {
   export const ShieldCheck: any;
   export const Zap: any;

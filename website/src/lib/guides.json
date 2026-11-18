@@ -1,0 +1,304 @@
+[
+    {
+        "slug": "first-program",
+        "title": "Your first Blyx program",
+        "group": "Start here",
+        "summary": "Run a greeting, change its text, and read what your program wrote.",
+        "example": "hello",
+        "sections": [
+            {
+                "heading": "Enter through main",
+                "text": "Every executable starts in a parameterless fn main(). The statements inside its braces run in order. A line beginning with // is a comment."
+            },
+            {
+                "heading": "Write to the console",
+                "text": "println!(value) evaluates one expression and writes it followed by a newline. print!(value) writes without a newline. Use consecutive calls to print several values."
+            },
+            {
+                "heading": "Try a change",
+                "text": "Replace the greeting with your name. Add a second println! that evaluates 6 * 7. The second line should read 42."
+            }
+        ]
+    },
+    {
+        "slug": "installation",
+        "title": "Install the compiler",
+        "group": "Start here",
+        "summary": "Choose an archive for your operating system and check the installed version.",
+        "example": null,
+        "sections": [
+            {
+                "heading": "Download blyxc",
+                "text": "The 0.2.0 release ships archives for Windows x86-64, Linux x86-64 and macOS Apple Silicon. Extract the archive and place the executable in a directory on PATH. With PowerShell you can also run .\\blyxc.exe from the extracted directory."
+            },
+            {
+                "heading": "Check your installation",
+                "text": "Run the version command. For the guide’s release the response is blyxc 0.2.0.",
+                "command": "blyxc --version"
+            },
+            {
+                "heading": "Install from source",
+                "text": "With Cargo and a host linker installed, select the release tag to reproduce this guide’s compiler.",
+                "command": "cargo install --locked --git https://github.com/Rahulchaube1/blyxxxx --tag v0.2.0 blyxc"
+            },
+            {
+                "heading": "Choose an execution path",
+                "text": "The downloaded CLI can interpret a .blyx file immediately. Install rustc and the host linker when you need blyxc build to produce an executable."
+            }
+        ]
+    },
+    {
+        "slug": "bindings",
+        "title": "Values, bindings and scope",
+        "group": "Language",
+        "summary": "Use immutable bindings, mutable state, and a block-local name.",
+        "example": "scope",
+        "sections": [
+            {
+                "heading": "Bind a value",
+                "text": "let creates an immutable binding. let mut allows assignment within the same value kind. Both forms need an initializer to execute."
+            },
+            {
+                "heading": "Shadow a name",
+                "text": "A nested block can introduce its own binding with the same name. The example prints 8 from the inner block and 3 after the block ends."
+            },
+            {
+                "heading": "Choose a numeric type",
+                "text": "Whole-number literals use checked signed 64-bit arithmetic during execution. Decimal literals such as 2.5 and 1e-2 use f64. true and false are booleans. Text is written in double quotes."
+            },
+            {
+                "heading": "Try a change",
+                "text": "Replace the inner declaration with an assignment to level. Observe the immutable-binding diagnostic. Then mark the outer binding mutable and run again."
+            }
+        ]
+    },
+    {
+        "slug": "functions",
+        "title": "Functions and return values",
+        "group": "Language",
+        "summary": "Pass values to a function, choose a return type, and call the function recursively.",
+        "example": "fibonacci",
+        "sections": [
+            {
+                "heading": "Declare a function",
+                "text": "Parameters use name: type. The arrow introduces a return type. Give value-returning functions an explicit return type for a native build."
+            },
+            {
+                "heading": "Return a result",
+                "text": "A final expression without a semicolon supplies the result of a block or function. An explicit return exits the current function even inside a nested block."
+            },
+            {
+                "heading": "Follow the base case",
+                "text": "fibonacci returns n when n is smaller than two. Other inputs call the function twice with smaller arguments. Change the input to 7 and update the printed label. The result is 13."
+            },
+            {
+                "heading": "Budget recursive work",
+                "text": "The interpreter allows 64 simultaneous calls. Its step budget also counts the many separate calls in this example. Use iteration for inputs that would require excessive recursion."
+            }
+        ]
+    },
+    {
+        "slug": "control-flow",
+        "title": "Conditions and loops",
+        "group": "Language",
+        "summary": "Make a decision, update a loop variable, and exit with a result.",
+        "example": "gcd",
+        "sections": [
+            {
+                "heading": "Test a condition",
+                "text": "if and while require booleans. The operators ==, !=, <, <=, > and >= compare values. Use && and || for short-circuit boolean expressions."
+            },
+            {
+                "heading": "Move toward termination",
+                "text": "Each iteration of Euclid’s algorithm replaces the pair (x, y) with (y, x % y). For positive inputs the remainder gets smaller until y reaches zero."
+            },
+            {
+                "heading": "Use loop, break and continue",
+                "text": "while checks a condition before every iteration. loop repeats until its body exits. break exits the nearest loop, and break value gives a loop expression a result. continue moves to the next iteration."
+            },
+            {
+                "heading": "Try a change",
+                "text": "Run gcd(18, 48) and gcd(48, 0). The results are 6 and 48."
+            }
+        ]
+    },
+    {
+        "slug": "vectors",
+        "title": "Numeric vectors",
+        "group": "Language",
+        "summary": "Create a vector, read its length, index a value, and reduce it to a scalar.",
+        "example": "weighted-mean",
+        "sections": [
+            {
+                "heading": "Construct and read",
+                "text": "A literal such as [2.0, 4.0, 8.0] creates an immutable numeric vector. Values are stored as f64. len(v) returns an i64 count. at(v, i) returns the f64 at the zero-based integer index."
+            },
+            {
+                "heading": "Sum and dot",
+                "text": "sum(v) adds the elements. dot(a, b) multiplies corresponding elements and adds the products. The two vectors must have equal lengths. Both reductions return f64."
+            },
+            {
+                "heading": "Interpret the weighted mean",
+                "text": "The weighted total is 30 and the weights sum to 4. Dividing the first by the second gives 7.5. Replacing the weights with three ones gives 7."
+            },
+            {
+                "heading": "Handle boundary cases",
+                "text": "Check that an index is at least zero and smaller than len(v) before calling at. Decide how to handle empty input and zero total weight before dividing."
+            }
+        ]
+    },
+    {
+        "slug": "numerical-models",
+        "title": "Fit and evaluate a model",
+        "group": "Numerical work",
+        "summary": "Fit one coefficient from paired observations and use it to predict a new response.",
+        "example": "linear-fit",
+        "sections": [
+            {
+                "heading": "Choose a model",
+                "text": "This example fits y = slope × x with the intercept fixed at zero. The four input observations and four targets appear directly in the program."
+            },
+            {
+                "heading": "Fit one parameter",
+                "text": "dot(samples, targets) gives 60 and dot(samples, samples) gives 30. Their ratio minimizes the sum of squared residuals for this model. The denominator must be nonzero."
+            },
+            {
+                "heading": "Predict on a new input",
+                "text": "The fitted slope is 2. Multiplying by an unseen input of 5 predicts 10. Change the targets to [3.0, 6.0, 9.0, 12.0]. The two outputs become 3 and 15."
+            },
+            {
+                "heading": "Evaluate residuals",
+                "text": "The example library includes a separate mean squared error program and a two-feature threshold classifier. All three execute with the CPU vector operations in Blyx 0.2.0."
+            }
+        ]
+    },
+    {
+        "slug": "projects",
+        "title": "Project layout and CLI",
+        "group": "Tools",
+        "summary": "Create a project and check, run, or format the main source file.",
+        "example": null,
+        "sections": [
+            {
+                "heading": "Create a project",
+                "text": "new creates a directory with a Blyx.toml manifest and src/main.blyx. Run the command from the directory where you want the project to live.",
+                "command": "blyxc new hello"
+            },
+            {
+                "heading": "Check syntax",
+                "text": "check reads a single source file and reports parser diagnostics. A successful syntax check can still be followed by a runtime error.",
+                "command": "blyxc check hello/src/main.blyx"
+            },
+            {
+                "heading": "Execute the source",
+                "text": "run starts main in the interpreter. The generated starter prints Hello, Blyx!",
+                "command": "blyxc run hello/src/main.blyx"
+            },
+            {
+                "heading": "Normalize line endings",
+                "text": "fmt normalizes the source file’s line endings in place. The separate blyxpkg tool is a prototype. Dependencies and registry publishing are outside the released CLI workflow.",
+                "command": "blyxc fmt hello/src/main.blyx"
+            }
+        ]
+    },
+    {
+        "slug": "native-builds",
+        "title": "Build a native executable",
+        "group": "Tools",
+        "summary": "Compile the synchronous, typed subset for the machine running the compiler.",
+        "example": null,
+        "sections": [
+            {
+                "heading": "Build the program",
+                "text": "Install rustc and a host linker. From your project directory, run the build command. By default the executable sits beside the source, with .exe on Windows.",
+                "command": "blyxc build src/main.blyx"
+            },
+            {
+                "heading": "Pick an output name",
+                "text": "On Linux or macOS, use the following commands to build and launch the executable.",
+                "command": "blyxc build src/main.blyx -o hello\n./hello"
+            },
+            {
+                "heading": "Run on Windows",
+                "text": "From PowerShell, use an .exe output name and a relative path to start the file.",
+                "command": "blyxc build src/main.blyx -o hello.exe\n.\\hello.exe"
+            },
+            {
+                "heading": "Keep types consistent",
+                "text": "Use typed parameters, explicit return types for functions that produce values, and matching scalar operand types. The native backend lowers supported Blyx syntax to Rust and invokes rustc. The produced executable runs without the compiler toolchain."
+            }
+        ]
+    },
+    {
+        "slug": "diagnostics",
+        "title": "Understand diagnostics",
+        "group": "Tools",
+        "summary": "Distinguish syntax errors from runtime errors and control execution limits.",
+        "example": "short-circuit",
+        "sections": [
+            {
+                "heading": "Read the first syntax error",
+                "text": "A parser diagnostic includes a line and column. Start at that location and check the preceding token, especially braces, parentheses and statement terminators."
+            },
+            {
+                "heading": "Guard integer division",
+                "text": "In the example, && evaluates the right operand only if the divisor is nonzero. The first call prints false without dividing. The second call prints true."
+            },
+            {
+                "heading": "Recognize runtime failures",
+                "text": "Integer overflow, division by zero, incompatible vector lengths and out-of-range indexing produce execution errors. In the CLI, run exits with status 4 for a runtime error."
+            },
+            {
+                "heading": "Limit work",
+                "text": "The interpreter defaults to one million steps. You can give a terminating program a different budget with a positive integer. Browser runs also have an eight-second wall-clock limit.",
+                "command": "blyxc run src/main.blyx --max-steps 2000000"
+            }
+        ]
+    },
+    {
+        "slug": "editor",
+        "title": "Use Blyx in VS Code",
+        "group": "Tools",
+        "summary": "Run the current buffer and see parser feedback while typing.",
+        "example": null,
+        "sections": [
+            {
+                "heading": "Install the release",
+                "text": "Download blyx-language-1.2.0.vsix from the Blyx 0.2.0 GitHub release. In desktop VS Code, open Extensions, choose Install from VSIX, and select the file."
+            },
+            {
+                "heading": "Run the current buffer",
+                "text": "Open a .blyx file or set the editor language to Blyx. Use Blyx: Run File in the Command Palette. The Blyx output channel shows the program’s output, including results from unsaved edits."
+            },
+            {
+                "heading": "Read parser diagnostics",
+                "text": "The extension runs the bundled WebAssembly parser as you edit. Its interpreter works locally. A separate CLI installation is useful when you want a native executable."
+            }
+        ]
+    },
+    {
+        "slug": "compatibility",
+        "title": "Release capabilities",
+        "group": "Reference",
+        "summary": "Check which Blyx features you can use in 0.2.0 and where their limits lie.",
+        "example": null,
+        "sections": [
+            {
+                "heading": "Available in the interpreter",
+                "text": "Functions, lexical scopes, bindings, assignment, conditionals, while, loop, break, continue and print macros run today. Numeric operations include checked integers, f64 arithmetic, vector literals, len, at, sum and dot."
+            },
+            {
+                "heading": "Native subset",
+                "text": "The build path supports synchronous, non-generic functions and the documented scalar and vector types. Type annotations affect native builds. The tree-walking interpreter performs runtime value-kind checks."
+            },
+            {
+                "heading": "Under development",
+                "text": "Async execution, GPU kernels, actor scheduling, module imports, external packages, model serving, ownership checking and a general-purpose tensor runtime remain development work. Applications that depend on those features need another implementation path today."
+            },
+            {
+                "heading": "Performance measurements",
+                "text": "The project publishes the source, raw sample timings and environment for its Fibonacci command-line benchmark. Comparing different workloads requires measuring them separately."
+            }
+        ]
+    }
+]

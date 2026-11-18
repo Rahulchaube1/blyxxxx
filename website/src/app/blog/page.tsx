@@ -1,68 +1,70 @@
-import React from "react";
-import Link from "next/link";
-
-export default function BlogPage() {
-  return (
-    <div style={{ background: "#0B0F19", color: "#F1F5F9", fontFamily: "'Inter', sans-serif", minHeight: "100vh", padding: "60px 24px" }}>
-      <style>{`
-        .blyx-card {
-          background: #101827;
-          border: 1px solid #1E293B;
-          border-radius: 8px;
-          transition: border-color 0.2s ease, transform 0.2s ease;
-        }
-        .blyx-card:hover {
-          border-color: #334155;
-          transform: translateY(-1px);
-        }
-      `}</style>
-      <main style={{ maxWidth: "860px", margin: "0 auto" }}>
-        <div style={{ fontSize: "14px", color: "#64748B", marginBottom: "24px" }}>
-          <Link href="/" style={{ color: "#38BDF8", textDecoration: "none" }}>Home</Link> / Blog
-        </div>
-
-        <h1 style={{ fontWeight: 800, fontSize: "40px", color: "#F8FAFC", marginBottom: "16px", letterSpacing: "-1px" }}>
-          Blyx Engineering Blog
-        </h1>
-        <p style={{ fontSize: "18px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "48px" }}>
-          Compiler architecture deep dives, release announcements, and language design notes.
-        </p>
-
-        <div style={{ display: "grid", gap: "24px" }}>
-          {[
+import { repository, release } from "@/lib/site";
+export const metadata = { title: "Release notes" };
+type Release = {
+    tag_name: string;
+    name: string | null;
+    published_at: string;
+    html_url: string;
+};
+async function getReleases(): Promise<Release[] | null> {
+    try {
+        const r = await fetch(
+            "https://api.github.com/repos/Rahulchaube1/blyxxxx/releases?per_page=12",
             {
-              title: "Designing BIR: A Strongly-Typed SSA Intermediate Representation",
-              date: "August 2, 2026",
-              author: "Rahul Chaube",
-              summary: "An in-depth look at how the Blyx Intermediate Representation enforces static shape verification and lifetime bounds before LLVM codegen.",
+                next: { revalidate: 300 },
+                headers: { Accept: "application/vnd.github+json" },
+                signal: AbortSignal.timeout(5000),
             },
-            {
-              title: "Memory Safety Without Garbage Collection in Blyx",
-              date: "July 28, 2026",
-              author: "Rahul Chaube",
-              summary: "How compile-time linear ownership tracking eliminates double frees and data races with zero runtime latency overhead.",
-            },
-            {
-              title: "Direct GPU PTX Compilation from High-Level Code",
-              date: "July 15, 2026",
-              author: "Rahul Chaube",
-              summary: "Bypassing C/C++ CUDA wrappers: How Blyx lowers GPU kernels directly to NVPTX instructions.",
-            },
-          ].map((post, idx) => (
-            <div key={idx} className="blyx-card" style={{ padding: "32px" }}>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", color: "#38BDF8", marginBottom: "8px" }}>
-                {post.date} • By {post.author}
-              </div>
-              <h2 style={{ fontWeight: 700, fontSize: "22px", color: "#F8FAFC", marginBottom: "12px" }}>
-                {post.title}
-              </h2>
-              <p style={{ fontSize: "15px", color: "#94A3B8", lineHeight: 1.6, margin: 0 }}>
-                {post.summary}
-              </p>
-            </div>
-          ))}
-        </div>
-      </main>
-    </div>
-  );
+        );
+        if (!r.ok) return null;
+        return ((await r.json()) as Release[]).filter(
+            (x) =>
+                x.published_at &&
+                x.html_url.startsWith(repository + "/releases/"),
+        );
+    } catch {
+        return null;
+    }
+}
+export default async function Blog() {
+    const releases = await getReleases();
+    return (
+        <main className="wrap">
+            <header className="page-head">
+                <h1>Release notes</h1>
+                <p>
+                    Published compiler and tooling releases from the Blyx
+                    repository.
+                </p>
+            </header>
+            {releases?.length ? (
+                <div className="grid">
+                    {releases.map((r) => (
+                        <article key={r.tag_name} className="card">
+                            <div className="file-label">
+                                <time dateTime={r.published_at}>
+                                    {r.published_at.slice(0, 10)}
+                                </time>
+                            </div>
+                            <h2>{r.name || r.tag_name}</h2>
+                            <p>{r.tag_name}</p>
+                            <a href={r.html_url}>Read release notes →</a>
+                        </article>
+                    ))}
+                </div>
+            ) : (
+                <div className="card">
+                    <h2>Blyx 0.2.0</h2>
+                    <p>
+                        The release feed is currently unavailable. The
+                        documented release remains available on GitHub.
+                    </p>
+                    <a href={release}>Open release →</a>
+                </div>
+            )}
+            <p className="block">
+                <a href={repository + "/releases"}>All releases on GitHub ↗</a>
+            </p>
+        </main>
+    );
 }
