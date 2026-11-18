@@ -3,5 +3,8 @@ name = "blyx_lexer"
 version = "0.1.0"
 edition = "2024"
 description = "Native Independent Lexer for the Blyx Programming Language"
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
 
 [dependencies]

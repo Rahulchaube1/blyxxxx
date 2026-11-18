@@ -3,7 +3,10 @@ name = "blyx_parser"
 version = "0.1.0"
 edition = "2024"
 description = "Native Independent Parser for the Blyx Programming Language"
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
 
 [dependencies]
-blyx_lexer = { path = "../blyx_lexer" }
-blyx_ast = { path = "../blyx_ast" }
+blyx_lexer = { version = "0.1.0", path = "../blyx_lexer" }
+blyx_ast = { version = "0.1.0", path = "../blyx_ast" }

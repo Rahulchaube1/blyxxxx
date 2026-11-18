@@ -1,0 +1,36 @@
+name: Test WinGet package
+on:
+  workflow_dispatch:
+  push:
+    branches: [blyx-main]
+    paths:
+      - 'packaging/winget/**'
+      - '.github/workflows/winget.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install the current WinGet client on the disposable runner
+        shell: pwsh
+        run: |
+          Install-Module -Name Microsoft.WinGet.Client -Repository PSGallery -Scope CurrentUser -Force
+          Repair-WinGetPackageManager -Latest -Force
+      - name: Install the release through WinGet and run a Blyx program
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $PSNativeCommandUseErrorActionPreference = $true
+          $manifest = Get-ChildItem packaging/winget -Directory |
+            Sort-Object { [version]$_.Name } -Descending | Select-Object -First 1
+          winget validate --manifest $manifest.FullName
+          winget settings --enable LocalManifestFiles
+          winget install --manifest $manifest.FullName --scope user --accept-source-agreements --disable-interactivity
+          $cli = Join-Path $env:LOCALAPPDATA 'Microsoft/WinGet/Links/blyxc.exe'
+          if ((& $cli --version) -ne "blyxc $($manifest.Name)") { throw 'Unexpected compiler version' }
+          $actual = (& $cli run examples/ml/linear_fit.blyx) -join ','
+          if ($actual -ne '2,10') { throw "Unexpected model output: $actual" }

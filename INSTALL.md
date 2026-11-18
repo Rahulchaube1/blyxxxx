@@ -10,6 +10,19 @@ https://www.blyx-lang.space/play
 
 ## Install a release
 
+On Apple Silicon macOS and x86-64 Linux, Homebrew installs the official release binary:
+
+```sh
+brew install rahulchaube1/blyx/blyx
+blyxc --version
+```
+
+With Rust installed, Cargo can also build the compiler from the published Git tag:
+
+```sh
+cargo install --locked --git https://github.com/Rahulchaube1/blyxxxx --tag v0.2.0 blyxc
+```
+
 Published binaries and installation instructions are maintained at:
 
 https://blyx-lang.space/download

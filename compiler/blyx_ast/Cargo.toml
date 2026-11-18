@@ -3,6 +3,9 @@ name = "blyx_ast"
 version = "0.1.0"
 edition = "2024"
 description = "Native AST Nodes, Visitors, and Span Tracking for the Blyx Compiler"
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
 
 [dependencies]
-blyx_lexer = { path = "../blyx_lexer" }
+blyx_lexer = { version = "0.1.0", path = "../blyx_lexer" }

@@ -3,11 +3,16 @@ name = "blyxc"
 version = "0.2.0"
 edition = "2024"
 description = "Official Compiler Driver for the Blyx Programming Language"
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "README.md"
+exclude = ["tests/repository_examples.rs"]
 
 [dependencies]
-blyx_lexer = { path = "../blyx_lexer" }
-blyx_parser = { path = "../blyx_parser" }
-blyx_ast = { path = "../blyx_ast" }
+blyx_lexer = { version = "0.1.0", path = "../blyx_lexer" }
+blyx_parser = { version = "0.1.0", path = "../blyx_parser" }
+blyx_ast = { version = "0.1.0", path = "../blyx_ast" }
 
 [lib]
 crate-type = ["rlib", "cdylib"]
