@@ -1,50 +1,83 @@
 {
-  "updated": "2026-07-31",
-  "benchmarks": [
+  "workload": "recursive Fibonacci(22), including process startup",
+  "warmups": 2,
+  "samples": 9,
+  "os": "Windows-10-10.0.26300-SP0",
+  "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+  "python": "3.10.6",
+  "rustc": "rustc 1.92.0 (ded5c06cf 2025-12-08)",
+  "blyxc": "blyxc 0.2.0",
+  "sizes_bytes": {
+    "Blyx native": 133120,
+    "Rust native": 133120
+  },
+  "results": [
     {
-      "name": "Matrix Multiply (1024×1024 f32)",
-      "unit": "GFLOPS",
-      "results": [
-        { "language": "Blyx", "value": 2840, "color": "#00f2fe" },
-        { "language": "C++", "value": 2780, "color": "#6e7681" },
-        { "language": "Rust", "value": 2720, "color": "#ce4a2e" },
-        { "language": "Julia", "value": 2100, "color": "#9558b2" },
-        { "language": "Python (NumPy)", "value": 890, "color": "#3776ab" }
+      "name": "Blyx native",
+      "median_ms": 7.777,
+      "min_ms": 7.471,
+      "max_ms": 8.664,
+      "samples_ms": [
+        7.874,
+        7.573,
+        8.247,
+        7.801,
+        7.777,
+        7.471,
+        7.701,
+        7.675,
+        8.664
       ]
     },
     {
-      "name": "Actor Message Throughput",
-      "unit": "M msgs/sec",
-      "results": [
-        { "language": "Blyx", "value": 142, "color": "#00f2fe" },
-        { "language": "Erlang", "value": 98, "color": "#a90533" },
-        { "language": "Go", "value": 87, "color": "#00add8" },
-        { "language": "Rust (Tokio)", "value": 75, "color": "#ce4a2e" },
-        { "language": "Java (Akka)", "value": 41, "color": "#f89820" }
+      "name": "Rust native",
+      "median_ms": 8.051,
+      "min_ms": 7.46,
+      "max_ms": 11.845,
+      "samples_ms": [
+        7.753,
+        7.903,
+        7.46,
+        9.945,
+        8.813,
+        7.569,
+        8.361,
+        8.051,
+        11.845
       ]
     },
     {
-      "name": "Compile Time (1000 files)",
-      "unit": "seconds (lower is better)",
-      "lower_is_better": true,
-      "results": [
-        { "language": "Blyx", "value": 3.2, "color": "#00f2fe" },
-        { "language": "Go", "value": 2.8, "color": "#00add8" },
-        { "language": "C++ (clang)", "value": 28.4, "color": "#6e7681" },
-        { "language": "Rust", "value": 41.7, "color": "#ce4a2e" },
-        { "language": "TypeScript", "value": 12.1, "color": "#3178c6" }
+      "name": "CPython",
+      "median_ms": 57.2,
+      "min_ms": 54.563,
+      "max_ms": 64.797,
+      "samples_ms": [
+        54.563,
+        61.067,
+        58.355,
+        57.2,
+        56.191,
+        58.579,
+        55.912,
+        64.797,
+        57.155
       ]
     },
     {
-      "name": "Binary Size (hello world)",
-      "unit": "KB (lower is better)",
-      "lower_is_better": true,
-      "results": [
-        { "language": "Blyx", "value": 48, "color": "#00f2fe" },
-        { "language": "C (gcc)", "value": 16, "color": "#6e7681" },
-        { "language": "Rust", "value": 312, "color": "#ce4a2e" },
-        { "language": "Go", "value": 1840, "color": "#00add8" },
-        { "language": "Swift", "value": 180, "color": "#f05138" }
+      "name": "Blyx interpreter",
+      "median_ms": 27.522,
+      "min_ms": 26.757,
+      "max_ms": 32.09,
+      "samples_ms": [
+        27.522,
+        26.999,
+        27.32,
+        27.193,
+        31.105,
+        26.757,
+        29.294,
+        27.822,
+        32.09
       ]
     }
   ]

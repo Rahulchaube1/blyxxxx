@@ -16,3 +16,5 @@ Cargo.lock linguist-generated=false
 *.ico binary
 *.woff binary
 *.woff2 binary
+
+*.wasm binary

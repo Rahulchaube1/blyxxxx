@@ -74,6 +74,7 @@ pub enum TokenKind {
     Task,
 
     // Literals
+    InvalidNumber,
     IntLit(u64),
     FloatLit(f64),
     StringLit(String),
@@ -372,128 +373,69 @@ impl<'a> BlyxLexer<'a> {
     }
 
     fn read_number(&mut self, start: usize, line: usize, col: usize) -> Token {
-        let mut num_str = String::new();
-        let mut is_float = false;
-
-        let c = self.peek().unwrap();
-        num_str.push(c);
         self.advance();
-
-        if c == '0' {
-            if let Some(next) = self.peek() {
-                match next {
-                    'x' | 'X' => {
-                        self.advance();
-                        while let Some(ch) = self.peek() {
-                            if ch.is_ascii_hexdigit() || ch == '_' {
-                                if ch != '_' {
-                                    num_str.push(ch);
-                                }
-                                self.advance();
-                            } else {
-                                break;
-                            }
-                        }
-                        self.read_type_suffix(); // Skip type suffix for now
-                        let val = u64::from_str_radix(&num_str[1..], 16).unwrap_or(0);
-                        return Token::new(
-                            TokenKind::IntLit(val),
-                            Span::new(start, self.pos, line, col),
-                        );
-                    }
-                    'o' | 'O' => {
-                        self.advance();
-                        while let Some(ch) = self.peek() {
-                            if (ch >= '0' && ch <= '7') || ch == '_' {
-                                if ch != '_' {
-                                    num_str.push(ch);
-                                }
-                                self.advance();
-                            } else {
-                                break;
-                            }
-                        }
-                        self.read_type_suffix();
-                        let val = u64::from_str_radix(&num_str[1..], 8).unwrap_or(0);
-                        return Token::new(
-                            TokenKind::IntLit(val),
-                            Span::new(start, self.pos, line, col),
-                        );
-                    }
-                    'b' | 'B' => {
-                        self.advance();
-                        while let Some(ch) = self.peek() {
-                            if ch == '0' || ch == '1' || ch == '_' {
-                                if ch != '_' {
-                                    num_str.push(ch);
-                                }
-                                self.advance();
-                            } else {
-                                break;
-                            }
-                        }
-                        self.read_type_suffix();
-                        let val = u64::from_str_radix(&num_str[1..], 2).unwrap_or(0);
-                        return Token::new(
-                            TokenKind::IntLit(val),
-                            Span::new(start, self.pos, line, col),
-                        );
-                    }
-                    _ => {}
-                }
+        let radix = if self.input.as_bytes()[start] == b'0' {
+            match self.peek() {
+                Some('x' | 'X') => 16,
+                Some('o' | 'O') => 8,
+                Some('b' | 'B') => 2,
+                _ => 10,
             }
-        }
-
-        while let Some(ch) = self.peek() {
-            if ch.is_ascii_digit() || ch == '_' {
-                if ch != '_' {
-                    num_str.push(ch);
-                }
-                self.advance();
-            } else if ch == '.' && self.peek_next() != Some('.') {
-                // Avoid matching range ..
-                is_float = true;
-                num_str.push(ch);
-                self.advance();
-            } else if (ch == 'e' || ch == 'E') && is_float {
-                num_str.push(ch);
-                self.advance();
-                if let Some(next) = self.peek() {
-                    if next == '+' || next == '-' {
-                        num_str.push(next);
-                        self.advance();
-                    }
-                }
-            } else {
-                break;
-            }
-        }
-
-        self.read_type_suffix(); // Ignore type suffix
-
-        let kind = if is_float {
-            TokenKind::FloatLit(num_str.parse().unwrap_or(0.0))
         } else {
-            TokenKind::IntLit(num_str.parse().unwrap_or(0))
+            10
         };
-
-        Token::new(kind, Span::new(start, self.pos, line, col))
-    }
-
-    fn read_type_suffix(&mut self) {
-        if let Some(c) = self.peek() {
-            if c == 'i' || c == 'u' || c == 'f' || c == 'i' || c == 'u' {
-                let mut suffix = String::new();
-                while let Some(ch) = self.peek() {
-                    if ch.is_alphanumeric() {
-                        suffix.push(ch);
-                        self.advance();
-                    } else {
-                        break;
-                    }
-                }
+        let mut float = false;
+        let digits = if radix != 10 {
+            self.advance();
+            let first = self.pos;
+            self.advance_while(|c| c.is_digit(radix) || c == '_');
+            first
+        } else {
+            self.advance_while(|c| c.is_ascii_digit() || c == '_');
+            if self.peek() == Some('.') && self.peek_next() != Some('.') {
+                float = true;
+                self.advance();
+                self.advance_while(|c| c.is_ascii_digit() || c == '_');
             }
-        }
+            if matches!(self.peek(), Some('e' | 'E')) {
+                float = true;
+                self.advance();
+                if matches!(self.peek(), Some('+' | '-')) {
+                    self.advance();
+                }
+                self.advance_while(|c| c.is_ascii_digit() || c == '_');
+            }
+            start
+        };
+        let end = self.pos;
+        self.advance_while(|c| c.is_ascii_alphanumeric() || c == '_');
+        let suffix = &self.input[end..self.pos];
+        let number = self.input[digits..end].replace('_', "");
+        let valid_integer_suffix = matches!(
+            suffix,
+            "" | "i8"
+                | "i16"
+                | "i32"
+                | "i64"
+                | "i128"
+                | "isize"
+                | "u8"
+                | "u16"
+                | "u32"
+                | "u64"
+                | "u128"
+                | "usize"
+        );
+        let float_suffix = matches!(suffix, "f16" | "f32" | "f64");
+        let kind = if radix == 10 && (float || float_suffix) && (suffix.is_empty() || float_suffix)
+        {
+            number.parse::<f64>().ok().filter(|n| n.is_finite()).map(TokenKind::FloatLit)
+        } else if !float && valid_integer_suffix {
+            u64::from_str_radix(&number, radix).ok().map(TokenKind::IntLit)
+        } else {
+            None
+        };
+        Token::new(kind.unwrap_or(TokenKind::InvalidNumber), Span::new(start, self.pos, line, col))
     }
 
     fn read_string(&mut self, start: usize, line: usize, col: usize) -> Token {

@@ -1,0 +1,43 @@
+name: Publish Blyx editor extension
+on:
+  workflow_dispatch:
+    inputs:
+      registry:
+        description: Extension registry
+        required: true
+        type: choice
+        options: [both, marketplace, open-vsx]
+permissions:
+  contents: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        registry: [marketplace, open-vsx]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Publish to Visual Studio Marketplace
+        if: matrix.registry == 'marketplace' && inputs.registry != 'open-vsx'
+        working-directory: editors/code
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: |
+          test -n "$VSCE_PAT" || { echo "Configure VSCE_PAT in repository Actions secrets"; exit 1; }
+          npx --yes @vscode/vsce@3.9.2 package --no-dependencies --out "$RUNNER_TEMP/blyx.vsix"
+          node ../../tools/test-editor-runtime.mjs
+          npx --yes @vscode/vsce@3.9.2 publish --packagePath "$RUNNER_TEMP/blyx.vsix"
+      - name: Publish to Open VSX
+        if: matrix.registry == 'open-vsx' && inputs.registry != 'marketplace'
+        working-directory: editors/code
+        env:
+          OVSX_PAT: ${{ secrets.OVSX_PAT }}
+        run: |
+          test -n "$OVSX_PAT" || { echo "Configure OVSX_PAT in repository Actions secrets"; exit 1; }
+          npx --yes @vscode/vsce@3.9.2 package --no-dependencies --out "$RUNNER_TEMP/blyx.vsix"
+          node ../../tools/test-editor-runtime.mjs
+          npx --yes ovsx@1.4.0 publish "$RUNNER_TEMP/blyx.vsix"

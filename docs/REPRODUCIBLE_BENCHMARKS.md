@@ -43,3 +43,14 @@ Before adding a benchmark result:
 - [ ] multiple measurements were collected;
 - [ ] the benchmark can be rerun by another contributor;
 - [ ] conclusions do not exceed the evidence.
+
+## Fibonacci command-line latency
+
+Build the release driver and run the harness with Python 3 and rustc on PATH.
+
+```sh
+cargo build --locked --release -p blyxc
+python tools/bench_fibonacci.py --blyxc target/release/blyxc
+```
+
+On Windows use `target/release/blyxc.exe`. The script compiles equivalent recursive Fibonacci(22) programs, checks all results against 17711 and times fresh processes in rotating order. Startup is included. See [raw measurements](../website/public/data/benchmarks.json) for the environment, two warm-ups, nine samples per runtime and native file sizes.

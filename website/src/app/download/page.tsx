@@ -25,7 +25,7 @@ export default function DownloadPage() {
           Install Blyx
         </h1>
         <p style={{ fontSize: "18px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "48px" }}>
-          Install official standalone binaries for Linux, macOS, and Windows. Every release includes the compiler (<code style={{ background: "#1E293B", color: "#38BDF8", padding: "2px 6px", borderRadius: "4px", fontFamily: "monospace" }}>blyxc</code>), package manager (<code style={{ background: "#1E293B", color: "#38BDF8", padding: "2px 6px", borderRadius: "4px", fontFamily: "monospace" }}>blyxpkg</code>), and language server (<code style={{ background: "#1E293B", color: "#38BDF8", padding: "2px 6px", borderRadius: "4px", fontFamily: "monospace" }}>blyx-analyzer</code>).
+          Download blyxc for your platform or install from source with Cargo. The interpreter runs on its own. Native builds also require rustc and a host linker.
         </p>
 
         {/* Quick Terminal Command */}
@@ -39,10 +39,10 @@ export default function DownloadPage() {
           }}
         >
           <div style={{ background: "#0F172A", padding: "10px 16px", borderBottom: "1px solid #1E293B", color: "#64748B", fontSize: "13px", fontFamily: "monospace" }}>
-            Quick Installer Terminal Command
+            Install from source with Cargo
           </div>
           <pre style={{ margin: 0, padding: "20px 24px", fontFamily: "'JetBrains Mono', monospace", fontSize: "14px", lineHeight: 1.8, color: "#F8FAFC" }}>
-            <span style={{ color: "#0EA5E9" }}>$</span> curl -sSf https://blyx-lang.space/install.sh | sh
+            <span style={{ color: "#0EA5E9" }}>$</span> cargo install --locked --git https://github.com/Rahulchaube1/blyxxxx --tag v0.2.0 blyxc
           </pre>
         </div>
 
@@ -52,9 +52,9 @@ export default function DownloadPage() {
         </h2>
         <div style={{ display: "grid", gap: "16px" }}>
           {[
-            { os: "Linux", arch: "x86_64", file: "blyx-v0.1.0-alpha-x86_64-linux-gnu.tar.gz" },
-            { os: "macOS", arch: "Apple Silicon (aarch64)", file: "blyx-v0.1.0-alpha-aarch64-apple-darwin.tar.gz" },
-            { os: "Windows", arch: "x64", file: "blyx-v0.1.0-alpha-x86_64-pc-windows-msvc.zip" },
+            { os: "Linux", arch: "x86_64", file: "blyx-v0.2.0-x86_64-unknown-linux-gnu.tar.gz" },
+            { os: "macOS", arch: "Apple Silicon (aarch64)", file: "blyx-v0.2.0-aarch64-apple-darwin.tar.gz" },
+            { os: "Windows", arch: "x64", file: "blyx-v0.2.0-x86_64-pc-windows-msvc.zip" },
           ].map((pkg, idx) => (
             <div
               key={idx}
@@ -77,7 +77,7 @@ export default function DownloadPage() {
                 </div>
               </div>
               <a
-                href="https://github.com/Rahulchaube1/blyxxxx/releases"
+                href={"https://github.com/Rahulchaube1/blyxxxx/releases/download/v0.2.0/" + pkg.file}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{

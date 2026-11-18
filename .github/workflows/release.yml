@@ -35,27 +35,21 @@ jobs:
         with:
           targets: ${{ matrix.target }}
 
-      - name: Build workspace
-        run: cargo build --workspace --release --target ${{ matrix.target }}
+      - name: Build and test the compiler
+        run: |
+          cargo test --locked -p blyxc
+          cargo build --locked --release -p blyxc --target ${{ matrix.target }}
 
-      - name: Package release
+      - name: Package standalone CLI
         shell: bash
         run: |
           mkdir -p dist
+          release_dir="target/${{ matrix.target }}/release"
+          filename="blyx-${GITHUB_REF_NAME}-${{ matrix.target }}"
           if [[ "${{ runner.os }}" == "Windows" ]]; then
-            7z a "dist/blyx-${GITHUB_REF_NAME}-${{ matrix.target }}.zip" "target/${{ matrix.target }}/release/*"
+            (cd "$release_dir" && 7z a "$GITHUB_WORKSPACE/dist/$filename.zip" blyxc.exe)
           else
-            tar -czf "dist/blyx-${GITHUB_REF_NAME}-${{ matrix.target }}.tar.gz" -C "target/${{ matrix.target }}/release" .
-          fi
-
-      - name: Generate checksum
-        shell: bash
-        run: |
-          cd dist
-          if command -v sha256sum >/dev/null 2>&1; then
-            sha256sum * > SHA256SUMS
-          else
-            shasum -a 256 * > SHA256SUMS
+            tar -czf "dist/$filename.tar.gz" -C "$release_dir" blyxc
           fi
 
       - name: Upload artifact
@@ -75,6 +69,24 @@ jobs:
         with:
           path: dist
           merge-multiple: true
+
+      - uses: actions/checkout@v4
+        with:
+          path: source
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Package editor extension
+        working-directory: source/editors/code
+        run: |
+          version=$(node -p "require('./package.json').version")
+          npx --yes @vscode/vsce@3.9.2 package --no-dependencies --out "$GITHUB_WORKSPACE/dist/blyx-language-$version.vsix"
+
+      - name: Generate release checksums
+        working-directory: dist
+        run: sha256sum *.tar.gz *.zip *.vsix > SHA256SUMS
 
       - name: Create release
         uses: softprops/action-gh-release@v2

@@ -1,4 +1,4 @@
-fn factorial(n: i64) {
+fn factorial(n: i64) -> i64 {
     let mut result = 1;
     let mut i = 2;
     while i <= n {

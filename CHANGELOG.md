@@ -1,5 +1,13 @@
 # Blyx Changelog
 
+## 0.2.0
+
+- Build standalone executables for the typed subset through rustc.
+- Run f64 arithmetic, immutable vectors, dot products, indexing and reductions.
+- Execute programs in the browser playground and VS Code using the shared interpreter.
+- Ship a reproducible CLI latency benchmark and a least-squares example.
+
+
 All notable Blyx releases and changes are documented here.
 
 The project is currently in alpha. Entries describe repository changes and intended capabilities only where implementation evidence exists.

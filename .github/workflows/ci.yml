@@ -70,3 +70,22 @@ jobs:
 
       - name: Run mutation and loops example
         run: cargo run --locked -p blyxc -- run examples/basic/loops.blyx
+
+  editor:
+    name: Check packaged WebAssembly runtime
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node editors/code/scripts/prepare.cjs
+      - run: node tools/test-editor-runtime.mjs
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - run: cargo build --locked --release --target wasm32-unknown-unknown -p blyxc --lib
+      - run: |
+          cp target/wasm32-unknown-unknown/release/blyxc.wasm website/public/runtime/blyx.wasm
+          node editors/code/scripts/prepare.cjs
+          node tools/test-editor-runtime.mjs

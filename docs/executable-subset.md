@@ -55,13 +55,33 @@ The budget must be a positive u64 integer; malformed/unknown run arguments retur
 
 ## Limits
 
-Type annotations are parsed but not enforced by this interpreter. Runtime value-kind checks are not a static type system. `check` performs syntax validation. Floating-point execution, for/range loops, labels, collections, imports, structs, ownership checking, async, GPU and AI operations remain unsupported in this execution path. Non-function declarations are not executed. BIR/native lowering of the new control flow remains separate work.
+Type annotations are parsed but not enforced by this interpreter. Runtime value-kind checks are not a static type system. `check` performs syntax validation. For/range loops, labels, general collections, imports, structs, ownership checking, async, GPU and AI operations remain unsupported in this execution path. Non-function declarations are not executed. BIR/native lowering of the new control flow remains separate work.
 
 ## Next release gates
 
 1. Integrate name resolution and type checking so unsupported programs fail before execution.
 2. Add source-located runtime errors, parser-depth limits and module loading.
 3. Stabilize collections, file/console I/O, package manifests and installation tests.
-4. Implement and compare a native backend against interpreter conformance tests.
+4. Expand native build coverage and differential tests.
 
 Performance comparisons with Rust, Python or C require reproducible measurements. This is an experimental interpreter, not language parity.
+
+## Numeric programs and native builds (0.2.0)
+
+Decimal literals use f64. Vector literals store contiguous f64 values and share immutable storage across function calls. Integers in vectors convert to f64. The interpreter promotes mixed integer/float arithmetic to f64. Floating-point division follows IEEE 754. Use `len(v)`, `at(v, index)`, `sum(v)` and `dot(left, right)`. Dot requires equal lengths. Indices start at zero. Interpreter reductions spend one step per element.
+
+`blyxc build path.blyx [-o executable]` lowers supported AST nodes to Rust and invokes rustc with optimization and integer overflow checks. Install rustc and a linker on the build machine. The resulting program runs without Blyx or Rust installed. Build accepts synchronous functions, scalar and vector locals, calls, print macros, conditionals and loops. Use explicit return types on value-returning functions and matching scalar operand types in native code. Supported types are i64, f64, bool, str, String, vector and unit. The native executable has no interpreter step or recursion budget. The BIR backend, GPU programs, model serving and a self-hosted compiler remain development work.
+
+The browser and desktop editor use the same interpreter compiled to WebAssembly. Their workers limit source to 256 KiB, output to 64 KiB and elapsed time to eight seconds.
+
+### Rebuild the editor runtime
+
+Run these commands from the repository root after changing the lexer, parser or interpreter. Commit the regenerated WebAssembly module with the source change. On Windows, use Copy-Item for the copy step.
+
+```sh
+rustup target add wasm32-unknown-unknown
+cargo build --locked --release -p blyxc --lib --target wasm32-unknown-unknown
+cp target/wasm32-unknown-unknown/release/blyxc.wasm website/public/runtime/blyx.wasm
+node editors/code/scripts/prepare.cjs
+node tools/test-editor-runtime.mjs
+```

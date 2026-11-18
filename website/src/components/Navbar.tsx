@@ -28,7 +28,7 @@ export default function Navbar() {
         fontWeight: 500,
         borderBottom: "1px solid #1E293B",
       }}>
-        ⚡ Blyx v0.1.0-alpha: AI-Native Systems Language with Rust Runtime &bull;{" "}
+        Blyx 0.2.0 · Native builds and an executable playground &bull;{" "}
         <a
           href="https://github.com/Rahulchaube1/blyxxxx"
           target="_blank"

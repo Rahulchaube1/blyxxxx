@@ -2,6 +2,12 @@
 
 All notable changes to the **Blyx Language** extension are documented here.
 
+## 1.2.0
+
+- Run the current buffer with the bundled Blyx interpreter.
+- Receive parser diagnostics while editing, including unsaved files.
+- Execute floating-point and vector math locally.
+
 ## [0.1.0-alpha]
 
 ### Added

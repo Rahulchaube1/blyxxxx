@@ -1,8 +1,8 @@
 {
   "name": "blyx-language",
   "displayName": "Blyx Language",
-  "description": "Blyx language syntax highlighting and snippets for VS Code.",
-  "version": "0.1.0-alpha",
+  "description": "Run Blyx programs and see syntax diagnostics as you edit, with a bundled WebAssembly runtime.",
+  "version": "1.2.0",
   "publisher": "RahulChaube",
   "license": "MIT",
   "icon": "blyx.png",
@@ -36,8 +36,13 @@
     "languages": [
       {
         "id": "blyx",
-        "aliases": ["Blyx", "blyx"],
-        "extensions": [".blyx"],
+        "aliases": [
+          "Blyx",
+          "blyx"
+        ],
+        "extensions": [
+          ".blyx"
+        ],
         "configuration": "./language-configuration.json"
       }
     ],
@@ -53,6 +58,28 @@
         "language": "blyx",
         "path": "./snippets/blyx.json"
       }
-    ]
+    ],
+    "commands": [
+      {
+        "command": "blyx.run",
+        "title": "Blyx: Run File",
+        "icon": "$(play)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "blyx.run",
+          "when": "resourceLangId == blyx",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "activationEvents": [
+    "onLanguage:blyx"
+  ],
+  "scripts": {
+    "vscode:prepublish": "node scripts/prepare.cjs"
   }
 }

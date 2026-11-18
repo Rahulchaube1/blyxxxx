@@ -1,0 +1,15 @@
+.play { max-width: 1150px; margin: auto; padding: clamp(32px,6vw,80px) 24px; color: #f1f5f9; }
+.play h1 { font-size: clamp(36px,6vw,60px); letter-spacing: -.045em; margin: 0; }
+.play header p { margin: 10px 0 32px; color: #a4b3c8; }
+.play-toolbar, .play-toolbar label { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.play-toolbar { margin-bottom: 16px; }
+.play-toolbar select, .play-toolbar button { border-radius: 6px; border: 1px solid #354558; padding: 9px 14px; background: #101827; color: inherit; font: inherit; }
+.play-toolbar button { margin-left: auto; background: #75d5f5; color: #071422; border-color: transparent; font-weight: 700; cursor: pointer; }
+.play-panes { display: grid; grid-template-columns: minmax(0,3fr) minmax(0,2fr); gap: 12px; }
+.play-panes section { background: #101827; border: 1px solid #334155; border-radius: 9px; overflow: hidden; }
+.play-panes h2 { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #334155; font: 600 14px/1.5 Inter,sans-serif; padding: 12px 18px; margin: 0; }
+.play-panes h2 span { color: #8ccde7; }
+.play textarea, .play pre { width: 100%; box-sizing: border-box; padding: 20px; margin: 0; min-height: 340px; overflow: auto; color: #eff6ff; background: #09101a; border: 0; font: 14px/1.7 ui-monospace,monospace; tab-size: 4; }
+.play textarea { display: block; resize: vertical; }
+.play pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+@media(max-width:700px) { .play-panes { grid-template-columns: 1fr; } .play pre { min-height: 100px; } }

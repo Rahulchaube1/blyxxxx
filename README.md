@@ -8,10 +8,10 @@
   Explore a programming model where AI-oriented computation, systems programming, concurrency, tensors, heterogeneous computing, and native compilation are designed together.
 
   [![Website](https://img.shields.io/badge/Website-blyx--lang.space-0f172a?style=flat-square)](https://blyx-lang.space)
-  [![Status](https://img.shields.io/badge/status-v0.1.0--alpha-orange?style=flat-square)](https://blyx-lang.space)
+  [![Status](https://img.shields.io/badge/status-v0.2.0-orange?style=flat-square)](https://blyx-lang.space)
   [![License](https://img.shields.io/badge/license-MIT%20%2F%20Apache--2.0-blue?style=flat-square)](LICENSE-MIT)
   [![Rust](https://img.shields.io/badge/compiler%20implementation-Rust-black?style=flat-square&logo=rust)](https://www.rust-lang.org/)
-  [![Playground](https://img.shields.io/badge/Playground-Try%20Blyx-2563eb?style=flat-square)](https://play.blyx-lang.space)
+  [![Playground](https://img.shields.io/badge/Playground-Try%20Blyx-2563eb?style=flat-square)](https://www.blyx-lang.space/play)
   [![♥ Sponsor](https://img.shields.io/badge/%E2%99%A5%20Sponsor-Support%20Blyx-ff69b4?style=flat-square)](https://buymeacoffee.com/rahulchaube)
   [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support%20Development-ffdd00?style=flat-square&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/rahulchaube)
 </div>
@@ -24,7 +24,7 @@
 
 The repository is the engineering source of truth. A feature should be considered implemented only when the corresponding source code and tests or reproducible examples support it.
 
-> **Current compiler reality:** `blyxc run` provides an experimental tree-walking interpreter for integers, booleans, strings, lexically scoped immutable/mutable bindings, assignment, direct function calls, bounded recursion, conditionals, while/loop, break/continue, blocks, returns, and zero/one-expression `print!`/`println!` macros. `check` parses syntax only; `build` validates syntax but does not emit a native executable. This is not yet a production-ready systems language. See [the executable subset](docs/executable-subset.md).
+> **Blyx 0.2.0** runs functions, loops, checked integers, floats and numeric vectors. The CLI builds the typed subset into standalone host executables through rustc. The browser playground and desktop VS Code extension use the same interpreter compiled to WebAssembly. See [the executable subset](docs/executable-subset.md).
 
 ## Why Blyx?
 
@@ -44,27 +44,22 @@ The goal is not to replace Rust, C++, Python, or CUDA overnight. The goal is to 
 
 ## Example
 
-The syntax is evolving. Examples below illustrate design direction and may not represent the complete supported surface of the current alpha compiler.
+This least-squares fit through the origin prints the slope (2) and a prediction (10).
 
 ```blyx
+// Fit y = slope * x by least squares through the origin.
+fn fit(samples: vector, targets: vector) -> f64 {
+    dot(samples, targets) / dot(samples, samples)
+}
+
 fn main() {
-    let result = generate("Summarize this document");
-    print(result);
+    let samples = [1.0, 2.0, 3.0, 4.0];
+    let targets = [2.0, 4.0, 6.0, 8.0];
+    let slope = fit(samples, targets);
+    println!(slope);
+    println!(slope * 5.0);
 }
 ```
-
-Tensor-oriented design:
-
-```blyx
-tensor<f32, 128, 64> weights;
-tensor<f32, 64, 32> inputs;
-
-gpu {
-    let output = weights * inputs;
-}
-```
-
-For currently supported syntax, use compiler tests and examples together with the official documentation.
 
 ## Compiler architecture
 
@@ -115,7 +110,7 @@ website/        Official web portal and playground
 
 | Tool | Current role | Alpha status |
 |---|---|---|
-| `blyxc` | Compiler driver | Frontend validation available; native backend in development |
+| `blyxc` | Compiler driver | Interpreter, syntax checking, native builds of the typed subset |
 | `blyxpkg` | Package management | Prototype |
 | `blyxfmt` | Source formatting | Prototype |
 | `blyx-analyzer` | Editor/LSP tooling | Prototype |
@@ -130,7 +125,7 @@ website/        Official web portal and playground
 
 Use the online playground:
 
-**https://play.blyx-lang.space**
+**https://www.blyx-lang.space/play**
 
 ### Install
 
@@ -161,7 +156,14 @@ Run the interpreter example:
 cargo run -p blyxc -- run examples/basic/fibonacci.blyx
 ```
 
-Expected output is `Fibonacci(10):` followed by `55`. Native compilation remains under development.
+Expected output is `Fibonacci(10):` followed by `55`.
+
+```sh
+cargo install --locked --path compiler/blyxc
+blyxc build examples/ml/linear_fit.blyx
+```
+
+Run the resulting `examples/ml/linear_fit` (Windows: `examples/ml/linear_fit.exe`).
 
 ## Documentation & canonical references
 
@@ -169,7 +171,7 @@ Expected output is `Fibonacci(10):` followed by `55`. Native compilation remains
 - **Learn:** https://blyx-lang.space/learn
 - **Compiler architecture:** https://blyx-lang.space/compiler
 - **Download:** https://blyx-lang.space/download
-- **Playground:** https://play.blyx-lang.space
+- **Playground:** https://www.blyx-lang.space/play
 - **Language specification:** [`docs/specification.md`](docs/specification.md)
 - **Repository health:** [`docs/repository_health.md`](docs/repository_health.md)
 - **Reproducible benchmarks:** [`docs/REPRODUCIBLE_BENCHMARKS.md`](docs/REPRODUCIBLE_BENCHMARKS.md)
@@ -254,4 +256,3 @@ Blyx is dual-licensed under your choice of:
 
 - [MIT License](LICENSE-MIT)
 - [Apache License 2.0](LICENSE-APACHE)
-

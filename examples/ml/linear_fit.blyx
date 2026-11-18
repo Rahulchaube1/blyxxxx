@@ -1,0 +1,12 @@
+// Fit y = slope * x by least squares through the origin.
+fn fit(samples: vector, targets: vector) -> f64 {
+    dot(samples, targets) / dot(samples, samples)
+}
+
+fn main() {
+    let samples = [1.0, 2.0, 3.0, 4.0];
+    let targets = [2.0, 4.0, 6.0, 8.0];
+    let slope = fit(samples, targets);
+    println!(slope);
+    println!(slope * 5.0);
+}

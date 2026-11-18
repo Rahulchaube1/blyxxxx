@@ -559,6 +559,11 @@ impl BlyxParser {
     fn parse_prefix(&mut self) -> Expr {
         let t = self.peek().clone();
         match t.kind {
+            TokenKind::InvalidNumber => {
+                self.error("Invalid or out-of-range numeric literal");
+                self.advance();
+                Expr::default()
+            }
             TokenKind::IntLit(v) => {
                 self.advance();
                 Expr::Literal(Lit::Int(v), t.span)

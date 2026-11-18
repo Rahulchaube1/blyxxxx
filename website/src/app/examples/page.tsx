@@ -4,44 +4,18 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 
-const EXAMPLES = [
-  {
-    category: "AI & Tensor",
-    title: "Static Neural Network Layer",
-    desc: "Compile-time dimension checked matrix multiplication pass.",
-    code: `import std.tensor;\n\nfn forward(w: tensor<f32, 128, 64>, x: tensor<f32, 64, 32>) -> tensor<f32, 128, 32> {\n    return matmul(w, x);\n}`,
-  },
-  {
-    category: "GPU",
-    title: "Inline GPU Thread Grid Vector Scaling",
-    desc: "Direct PTX lower GPU kernel.",
-    code: `gpu {\n    let tid = thread_id();\n    data[tid] = data[tid] * 2.5;\n}`,
-  },
-  {
-    category: "Actors",
-    title: "Lock-Free Ping-Pong Message Passing",
-    desc: "142M msg/sec concurrency runtime.",
-    code: `actor PingPong {\n    fn receive(msg: Message) {\n        match msg { Ping => send(Pong) }\n    }\n}`,
-  },
-  {
-    category: "CLI",
-    title: "Fast Arguments Parser & Streaming Input",
-    desc: "Zero dependency CLI utility.",
-    code: `import std.cli;\n\nfn main() {\n    let args = cli::parse();\n    println("Command: {}", args.command);\n}`,
-  },
-  {
-    category: "Networking",
-    title: "Asynchronous HTTP/3 Server",
-    desc: "High throughput web service.",
-    code: `import std.net.http;\n\nfn main() {\n    let server = http::Server::bind("127.0.0.1:8080");\n    server.listen(|req| -> Response { Response::ok("Blyx Server") });\n}`,
-  },
-];
+import samples from "@/lib/samples.json";
+
+const EXAMPLES = samples.map((sample, i) => ({
+  ...sample, category: i === 0 ? "Numerics" : "Basics",
+  desc: ["Estimate a slope and predict a new value.", "Compute a sequence recursively.", "Use mutable bindings, break and continue.", "Print a greeting."][i],
+}));
 
 export default function ExamplesPage() {
   const [filter, setFilter] = useState("All");
   const [query, setQuery] = useState("");
 
-  const categories = ["All", "AI & Tensor", "GPU", "Actors", "CLI", "Networking"];
+  const categories = ["All", "Numerics", "Basics"];
 
   const filtered = EXAMPLES.filter((e) => {
     const matchesCat = filter === "All" || e.category === filter;
@@ -75,7 +49,7 @@ export default function ExamplesPage() {
             Searchable Blyx Code Examples
           </h1>
           <p style={{ fontSize: "18px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "40px" }}>
-            Explore practical code samples across AI, GPU kernels, actor concurrency, CLI binaries, and high-performance networking.
+            Each example runs in the playground and with the Blyx CLI.
           </p>
 
           {/* Search & Category Filter */}

@@ -2,7 +2,7 @@
   "Blyx Function": {
     "prefix": "fn",
     "body": [
-      "fn ${1:name}(${2:params}) -> ${3:i32} {",
+      "fn ${1:name}(${2:params}) -> ${3:i64} {",
       "    ${0}",
       "}"
     ],
@@ -57,7 +57,7 @@
     "prefix": "struct",
     "body": [
       "struct ${1:Name} {",
-      "    ${2:field}: ${3:i32},",
+      "    ${2:field}: ${3:i64},",
       "}"
     ],
     "description": "Struct definition"

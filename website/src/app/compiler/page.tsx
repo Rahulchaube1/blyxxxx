@@ -15,30 +15,17 @@ const PIPELINE_STAGES = [
   {
     id: "parser",
     name: "02. Parser & AST",
-    desc: "Recursive descent parser producing strongly-typed Abstract Syntax Trees.",
+    desc: "Recursive descent parser producing the Blyx abstract syntax tree.",
     input: "[Tokens]",
     output: "FnDef {\n  name: \"main\",\n  body: Block [\n    LetStmt { name: \"x\", value: Literal(42) }\n  ]\n}",
   },
   {
-    id: "typecheck",
-    name: "03. Type Checker & Tensor Shapes",
-    desc: "Verifies memory lifetimes, linear ownership, and multidimensional matrix dimensions.",
-    input: "LetStmt { name: \"x\", value: Literal(42) }",
-    output: "CheckedType: LetStmt { name: \"x\", inferred_type: i32, shape: [] }",
+    id: "run", name: "03. Interpret", desc: "Walk the AST with lexical scopes, checked integer arithmetic and an execution budget.",
+    input: "fn main() { println!(6 * 7); }", output: "42",
   },
   {
-    id: "bir",
-    name: "04. BIR SSA Intermediate IR",
-    desc: "Blyx Intermediate Representation: strongly-typed SSA instructions.",
-    input: "Checked AST",
-    output: "%0 = alloc i32\nstore i32 42, %0\nret void",
-  },
-  {
-    id: "llvm",
-    name: "05. LLVM Code Generation",
-    desc: "Lowers BIR SSA into target-native machine code (x86_64, ARM64, PTX, SPIR-V).",
-    input: "BIR SSA",
-    output: "define i32 @main() #0 {\n  ret i32 0\n}",
+    id: "build", name: "04. Build a native program", desc: "Lower the typed subset to Rust and invoke rustc and the host linker.",
+    input: "blyxc build examples/ml/linear_fit.blyx", output: "Standalone executable for the build host",
   },
 ];
 
@@ -70,7 +57,7 @@ export default function CompilerPage() {
             Interactive Compiler Architecture &amp; BIR Pipeline
           </h1>
           <p style={{ fontSize: "18px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "40px" }}>
-            Click through the stages below to inspect how Blyx source code transforms into optimized machine code and GPU assembly.
+            Explore how the frontend parses a program and how the interpreter and native compiler execute it.
           </p>
 
           {/* Pipeline Interactive Tabs */}

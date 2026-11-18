@@ -46,13 +46,13 @@ export default function HomePage() {
       <section style={{ padding: '96px 24px 80px', borderBottom: '1px solid #1E293B' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto', textAlign: 'center' }}>
           <span style={{ display: 'inline-block', padding: '7px 14px', border: '1px solid #334155', borderRadius: 999, color: '#38BDF8', background: '#0F172A', fontSize: 13, fontWeight: 700 }}>
-            v0.1.0-alpha · experimental open source
+            Blyx 0.2.0 · experimental
           </span>
           <h1 style={{ margin: '28px auto 20px', maxWidth: 900, fontSize: 'clamp(44px, 7vw, 78px)', lineHeight: 1.03, letterSpacing: '-2px', fontWeight: 900, color: '#F8FAFC' }}>
-            AI-native systems programming, explored in the open.
+            Write Blyx. Run it in your browser.
           </h1>
           <p style={{ maxWidth: 760, margin: '0 auto 36px', color: '#94A3B8', fontSize: 'clamp(18px, 2vw, 22px)', lineHeight: 1.65 }}>
-            Blyx is an experimental programming language exploring how AI-oriented computation, systems programming, concurrency, tensors, heterogeneous computing, and native compilation can fit into one language model.
+            Fit a line, write a loop, or build a command-line program. Blyx brings its own parser and runtime to the playground, VS Code, and your terminal.
           </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap' }}>
             <Link href="/learn" style={{ padding: '13px 24px', borderRadius: 7, background: '#0EA5E9', color: '#fff', fontWeight: 800, textDecoration: 'none' }}>Learn Blyx</Link>
@@ -84,10 +84,9 @@ export default function HomePage() {
         <div style={{ maxWidth: 1180, margin: '0 auto', padding: '80px 24px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 32, alignItems: 'start' }}>
           <div>
             <h2 style={{ fontSize: 34, color: '#F8FAFC', marginBottom: 14 }}>See the language</h2>
-            <p style={{ color: '#94A3B8', lineHeight: 1.7, marginBottom: 22 }}>The syntax is evolving. This example demonstrates the direction without implying that every runtime or backend capability is already complete.</p>
+            <p style={{ color: '#94A3B8', lineHeight: 1.7, marginBottom: 22 }}>A dot product multiplies matching elements and adds the results. This program prints 11.</p>
             <pre style={{ margin: 0, padding: 22, borderRadius: 10, background: '#020617', border: '1px solid #1E293B', overflowX: 'auto', color: '#E2E8F0', lineHeight: 1.65 }}><code>{`fn main() {
-    let result = generate("Summarize this document");
-    print(result);
+    println!(dot([1.0, 2.0], [3.0, 4.0]));
 }`}</code></pre>
           </div>
           <div style={{ padding: 28, border: '1px solid #1E293B', borderRadius: 12, background: '#101827' }}>
@@ -95,11 +94,9 @@ export default function HomePage() {
             <ol style={{ color: '#CBD5E1', lineHeight: 2, paddingLeft: 22 }}>
               <li>Source → Lexer</li>
               <li>Parser → AST</li>
-              <li>Semantic analysis</li>
-              <li>Type checking</li>
-              <li>BIR / SSA</li>
-              <li>Optimization</li>
-              <li>Backend / code generation — in development</li>
+              <li>Run the AST in the interpreter</li>
+              <li>Or lower the typed subset to Rust</li>
+              <li>Compile and link a host executable</li>
             </ol>
             <Link href="/compiler" style={{ display: 'inline-block', marginTop: 12, color: '#38BDF8', fontWeight: 700 }}>Read the compiler architecture →</Link>
           </div>

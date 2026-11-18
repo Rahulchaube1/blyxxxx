@@ -1,6 +1,6 @@
 [package]
 name = "blyxc"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 description = "Official Compiler Driver for the Blyx Programming Language"
 
@@ -8,6 +8,9 @@ description = "Official Compiler Driver for the Blyx Programming Language"
 blyx_lexer = { path = "../blyx_lexer" }
 blyx_parser = { path = "../blyx_parser" }
 blyx_ast = { path = "../blyx_ast" }
-blyx_semantic = { path = "../blyx_semantic" }
-blyx_typeck = { path = "../blyx_typeck" }
-blyx_bir = { path = "../blyx_bir" }
+
+[lib]
+crate-type = ["rlib", "cdylib"]
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+tempfile = "3"

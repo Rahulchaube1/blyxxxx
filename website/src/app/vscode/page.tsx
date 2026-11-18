@@ -25,7 +25,7 @@ export default function VSCodePage() {
           BLYX Language VS Code Extension
         </h1>
         <p style={{ fontSize: "18px", color: "#94A3B8", lineHeight: 1.6, marginBottom: "48px" }}>
-          Official language extension for Visual Studio Code published by RahulChaube. Features syntax highlighting, LSP diagnostics, and BIR SSA inspection.
+          Official language extension for Visual Studio Code published by RahulChaube. Version 1.2.0 runs the current file and shows parser diagnostics as you edit. Its WebAssembly runtime is bundled.
         </p>
 
         <div className="blyx-card" style={{ padding: "32px", marginBottom: "32px" }}>
@@ -55,6 +55,7 @@ export default function VSCodePage() {
           >
             Install from Marketplace ↗
           </a>
+          <a href="https://open-vsx.org/extension/RahulChaube/blyx-language" style={{ marginLeft: 20, color: "#7dd3fc" }}>Open VSX ↗</a>
         </div>
       </main>
     </div>

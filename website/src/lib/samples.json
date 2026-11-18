@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Fit a line",
+    "code": "// Fit y = slope * x by least squares through the origin.\nfn fit(samples: vector, targets: vector) -> f64 {\n    dot(samples, targets) / dot(samples, samples)\n}\n\nfn main() {\n    let samples = [1.0, 2.0, 3.0, 4.0];\n    let targets = [2.0, 4.0, 6.0, 8.0];\n    let slope = fit(samples, targets);\n    println!(slope);\n    println!(slope * 5.0);\n}\n"
+  },
+  {
+    "title": "Fibonacci",
+    "code": "fn fibonacci(n: i64) -> i64 {\n    if n < 2 { return n; }\n    return fibonacci(n - 1) + fibonacci(n - 2);\n}\n\nfn main() {\n    println!(\"Fibonacci(10):\");\n    println!(fibonacci(10));\n}\n"
+  },
+  {
+    "title": "Loops and mutation",
+    "code": "fn factorial(n: i64) -> i64 {\n    let mut result = 1;\n    let mut i = 2;\n    while i <= n {\n        result *= i;\n        i += 1;\n    }\n    result\n}\n\nfn main() {\n    println!(\"Factorial(6):\");\n    println!(factorial(6));\n    let mut n = 0;\n    let answer = loop {\n        n += 1;\n        if n < 5 { continue; }\n        break n * 2;\n    };\n    println!(answer);\n}\n"
+  },
+  {
+    "title": "Hello, Blyx",
+    "code": "// Blyx Example 1: Hello World\n// Official Domain: https://blyx-lang.space\n\nfn main() {\n    println!(\"Hello, World from Blyx!\");\n}\n"
+  }
+]

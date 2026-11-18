@@ -6,7 +6,7 @@ Blyx is an experimental alpha-stage programming language. The simplest way to tr
 
 Use the official playground:
 
-https://play.blyx-lang.space
+https://www.blyx-lang.space/play
 
 ## Install a release
 
