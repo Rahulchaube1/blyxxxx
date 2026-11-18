@@ -264,7 +264,7 @@
         "sections": [
             {
                 "heading": "Install the release",
-                "text": "Download blyx-language-1.2.0.vsix from the Blyx 0.2.0 GitHub release. In desktop VS Code, open Extensions, choose Install from VSIX, and select the file."
+                "text": "Download blyx-language-1.2.1.vsix from the Blyx editor 1.2.1 GitHub release. In desktop VS Code, open Extensions, choose Install from VSIX, and select the file."
             },
             {
                 "heading": "Run the current buffer",

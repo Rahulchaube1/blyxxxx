@@ -29,7 +29,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           version=$(node -p "require('./editors/code/package.json').version")
-          tag=$(sed -n 's/^version = "\([^"]*\)"/v\1/p' compiler/blyxc/Cargo.toml | head -1)
+          tag="editor-v$version"
+          if ! gh release view "$tag" >/dev/null; then
+            tag=$(sed -n 's/^version = "\([^"]*\)"/v\1/p' compiler/blyxc/Cargo.toml | head -1)
+          fi
           gh release download "$tag" -p "blyx-language-$version.vsix" -p SHA256SUMS -D "$RUNNER_TEMP/editor"
           cd "$RUNNER_TEMP/editor"
           sha256sum --check --ignore-missing SHA256SUMS

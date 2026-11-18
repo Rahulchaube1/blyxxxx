@@ -2,6 +2,10 @@
 
 All notable changes to the **Blyx Language** extension are documented here.
 
+## 1.2.1
+
+- Use the Blyx website logo as the extension icon.
+
 ## 1.2.0
 
 - Run the current buffer with the bundled Blyx interpreter.
