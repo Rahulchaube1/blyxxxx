@@ -2,6 +2,10 @@
 
 All notable changes to the **Blyx Language** extension are documented here.
 
+## 1.2.2
+
+- Size the website artwork for the Visual Studio Marketplace icon limit.
+
 ## 1.2.1
 
 - Use the Blyx website logo as the extension icon.
