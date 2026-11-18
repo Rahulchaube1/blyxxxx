@@ -17,6 +17,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install the current WinGet client on the disposable runner
         shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           Install-Module -Name Microsoft.WinGet.Client -Repository PSGallery -Scope CurrentUser -Force
           Repair-WinGetPackageManager -Latest -Force
