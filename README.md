@@ -1,258 +1,97 @@
-<div align="center">
-  <img src="blyxlogo.png" alt="Blyx logo" width="140" />
+<p align="center"><img src="website/public/blyx.png" alt="Blyx" width="168"></p>
 
-  # Blyx
+# Blyx programming language
 
-  **An open-source AI-native systems programming language.**
+Blyx is an experimental, open-source language for writing small numerical programs. A dot product, a recursive function, or a loop over readings fits in a single `.blyx` file. Run that file in the browser, in VS Code, or with the `blyxc` command. For the supported typed subset, build a standalone native executable from the same source.
 
-  Explore a programming model where AI-oriented computation, systems programming, concurrency, tensors, heterogeneous computing, and native compilation are designed together.
+[Try the playground](https://www.blyx-lang.space/play) · [Read the language guide](https://doc.blyx-lang.space/) · [Download Blyx](https://www.blyx-lang.space/download) · [Project website](https://www.blyx-lang.space/)
 
-  [![Website](https://img.shields.io/badge/Website-blyx--lang.space-0f172a?style=flat-square)](https://blyx-lang.space)
-  [![Status](https://img.shields.io/badge/status-v0.2.0-orange?style=flat-square)](https://blyx-lang.space)
-  [![License](https://img.shields.io/badge/license-MIT%20%2F%20Apache--2.0-blue?style=flat-square)](LICENSE-MIT)
-  [![Rust](https://img.shields.io/badge/compiler%20implementation-Rust-black?style=flat-square&logo=rust)](https://www.rust-lang.org/)
-  [![Playground](https://img.shields.io/badge/Playground-Try%20Blyx-2563eb?style=flat-square)](https://www.blyx-lang.space/play)
-  [![♥ Sponsor](https://img.shields.io/badge/%E2%99%A5%20Sponsor-Support%20Blyx-ff69b4?style=flat-square)](https://buymeacoffee.com/rahulchaube)
-  [![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support%20Development-ffdd00?style=flat-square&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/rahulchaube)
-</div>
+## Your first program
 
----
-
-## ⚠️ Project status
-
-**Blyx is experimental alpha software.** Syntax, compiler behavior, APIs, and tooling can change without notice.
-
-The repository is the engineering source of truth. A feature should be considered implemented only when the corresponding source code and tests or reproducible examples support it.
-
-> **Blyx 0.2.0** runs functions, loops, checked integers, floats and numeric vectors. The CLI builds the typed subset into standalone host executables through rustc. The browser playground and desktop VS Code extension use the same interpreter compiled to WebAssembly. See [the executable subset](docs/executable-subset.md).
-
-## Why Blyx?
-
-AI workloads increasingly combine native systems code, parallel execution, tensor computation, accelerators, and model-oriented operations. Blyx explores whether those concerns can be represented as language-level concepts rather than assembled entirely through separate libraries and runtimes.
-
-The goal is not to replace Rust, C++, Python, or CUDA overnight. The goal is to investigate a different programming model and make the implementation open to scrutiny and contribution.
-
-## Design pillars
-
-- **Native compilation** — a Rust-based compiler implementation with a path toward native machine-code generation.
-- **AI-oriented primitives** — language constructs such as `generate`, `reason`, `orchestrate`, and `task` are explored as first-class concepts.
-- **Static tensor concepts** — tensor shape and type information can participate in compile-time validation where implemented.
-- **Concurrency** — actor and asynchronous programming models are part of the language design.
-- **Heterogeneous computing** — GPU-oriented syntax and backend work are being explored.
-- **Explicit resource management** — ownership, borrowing, and lifetime-oriented safety are part of the design direction.
-- **Intermediate representation** — Blyx uses a BIR/SSA-oriented architecture to separate language semantics from lower-level code generation.
-
-## Example
-
-This least-squares fit through the origin prints the slope (2) and a prediction (10).
+Save this as `readings.blyx`. The last reading has twice the weight of either of the first two. `dot` computes the weighted total and `sum` computes the total weight.
 
 ```blyx
-// Fit y = slope * x by least squares through the origin.
-fn fit(samples: vector, targets: vector) -> f64 {
-    dot(samples, targets) / dot(samples, samples)
+fn main() {
+    let readings = [5.0, 7.0, 9.0];
+    let weights = [1.0, 1.0, 2.0];
+    println!(dot(readings, weights) / sum(weights));
+}
+```
+
+The program prints **`7.5`**. You can change a weight in the browser and see the new result, or run the same example locally. [Run this example](https://www.blyx-lang.space/play?example=weighted-mean) · [Source file](examples/numerics/weighted_mean.blyx)
+
+### Run it locally
+
+Download the **Blyx 0.2.0** archive for Windows x86-64, Linux x86-64, or macOS on Apple Silicon. Verify it against the release’s `SHA256SUMS`, extract the archive, and put the directory containing `blyxc` on your `PATH`. [Release archives and checksums](https://github.com/Rahulchaube1/blyxxxx/releases/tag/v0.2.0)
+
+```sh
+blyxc --version
+blyxc check readings.blyx
+blyxc run readings.blyx
+```
+
+`check` checks syntax. `run` executes the program with the interpreter. To build a native executable, install `rustc` and a host linker, then run `blyxc build readings.blyx`. Start the result with `./readings` on Linux or macOS, or `.\readings.exe` in PowerShell. The resulting executable runs independently of the compiler. [Native build guide](https://doc.blyx-lang.space/guide/native-builds)
+
+## A small machine-learning example
+
+Fit a line of the form `y = slope × x` to observations. For a fit through the origin, the least-squares coefficient is `dot(x, y) / dot(x, x)`. The inputs below have equal lengths and a nonzero denominator.
+
+```blyx
+fn fit(x: vector, y: vector) -> f64 {
+    dot(x, y) / dot(x, x)
 }
 
 fn main() {
-    let samples = [1.0, 2.0, 3.0, 4.0];
-    let targets = [2.0, 4.0, 6.0, 8.0];
-    let slope = fit(samples, targets);
+    let x = [1.0, 2.0, 3.0, 4.0];
+    let y = [2.0, 4.0, 6.0, 8.0];
+    let slope = fit(x, y);
     println!(slope);
     println!(slope * 5.0);
 }
 ```
 
-## Compiler architecture
+The first line of output is `2`, the fitted slope. The second is `10`, the prediction at `x = 5`. [Run the fit](https://www.blyx-lang.space/play?example=linear-fit) · [Walk through the model](https://doc.blyx-lang.space/guide/numerical-models)
 
-```text
-Source
-  │
-  ▼
-Lexer
-  │
-  ▼
-Parser / AST
-  │
-  ▼
-Semantic Analysis
-  │
-  ▼
-Type Checking / Tensor Validation
-  │
-  ▼
-BIR / SSA
-  │
-  ▼
-Optimization
-  │
-  ▼
-Backend / Code Generation   ← in development
-  │
-  ▼
-Native / Heterogeneous Targets
-```
+| Explore next | Language features | Expected output |
+| --- | --- | --- |
+| [Greatest common divisor](https://www.blyx-lang.space/play?example=gcd) | Mutable bindings, remainder, and a `while` loop | `6` for 48 and 18 |
+| [Threshold classifier](https://www.blyx-lang.space/play?example=threshold) | Vector dot product, bias, and a conditional | `positive` |
+| [Smoothed readings](https://www.blyx-lang.space/play?example=smoothing) | Indexed reads and a rolling calculation | `10`, `12`, `15` |
 
-The compiler is organized into dedicated crates for lexing, parsing, AST representation, semantic analysis, type checking, BIR, and the compiler driver.
+## What ships in 0.2.0
 
-## Repository layout
+| Component | What you can use today |
+| --- | --- |
+| Language | Functions and recursion, block scope, mutable bindings, conditionals, loops, checked `i64` arithmetic, `f64`, and numeric vectors with `len`, `at`, `sum`, and `dot`. |
+| CLI | Create a project with `blyxc new hello`, check syntax, run source, and compile supported typed programs. The native backend lowers Blyx to Rust and invokes `rustc`. |
+| Browser and editor | The playground and desktop extension run the Blyx interpreter compiled to WebAssembly. The editor can run an unsaved buffer and show parser errors while you type. |
 
-```text
-compiler/       Compiler frontend, type system, BIR and compiler driver
-library/        Runtime and standard-library components
-tools/          Package, formatting, analysis and developer-tooling prototypes
-examples/       Language examples
-docs/           Architecture, specifications and project documentation
-RFC/            Language and ecosystem design proposals
-website/        Official web portal and playground
-.github/        CI, issue templates, PR workflow and project automation
-```
+Blyx has its own lexer, parser, and interpreter. GPU execution, a general-purpose tensor runtime, actor scheduling, and external package installation remain development work. The executable subset is the reference for supported behavior. [Executable subset](docs/executable-subset.md) · [Release capabilities](https://doc.blyx-lang.space/guide/compatibility) · [Roadmap](ROADMAP_PUBLIC.md)
 
-## Toolchain maturity
+## Reproduce the results
 
-| Tool | Current role | Alpha status |
-|---|---|---|
-| `blyxc` | Compiler driver | Interpreter, syntax checking, native builds of the typed subset |
-| `blyxpkg` | Package management | Prototype |
-| `blyxfmt` | Source formatting | Prototype |
-| `blyx-analyzer` | Editor/LSP tooling | Prototype |
-| `blyxdoc` | Documentation generation | Prototype |
-| `blyxup` | Toolchain management | Prototype |
-| `blyxdbg` | Debugging | Prototype; backend not complete |
-| `blyxprof` | Performance profiling | No measurements until a real backend exists |
-
-## Quick start
-
-### Try without installing
-
-Use the online playground:
-
-**https://www.blyx-lang.space/play**
-
-### Install
-
-Official installation instructions and release artifacts:
-
-**https://blyx-lang.space/download**
-
-### Build from source
-
-```bash
-git clone https://github.com/Rahulchaube1/blyxxxx.git
-cd blyxxxx
-cargo build --workspace
-cargo test --workspace
-```
-
-### Validate a Blyx source file
-
-After building `blyxc`, use its current supported frontend command:
-
-```bash
-cargo run -p blyxc -- check examples/hello.blyx
-```
-
-Run the interpreter example:
-
-```bash
-cargo run -p blyxc -- run examples/basic/fibonacci.blyx
-```
-
-Expected output is `Fibonacci(10):` followed by `55`.
+With Rust, Cargo, a host linker, and Node.js installed, run these commands from the repository root.
 
 ```sh
-cargo install --locked --path compiler/blyxc
-blyxc build examples/ml/linear_fit.blyx
+cargo test --locked --workspace
+cargo run --locked -p blyxc -- run examples/ml/linear_fit.blyx
+node editors/code/scripts/prepare.cjs
+node tools/test-editor-runtime.mjs
 ```
 
-Run the resulting `examples/ml/linear_fit` (Windows: `examples/ml/linear_fit.exe`).
+The editor test checks the browser examples against their source files and expected output, then exercises the editor worker. CI also runs compiler tests on Linux, macOS, and Windows. [Test harness](tools/test-editor-runtime.mjs) · [CI runs](https://github.com/Rahulchaube1/blyxxxx/actions/workflows/ci.yml)
 
-## Documentation & canonical references
+**Performance evidence.** The published benchmark measures recursive Fibonacci(22) on one Windows host. Across nine runs after two warm-ups, the median was **7.777 ms** for a native Blyx executable and **27.522 ms** for the Blyx interpreter. Each timing includes process startup. The raw report includes the Rust and CPython baselines, toolchain versions, individual samples, and executable sizes. [Benchmark harness](tools/bench_fibonacci.py) · [Raw results](website/public/data/benchmarks.json) · [Benchmark report](https://www.blyx-lang.space/benchmarks)
 
-- **Website:** https://blyx-lang.space
-- **Learn:** https://blyx-lang.space/learn
-- **Compiler architecture:** https://blyx-lang.space/compiler
-- **Download:** https://blyx-lang.space/download
-- **Playground:** https://www.blyx-lang.space/play
-- **Language specification:** [`docs/specification.md`](docs/specification.md)
-- **Repository health:** [`docs/repository_health.md`](docs/repository_health.md)
-- **Reproducible benchmarks:** [`docs/REPRODUCIBLE_BENCHMARKS.md`](docs/REPRODUCIBLE_BENCHMARKS.md)
-- **RFC process:** [`docs/RFC_PROCESS.md`](docs/RFC_PROCESS.md)
-- **Marketing & community kit:** [`docs/MARKETING_KIT.md`](docs/MARKETING_KIT.md)
-- **AI-readable project index:** [`llms.txt`](llms.txt)
-- **Detailed AI-readable reference:** [`llms-full.txt`](llms-full.txt)
-- **Citation metadata:** [`CITATION.cff`](CITATION.cff)
+## Project and people
 
-These files provide stable project context for documentation tools, search systems, AI agents, researchers, and contributors. They improve discoverability and machine-readable context; they do not guarantee indexing, ranking, or model training.
+Rahul Chaube created Blyx and leads compiler development. Ujjwal Chaudhury is a core contributor. The project is maintained by Neuroblyx and community contributors. [Rahul on GitHub](https://github.com/Rahulchaube1) · [Rahul on LinkedIn](https://www.linkedin.com/in/rahulchaube1) · [Blyx community](https://www.blyx-lang.space/community)
 
-## Supporting Blyx
+| Working on | Start here |
+| --- | --- |
+| Language and toolchain | [Compiler source](compiler/), [examples](examples/), [design proposals](RFC/) |
+| Editor and documentation | [VS Code extension](editors/code/README.md), [website contributor guide](website/README.md) |
+| Contributing or reporting an issue | [Contribution guide](CONTRIBUTING.md), [issue tracker](https://github.com/Rahulchaube1/blyxxxx/issues), [private security reporting](SECURITY.md) |
+| Project stewardship | [Governance](GOVERNANCE.md), [maintainers](MAINTAINERS.md), [support development](https://buymeacoffee.com/rahulchaube) |
 
-Blyx is open source and community-supported. If you find the project useful or want to help fund compiler, tooling, documentation, infrastructure, and ecosystem development, you can support it here:
-
-**[♥ Sponsor Blyx](https://buymeacoffee.com/rahulchaube)** · **[☕ Buy Me a Coffee](https://buymeacoffee.com/rahulchaube)**
-
-Sponsorship is optional and does not grant special influence over technical decisions or project governance.
-
-## Testing and reproducibility
-
-Blyx should earn performance and compatibility claims through reproducible evidence. When adding or changing a benchmark:
-
-1. Keep the benchmark source in the repository where practical.
-2. Document compiler version, commit, target, operating system, hardware, and build flags.
-3. Report methodology and variance rather than a single unexplained number.
-4. Make the benchmark runnable by another contributor.
-
-Performance numbers should therefore be treated as project measurements, not universal guarantees, until the complete methodology and harness are independently reproducible.
-
-## Contributing
-
-Blyx is intentionally open to criticism and experimentation. Useful contributions include compiler implementation, parser and diagnostics improvements, type-system design, BIR/SSA work, runtime and concurrency work, tensor and accelerator support, tooling, examples, documentation, tests, fuzzing, reproducible benchmarks, and language-design RFCs.
-
-For substantial language or compiler changes, start with an issue or RFC before investing in a large implementation. See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`RFC/`](RFC/).
-
-### Good first contributions
-
-New contributors can start with focused work that is easy to review:
-
-- [Parser regression tests](https://github.com/Rahulchaube1/blyxxxx/issues/5)
-- [Formatter idempotence tests](https://github.com/Rahulchaube1/blyxxxx/issues/6)
-- [A verified minimal example](https://github.com/Rahulchaube1/blyxxxx/issues/7)
-- [Lexer edge-case tests](https://github.com/Rahulchaube1/blyxxxx/issues/8)
-- [Compiler diagnostic tests](https://github.com/Rahulchaube1/blyxxxx/issues/9)
-
-For larger compiler work, see [the native-backend milestone discussion](https://github.com/Rahulchaube1/blyxxxx/issues/10).
-
-## Community
-
-Questions, design proposals, feature requests, implementation feedback, and bug reports are welcome through GitHub Issues.
-
-Please report security-sensitive vulnerabilities through [`SECURITY.md`](SECURITY.md), not a public issue.
-
-## Roadmap
-
-The alpha roadmap focuses on making the compiler and ecosystem increasingly useful and reproducible:
-
-- [ ] stabilize the core language surface
-- [ ] expand semantic and type-system coverage
-- [ ] strengthen diagnostics and compiler UX
-- [ ] define stable BIR/SSA invariants and optimization passes
-- [ ] implement a real native backend
-- [ ] improve runtime and concurrency primitives
-- [ ] mature tensor and heterogeneous-computing support
-- [ ] replace tooling prototypes with tested implementations
-- [ ] expand cross-platform release coverage
-- [ ] publish reproducible benchmark harnesses
-- [ ] grow documentation, examples, and RFC coverage
-
-The roadmap is intentionally subject to change as implementation and community feedback evolve.
-
-## Governance and project philosophy
-
-Blyx is developed as an open-source project backed by Neuroblyx. The public repository is intended to make language design, implementation, testing, and discussion visible to contributors.
-
-Technical claims should be measurable. Experimental features should be labeled. Breaking changes should be discussed openly. Contributions should be reviewed on technical merit.
-
-## License
-
-Blyx is dual-licensed under your choice of:
-
-- [MIT License](LICENSE-MIT)
-- [Apache License 2.0](LICENSE-APACHE)
+The language project is dual-licensed under your choice of the [MIT License](LICENSE-MIT) or [Apache License 2.0](LICENSE-APACHE). The editor extension has its own [MIT license](editors/code/LICENSE).

@@ -1,33 +1,23 @@
-<div align="center">
-  <img src="https://raw.githubusercontent.com/Rahulchaube1/blyxxxx/blyx-main/blyx.png" alt="Blyx logo" width="160" />
-  <h1>Blyx</h1>
-  <p><strong>An open-source AI-native systems programming language.</strong></p>
-  <p>Experimental compiler and language research combining systems programming, concurrency, tensors, heterogeneous computing, and AI-oriented primitives.</p>
+# Blyx
 
-  <p>
-    <a href="https://blyx-lang.space"><img src="https://img.shields.io/badge/Website-blyx--lang.space-0f172a?style=for-the-badge" alt="Website" /></a>
-    <a href="https://github.com/Rahulchaube1/blyxxxx"><img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
-    <a href="https://play.blyx-lang.space"><img src="https://img.shields.io/badge/Playground-Try_Blyx-2563eb?style=for-the-badge" alt="Playground" /></a>
-  </p>
-</div>
+Blyx is an open-source programming language for numerical experiments and small native programs. Start with a question you can check by hand. For example, the dot product of `[1.0, 2.0]` and `[3.0, 4.0]` is `1 × 3 + 2 × 4 = 11`.
 
----
+```blyx
+fn main() {
+    println!(dot([1.0, 2.0], [3.0, 4.0]));
+}
+```
 
-## Explore Blyx
+Paste the program into the playground to run it in your browser. The same source runs with the Blyx 0.2.0 CLI and the desktop VS Code extension. [Playground](https://www.blyx-lang.space/play) · [First program](https://doc.blyx-lang.space/guide/first-program) · [Editor extension](https://www.blyx-lang.space/vscode)
 
-- **Repository:** compiler, runtime/library, tooling, tests, examples, RFCs, and project infrastructure.
-- **Playground:** experiment with Blyx without a local installation.
-- **Website:** language overview, installation, compiler architecture, and learning resources.
-- **Contributing:** compiler engineering, language design, diagnostics, runtime work, tooling, tests, documentation, benchmarks, and RFCs.
+## Explore the project
 
-## Project status
+- **Learn the language.** Work through functions, loops, vector operations, and a least-squares fit. [Blyx documentation](https://doc.blyx-lang.space/) · [Runnable examples](https://www.blyx-lang.space/examples)
+- **Run it locally.** Download a compiler, check a source file, and compile a typed program for your machine. [Compiler downloads](https://www.blyx-lang.space/download) · [Native build guide](https://doc.blyx-lang.space/guide/native-builds)
+- **Inspect the evidence.** Read the executable subset, run the tests, or reproduce the published Fibonacci benchmark. [Source and tests](https://github.com/Rahulchaube1/blyxxxx) · [Benchmark results](https://www.blyx-lang.space/benchmarks)
 
-Blyx is **experimental alpha software**. Syntax, APIs, compiler behavior, and tooling are expected to evolve. Check the repository and release artifacts for the current implementation status.
+## People and contributions
 
-## Links
+Rahul Chaube created Blyx and leads compiler development. Ujjwal Chaudhury is a core contributor. Language proposals, bug reports, and patches are welcome in the project repository. [Contributing](https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/CONTRIBUTING.md) · [Blyx community](https://www.blyx-lang.space/community)
 
-- [Blyx repository](https://github.com/Rahulchaube1/blyxxxx)
-- [Official website](https://blyx-lang.space)
-- [Learn Blyx](https://blyx-lang.space/learn)
-- [Playground](https://play.blyx-lang.space)
-- [Installation](https://blyx-lang.space/download)
+[Official Blyx website](https://www.blyx-lang.space/) · [Rahul on GitHub](https://github.com/Rahulchaube1) · [Rahul on LinkedIn](https://www.linkedin.com/in/rahulchaube1)

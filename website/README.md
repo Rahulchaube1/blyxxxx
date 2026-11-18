@@ -1,7 +1,48 @@
-# Blyx website and language guide
+# Blyx website and documentation
 
-The main website and the guide at [doc.blyx-lang.space](https://doc.blyx-lang.space/) use the same Next.js application. Install dependencies with `npm ci` inside this directory and run `npm run dev` for the main site. To develop or build the documentation edition, set `NEXT_PUBLIC_BLYX_EDITION=docs` before starting Next.js. Each edition has its own home page, navigation, robots file, and sitemap.
+This Next.js application serves the language website and its documentation. The example catalog, editable playground, and runnable guide chapters share a WebAssembly build of the Blyx interpreter. A reader can change the source of a program and see its output in the browser. [Website](https://www.blyx-lang.space/) · [Documentation](https://doc.blyx-lang.space/) · [Example catalog](https://www.blyx-lang.space/examples)
 
-The Vercel project `website` serves the main site. The project `book` serves the documentation edition. Deploy this directory as the project root in both cases. The guide chapters live in `src/lib/guides.json` and the old book URL mappings live in `legacy-book.json`.
+## Run a local edition
 
-The runnable catalog in `src/lib/samples.json` mirrors source programs in the repository's `examples/` directory. From the repository root, run `node editors/code/scripts/prepare.cjs` and `node tools/test-editor-runtime.mjs` to check the embedded programs and their expected output against the WebAssembly runtime. Run `npm run build` in this directory to type-check and build the website.
+Use Node.js 20.9 or newer and npm. From the repository root, start the main website with these commands.
+
+```sh
+cd website
+npm ci
+npm run dev
+```
+
+Open `http://localhost:3000`. To start the documentation edition, stop the dev server and run one of these commands from `website/`.
+
+| Shell | Start the documentation edition |
+| --- | --- |
+| Bash or zsh | `NEXT_PUBLIC_BLYX_EDITION=docs npm run dev` |
+| PowerShell | `$env:NEXT_PUBLIC_BLYX_EDITION = 'docs'` followed by `npm run dev` |
+
+The edition is selected at startup and build time. To switch back in PowerShell, run `Remove-Item Env:NEXT_PUBLIC_BLYX_EDITION` and restart the server. Both editions use the same routes and components, with edition-specific home pages, navigation, robots files, and sitemaps.
+
+## Change content
+
+| What you want to change | Where it lives |
+| --- | --- |
+| An example program | Its `.blyx` file in [examples](../examples/) and its catalog entry in [samples.json](src/lib/samples.json). The entry includes the source path, runnable code, and expected output. |
+| A documentation chapter | [guides.json](src/lib/guides.json). A chapter can reference a catalog example by ID to embed a runnable program. |
+| A page or editor control | [App routes](src/app/) and [shared components](src/components/). |
+| A redirect from the old book | [Legacy route map](legacy-book.json) and [redirect configuration](next.config.mjs). |
+
+For example, `weighted-mean` links the catalog to a source file that prints `7.5`. Edit the readings, update the expected result, and run the example checks before opening a pull request. [Source program](../examples/numerics/weighted_mean.blyx) · [Live program](https://www.blyx-lang.space/play?example=weighted-mean)
+
+## Verify and build
+
+Run the example checks from the **repository root**. They compare the catalog with the checked-in source files, execute the examples in WebAssembly, and exercise the editor worker.
+
+```sh
+node editors/code/scripts/prepare.cjs
+node tools/test-editor-runtime.mjs
+```
+
+From `website/`, run `npm run build` to type-check and create a production build. Use `npm start` to serve that build locally. For the documentation build, set `NEXT_PUBLIC_BLYX_EDITION=docs` before running the build command. Vercel uses `website/` as the project root for both deployments. The `website` project hosts the main site and the `book` project hosts the guide. [Runtime rebuild instructions](../docs/executable-subset.md) · [Test harness](../tools/test-editor-runtime.mjs)
+
+## Project
+
+Rahul Chaube leads the Blyx project. For site corrections, include the page URL, the affected text or program, and the expected behavior. [Project repository](https://github.com/Rahulchaube1/blyxxxx) · [Issue tracker](https://github.com/Rahulchaube1/blyxxxx/issues) · [Rahul on GitHub](https://github.com/Rahulchaube1) · [Rahul on LinkedIn](https://www.linkedin.com/in/rahulchaube1)
