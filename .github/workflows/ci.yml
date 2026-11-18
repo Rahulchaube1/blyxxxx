@@ -81,6 +81,7 @@ jobs:
           node-version: 24
       - run: node editors/code/scripts/prepare.cjs
       - run: node tools/test-editor-runtime.mjs
+      - run: node tools/export-handbook.mjs --check
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: wasm32-unknown-unknown

@@ -11,6 +11,20 @@ for (const sample of examples) {
   const result = await evaluate(wasm, sample.code, true);
   assert.deepEqual(result, { status: 0, output: sample.expected, diagnostics: [] }, sample.id);
 }
+const guides = JSON.parse(await readFile(new URL("../website/src/lib/guides.json", import.meta.url), "utf8"));
+assert.equal(new Set(guides.map((guide) => guide.slug)).size, guides.length, "unique chapter URLs");
+for (const guide of guides) {
+  if (!guide.example) continue;
+  const sample = examples.find((item) => item.id === guide.example);
+  assert.ok(sample, guide.slug + " example");
+  let solution = sample.code;
+  for (const [from, to] of guide.exercise.edits) {
+    assert.equal(solution.split(from).length, 2, guide.slug + " exercise must identify a unique edit");
+    solution = solution.replace(from, () => to);
+  }
+  const result = await evaluate(wasm, solution, true);
+  assert.deepEqual(result, { status: 0, output: guide.exercise.expected, diagnostics: [] }, guide.slug + " solution");
+}
 for (const [expr, status] of [["1e-2", 0], ["0b2", 1], ["1 / 0", 4], ["loop {}", 4]]) {
   assert.equal((await evaluate(wasm, "fn main() { println!(" + expr + "); }", true)).status, status);
 }
@@ -18,4 +32,4 @@ assert.equal((await evaluate(wasm, "fn main() { loop {} }", false)).status, 0);
 const worker = new Worker(new URL("../editors/code/src/worker.mjs", import.meta.url), { workerData: { source: examples[0].code, run: true } });
 const result = await new Promise((resolve, reject) => { worker.once("message", resolve); worker.once("error", reject); });
 assert.deepEqual(result, { status: 0, output: "2\n10\n", diagnostics: [] });
-console.log("Passed CLI example fixtures, WebAssembly checks, and editor worker execution.");
+console.log(`Passed ${examples.length} example fixtures, ${guides.filter((g) => g.example).length} handbook solutions, WebAssembly checks, and editor worker execution.`);

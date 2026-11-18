@@ -4,4 +4,6 @@ export const metadata = {
     title: "Documentation",
     alternates: { canonical: docs + "/" },
 };
-export default GuideIndex;
+export default function Documentation() {
+    return <GuideIndex />;
+}

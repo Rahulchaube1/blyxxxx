@@ -415,6 +415,71 @@ button.primary {
 .guide-mobile {
 	display: none;
 }
+.course-index {
+	display: grid;
+	grid-template-columns: minmax(165px, 1fr) minmax(0, 3fr);
+	gap: clamp(20px, 5vw, 68px);
+	align-items: start;
+}
+.course-sections, .guide-nav {
+	position: sticky;
+	top: 16px;
+	max-height: calc(100vh - 32px);
+	overflow-y: auto;
+}
+.course-sections {
+	display: grid;
+	gap: 10px;
+	padding: 8px 0;
+}
+.course-stage {
+	margin-bottom: 48px;
+}
+.course-stage > p {
+	margin: 8px 0 18px;
+	color: var(--muted);
+}
+.course-stage ul {
+	list-style: none;
+	padding: 0;
+	border-top: 1px solid var(--rule);
+}
+.course-stage li a {
+	display: grid;
+	gap: 3px;
+	padding: 12px 8px;
+	text-decoration: none;
+	border-bottom: 1px solid var(--rule);
+}
+.course-stage li a:hover, .course-stage li a:focus-visible {
+	background: #e8f3ec;
+}
+.course-stage li span {
+	color: var(--muted);
+	font-size: 15px;
+}
+.chapter-group strong {
+	display: block;
+	margin: 16px 0 4px;
+	font-size: 13px;
+}
+.lesson-disclosure {
+	border-left: 3px solid var(--rule);
+	padding: 5px 14px;
+	margin: 12px 0;
+}
+.lesson-disclosure summary {
+	color: var(--teal);
+	font-weight: 650;
+	cursor: pointer;
+}
+.solution-edit { margin-top: 16px; }
+.lesson-exercise .solution-edit p { font-size: 14px; margin-bottom: 0; }
+.prose .table-box th, .prose .table-box td { vertical-align: top; }
+@media (max-width: 720px) {
+	.course-index { display: block; }
+	.course-sections { position: static; display: flex; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 26px; }
+}
 .footer {
 	margin-top: 30px;
 }

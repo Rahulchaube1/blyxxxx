@@ -23,9 +23,9 @@ export default function Home() {
                             </a>
                             <a
                                 className="button secondary"
-                                href={guideLink("first-program")}
+                                href="/learn"
                             >
-                                Read the guide
+                                Learn Blyx
                             </a>
                         </div>
                     </div>

@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
-import guides from "@/lib/guides.json";
-import samples from "@/lib/samples.json";
-import { docs, guideLink, mainLink, playLink } from "@/lib/site";
-import Runner from "@/components/Runner";
+import { guides, stages } from "@/lib/handbook";
+import { docs, guideLink, mainLink } from "@/lib/site";
+import GuideContent from "@/components/GuideContent";
 type Props = { params: Promise<{ slug: string }> };
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -24,15 +23,23 @@ export default async function Chapter({ params }: Props) {
     const index = guides.findIndex((g) => g.slug === slug);
     if (index < 0) notFound();
     const g = guides[index];
-    const sample = samples.find((s) => s.id === g.example);
-    const contents = guides.map((x) => (
-        <a
-            key={x.slug}
-            href={guideLink(x.slug)}
-            aria-current={x.slug === slug ? "page" : undefined}
-        >
-            {x.title}
-        </a>
+    const contents = stages.map(([stage]) => (
+        <div key={stage} className="chapter-group">
+            <strong>{stage}</strong>
+            {guides
+                .filter((chapter) => chapter.group === stage)
+                .map((chapter) => (
+                    <a
+                        key={chapter.slug}
+                        href={guideLink(chapter.slug)}
+                        aria-current={
+                            chapter.slug === slug ? "page" : undefined
+                        }
+                    >
+                        {chapter.title}
+                    </a>
+                ))}
+        </div>
     ));
     return (
         <main className="wrap guide-shell">
@@ -53,28 +60,7 @@ export default async function Chapter({ params }: Props) {
                     <p>{g.summary}</p>
                 </header>
                 <article className="prose">
-                    {g.sections.map((s) => (
-                        <section key={s.heading}>
-                            <h2>{s.heading}</h2>
-                            <p>{s.text}</p>
-                            {"command" in s && (
-                                <pre>
-                                    <code>{s.command}</code>
-                                </pre>
-                            )}
-                        </section>
-                    ))}
-                    {sample && (
-                        <section>
-                            <h2>Try the program</h2>
-                            <Runner code={sample.code} filename={sample.file} />
-                            <p>
-                                <a href={playLink(sample.id)}>
-                                    Open in the full playground →
-                                </a>
-                            </p>
-                        </section>
-                    )}
+                    <GuideContent guide={g} />
                     {slug === "editor" && (
                         <a className="button" href={mainLink("/vscode")}>
                             Get the editor extension

@@ -2,308 +2,1242 @@
     {
         "slug": "first-program",
         "title": "Your first Blyx program",
-        "group": "Start here",
-        "summary": "Run a greeting, change its text, and read what your program wrote.",
+        "group": "First steps",
+        "summary": "Start in the browser, make a prediction, then edit and run your first line of Blyx.",
         "example": "hello",
         "sections": [
             {
-                "heading": "Enter through main",
-                "text": "Every executable starts in a parameterless fn main(). The statements inside its braces run in order. A line beginning with // is a comment."
+                "heading": "Start with a running file",
+                "text": "A program is a set of instructions written as text. The editor below contains a complete file. Select Run program and read the Output pane. If Run on edit is selected, changes run automatically. You can reset the example at any time."
             },
             {
-                "heading": "Write to the console",
-                "text": "println!(value) evaluates one expression and writes it followed by a newline. print!(value) writes without a newline. Use consecutive calls to print several values."
+                "heading": "Read the greeting",
+                "text": "The two lines beginning with // are notes for the reader. Execution begins at fn main(). The braces enclose the work that main performs. Inside them, println! writes the text between the double quotes and finishes the line. The semicolon ends that instruction."
             },
             {
-                "heading": "Try a change",
-                "text": "Replace the greeting with your name. Add a second println! that evaluates 6 * 7. The second line should read 42."
+                "heading": "Change one thing",
+                "text": "Replace World inside the quoted greeting with your name. Leave the quotes, parentheses, exclamation mark and semicolon where they are. Run again and compare the two greetings. Changing the text changes what your reader sees."
+            },
+            {
+                "heading": "Let the computer calculate",
+                "text": "Add println!(6 * 7); on a new line inside the braces. Blyx evaluates the multiplication before printing 42. Put double quotes around 6 * 7 and you will see the characters instead. The difference between a value and text describing a value will recur throughout the course."
             }
-        ]
+        ],
+        "exercise": {
+            "prompt": "Make the program print Hello, Blyx! on its first line and 42 on its second.",
+            "hint": "Keep both print calls inside main. Use quotes for the greeting and leave the multiplication unquoted.",
+            "answer": "Each println! adds one line. The arithmetic expression evaluates before the second call.",
+            "edits": [
+                [
+                    "println!(\"Hello, World from Blyx!\");",
+                    "println!(\"Hello, Blyx!\");\n    println!(6 * 7);"
+                ]
+            ],
+            "expected": "Hello, Blyx!\n42\n"
+        }
     },
     {
-        "slug": "installation",
-        "title": "Install the compiler",
-        "group": "Start here",
-        "summary": "Choose an archive for your operating system and check the installed version.",
-        "example": null,
+        "slug": "arithmetic",
+        "title": "Numbers and expressions",
+        "group": "First steps",
+        "summary": "Use a packing problem to learn whole numbers, decimals, operator order and integer division.",
+        "example": "arithmetic",
         "sections": [
             {
-                "heading": "Download blyxc",
-                "text": "The 0.2.0 release ships archives for Windows x86-64, Linux x86-64 and macOS Apple Silicon. Extract the archive and place the executable in a directory on PATH. With PowerShell you can also run .\\blyxc.exe from the extracted directory."
+                "heading": "Turn a question into an expression",
+                "text": "How many rows of five can you fill with 23 items? Give the two counts names with let. Since both values are integers, items / row yields the number of whole rows. The remainder operator, %, gives the three items still on the table."
             },
             {
-                "heading": "Install with Homebrew",
-                "text": "On Apple Silicon macOS or x86-64 Linux, Homebrew can install the release binary and verify its checksum.",
-                "command": "brew install rahulchaube1/blyx/blyx"
+                "heading": "Choose whole or fractional units",
+                "text": "The literal 23 has type i64, a signed 64-bit integer. The literal 23.0 has type f64, a 64-bit floating-point number. The expression 23.0 / 5.0 yields 4.6. Use integer counts for indivisible objects and decimal operands on both sides when a fraction matters."
             },
             {
-                "heading": "Check your installation",
-                "text": "Run the version command. For the guide’s release the response is blyxc 0.2.0.",
-                "command": "blyxc --version"
+                "heading": "Group an expression",
+                "text": "Multiplication and division bind more tightly than addition and subtraction. Read 2 + 3 * 4 as 2 + (3 * 4), which gives 14. In the editor, parentheses make (2 + 3) happen first, giving 20."
             },
             {
-                "heading": "Install with Cargo",
-                "text": "With Rust, Cargo, and a host linker installed, build the published compiler from crates.io. This command selects the version used in this guide.",
-                "command": "cargo install --locked --version 0.2.0 blyxc"
-            },
-            {
-                "heading": "Choose an execution path",
-                "text": "The downloaded CLI can interpret a .blyx file immediately. Install rustc and the host linker when you need blyxc build to produce an executable."
+                "heading": "Choose useful test cases",
+                "text": "A full row, one fewer than a full row, and zero items each tell you something different about the result. With a nonzero row size, full_rows * row + leftover reconstructs the input. Integer division by zero and integer overflow produce execution errors."
             }
-        ]
+        ],
+        "exercise": {
+            "prompt": "Pack 24 items in rows of five. Predict both integer results before running.",
+            "hint": "The division and remainder use items. The separate decimal example uses literal values.",
+            "answer": "Four complete rows hold 20 items. Four items remain. The decimal expression and the grouped expression still use their original literals.",
+            "edits": [
+                [
+                    "let items = 23;",
+                    "let items = 24;"
+                ]
+            ],
+            "expected": "4\n4\n4.6\n20\n"
+        }
+    },
+    {
+        "slug": "text-output",
+        "title": "Text, comments and output",
+        "group": "First steps",
+        "summary": "Build a receipt one value at a time and learn how strings differ from variable names.",
+        "example": "text-output",
+        "sections": [
+            {
+                "heading": "Name the pieces",
+                "text": "A string literal encloses text in double quotes. Inside \"Total: \" the final space separates the label from the price. Outside quotes, label refers to the value introduced by let. Writing \"label\" would print those five letters."
+            },
+            {
+                "heading": "Assemble a line",
+                "text": "print!(label) writes the label and leaves the cursor on that line. println!(cost) writes the integer and ends the line. The last call starts a new line with Paid. To display several values together, use consecutive calls. These macros take zero or one expression."
+            },
+            {
+                "heading": "Write a useful comment",
+                "text": "A // comment continues to the end of its line. A comment such as // price is in whole credits records the unit that the number alone cannot express. Put the calculation in a binding if you want to print it twice."
+            },
+            {
+                "heading": "Read output precisely",
+                "text": "An extra space, a missing line break or putting the numeric expression inside quotes can change a report. First compare the lines and then compare characters within each line. This is the same approach you can use when testing a longer program."
+            }
+        ],
+        "exercise": {
+            "prompt": "Change the quantity from three to five and replace the final receipt line with Thanks.",
+            "hint": "Edit the expression that defines cost, then edit the last quoted string.",
+            "answer": "Five units at seven credits cost 35. print! keeps the label and total on the same line.",
+            "edits": [
+                [
+                    "3 * 7",
+                    "5 * 7"
+                ],
+                [
+                    "\"Paid\"",
+                    "\"Thanks\""
+                ]
+            ],
+            "expected": "Total: 35\nThanks\n"
+        }
     },
     {
         "slug": "bindings",
-        "title": "Values, bindings and scope",
-        "group": "Language",
-        "summary": "Use immutable bindings, mutable state, and a block-local name.",
+        "title": "Bindings, mutation and scope",
+        "group": "Language essentials",
+        "summary": "Trace a name through nested blocks and choose when a value should change.",
         "example": "scope",
         "sections": [
             {
-                "heading": "Bind a value",
-                "text": "let creates an immutable binding. let mut allows assignment within the same value kind. Both forms need an initializer to execute."
+                "heading": "Bind a name",
+                "text": "let level = 3; evaluates the right-hand expression and gives its result a name. An immutable binding is a useful default for a quantity that should keep the same value. Declare let mut when later statements need to update that particular binding."
             },
             {
-                "heading": "Shadow a name",
-                "text": "A nested block can introduce its own binding with the same name. The example prints 8 from the inner block and 3 after the block ends."
+                "heading": "Follow a name into a block",
+                "text": "At the opening brace the program enters a new scope. The inner let level = 8; creates a second binding. A read of level starts in the current scope, so the first print sees 8. Leaving the block removes the inner binding and the outer 3 is visible again."
             },
             {
-                "heading": "Choose a numeric type",
-                "text": "Whole-number literals use checked signed 64-bit arithmetic during execution. Decimal literals such as 2.5 and 1e-2 use f64. true and false are booleans. Text is written in double quotes."
+                "heading": "Change an existing binding",
+                "text": "An assignment starts with the name, as in level = 8;. The interpreter finds the nearest binding with that name. Assignment requires a mutable binding and a compatible value kind. If there is an inner declaration, updating it only changes the inner value."
             },
             {
-                "heading": "Try a change",
-                "text": "Replace the inner declaration with an assignment to level. Observe the immutable-binding diagnostic. Then mark the outer binding mutable and run again."
+                "heading": "Accumulate a result",
+                "text": "For a mutable integer counter, count += 1 adds one to the current value. The same updates work for subtraction, multiplication, division and remainder through -=, *=, /= and %=. Start a sum at zero and a product at one so the initial value preserves the first term."
             }
-        ]
+        ],
+        "exercise": {
+            "prompt": "Make both print calls show 8 by updating the outer level inside the block.",
+            "hint": "Use mut for the outer declaration and remove let from the inner statement.",
+            "answer": "There is now one mutable binding. The assignment reaches it and the new value is still visible after the block.",
+            "edits": [
+                [
+                    "let level = 3;",
+                    "let mut level = 3;"
+                ],
+                [
+                    "let level = 8;",
+                    "level = 8;"
+                ]
+            ],
+            "expected": "8\n8\n"
+        }
+    },
+    {
+        "slug": "decisions",
+        "title": "Booleans and decisions",
+        "group": "Language essentials",
+        "summary": "Classify temperatures, then test exactly what happens at the boundaries.",
+        "example": "decisions",
+        "sections": [
+            {
+                "heading": "Ask a yes-or-no question",
+                "text": "A comparison such as t < 0.0 produces true or false. An if condition requires a boolean. The band function first checks for a value below zero. Its early return immediately sends the string frozen back to the caller."
+            },
+            {
+                "heading": "Partition the remaining inputs",
+                "text": "After the first check, every remaining input in this example is zero or warmer. The final if expression chooses mild below 30 and hot otherwise. Because this expression supplies the function’s result, there is no semicolon after its closing brace."
+            },
+            {
+                "heading": "Read the comparison signs",
+                "text": "Use == to compare for equality and != to test inequality. Use < or > for strict limits and <= or >= to include the limit itself. To combine rules, && requires both sides, || requires at least one, and ! reverses a boolean. Short-circuit evaluation skips the right side once the answer is known."
+            },
+            {
+                "heading": "Test the boundary",
+                "text": "Two implementations can agree on -2 and 10 and still disagree at zero. A boundary test deliberately uses the threshold itself. Here 0.0 skips the frozen branch and 30.0 skips the mild branch."
+            }
+        ],
+        "exercise": {
+            "prompt": "Change the rule so exactly 30 is mild. Keep the boundary at zero as it is.",
+            "hint": "Look for the comparison in the final if expression.",
+            "answer": "Including equality sends 30.0 through the mild branch. The negative and zero cases take their original branches.",
+            "edits": [
+                [
+                    "t < 30.0",
+                    "t <= 30.0"
+                ]
+            ],
+            "expected": "frozen\nmild\nmild\n"
+        }
     },
     {
         "slug": "functions",
-        "title": "Functions and return values",
-        "group": "Language",
-        "summary": "Pass values to a function, choose a return type, and call the function recursively.",
-        "example": "fibonacci",
+        "title": "Functions, parameters and results",
+        "group": "Language essentials",
+        "summary": "Give a calculation a name, call it more than once, and use its return value in another expression.",
+        "example": "unit-price",
         "sections": [
             {
-                "heading": "Declare a function",
-                "text": "Parameters use name: type. The arrow introduces a return type. Give value-returning functions an explicit return type for a native build."
+                "heading": "Define the interface",
+                "text": "Read fn total(price: i64, quantity: i64) -> i64 as a function named total taking two signed integers and returning one signed integer. A parameter names a value inside the function. An argument is the value supplied by a call."
             },
             {
-                "heading": "Return a result",
-                "text": "A final expression without a semicolon supplies the result of a block or function. An explicit return exits the current function even inside a nested block."
+                "heading": "Trace a call",
+                "text": "In total(7, 3), price receives 7 and quantity receives 3. The function multiplies them, finishes, and the caller receives 21. The binding first keeps that result in main. The second call uses new arguments and its result is added to first."
             },
             {
-                "heading": "Follow the base case",
-                "text": "fibonacci returns n when n is smaller than two. Other inputs call the function twice with smaller arguments. Change the input to 7 and update the printed label. The result is 13."
+                "heading": "Return from a block",
+                "text": "A final expression without a semicolon supplies the result. You can also write return price * quantity; to exit explicitly. A semicolon discards a final expression’s value. Keep an explicit return type on functions that return values when compiling a native executable."
             },
             {
-                "heading": "Budget recursive work",
-                "text": "The interpreter allows 64 simultaneous calls. Its step budget also counts the many separate calls in this example. Use iteration for inputs that would require excessive recursion."
+                "heading": "Keep calculation separate from output",
+                "text": "total can serve a receipt, a test or a larger calculation because it returns its answer. main decides what to print. Parameters belong to each call. Declare a local mutable accumulator when you need a value to change inside the function."
             }
-        ]
+        ],
+        "exercise": {
+            "prompt": "Make the second order four units at four credits. Print the combined total for both orders.",
+            "hint": "Only the second call in main needs different arguments.",
+            "answer": "The first order is 21 and the second is 16. Their sum is 37.",
+            "edits": [
+                [
+                    "total(4, 2)",
+                    "total(4, 4)"
+                ]
+            ],
+            "expected": "21\n37\n"
+        }
     },
     {
         "slug": "control-flow",
-        "title": "Conditions and loops",
-        "group": "Language",
-        "summary": "Make a decision, update a loop variable, and exit with a result.",
+        "title": "While loops and the Euclidean algorithm",
+        "group": "Language essentials",
+        "summary": "Trace changing state and explain why a loop finishes.",
         "example": "gcd",
         "sections": [
             {
-                "heading": "Test a condition",
-                "text": "if and while require booleans. The operators ==, !=, <, <=, > and >= compare values. Use && and || for short-circuit boolean expressions."
+                "heading": "Name the repeated work",
+                "text": "The greatest common divisor is the largest positive integer that divides both inputs exactly. For nonnegative inputs with at least one positive, dividing x by y leaves a remainder. A number divides both x and y exactly if and only if it divides y and that remainder."
             },
             {
-                "heading": "Move toward termination",
-                "text": "Each iteration of Euclid’s algorithm replaces the pair (x, y) with (y, x % y). For positive inputs the remainder gets smaller until y reaches zero."
+                "heading": "Trace the state",
+                "text": "A while loop checks its condition before executing the body. Each pass replaces (x, y) with (y, x % y). Save the remainder first because overwriting x earlier would lose one of the inputs.",
+                "table": {
+                    "columns": [
+                        "Before the pass",
+                        "Remainder",
+                        "After the pass"
+                    ],
+                    "rows": [
+                        [
+                            "48, 18",
+                            "12",
+                            "18, 12"
+                        ],
+                        [
+                            "18, 12",
+                            "6",
+                            "12, 6"
+                        ],
+                        [
+                            "12, 6",
+                            "0",
+                            "6, 0"
+                        ]
+                    ]
+                }
             },
             {
-                "heading": "Use loop, break and continue",
-                "text": "while checks a condition before every iteration. loop repeats until its body exits. break exits the nearest loop, and break value gives a loop expression a result. continue moves to the next iteration."
+                "heading": "Explain termination",
+                "text": "When y is positive, the new remainder is at least zero and strictly smaller than y. Eventually y reaches zero. The guard prevents taking a remainder with a zero divisor and the final x supplies the answer."
             },
             {
-                "heading": "Try a change",
-                "text": "Run gcd(18, 48) and gcd(48, 0). The results are 6 and 48."
+                "heading": "Start with a small test",
+                "text": "If the second argument already equals zero, no iteration runs. Swapping positive inputs can add a first iteration, but the same common divisors survive. Tracing two small examples by hand is a quick way to find a mistaken update order."
             }
-        ]
+        ],
+        "exercise": {
+            "prompt": "Use 35 and 15 as inputs. Predict each remainder and the final result.",
+            "hint": "Start with 35 % 15, then divide 15 by that remainder.",
+            "answer": "The remainders are 5 and 0, so the last positive divisor is 5.",
+            "edits": [
+                [
+                    "gcd(48, 18)",
+                    "gcd(35, 15)"
+                ]
+            ],
+            "expected": "5\n"
+        }
+    },
+    {
+        "slug": "loop-exits",
+        "title": "Break, continue and loop values",
+        "group": "Language essentials",
+        "summary": "Find the first matching integer and carry it out of a loop.",
+        "example": "loop-result",
+        "sections": [
+            {
+                "heading": "Choose a stopping rule",
+                "text": "while is convenient when the decision to repeat belongs at the top. Here the program must construct a candidate before it can decide whether to stop. A loop expression lets the test live beside the value that will become the answer."
+            },
+            {
+                "heading": "Follow one iteration",
+                "text": "The counter starts at 9. The first pass increments it to 10. Its remainder on division by four is nonzero, so continue jumps back to the beginning. The update occurs before continue so the candidate moves forward on every pass."
+            },
+            {
+                "heading": "Return a value from a loop",
+                "text": "At 12 the condition for continue is false. break n exits the nearest loop and supplies 12 to the binding found. The semicolon after the loop expression completes the enclosing let declaration. An ordinary break also exits a while loop, without carrying a value."
+            },
+            {
+                "heading": "Distinguish the destinations",
+                "text": "continue returns to the next iteration, break leaves the current loop, and return leaves the current function. If your program stops with a step-budget error, trace the path through continue and check that the variable in the condition actually changes."
+            }
+        ],
+        "exercise": {
+            "prompt": "Find the first multiple of five strictly greater than nine.",
+            "hint": "Keep the starting number and change the divisor.",
+            "answer": "The first candidate is 10. Its remainder on division by five is zero, so it becomes the loop result.",
+            "edits": [
+                [
+                    "n % 4",
+                    "n % 5"
+                ]
+            ],
+            "expected": "10\n"
+        }
+    },
+    {
+        "slug": "recursion",
+        "title": "Recursion and the cost of a call",
+        "group": "Language essentials",
+        "summary": "Trace Fibonacci by hand, identify the base case, and decide when iteration is cheaper.",
+        "example": "fibonacci",
+        "sections": [
+            {
+                "heading": "Specify a base case",
+                "text": "In this example Fibonacci is defined on nonnegative integers with F(0) = 0 and F(1) = 1. Each call first checks whether its argument is smaller than two. A base case gives a direct answer and prevents another call."
+            },
+            {
+                "heading": "Expand one call",
+                "text": "For n = 4 the two subproblems are F(3) and F(2). F(3) needs F(2) and F(1), while each F(2) needs F(1) and F(0). Work back up the tree to get 2 + 1 = 3. Each invocation has its own parameter value."
+            },
+            {
+                "heading": "Count work as well as depth",
+                "text": "F(2) is evaluated twice in that small tree. Repeated subproblems make this recursive implementation expensive as n grows. An iterative version can carry the two most recent values in mutable bindings and advance one position per pass."
+            },
+            {
+                "heading": "Choose a safe input",
+                "text": "The interpreter has both a step budget and a maximum of 64 simultaneous calls. Keep practice inputs small. A native build also uses finite machine resources. Large Fibonacci numbers eventually exceed the checked i64 range regardless of the algorithm."
+            }
+        ],
+        "exercise": {
+            "prompt": "Print Fibonacci at position seven, with a matching label.",
+            "hint": "The function name also occurs in the label. Edit the label and the call.",
+            "answer": "Building the sequence from zero gives 0, 1, 1, 2, 3, 5, 8, 13. Position seven is 13.",
+            "edits": [
+                [
+                    "\"Fibonacci(10):\"",
+                    "\"Fibonacci(7):\""
+                ],
+                [
+                    "fibonacci(10)",
+                    "fibonacci(7)"
+                ]
+            ],
+            "expected": "Fibonacci(7):\n13\n"
+        }
     },
     {
         "slug": "vectors",
-        "title": "Numeric vectors",
-        "group": "Language",
-        "summary": "Create a vector, read its length, index a value, and reduce it to a scalar.",
+        "title": "Vectors and reductions",
+        "group": "Numerical programming",
+        "summary": "Represent several readings in one value and combine them into a weighted mean.",
         "example": "weighted-mean",
         "sections": [
             {
-                "heading": "Construct and read",
-                "text": "A literal such as [2.0, 4.0, 8.0] creates an immutable numeric vector. Values are stored as f64. len(v) returns an i64 count. at(v, i) returns the f64 at the zero-based integer index."
+                "heading": "Choose a representation",
+                "text": "A vector literal such as [5.0, 7.0, 9.0] holds numeric elements in order. Element storage is f64, including when the literal contains whole numbers. A vector can be empty. Bind it to a name or pass it to a function whose parameter type is vector."
             },
             {
-                "heading": "Sum and dot",
-                "text": "sum(v) adds the elements. dot(a, b) multiplies corresponding elements and adds the products. The two vectors must have equal lengths. Both reductions return f64."
+                "heading": "Read by position",
+                "text": "Indices begin at zero. For these three readings, len(readings) is 3 and at(readings, 2) is 9. Use an integer index and keep it below the length. The release supports reading vector elements. Build an accumulator when you need to calculate a derived result."
             },
             {
-                "heading": "Interpret the weighted mean",
-                "text": "The weighted total is 30 and the weights sum to 4. Dividing the first by the second gives 7.5. Replacing the weights with three ones gives 7."
+                "heading": "Give one reading extra weight",
+                "text": "A dot product multiplies pairs at matching positions and adds them. With weights [1.0, 1.0, 2.0], the weighted total is 5 + 7 + 18 = 30. The total weight is 4. Dividing produces 7.5, which is closer to the final reading than the ordinary mean."
             },
             {
-                "heading": "Handle boundary cases",
-                "text": "Check that an index is at least zero and smaller than len(v) before calling at. Decide how to handle empty input and zero total weight before dividing."
+                "heading": "State the input contract",
+                "text": "dot requires equal vector lengths. For a weighted average with nonnegative weights, require a positive total weight. An empty pair can have a valid dot product of zero while its mean has a zero denominator. Decide how your program should handle that case before you divide."
             }
-        ]
+        ],
+        "exercise": {
+            "prompt": "Give the first reading double weight and give each of the others weight one.",
+            "hint": "Keep the number of weights equal to the number of readings.",
+            "answer": "The weighted total becomes 10 + 7 + 9 = 26. Divide by four to get 6.5.",
+            "edits": [
+                [
+                    "[1.0, 1.0, 2.0]",
+                    "[2.0, 1.0, 1.0]"
+                ]
+            ],
+            "expected": "6.5\n"
+        }
+    },
+    {
+        "slug": "vector-scans",
+        "title": "Scan a vector for its maximum",
+        "group": "Numerical programming",
+        "summary": "Design a loop that finds the largest value even when every reading is negative.",
+        "example": "vector-peak",
+        "sections": [
+            {
+                "heading": "Define the input",
+                "text": "Finding a maximum requires at least one reading. This example supplies a nonempty literal. A reusable function should check len(readings) before indexing, or document and enforce the nonempty requirement at its call site."
+            },
+            {
+                "heading": "Choose a starting value",
+                "text": "Initialize peak from the first reading and begin the loop at index 1. Starting at zero as a candidate maximum would report a nonexistent zero for an all-negative input. The first real reading is a candidate you know belongs to the data."
+            },
+            {
+                "heading": "Maintain a fact after every pass",
+                "text": "Before reading index i, peak is the largest of the first i elements. Compare the next reading with peak, keep the larger value and increment i. The same fact now covers one more element. When i equals len(readings), the fact covers the whole input."
+            },
+            {
+                "heading": "Estimate the cost",
+                "text": "For n nonempty readings this scan performs n − 1 comparisons and stores a fixed number of local values beyond the input. A one-element vector skips the loop and returns its only element. Equal maxima do not change the reported value."
+            }
+        ],
+        "exercise": {
+            "prompt": "Try a vector containing just -12.0. Decide whether the loop body will run.",
+            "hint": "After initialization the index and the vector length both equal one.",
+            "answer": "The condition is false before the first pass. The initial reading is already the maximum.",
+            "edits": [
+                [
+                    "[-8.0, -1.0, -3.0]",
+                    "[-12.0]"
+                ]
+            ],
+            "expected": "-12\n"
+        }
+    },
+    {
+        "slug": "smoothing",
+        "title": "Smooth a sequence with one running value",
+        "group": "Numerical programming",
+        "summary": "Turn a noisy signal into a sequence of estimates and trace how much history each estimate retains.",
+        "example": "smoothing",
+        "sections": [
+            {
+                "heading": "Set the initial state",
+                "text": "The first reading is the first estimate. Print it before the loop and begin processing at index one. This convention gives one output per input, including for a single reading. The example assumes a nonempty signal because it reads index zero."
+            },
+            {
+                "heading": "Blend old and new",
+                "text": "Each later estimate is half the new reading plus half the previous estimate. For readings 10, 14, 18, the second estimate is 0.5 × 14 + 0.5 × 10 = 12. The third uses 12 as its old state and becomes 15."
+            },
+            {
+                "heading": "Understand the tradeoff",
+                "text": "More weight on the new reading makes the output respond faster to changes. Less weight preserves more history. Choose complementary weights that sum to one so a constant signal stays constant. A weight of one on the new reading reproduces the input."
+            },
+            {
+                "heading": "Check a boundary case",
+                "text": "Feed the algorithm three copies of 6. Its estimate should remain 6 after every pass. This checks both the initial value and the blend. Then change one input at a time so the reason for any output change is visible."
+            }
+        ],
+        "exercise": {
+            "prompt": "Give the new reading weight 0.75 and the previous estimate weight 0.25.",
+            "hint": "Both coefficients occur on the line that updates estimate.",
+            "answer": "The second estimate is 13. The last uses 13 as its old state, yielding 16.75.",
+            "edits": [
+                [
+                    "0.5 * at(signal, i) + 0.5 * estimate",
+                    "0.75 * at(signal, i) + 0.25 * estimate"
+                ]
+            ],
+            "expected": "10\n13\n16.75\n"
+        }
     },
     {
         "slug": "numerical-models",
-        "title": "Fit and evaluate a model",
-        "group": "Numerical work",
-        "summary": "Fit one coefficient from paired observations and use it to predict a new response.",
+        "title": "Fit a line and predict a value",
+        "group": "Numerical programming",
+        "summary": "Fit a one-parameter model, inspect its assumptions, and predict the response at an unseen input.",
         "example": "linear-fit",
         "sections": [
             {
                 "heading": "Choose a model",
-                "text": "This example fits y = slope × x with the intercept fixed at zero. The four input observations and four targets appear directly in the program."
+                "text": "Suppose measurements are proportional to their input and a zero input should produce a zero response. Use y = slope × x. This choice fixes the intercept at zero. Pair each input with its observed target by position in two equal-length vectors."
             },
             {
-                "heading": "Fit one parameter",
-                "text": "dot(samples, targets) gives 60 and dot(samples, samples) gives 30. Their ratio minimizes the sum of squared residuals for this model. The denominator must be nonzero."
+                "heading": "Find the slope",
+                "text": "The least-squares slope through the origin is dot(samples, targets) / dot(samples, samples). The numerator adds input × observed response across the pairs. The denominator adds the squared inputs. It is positive when at least one input is nonzero."
             },
             {
-                "heading": "Predict on a new input",
-                "text": "The fitted slope is 2. Multiplying by an unseen input of 5 predicts 10. Change the targets to [3.0, 6.0, 9.0, 12.0]. The two outputs become 3 and 15."
+                "heading": "Work a fit by hand",
+                "text": "With x = [1, 2, 3, 4] and y = [2, 4, 6, 8], the numerator is 60 and the denominator is 30. The slope is 2. A new input of 5 yields 10. The fit function only returns a coefficient. main chooses where to predict."
             },
             {
-                "heading": "Evaluate residuals",
-                "text": "The example library includes a separate mean squared error program and a two-feature threshold classifier. All three execute with the CPU vector operations in Blyx 0.2.0."
+                "heading": "Interpret a changed observation",
+                "text": "Increase the last target by 3. The numerator increases by 4 × 3 while the denominator stays 30. The new slope is 72 / 30 = 2.4. One observation can move every future prediction because the fitted slope is shared."
             }
-        ]
+        ],
+        "exercise": {
+            "prompt": "Leave the training data unchanged and predict the response for x = 6.",
+            "hint": "Change the final multiplication in main. The fit still sees the original four pairs.",
+            "answer": "The fitted coefficient is still 2, and multiplying by 6 produces 12.",
+            "edits": [
+                [
+                    "slope * 5.0",
+                    "slope * 6.0"
+                ]
+            ],
+            "expected": "2\n12\n"
+        }
     },
     {
-        "slug": "projects",
-        "title": "Project layout and CLI",
-        "group": "Tools",
-        "summary": "Create a project and check, run, or format the main source file.",
+        "slug": "model-error",
+        "title": "Measure prediction error",
+        "group": "Numerical programming",
+        "summary": "Evaluate a set of predictions, trace the residuals and interpret their mean squared error.",
+        "example": "prediction-error",
+        "sections": [
+            {
+                "heading": "Compare paired observations",
+                "text": "Take one prediction and the matching observed target. Their difference is a residual. Its sign tells you whether the prediction is high or low. Averaging signed residuals alone could hide errors that cancel one another."
+            },
+            {
+                "heading": "Accumulate the loss",
+                "text": "With predictions [2, 3, 5] and targets [1, 4, 3], the residuals are 1, -1 and 2. Squaring gives 1, 1 and 4. Add the squares, then divide 6 by the number of observations, 3. The mean squared error is 2."
+            },
+            {
+                "heading": "Match types and lengths",
+                "text": "The loop index is an integer for at. The floating-point count supplies a same-type divisor for squares in both execution paths. For inputs supplied by a caller, check that the lengths match and that at least one pair exists before you compute the mean."
+            },
+            {
+                "heading": "Use held-out data",
+                "text": "Training chooses a slope or other parameters. Evaluation asks how those fixed parameters perform on examples that did not determine them. Keep a second vector of test targets when comparing two models. A low training loss alone says little about unseen observations."
+            }
+        ],
+        "exercise": {
+            "prompt": "Replace the predictions with the three actual targets. What is the best possible value of this loss?",
+            "hint": "Each residual should be exactly zero for these inputs.",
+            "answer": "All squared residuals are zero, so the mean squared error is zero.",
+            "edits": [
+                [
+                    "[2.0, 3.0, 5.0]",
+                    "[1.0, 4.0, 3.0]"
+                ]
+            ],
+            "expected": "0\n"
+        }
+    },
+    {
+        "slug": "classification",
+        "title": "Classify using a score and a threshold",
+        "group": "Numerical programming",
+        "summary": "Combine two features, choose a category, and decide how ties are classified.",
+        "example": "threshold",
+        "sections": [
+            {
+                "heading": "Build the score",
+                "text": "A feature is a numeric input such as a count or a measurement. A weight describes its contribution to a score. classify uses one weight per feature, computes dot(features, weights), then adds a scalar bias. The inputs and weights must have equal lengths."
+            },
+            {
+                "heading": "Trace the prediction",
+                "text": "The two contributions are 2 × 0.5 = 1 and 3 × -0.25 = -0.75. With a zero bias the score is 0.25. The condition score >= 0.0 chooses the string positive. A negative sign on a weight makes a larger feature lower the score."
+            },
+            {
+                "heading": "Choose the tie rule",
+                "text": "The comparison includes exactly zero on the positive side. A negative bias moves the cutoff without changing any individual weight. Test scores on both sides of zero and exactly at zero to check that the rule matches your intention."
+            },
+            {
+                "heading": "Separate scoring from training",
+                "text": "This is inference with coefficients supplied in the program. There is no learning step in this classifier. If you choose different coefficients, evaluate their predictions on labeled data before interpreting the change as an improvement."
+            }
+        ],
+        "exercise": {
+            "prompt": "Set the bias to -0.5 and predict the label before running.",
+            "hint": "The original weighted sum is 0.25.",
+            "answer": "The adjusted score is -0.25. This selects the negative branch.",
+            "edits": [
+                [
+                    "[0.5, -0.25], 0.0",
+                    "[0.5, -0.25], -0.5"
+                ]
+            ],
+            "expected": "negative\n"
+        }
+    },
+    {
+        "slug": "testing",
+        "title": "Test a program at its boundaries",
+        "group": "Practical projects",
+        "summary": "Design a small repeatable test suite that catches an off-by-one classification rule.",
+        "example": "test-boundaries",
+        "sections": [
+            {
+                "heading": "Write the rule first",
+                "text": "Raise an alarm only above 30.0. This sentence decides what happens at exactly 30.0. Implement the production rule in a function so the test calls precisely the same calculation that a larger program would use."
+            },
+            {
+                "heading": "Choose three cases",
+                "text": "Select a value below the limit, exactly at the limit, and above it. For each input, compare the returned boolean with the expected boolean. A correct run prints true three times. If one line prints false, its position identifies the case to inspect."
+            },
+            {
+                "heading": "Prove a test can fail",
+                "text": "Temporarily replace > with >= and run again. The below and above cases still pass. The equality case now prints false. Restore the strict comparison and repeat. This gives you evidence that at least one test can detect a real defect."
+            },
+            {
+                "heading": "Compare execution paths",
+                "text": "Run the same source with blyxc run, then build an executable and compare its output on the same inputs. Checking the process exit status detects execution failures. Checking actual output against expected output detects wrong answers from executions that finished successfully."
+            }
+        ],
+        "exercise": {
+            "prompt": "Change the rule to include exactly 30 and update the expected result for that input.",
+            "hint": "The implementation and the test expectation express two sides of the same contract.",
+            "answer": "Both changes are needed to keep all three tests passing under the new specification.",
+            "edits": [
+                [
+                    "t > 30.0",
+                    "t >= 30.0"
+                ],
+                [
+                    "alarm(30.0) == false",
+                    "alarm(30.0) == true"
+                ]
+            ],
+            "expected": "true\ntrue\ntrue\n"
+        }
+    },
+    {
+        "slug": "sensor-report",
+        "title": "Capstone project — build a sensor report",
+        "group": "Practical projects",
+        "summary": "Build a complete report from a blank file, handle empty input, and verify a boundary condition.",
+        "example": "sensor-report",
+        "sections": [
+            {
+                "heading": "Specify the report",
+                "text": "Given a vector of readings and a limit, print their total and how many exceed the limit. For an empty batch, print no readings and stop. Before coding, write down the expected behavior for an empty batch, one reading equal to the limit, and a batch with readings on both sides."
+            },
+            {
+                "heading": "Build the counting function",
+                "text": "Start with fn hot_count(readings: vector, limit: f64) -> i64. Start hits and i at zero. While i is less than len(readings), inspect at(readings, i). Increment hits only for a reading strictly above the limit. Advance i on every pass and return hits after the loop."
+            },
+            {
+                "heading": "Build the report function",
+                "text": "Take the same two parameters. Check for an empty batch first. The early return lets the normal report follow at the same indentation. Use sum for the total, call hot_count for the count, and pair print! labels with println! values."
+            },
+            {
+                "heading": "Trace and verify",
+                "text": "The four readings total 123.5. Only 31.5 and 34.0 exceed the limit of 30.0. The empty batch exercises a separate branch without reading an element. Verify the complete program in both the browser and the CLI.",
+                "table": {
+                    "columns": [
+                        "Input",
+                        "Expected behavior"
+                    ],
+                    "rows": [
+                        [
+                            "[]",
+                            "One line: no readings"
+                        ],
+                        [
+                            "[30.0] with limit 30.0",
+                            "Total 30 and count 0"
+                        ],
+                        [
+                            "[28.0, 31.5, 30.0, 34.0] with limit 30.0",
+                            "Total 123.5 and count 2"
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Take it further",
+                "text": "Change the function to count readings inside an inclusive range. Accept low and high parameters and combine two comparisons with &&. Test both endpoints, a value outside each end, and an empty vector. Decide how a caller should handle low greater than high."
+            }
+        ],
+        "exercise": {
+            "prompt": "Replace only the empty batch in main with a single reading equal to the limit. Predict the complete report.",
+            "hint": "This batch takes the nonempty branch but adds nothing to the above-limit count.",
+            "answer": "The first batch is unchanged. For the second, sum returns 30 and the strict comparison leaves hits at zero.",
+            "edits": [
+                [
+                    "report([], 30.0);",
+                    "report([30.0], 30.0);"
+                ]
+            ],
+            "expected": "total: 123.5\nabove limit: 2\ntotal: 30\nabove limit: 0\n"
+        }
+    },
+    {
+        "slug": "installation",
+        "title": "Install and verify Blyx",
+        "group": "Local toolchain",
+        "summary": "Choose a binary or package manager, locate the executable, and verify the exact compiler version.",
         "example": null,
         "sections": [
             {
-                "heading": "Create a project",
-                "text": "new creates a directory with a Blyx.toml manifest and src/main.blyx. Run the command from the directory where you want the project to live.",
+                "heading": "Choose how to run the course",
+                "text": "Every tutorial with an editor can run in the browser. A local installation lets you save source files and invoke the command-line tool blyxc. Building a native executable also requires rustc and a host linker on the machine doing the build."
+            },
+            {
+                "heading": "Download a release archive",
+                "text": "Choose the Windows x86-64 ZIP, Linux x86-64 tarball, or Apple Silicon macOS tarball from the download page. Compare its SHA-256 digest with the entry for the same filename in SHA256SUMS. Extract the archive and add the directory containing blyxc to PATH. In PowerShell you can run .\\blyxc.exe directly from the extracted directory."
+            },
+            {
+                "heading": "Install with Homebrew",
+                "text": "On Apple Silicon macOS or x86-64 Linux, the project tap installs the published compiler binary and checks the archive checksum.",
+                "command": "brew install rahulchaube1/blyx/blyx"
+            },
+            {
+                "heading": "Install with Cargo",
+                "text": "With Rust, Cargo and a host linker installed, build the compiler from crates.io. The version flag selects the same release as this course. Cargo normally places the result in the bin directory under your Cargo home.",
+                "command": "cargo install --locked --version 0.2.0 blyxc"
+            },
+            {
+                "heading": "Check your installation",
+                "text": "Open a fresh terminal after a PATH change. The version command should print blyxc 0.2.0. If the shell cannot find it, check the directory from which the executable runs directly and make sure that directory appears on PATH.",
+                "command": "blyxc --version"
+            }
+        ],
+        "exercise": {
+            "prompt": "Confirm which compiler your terminal will use if you have both a downloaded binary and a Cargo installation.",
+            "hint": "Use Get-Command blyxc in PowerShell or command -v blyxc in a POSIX shell.",
+            "answer": "The path should point to the installation you intended. Run that path with --version to verify it before continuing."
+        }
+    },
+    {
+        "slug": "projects",
+        "title": "Create a project on disk",
+        "group": "Local toolchain",
+        "summary": "Move a program from the browser into a project, check the file and run it from a terminal.",
+        "example": null,
+        "sections": [
+            {
+                "heading": "Create a workspace",
+                "text": "Choose a parent directory where you want to keep your work. This command creates a fresh directory named hello. Blyx refuses to create the project if that directory already exists, which helps protect existing work.",
                 "command": "blyxc new hello"
             },
             {
-                "heading": "Check syntax",
-                "text": "check reads a single source file and reports parser diagnostics. A successful syntax check can still be followed by a runtime error.",
-                "command": "blyxc check hello/src/main.blyx"
+                "heading": "Find the entry point",
+                "text": "The generated project contains Blyx.toml and src/main.blyx. The manifest records the project name, version and edition. The released CLI takes an explicit source file. Open hello/src/main.blyx in a text editor and find fn main()."
             },
             {
-                "heading": "Execute the source",
-                "text": "run starts main in the interpreter. The generated starter prints Hello, Blyx!",
-                "command": "blyxc run hello/src/main.blyx"
+                "heading": "Check, run and edit",
+                "text": "From the same parent directory, run these commands in order. check parses the source. run executes it. The starter prints Hello, Blyx! Replace its print call with a calculation, save the file and run it again.",
+                "command": "blyxc check hello/src/main.blyx\nblyxc run hello/src/main.blyx"
             },
             {
-                "heading": "Normalize line endings",
-                "text": "fmt normalizes the source file’s line endings in place. The separate blyxpkg tool is a prototype. Dependencies and registry publishing are outside the released CLI workflow.",
+                "heading": "Keep paths consistent",
+                "text": "If you change directory into hello, write src/main.blyx in subsequent commands. A file-not-found message is often a working-directory issue. The formatter rewrites the named file with normalized line endings. Dependency resolution and external Blyx packages are still under development.",
                 "command": "blyxc fmt hello/src/main.blyx"
             }
-        ]
+        ],
+        "exercise": {
+            "prompt": "Make the starter print 21. Run a syntax check first and then execute the saved file.",
+            "hint": "In main, multiply 3 by 7 inside println!.",
+            "answer": "Use println!(3 * 7); and save. A successful check reports that the file parsed. The run command prints 21."
+        }
+    },
+    {
+        "slug": "editor",
+        "title": "Develop in VS Code",
+        "group": "Local toolchain",
+        "summary": "Run an unsaved editor buffer, read a parser diagnostic and move the same program to the CLI.",
+        "example": null,
+        "sections": [
+            {
+                "heading": "Open a Blyx file",
+                "text": "Install the desktop extension with ID RahulChaube.blyx-language. Open or create a file ending in .blyx. For an untitled buffer, select Blyx as its language. The editor highlighting helps you see strings, keywords and comments."
+            },
+            {
+                "heading": "Run the active buffer",
+                "text": "Use the play button in the editor title bar or choose Blyx: Run File in the Command Palette. The Blyx output channel shows the output for the current text, including unsaved edits. Paste the first tutorial program and change the string to confirm which version is running."
+            },
+            {
+                "heading": "Read a diagnostic",
+                "text": "Remove the closing brace of main and look in the Problems panel. A parser diagnostic reports where parsing ran into trouble. Restore the brace, wait for the parser to update and run again. Runtime failures, such as a zero integer divisor, appear when the program executes."
+            },
+            {
+                "heading": "Use a local extension file",
+                "text": "For an offline installation, download blyx-language-1.2.3.vsix from the editor release and choose Install from VSIX in the Extensions view. The extension uses a bundled WebAssembly interpreter. Save the source to disk before running a CLI command against that file."
+            }
+        ],
+        "exercise": {
+            "prompt": "Change a string without saving. Compare an editor run with a terminal run before and after saving.",
+            "hint": "The editor reads the buffer. The terminal reads the file on disk.",
+            "answer": "Before saving, the editor can print the new string while the CLI prints the old one. Save and run both again to compare the same source."
+        }
+    },
+    {
+        "slug": "diagnostics",
+        "title": "Debug and recover from errors",
+        "group": "Local toolchain",
+        "summary": "Locate a syntax error, diagnose a runtime failure, and guard an operation using short-circuit evaluation.",
+        "example": "short-circuit",
+        "sections": [
+            {
+                "heading": "Identify the failing stage",
+                "text": "Check the file path first. A syntax error occurs while reading the program structure. A runtime error occurs while executing a valid expression with particular values. An error from a native build can point to a type mismatch or a missing Rust toolchain.",
+                "table": {
+                    "columns": [
+                        "Observation",
+                        "Likely cause",
+                        "First action"
+                    ],
+                    "rows": [
+                        [
+                            "A parser line and column",
+                            "Missing punctuation or an unfinished expression",
+                            "Inspect that token and the preceding statement."
+                        ],
+                        [
+                            "index … out of bounds",
+                            "The index fell outside the vector",
+                            "Check 0 <= i and i < len(v) before at."
+                        ],
+                        [
+                            "dot requires vectors of equal length",
+                            "The inputs contain different numbers of observations",
+                            "Compare both lengths."
+                        ],
+                        [
+                            "step limit exceeded",
+                            "The budget ran out",
+                            "Trace the loop condition and its updates."
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Reproduce the smallest failure",
+                "text": "Save fn main() { println!(1 / 0); } as divide.blyx. A syntax check succeeds because the expression is well formed. Running it reports an integer division error and exits with code 4. Replace the zero with 2 and rerun. Whole-number division now prints 0."
+            },
+            {
+                "heading": "Put a guard before division",
+                "text": "The example reads count != 0 && total / count > 3. With a zero count the first comparison is false, so evaluation skips the division. Reversing the operands would evaluate the division before discovering the zero."
+            },
+            {
+                "heading": "Limit a test run",
+                "text": "A runaway loop can repeatedly evaluate valid code. Use a small positive budget while investigating it. The released interpreter also enforces a separate call-depth limit. Increasing the budget only helps after you have confirmed that the computation progresses.",
+                "command": "blyxc run src/main.blyx --max-steps 10000"
+            }
+        ],
+        "exercise": {
+            "prompt": "Make the second call use a nonzero count whose integer quotient is exactly three.",
+            "hint": "Keep total at 12 and choose a count that divides it evenly.",
+            "answer": "The quotient 12 / 4 is 3. The strict > 3 comparison returns false, and the zero-count case also returns false.",
+            "edits": [
+                [
+                    "above_limit(12, 2)",
+                    "above_limit(12, 4)"
+                ]
+            ],
+            "expected": "false\nfalse\n"
+        }
     },
     {
         "slug": "native-builds",
         "title": "Build a native executable",
-        "group": "Tools",
-        "summary": "Compile the synchronous, typed subset for the machine running the compiler.",
+        "group": "Local toolchain",
+        "summary": "Compile a typed Blyx program and compare the executable with the interpreter on the same input.",
         "example": null,
         "sections": [
             {
-                "heading": "Build the program",
-                "text": "Install rustc and a host linker. From your project directory, run the build command. By default the executable sits beside the source, with .exe on Windows.",
+                "heading": "Start with a known result",
+                "text": "Run the project source through the interpreter and keep a small expected output. When trying a native build for the first time, use the generated hello project or the capstone. Both have simple results that you can check by eye."
+            },
+            {
+                "heading": "Build for your host",
+                "text": "Install a Rust compiler and host linker. From inside your Blyx project, run the command below. The native backend translates supported Blyx syntax to Rust and invokes rustc to produce an optimized executable for the build machine.",
                 "command": "blyxc build src/main.blyx"
             },
             {
-                "heading": "Pick an output name",
-                "text": "On Linux or macOS, use the following commands to build and launch the executable.",
+                "heading": "Choose the output location",
+                "text": "An explicit output name makes scripts easier to read. On Linux or macOS, run the executable using a relative path. Use a separate output path from the source file.",
                 "command": "blyxc build src/main.blyx -o hello\n./hello"
             },
             {
-                "heading": "Run on Windows",
-                "text": "From PowerShell, use an .exe output name and a relative path to start the file.",
+                "heading": "Build on Windows",
+                "text": "In PowerShell, use an .exe suffix and the current-directory prefix. The resulting executable runs independently of blyxc and rustc on a compatible machine.",
                 "command": "blyxc build src/main.blyx -o hello.exe\n.\\hello.exe"
             },
             {
-                "heading": "Keep types consistent",
-                "text": "Use typed parameters, explicit return types for functions that produce values, and matching scalar operand types. The native backend lowers supported Blyx syntax to Rust and invokes rustc. The produced executable runs without the compiler toolchain."
+                "heading": "Compare the two paths",
+                "text": "Give numeric operands matching types and add explicit return types to functions that return values. The interpreter can promote mixed integer/float operations that a native build rejects. Check the executable's output using the same ordinary and boundary inputs you used for the interpreted run."
             }
-        ]
+        ],
+        "exercise": {
+            "prompt": "Build the capstone source as a native executable, run it and compare the complete output with the chapter’s expected output.",
+            "hint": "Save the complete capstone program to src/main.blyx first.",
+            "answer": "The four readings sum to 123.5, two exceed 30, and the empty call prints no readings. Those three lines should agree across both execution paths."
+        }
     },
     {
-        "slug": "diagnostics",
-        "title": "Understand diagnostics",
-        "group": "Tools",
-        "summary": "Distinguish syntax errors from runtime errors and control execution limits.",
-        "example": "short-circuit",
+        "slug": "language-reference",
+        "title": "Syntax, types and operators",
+        "group": "Language reference",
+        "summary": "Look up the executable forms, operator order and value types used in Blyx 0.2.0.",
+        "example": "literal-forms",
         "sections": [
             {
-                "heading": "Read the first syntax error",
-                "text": "A parser diagnostic includes a line and column. Start at that location and check the preceding token, especially braces, parentheses and statement terminators."
+                "heading": "Read the shape of a program",
+                "text": "A runnable source file declares top-level functions, including a parameterless main. A function body is a brace-delimited block of statements and an optional final expression. A semicolon ends a let declaration, return statement or expression statement. A final expression without one supplies the block’s value."
             },
             {
-                "heading": "Guard integer division",
-                "text": "In the example, && evaluates the right operand only if the divisor is nonzero. The first call prints false without dividing. The second call prints true."
+                "heading": "Read names, literals and comments",
+                "text": "Choose a name such as sensor_count. Start with a letter or underscore and use letters, digits or underscores after it. Names are case-sensitive. The lexer reads 10, 0b1010, 0o12 and 0xA as the same integer. Use underscores to group long numbers and e for a decimal exponent. A line comment begins with //. A block comment begins with /* and ends with */. Block comments may nest."
             },
             {
-                "heading": "Recognize runtime failures",
-                "text": "Integer overflow, division by zero, incompatible vector lengths and out-of-range indexing produce execution errors. In the CLI, run exits with status 4 for a runtime error."
+                "heading": "Value types",
+                "text": "Use explicit scalar types for native function parameters and results. Vector elements are numeric. A unit-valued block completes without returning a useful value.",
+                "table": {
+                    "columns": [
+                        "Type",
+                        "Example",
+                        "Use"
+                    ],
+                    "rows": [
+                        [
+                            "i64",
+                            "-12, 0, 42",
+                            "Checked integer arithmetic, counts and indices"
+                        ],
+                        [
+                            "f64",
+                            "2.5, 1e-2",
+                            "Measurements, division with fractions and vector elements"
+                        ],
+                        [
+                            "bool",
+                            "true, false",
+                            "Conditions and logical combinations"
+                        ],
+                        [
+                            "str",
+                            "\"Blyx\"",
+                            "Text, labels and messages. The native subset also recognizes String."
+                        ],
+                        [
+                            "vector",
+                            "[2.0, 3.0]",
+                            "An immutable sequence of numeric elements"
+                        ],
+                        [
+                            "unit (or omit the return annotation)",
+                            "fn show() { println!(1); }",
+                            "A function called for its effect"
+                        ]
+                    ]
+                }
             },
             {
-                "heading": "Limit work",
-                "text": "The interpreter defaults to one million steps. You can give a terminating program a different budget with a positive integer. Browser runs also have an eight-second wall-clock limit.",
-                "command": "blyxc run src/main.blyx --max-steps 2000000"
+                "heading": "Operator order",
+                "text": "The rows are ordered from tightest binding to loosest among the operators used by the released interpreter here. Parentheses override the default order. Keep comparisons separate and join their boolean results with && or ||.",
+                "table": {
+                    "columns": [
+                        "Operators",
+                        "Meaning",
+                        "Example"
+                    ],
+                    "rows": [
+                        [
+                            "! and unary -",
+                            "Boolean negation and numeric negation",
+                            "!ready, -x"
+                        ],
+                        [
+                            "* / %",
+                            "Multiply, divide, remainder",
+                            "7 / 2 yields 3"
+                        ],
+                        [
+                            "+ -",
+                            "Add, subtract",
+                            "2 + 3 * 4 yields 14"
+                        ],
+                        [
+                            "< <= > >=",
+                            "Order comparisons",
+                            "t >= 30.0"
+                        ],
+                        [
+                            "== !=",
+                            "Equality and inequality",
+                            "count != 0"
+                        ],
+                        [
+                            "&&",
+                            "Short-circuit logical AND",
+                            "ready && valid"
+                        ],
+                        [
+                            "||",
+                            "Short-circuit logical OR",
+                            "low || high"
+                        ],
+                        [
+                            "= += -= *= /= %=",
+                            "Assign to a mutable binding",
+                            "count += 1"
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Declarations and control flow",
+                "text": "let binds, let mut permits updates and fn introduces a function. if selects a branch, while checks before each pass, and loop repeats unconditionally. break leaves the nearest loop, continue begins its next iteration, and return exits the current function. Nested braces introduce a scope."
+            },
+            {
+                "heading": "Literal and boundary behavior",
+                "text": "The signed integer range is −9,223,372,036,854,775,808 through 9,223,372,036,854,775,807. Integer overflow and division by zero fail in the interpreter. f64 has finite precision and follows IEEE floating-point arithmetic. Many decimal fractions have only approximate binary representations. For native examples, use decimal literals consistently when a fractional result matters."
+            },
+            {
+                "heading": "Text and escape sequences",
+                "text": "Write strings in double quotes. Inside a string, \\n starts a new line, \\t inserts a tab, \\\" inserts a quote, and \\\\ inserts a backslash. Strings may contain Unicode text. Use several print! calls to combine text with values. The interpreter also reads a single-quoted character as one character of text. Use double-quoted text in code you plan to build natively."
+            },
+            {
+                "heading": "Use a branch as a value",
+                "text": "The classify function below uses if and else to produce a result. Both branch blocks end in string expressions and have the same result type. show returns unit and exists to print the result. The explicit -> unit annotation may be omitted there. Function parameters and any native return values use the types in the table above."
             }
-        ]
+        ],
+        "exercise": {
+            "prompt": "Change the classifier call to use the integer eleven in hexadecimal. Predict the final line and check whether the other lines change.",
+            "hint": "In hexadecimal, the digits after 9 are A, B, C, D, E and F. Eleven divided by two leaves a remainder of one.",
+            "answer": "0xB is eleven. classify chooses the odd branch, and the earlier calculations still use the original literals.",
+            "edits": [
+                [
+                    "classify(10)",
+                    "classify(0xB)"
+                ]
+            ],
+            "expected": "true\n1005\n25\nlabel\todd\n"
+        }
     },
     {
-        "slug": "editor",
-        "title": "Use Blyx in VS Code",
-        "group": "Tools",
-        "summary": "Run the current buffer and see parser feedback while typing.",
+        "slug": "builtin-reference",
+        "title": "Built-in functions and output",
+        "group": "Language reference",
+        "summary": "Look up every vector built-in and both output macros, including their inputs, results and boundary cases.",
         "example": null,
         "sections": [
             {
-                "heading": "Install the release",
-                "text": "Download blyx-language-1.2.3.vsix from the Blyx editor 1.2.3 GitHub release. In desktop VS Code, open Extensions, choose Install from VSIX, and select the file."
+                "heading": "Vector operations",
+                "text": "All four functions receive vectors by value in Blyx source. The interpreter shares immutable element storage across calls. An index is an i64; an element, sum or dot product is an f64.",
+                "table": {
+                    "columns": [
+                        "Call",
+                        "Result",
+                        "Example"
+                    ],
+                    "rows": [
+                        [
+                            "len(vector)",
+                            "i64 count, zero for an empty vector",
+                            "len([4.0, 9.0]) → 2"
+                        ],
+                        [
+                            "at(vector, i64)",
+                            "The element at a zero-based index",
+                            "at([4.0, 9.0], 1) → 9"
+                        ],
+                        [
+                            "sum(vector)",
+                            "Sum of the elements",
+                            "sum([4.0, 9.0]) → 13"
+                        ],
+                        [
+                            "dot(vector, vector)",
+                            "Sum of products at matching indices",
+                            "dot([1.0, 2.0], [4.0, 9.0]) → 22"
+                        ]
+                    ]
+                }
             },
             {
-                "heading": "Run the current buffer",
-                "text": "Open a .blyx file or set the editor language to Blyx. Use Blyx: Run File in the Command Palette. The Blyx output channel shows the program’s output, including results from unsaved edits."
+                "heading": "Preconditions",
+                "text": "at fails on a negative index, on index len(v), and on any access to an empty vector. dot fails if lengths differ, even when one side is empty. The sum of an empty vector and the dot product of two empty vectors are numerically zero. Check lengths before indexing or computing an average."
             },
             {
-                "heading": "Read parser diagnostics",
-                "text": "The extension runs the bundled WebAssembly parser as you edit. Its interpreter works locally. A separate CLI installation is useful when you want a native executable."
+                "heading": "Output macros",
+                "text": "print!() emits no text. println!() emits a newline. With a single expression, print!(value) displays its value, and println!(value) follows it with a newline. Use consecutive calls to combine text and numbers. Braces inside an output string are literal characters."
+            },
+            {
+                "heading": "Cost of the operations",
+                "text": "Reading the length or one element requires no scan. sum and dot visit the elements and their work grows with vector length. The interpreter charges its execution budget for these reductions. Holding the sum in a binding avoids recomputing it in every loop iteration."
             }
-        ]
+        ],
+        "exercise": {
+            "prompt": "Calculate dot([2.0, -1.0], [3.0, 4.0]) by hand. What happens if you remove the 4.0 from the second vector?",
+            "hint": "Multiply the corresponding entries before summing.",
+            "answer": "2 × 3 + (−1 × 4) is 2. After removing an entry the lengths differ, and the runtime reports an error."
+        }
+    },
+    {
+        "slug": "cli-reference",
+        "title": "Command-line reference",
+        "group": "Language reference",
+        "summary": "Look up CLI forms, output files, execution budgets and exit codes.",
+        "example": null,
+        "sections": [
+            {
+                "heading": "Command forms",
+                "text": "Pass a path to a single source file to check, run, build or fmt. Paths with spaces need the usual quoting rules of your shell.",
+                "table": {
+                    "columns": [
+                        "Command",
+                        "Effect"
+                    ],
+                    "rows": [
+                        [
+                            "blyxc --version or -V",
+                            "Print the installed compiler version."
+                        ],
+                        [
+                            "blyxc help, --help or -h",
+                            "Show the available commands."
+                        ],
+                        [
+                            "blyxc new NAME",
+                            "Create a new directory with Blyx.toml and src/main.blyx."
+                        ],
+                        [
+                            "blyxc check FILE",
+                            "Parse the file and report syntax diagnostics."
+                        ],
+                        [
+                            "blyxc run FILE [--max-steps N]",
+                            "Interpret main with an optional positive step budget."
+                        ],
+                        [
+                            "blyxc build FILE [-o PATH]",
+                            "Build a native executable, optionally at PATH."
+                        ],
+                        [
+                            "blyxc fmt FILE",
+                            "Rewrite the file with normalized line endings."
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Interpret the exit status",
+                "text": "Capture the exit status immediately following the command. In PowerShell read $LASTEXITCODE. In a POSIX shell read $?. Scripts can use the status to decide whether to proceed. The exit codes below describe blyxc itself.",
+                "table": {
+                    "columns": [
+                        "Code",
+                        "Meaning"
+                    ],
+                    "rows": [
+                        [
+                            "0",
+                            "Command completed successfully."
+                        ],
+                        [
+                            "1",
+                            "Examples include a missing file, parser error or failed build."
+                        ],
+                        [
+                            "2",
+                            "Examples include an unknown command, a missing argument or an invalid run budget."
+                        ],
+                        [
+                            "4",
+                            "The interpreter reached a runtime failure, such as integer division by zero."
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Find the output file",
+                "text": "With no -o option a native build puts the executable beside the source, using the platform executable extension. Pass an explicit output name when a project has several programs or when a script needs to invoke a known path."
+            },
+            {
+                "heading": "Separate execution budgets",
+                "text": "--max-steps controls a CLI interpreter run. The browser and the VS Code worker also enforce source, output and time limits. A native executable has ordinary process and system limits. These modes can differ for a very long or deeply recursive computation."
+            }
+        ],
+        "exercise": {
+            "prompt": "Choose the commands for a script that first checks the syntax of main.blyx, then runs it with a budget of 500 steps.",
+            "hint": "Check the exit status before starting the second command.",
+            "answer": "Use blyxc check main.blyx, followed on success by blyxc run main.blyx --max-steps 500. A parser success does not guarantee that execution will finish within the budget."
+        }
     },
     {
         "slug": "compatibility",
-        "title": "Release capabilities",
-        "group": "Reference",
-        "summary": "Check which Blyx features you can use in 0.2.0 and where their limits lie.",
+        "title": "What Blyx 0.2.0 can run",
+        "group": "Language reference",
+        "summary": "Choose an execution mode and identify features that are still being developed.",
         "example": null,
         "sections": [
             {
-                "heading": "Available in the interpreter",
-                "text": "Functions, lexical scopes, bindings, assignment, conditionals, while, loop, break, continue and print macros run today. Numeric operations include checked integers, f64 arithmetic, vector literals, len, at, sum and dot."
+                "heading": "Choose an execution mode",
+                "text": "Use the CLI interpreter or browser for immediate feedback. Use a native build to distribute a supported typed program to a compatible host. The editor and playground run the interpreter compiled to WebAssembly.",
+                "table": {
+                    "columns": [
+                        "Mode",
+                        "Inputs and requirements",
+                        "Limits to account for"
+                    ],
+                    "rows": [
+                        [
+                            "Browser or desktop extension",
+                            "A complete source buffer with fn main()",
+                            "256 KiB source, 64 KiB output and an eight-second worker deadline."
+                        ],
+                        [
+                            "CLI interpreter",
+                            "A .blyx file and the blyxc executable",
+                            "Default one million evaluation steps and at most 64 simultaneous calls."
+                        ],
+                        [
+                            "Native build",
+                            "A supported typed program, rustc and a host linker",
+                            "The generated program runs with system resources; interpreter step and call budgets do not apply."
+                        ]
+                    ]
+                }
             },
             {
-                "heading": "Native subset",
-                "text": "The build path supports synchronous, non-generic functions and the documented scalar and vector types. Type annotations affect native builds. The tree-walking interpreter performs runtime value-kind checks."
+                "heading": "Supported execution",
+                "text": "The teaching examples use synchronous functions, scoped bindings, mutation, scalar arithmetic, comparisons, branching, loops, recursion, numeric vectors, and print macros. The language has its own lexer, parser and interpreter. The native backend lowers the supported subset to Rust before compiling."
             },
             {
-                "heading": "Under development",
-                "text": "Async execution, GPU kernels, actor scheduling, module imports, external packages, model serving, ownership checking and a general-purpose tensor runtime remain development work. Applications that depend on those features need another implementation path today."
+                "heading": "Features under development",
+                "text": "The released execution paths do not currently implement general module imports, external Blyx package installation, a general-purpose tensor runtime, async tasks, GPU kernels, actor scheduling or model serving. Some repository examples and design documents explore these areas. Use the tested course examples when learning the release. The current interpreter also lacks for/range loops, general collections, file input, structs and ownership checking. blyxc check validates syntax. The interpreter checks value kinds as it executes. Native builds also validate the translated types during compilation."
             },
             {
-                "heading": "Performance measurements",
-                "text": "The project publishes the source, raw sample timings and environment for its Fibonacci command-line benchmark. Comparing different workloads requires measuring them separately."
+                "heading": "Interpret a benchmark",
+                "text": "Measure the same workload, input size and output across the implementations you compare. Separate startup costs from computational work when they answer different questions. The project’s published Fibonacci benchmark includes startup and reports its machine, raw samples and methodology."
             }
-        ]
+        ],
+        "exercise": {
+            "prompt": "Decide how to deliver a small numeric utility to a colleague who has no compiler installed. What do you need on each machine?",
+            "hint": "Distinguish the machine doing the build from the machine running the result.",
+            "answer": "On a suitable build host use blyxc, rustc and a linker to build the typed source. Deliver the executable for your colleague’s compatible OS and architecture. Try a small known input on the destination machine."
+        }
     }
 ]

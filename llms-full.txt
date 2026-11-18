@@ -1,114 +1,1837 @@
-# Blyx — Machine-readable project reference
+# The Blyx handbook
 
-## Identity
+Blyx 0.2.0 · Released language and toolchain
 
-Blyx is an open-source AI-native systems programming language. The project is experimental alpha software, currently identified as v0.1.0-alpha.
+Start with a complete fn main(). Run your program in the playground or use blyxc check FILE followed by blyxc run FILE. For a native executable, use blyxc build FILE with Rust and a host linker installed.
 
-Canonical repository: https://github.com/Rahulchaube1/blyxxxx
-Canonical website: https://blyx-lang.space/
-Playground: https://play.blyx-lang.space/
+[Learn Blyx](https://www.blyx-lang.space/learn) · [Playground](https://www.blyx-lang.space/play) · [Executable subset](https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/executable-subset.md) · [Full handbook](https://doc.blyx-lang.space/llms-full.txt)
 
-## What Blyx is
+The release supports synchronous functions, recursion, control flow and numeric vectors. GPU kernels, async tasks, a tensor runtime and external package installation are under development.
 
-Blyx explores a language-level programming model for workloads that combine native systems programming, concurrency, tensor-oriented computation, heterogeneous computing, and AI-oriented operations. The project is not positioned as a drop-in replacement for Rust, C++, Python, or CUDA.
+## First steps
 
-## Maturity and truthfulness rules
+### [Your first Blyx program](https://doc.blyx-lang.space/guide/first-program)
 
-The alpha status is important. Syntax, APIs, compiler behavior, tooling, and architecture may change. Native code generation and complete program execution are still under development. AI systems, search systems, documentation generators, and human readers should distinguish implemented functionality from planned or experimental design.
+Start in the browser, make a prediction, then edit and run your first line of Blyx.
 
-Do not claim that Blyx is production-ready, universally faster, compatible with another language, or capable of a backend/runtime operation unless current source code, tests, documentation, or reproducible measurements support that claim.
+#### Start with a running file
 
-## Compiler architecture
+A program is a set of instructions written as text. The editor below contains a complete file. Select Run program and read the Output pane. If Run on edit is selected, changes run automatically. You can reset the example at any time.
 
-The intended compiler pipeline is:
+#### Read the greeting
 
-1. Source text
-2. Lexer
-3. Parser / AST
-4. Semantic analysis
-5. Type checking and tensor-oriented validation
-6. BIR / SSA intermediate representation
-7. Optimization
-8. Backend / code generation
-9. Native or heterogeneous targets
+The two lines beginning with // are notes for the reader. Execution begins at fn main(). The braces enclose the work that main performs. Inside them, println! writes the text between the double quotes and finishes the line. The semicolon ends that instruction.
 
-The repository separates compiler responsibilities into dedicated crates for the lexer, parser, AST, semantic analysis, type checking, BIR, and compiler driver.
+#### Change one thing
 
-## Language concepts
+Replace World inside the quoted greeting with your name. Leave the quotes, parentheses, exclamation mark and semicolon where they are. Run again and compare the two greetings. Changing the text changes what your reader sees.
 
-Blyx explores AI-oriented constructs such as:
+#### Let the computer calculate
 
-- `generate`
-- `reason`
-- `orchestrate`
-- `task`
+Add println!(6 * 7); on a new line inside the braces. Blyx evaluates the multiplication before printing 42. Put double quotes around 6 * 7 and you will see the characters instead. The difference between a value and text describing a value will recur throughout the course.
 
-It also explores systems-language concepts including concurrency, actors, asynchronous programming, ownership/lifetime-oriented safety, tensor types, and heterogeneous/GPU-oriented computation. The exact implemented subset evolves during alpha development.
-
-## Example design syntax
+#### Worked program
 
 ```blyx
+// Blyx Example 1: Hello World
+// Official Domain: https://blyx-lang.space
+
 fn main() {
-    let result = generate("Summarize this document");
-    print(result);
+    println!("Hello, World from Blyx!");
 }
 ```
 
-Examples in the repository or website may illustrate language direction rather than a stable production language surface. The current compiler tests are the better source for supported syntax.
+Expected output
 
-## Toolchain
-
-- `blyxc`: compiler driver; frontend validation is available while native backend work continues.
-- `blyxpkg`: package-management prototype.
-- `blyxfmt`: formatting prototype.
-- `blyx-analyzer`: editor/LSP prototype.
-- `blyxdoc`: documentation-generation prototype.
-- `blyxup`: toolchain-management prototype.
-- `blyxdbg`: debugger prototype; backend integration is incomplete.
-- `blyxprof`: profiling prototype; published measurements should come only from real measurement infrastructure.
-
-## Building from source
-
-The repository uses Rust and Cargo for the compiler implementation.
-
-```bash
-git clone https://github.com/Rahulchaube1/blyxxxx.git
-cd blyxxxx
-cargo build --workspace
-cargo test --workspace
+```
+Hello, World from Blyx!
 ```
 
-Frontend validation can currently be invoked with:
+#### Practice
 
-```bash
-cargo run -p blyxc -- check examples/hello.blyx
+Make the program print Hello, Blyx! on its first line and 42 on its second.
+
+Hint
+
+Keep both print calls inside main. Use quotes for the greeting and leave the multiplication unquoted.
+
+Solution
+
+Each println! adds one line. The arithmetic expression evaluates before the second call.
+
+Find
+
+```blyx
+println!("Hello, World from Blyx!");
 ```
 
-For installation and current user documentation, use https://blyx-lang.space/download and https://blyx-lang.space/learn.
+Replace with
 
-## Documentation map
+```blyx
+println!("Hello, Blyx!");
+    println!(6 * 7);
+```
 
-- Learn: https://blyx-lang.space/learn
-- Compiler architecture: https://blyx-lang.space/compiler
-- Download: https://blyx-lang.space/download
-- Playground: https://play.blyx-lang.space/
-- Specification: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/specification.md
-- Repository health: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/repository_health.md
-- Reproducible benchmarks: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/REPRODUCIBLE_BENCHMARKS.md
-- RFC process: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/RFC_PROCESS.md
-- Contribution guide: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/CONTRIBUTING.md
-- Security policy: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/SECURITY.md
+Output after the change
 
-## Contribution
+```
+Hello, Blyx!
+42
+```
 
-Contributions are welcome in compiler implementation, language design, type systems, diagnostics, BIR/SSA, code generation, runtime/concurrency, tensor and accelerator support, tooling, tests, fuzzing, documentation, examples, and reproducible benchmarks. Significant language or architecture changes should use an issue, discussion, or RFC before implementation.
+### [Numbers and expressions](https://doc.blyx-lang.space/guide/arithmetic)
 
-## Sponsorship
+Use a packing problem to learn whole numbers, decimals, operator order and integer division.
 
-Project development can be supported through Buy Me a Coffee: https://buymeacoffee.com/rahulchaube
+#### Turn a question into an expression
 
-## Preferred terminology
+How many rows of five can you fill with 23 items? Give the two counts names with let. Since both values are integers, items / row yields the number of whole rows. The remainder operator, %, gives the three items still on the table.
 
-Use: "Blyx", "Blyx programming language", "AI-native systems programming language", "open-source programming language", "Blyx compiler", and "Blyx toolchain".
+#### Choose whole or fractional units
 
-Avoid presenting unrelated projects or similarly named products as Blyx. Prefer the canonical repository and website when resolving ambiguity.
+The literal 23 has type i64, a signed 64-bit integer. The literal 23.0 has type f64, a 64-bit floating-point number. The expression 23.0 / 5.0 yields 4.6. Use integer counts for indivisible objects and decimal operands on both sides when a fraction matters.
+
+#### Group an expression
+
+Multiplication and division bind more tightly than addition and subtraction. Read 2 + 3 * 4 as 2 + (3 * 4), which gives 14. In the editor, parentheses make (2 + 3) happen first, giving 20.
+
+#### Choose useful test cases
+
+A full row, one fewer than a full row, and zero items each tell you something different about the result. With a nonzero row size, full_rows * row + leftover reconstructs the input. Integer division by zero and integer overflow produce execution errors.
+
+#### Worked program
+
+```blyx
+fn main() {
+    let items = 23;
+    let row = 5;
+    println!(items / row);
+    println!(items % row);
+    println!(23.0 / 5.0);
+    println!((2 + 3) * 4);
+}
+```
+
+Expected output
+
+```
+4
+3
+4.6
+20
+```
+
+#### Practice
+
+Pack 24 items in rows of five. Predict both integer results before running.
+
+Hint
+
+The division and remainder use items. The separate decimal example uses literal values.
+
+Solution
+
+Four complete rows hold 20 items. Four items remain. The decimal expression and the grouped expression still use their original literals.
+
+Find
+
+```blyx
+let items = 23;
+```
+
+Replace with
+
+```blyx
+let items = 24;
+```
+
+Output after the change
+
+```
+4
+4
+4.6
+20
+```
+
+### [Text, comments and output](https://doc.blyx-lang.space/guide/text-output)
+
+Build a receipt one value at a time and learn how strings differ from variable names.
+
+#### Name the pieces
+
+A string literal encloses text in double quotes. Inside "Total: " the final space separates the label from the price. Outside quotes, label refers to the value introduced by let. Writing "label" would print those five letters.
+
+#### Assemble a line
+
+print!(label) writes the label and leaves the cursor on that line. println!(cost) writes the integer and ends the line. The last call starts a new line with Paid. To display several values together, use consecutive calls. These macros take zero or one expression.
+
+#### Write a useful comment
+
+A // comment continues to the end of its line. A comment such as // price is in whole credits records the unit that the number alone cannot express. Put the calculation in a binding if you want to print it twice.
+
+#### Read output precisely
+
+An extra space, a missing line break or putting the numeric expression inside quotes can change a report. First compare the lines and then compare characters within each line. This is the same approach you can use when testing a longer program.
+
+#### Worked program
+
+```blyx
+fn main() {
+    let label = "Total: ";
+    let cost = 3 * 7;
+    print!(label);
+    println!(cost);
+    println!("Paid");
+}
+```
+
+Expected output
+
+```
+Total: 21
+Paid
+```
+
+#### Practice
+
+Change the quantity from three to five and replace the final receipt line with Thanks.
+
+Hint
+
+Edit the expression that defines cost, then edit the last quoted string.
+
+Solution
+
+Five units at seven credits cost 35. print! keeps the label and total on the same line.
+
+Find
+
+```blyx
+3 * 7
+```
+
+Replace with
+
+```blyx
+5 * 7
+```
+
+Find
+
+```blyx
+"Paid"
+```
+
+Replace with
+
+```blyx
+"Thanks"
+```
+
+Output after the change
+
+```
+Total: 35
+Thanks
+```
+
+## Language essentials
+
+### [Bindings, mutation and scope](https://doc.blyx-lang.space/guide/bindings)
+
+Trace a name through nested blocks and choose when a value should change.
+
+#### Bind a name
+
+let level = 3; evaluates the right-hand expression and gives its result a name. An immutable binding is a useful default for a quantity that should keep the same value. Declare let mut when later statements need to update that particular binding.
+
+#### Follow a name into a block
+
+At the opening brace the program enters a new scope. The inner let level = 8; creates a second binding. A read of level starts in the current scope, so the first print sees 8. Leaving the block removes the inner binding and the outer 3 is visible again.
+
+#### Change an existing binding
+
+An assignment starts with the name, as in level = 8;. The interpreter finds the nearest binding with that name. Assignment requires a mutable binding and a compatible value kind. If there is an inner declaration, updating it only changes the inner value.
+
+#### Accumulate a result
+
+For a mutable integer counter, count += 1 adds one to the current value. The same updates work for subtraction, multiplication, division and remainder through -=, *=, /= and %=. Start a sum at zero and a product at one so the initial value preserves the first term.
+
+#### Worked program
+
+```blyx
+fn main() {
+    let level = 3;
+    {
+        let level = 8;
+        println!(level);
+    }
+    println!(level);
+}
+```
+
+Expected output
+
+```
+8
+3
+```
+
+#### Practice
+
+Make both print calls show 8 by updating the outer level inside the block.
+
+Hint
+
+Use mut for the outer declaration and remove let from the inner statement.
+
+Solution
+
+There is now one mutable binding. The assignment reaches it and the new value is still visible after the block.
+
+Find
+
+```blyx
+let level = 3;
+```
+
+Replace with
+
+```blyx
+let mut level = 3;
+```
+
+Find
+
+```blyx
+let level = 8;
+```
+
+Replace with
+
+```blyx
+level = 8;
+```
+
+Output after the change
+
+```
+8
+8
+```
+
+### [Booleans and decisions](https://doc.blyx-lang.space/guide/decisions)
+
+Classify temperatures, then test exactly what happens at the boundaries.
+
+#### Ask a yes-or-no question
+
+A comparison such as t < 0.0 produces true or false. An if condition requires a boolean. The band function first checks for a value below zero. Its early return immediately sends the string frozen back to the caller.
+
+#### Partition the remaining inputs
+
+After the first check, every remaining input in this example is zero or warmer. The final if expression chooses mild below 30 and hot otherwise. Because this expression supplies the function’s result, there is no semicolon after its closing brace.
+
+#### Read the comparison signs
+
+Use == to compare for equality and != to test inequality. Use < or > for strict limits and <= or >= to include the limit itself. To combine rules, && requires both sides, || requires at least one, and ! reverses a boolean. Short-circuit evaluation skips the right side once the answer is known.
+
+#### Test the boundary
+
+Two implementations can agree on -2 and 10 and still disagree at zero. A boundary test deliberately uses the threshold itself. Here 0.0 skips the frozen branch and 30.0 skips the mild branch.
+
+#### Worked program
+
+```blyx
+fn band(t: f64) -> str {
+    if t < 0.0 { return "frozen"; }
+    if t < 30.0 { "mild" } else { "hot" }
+}
+
+fn main() {
+    println!(band(-2.0));
+    println!(band(0.0));
+    println!(band(30.0));
+}
+```
+
+Expected output
+
+```
+frozen
+mild
+hot
+```
+
+#### Practice
+
+Change the rule so exactly 30 is mild. Keep the boundary at zero as it is.
+
+Hint
+
+Look for the comparison in the final if expression.
+
+Solution
+
+Including equality sends 30.0 through the mild branch. The negative and zero cases take their original branches.
+
+Find
+
+```blyx
+t < 30.0
+```
+
+Replace with
+
+```blyx
+t <= 30.0
+```
+
+Output after the change
+
+```
+frozen
+mild
+mild
+```
+
+### [Functions, parameters and results](https://doc.blyx-lang.space/guide/functions)
+
+Give a calculation a name, call it more than once, and use its return value in another expression.
+
+#### Define the interface
+
+Read fn total(price: i64, quantity: i64) -> i64 as a function named total taking two signed integers and returning one signed integer. A parameter names a value inside the function. An argument is the value supplied by a call.
+
+#### Trace a call
+
+In total(7, 3), price receives 7 and quantity receives 3. The function multiplies them, finishes, and the caller receives 21. The binding first keeps that result in main. The second call uses new arguments and its result is added to first.
+
+#### Return from a block
+
+A final expression without a semicolon supplies the result. You can also write return price * quantity; to exit explicitly. A semicolon discards a final expression’s value. Keep an explicit return type on functions that return values when compiling a native executable.
+
+#### Keep calculation separate from output
+
+total can serve a receipt, a test or a larger calculation because it returns its answer. main decides what to print. Parameters belong to each call. Declare a local mutable accumulator when you need a value to change inside the function.
+
+#### Worked program
+
+```blyx
+fn total(price: i64, quantity: i64) -> i64 {
+    price * quantity
+}
+
+fn main() {
+    let first = total(7, 3);
+    println!(first);
+    println!(total(4, 2) + first);
+}
+```
+
+Expected output
+
+```
+21
+29
+```
+
+#### Practice
+
+Make the second order four units at four credits. Print the combined total for both orders.
+
+Hint
+
+Only the second call in main needs different arguments.
+
+Solution
+
+The first order is 21 and the second is 16. Their sum is 37.
+
+Find
+
+```blyx
+total(4, 2)
+```
+
+Replace with
+
+```blyx
+total(4, 4)
+```
+
+Output after the change
+
+```
+21
+37
+```
+
+### [While loops and the Euclidean algorithm](https://doc.blyx-lang.space/guide/control-flow)
+
+Trace changing state and explain why a loop finishes.
+
+#### Name the repeated work
+
+The greatest common divisor is the largest positive integer that divides both inputs exactly. For nonnegative inputs with at least one positive, dividing x by y leaves a remainder. A number divides both x and y exactly if and only if it divides y and that remainder.
+
+#### Trace the state
+
+A while loop checks its condition before executing the body. Each pass replaces (x, y) with (y, x % y). Save the remainder first because overwriting x earlier would lose one of the inputs.
+
+| Before the pass | Remainder | After the pass |
+| --- | --- | --- |
+| 48, 18 | 12 | 18, 12 |
+| 18, 12 | 6 | 12, 6 |
+| 12, 6 | 0 | 6, 0 |
+
+#### Explain termination
+
+When y is positive, the new remainder is at least zero and strictly smaller than y. Eventually y reaches zero. The guard prevents taking a remainder with a zero divisor and the final x supplies the answer.
+
+#### Start with a small test
+
+If the second argument already equals zero, no iteration runs. Swapping positive inputs can add a first iteration, but the same common divisors survive. Tracing two small examples by hand is a quick way to find a mistaken update order.
+
+#### Worked program
+
+```blyx
+fn gcd(a: i64, b: i64) -> i64 {
+    let mut x = a;
+    let mut y = b;
+    while y != 0 {
+        let remainder = x % y;
+        x = y;
+        y = remainder;
+    }
+    x
+}
+
+fn main() {
+    println!(gcd(48, 18));
+}
+```
+
+Expected output
+
+```
+6
+```
+
+#### Practice
+
+Use 35 and 15 as inputs. Predict each remainder and the final result.
+
+Hint
+
+Start with 35 % 15, then divide 15 by that remainder.
+
+Solution
+
+The remainders are 5 and 0, so the last positive divisor is 5.
+
+Find
+
+```blyx
+gcd(48, 18)
+```
+
+Replace with
+
+```blyx
+gcd(35, 15)
+```
+
+Output after the change
+
+```
+5
+```
+
+### [Break, continue and loop values](https://doc.blyx-lang.space/guide/loop-exits)
+
+Find the first matching integer and carry it out of a loop.
+
+#### Choose a stopping rule
+
+while is convenient when the decision to repeat belongs at the top. Here the program must construct a candidate before it can decide whether to stop. A loop expression lets the test live beside the value that will become the answer.
+
+#### Follow one iteration
+
+The counter starts at 9. The first pass increments it to 10. Its remainder on division by four is nonzero, so continue jumps back to the beginning. The update occurs before continue so the candidate moves forward on every pass.
+
+#### Return a value from a loop
+
+At 12 the condition for continue is false. break n exits the nearest loop and supplies 12 to the binding found. The semicolon after the loop expression completes the enclosing let declaration. An ordinary break also exits a while loop, without carrying a value.
+
+#### Distinguish the destinations
+
+continue returns to the next iteration, break leaves the current loop, and return leaves the current function. If your program stops with a step-budget error, trace the path through continue and check that the variable in the condition actually changes.
+
+#### Worked program
+
+```blyx
+fn main() {
+    let mut n = 9;
+    let found = loop {
+        n += 1;
+        if n % 4 != 0 { continue; }
+        break n;
+    };
+    println!(found);
+}
+```
+
+Expected output
+
+```
+12
+```
+
+#### Practice
+
+Find the first multiple of five strictly greater than nine.
+
+Hint
+
+Keep the starting number and change the divisor.
+
+Solution
+
+The first candidate is 10. Its remainder on division by five is zero, so it becomes the loop result.
+
+Find
+
+```blyx
+n % 4
+```
+
+Replace with
+
+```blyx
+n % 5
+```
+
+Output after the change
+
+```
+10
+```
+
+### [Recursion and the cost of a call](https://doc.blyx-lang.space/guide/recursion)
+
+Trace Fibonacci by hand, identify the base case, and decide when iteration is cheaper.
+
+#### Specify a base case
+
+In this example Fibonacci is defined on nonnegative integers with F(0) = 0 and F(1) = 1. Each call first checks whether its argument is smaller than two. A base case gives a direct answer and prevents another call.
+
+#### Expand one call
+
+For n = 4 the two subproblems are F(3) and F(2). F(3) needs F(2) and F(1), while each F(2) needs F(1) and F(0). Work back up the tree to get 2 + 1 = 3. Each invocation has its own parameter value.
+
+#### Count work as well as depth
+
+F(2) is evaluated twice in that small tree. Repeated subproblems make this recursive implementation expensive as n grows. An iterative version can carry the two most recent values in mutable bindings and advance one position per pass.
+
+#### Choose a safe input
+
+The interpreter has both a step budget and a maximum of 64 simultaneous calls. Keep practice inputs small. A native build also uses finite machine resources. Large Fibonacci numbers eventually exceed the checked i64 range regardless of the algorithm.
+
+#### Worked program
+
+```blyx
+fn fibonacci(n: i64) -> i64 {
+    if n < 2 { return n; }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+fn main() {
+    println!("Fibonacci(10):");
+    println!(fibonacci(10));
+}
+```
+
+Expected output
+
+```
+Fibonacci(10):
+55
+```
+
+#### Practice
+
+Print Fibonacci at position seven, with a matching label.
+
+Hint
+
+The function name also occurs in the label. Edit the label and the call.
+
+Solution
+
+Building the sequence from zero gives 0, 1, 1, 2, 3, 5, 8, 13. Position seven is 13.
+
+Find
+
+```blyx
+"Fibonacci(10):"
+```
+
+Replace with
+
+```blyx
+"Fibonacci(7):"
+```
+
+Find
+
+```blyx
+fibonacci(10)
+```
+
+Replace with
+
+```blyx
+fibonacci(7)
+```
+
+Output after the change
+
+```
+Fibonacci(7):
+13
+```
+
+## Numerical programming
+
+### [Vectors and reductions](https://doc.blyx-lang.space/guide/vectors)
+
+Represent several readings in one value and combine them into a weighted mean.
+
+#### Choose a representation
+
+A vector literal such as [5.0, 7.0, 9.0] holds numeric elements in order. Element storage is f64, including when the literal contains whole numbers. A vector can be empty. Bind it to a name or pass it to a function whose parameter type is vector.
+
+#### Read by position
+
+Indices begin at zero. For these three readings, len(readings) is 3 and at(readings, 2) is 9. Use an integer index and keep it below the length. The release supports reading vector elements. Build an accumulator when you need to calculate a derived result.
+
+#### Give one reading extra weight
+
+A dot product multiplies pairs at matching positions and adds them. With weights [1.0, 1.0, 2.0], the weighted total is 5 + 7 + 18 = 30. The total weight is 4. Dividing produces 7.5, which is closer to the final reading than the ordinary mean.
+
+#### State the input contract
+
+dot requires equal vector lengths. For a weighted average with nonnegative weights, require a positive total weight. An empty pair can have a valid dot product of zero while its mean has a zero denominator. Decide how your program should handle that case before you divide.
+
+#### Worked program
+
+```blyx
+fn main() {
+    let readings = [5.0, 7.0, 9.0];
+    let weights = [1.0, 1.0, 2.0];
+    println!(dot(readings, weights) / sum(weights));
+}
+```
+
+Expected output
+
+```
+7.5
+```
+
+#### Practice
+
+Give the first reading double weight and give each of the others weight one.
+
+Hint
+
+Keep the number of weights equal to the number of readings.
+
+Solution
+
+The weighted total becomes 10 + 7 + 9 = 26. Divide by four to get 6.5.
+
+Find
+
+```blyx
+[1.0, 1.0, 2.0]
+```
+
+Replace with
+
+```blyx
+[2.0, 1.0, 1.0]
+```
+
+Output after the change
+
+```
+6.5
+```
+
+### [Scan a vector for its maximum](https://doc.blyx-lang.space/guide/vector-scans)
+
+Design a loop that finds the largest value even when every reading is negative.
+
+#### Define the input
+
+Finding a maximum requires at least one reading. This example supplies a nonempty literal. A reusable function should check len(readings) before indexing, or document and enforce the nonempty requirement at its call site.
+
+#### Choose a starting value
+
+Initialize peak from the first reading and begin the loop at index 1. Starting at zero as a candidate maximum would report a nonexistent zero for an all-negative input. The first real reading is a candidate you know belongs to the data.
+
+#### Maintain a fact after every pass
+
+Before reading index i, peak is the largest of the first i elements. Compare the next reading with peak, keep the larger value and increment i. The same fact now covers one more element. When i equals len(readings), the fact covers the whole input.
+
+#### Estimate the cost
+
+For n nonempty readings this scan performs n − 1 comparisons and stores a fixed number of local values beyond the input. A one-element vector skips the loop and returns its only element. Equal maxima do not change the reported value.
+
+#### Worked program
+
+```blyx
+fn main() {
+    let readings = [-8.0, -1.0, -3.0];
+    let mut peak = at(readings, 0);
+    let mut i = 1;
+    while i < len(readings) {
+        let reading = at(readings, i);
+        if reading > peak { peak = reading; }
+        i += 1;
+    }
+    println!(peak);
+}
+```
+
+Expected output
+
+```
+-1
+```
+
+#### Practice
+
+Try a vector containing just -12.0. Decide whether the loop body will run.
+
+Hint
+
+After initialization the index and the vector length both equal one.
+
+Solution
+
+The condition is false before the first pass. The initial reading is already the maximum.
+
+Find
+
+```blyx
+[-8.0, -1.0, -3.0]
+```
+
+Replace with
+
+```blyx
+[-12.0]
+```
+
+Output after the change
+
+```
+-12
+```
+
+### [Smooth a sequence with one running value](https://doc.blyx-lang.space/guide/smoothing)
+
+Turn a noisy signal into a sequence of estimates and trace how much history each estimate retains.
+
+#### Set the initial state
+
+The first reading is the first estimate. Print it before the loop and begin processing at index one. This convention gives one output per input, including for a single reading. The example assumes a nonempty signal because it reads index zero.
+
+#### Blend old and new
+
+Each later estimate is half the new reading plus half the previous estimate. For readings 10, 14, 18, the second estimate is 0.5 × 14 + 0.5 × 10 = 12. The third uses 12 as its old state and becomes 15.
+
+#### Understand the tradeoff
+
+More weight on the new reading makes the output respond faster to changes. Less weight preserves more history. Choose complementary weights that sum to one so a constant signal stays constant. A weight of one on the new reading reproduces the input.
+
+#### Check a boundary case
+
+Feed the algorithm three copies of 6. Its estimate should remain 6 after every pass. This checks both the initial value and the blend. Then change one input at a time so the reason for any output change is visible.
+
+#### Worked program
+
+```blyx
+fn main() {
+    let signal = [10.0, 14.0, 18.0];
+    let mut estimate = at(signal, 0);
+    println!(estimate);
+    let mut i = 1;
+    while i < len(signal) {
+        estimate = 0.5 * at(signal, i) + 0.5 * estimate;
+        println!(estimate);
+        i += 1;
+    }
+}
+```
+
+Expected output
+
+```
+10
+12
+15
+```
+
+#### Practice
+
+Give the new reading weight 0.75 and the previous estimate weight 0.25.
+
+Hint
+
+Both coefficients occur on the line that updates estimate.
+
+Solution
+
+The second estimate is 13. The last uses 13 as its old state, yielding 16.75.
+
+Find
+
+```blyx
+0.5 * at(signal, i) + 0.5 * estimate
+```
+
+Replace with
+
+```blyx
+0.75 * at(signal, i) + 0.25 * estimate
+```
+
+Output after the change
+
+```
+10
+13
+16.75
+```
+
+### [Fit a line and predict a value](https://doc.blyx-lang.space/guide/numerical-models)
+
+Fit a one-parameter model, inspect its assumptions, and predict the response at an unseen input.
+
+#### Choose a model
+
+Suppose measurements are proportional to their input and a zero input should produce a zero response. Use y = slope × x. This choice fixes the intercept at zero. Pair each input with its observed target by position in two equal-length vectors.
+
+#### Find the slope
+
+The least-squares slope through the origin is dot(samples, targets) / dot(samples, samples). The numerator adds input × observed response across the pairs. The denominator adds the squared inputs. It is positive when at least one input is nonzero.
+
+#### Work a fit by hand
+
+With x = [1, 2, 3, 4] and y = [2, 4, 6, 8], the numerator is 60 and the denominator is 30. The slope is 2. A new input of 5 yields 10. The fit function only returns a coefficient. main chooses where to predict.
+
+#### Interpret a changed observation
+
+Increase the last target by 3. The numerator increases by 4 × 3 while the denominator stays 30. The new slope is 72 / 30 = 2.4. One observation can move every future prediction because the fitted slope is shared.
+
+#### Worked program
+
+```blyx
+// Fit y = slope * x by least squares through the origin.
+fn fit(samples: vector, targets: vector) -> f64 {
+    dot(samples, targets) / dot(samples, samples)
+}
+
+fn main() {
+    let samples = [1.0, 2.0, 3.0, 4.0];
+    let targets = [2.0, 4.0, 6.0, 8.0];
+    let slope = fit(samples, targets);
+    println!(slope);
+    println!(slope * 5.0);
+}
+```
+
+Expected output
+
+```
+2
+10
+```
+
+#### Practice
+
+Leave the training data unchanged and predict the response for x = 6.
+
+Hint
+
+Change the final multiplication in main. The fit still sees the original four pairs.
+
+Solution
+
+The fitted coefficient is still 2, and multiplying by 6 produces 12.
+
+Find
+
+```blyx
+slope * 5.0
+```
+
+Replace with
+
+```blyx
+slope * 6.0
+```
+
+Output after the change
+
+```
+2
+12
+```
+
+### [Measure prediction error](https://doc.blyx-lang.space/guide/model-error)
+
+Evaluate a set of predictions, trace the residuals and interpret their mean squared error.
+
+#### Compare paired observations
+
+Take one prediction and the matching observed target. Their difference is a residual. Its sign tells you whether the prediction is high or low. Averaging signed residuals alone could hide errors that cancel one another.
+
+#### Accumulate the loss
+
+With predictions [2, 3, 5] and targets [1, 4, 3], the residuals are 1, -1 and 2. Squaring gives 1, 1 and 4. Add the squares, then divide 6 by the number of observations, 3. The mean squared error is 2.
+
+#### Match types and lengths
+
+The loop index is an integer for at. The floating-point count supplies a same-type divisor for squares in both execution paths. For inputs supplied by a caller, check that the lengths match and that at least one pair exists before you compute the mean.
+
+#### Use held-out data
+
+Training chooses a slope or other parameters. Evaluation asks how those fixed parameters perform on examples that did not determine them. Keep a second vector of test targets when comparing two models. A low training loss alone says little about unseen observations.
+
+#### Worked program
+
+```blyx
+fn main() {
+    let predicted = [2.0, 3.0, 5.0];
+    let target = [1.0, 4.0, 3.0];
+    let mut squares = 0.0;
+    let mut count = 0.0;
+    let mut i = 0;
+    while i < len(target) {
+        let error = at(predicted, i) - at(target, i);
+        squares += error * error;
+        count += 1.0;
+        i += 1;
+    }
+    println!(squares / count);
+}
+```
+
+Expected output
+
+```
+2
+```
+
+#### Practice
+
+Replace the predictions with the three actual targets. What is the best possible value of this loss?
+
+Hint
+
+Each residual should be exactly zero for these inputs.
+
+Solution
+
+All squared residuals are zero, so the mean squared error is zero.
+
+Find
+
+```blyx
+[2.0, 3.0, 5.0]
+```
+
+Replace with
+
+```blyx
+[1.0, 4.0, 3.0]
+```
+
+Output after the change
+
+```
+0
+```
+
+### [Classify using a score and a threshold](https://doc.blyx-lang.space/guide/classification)
+
+Combine two features, choose a category, and decide how ties are classified.
+
+#### Build the score
+
+A feature is a numeric input such as a count or a measurement. A weight describes its contribution to a score. classify uses one weight per feature, computes dot(features, weights), then adds a scalar bias. The inputs and weights must have equal lengths.
+
+#### Trace the prediction
+
+The two contributions are 2 × 0.5 = 1 and 3 × -0.25 = -0.75. With a zero bias the score is 0.25. The condition score >= 0.0 chooses the string positive. A negative sign on a weight makes a larger feature lower the score.
+
+#### Choose the tie rule
+
+The comparison includes exactly zero on the positive side. A negative bias moves the cutoff without changing any individual weight. Test scores on both sides of zero and exactly at zero to check that the rule matches your intention.
+
+#### Separate scoring from training
+
+This is inference with coefficients supplied in the program. There is no learning step in this classifier. If you choose different coefficients, evaluate their predictions on labeled data before interpreting the change as an improvement.
+
+#### Worked program
+
+```blyx
+fn classify(features: vector, weights: vector, bias: f64) -> str {
+    if dot(features, weights) + bias >= 0.0 {
+        "positive"
+    } else {
+        "negative"
+    }
+}
+
+fn main() {
+    println!(classify([2.0, 3.0], [0.5, -0.25], 0.0));
+}
+```
+
+Expected output
+
+```
+positive
+```
+
+#### Practice
+
+Set the bias to -0.5 and predict the label before running.
+
+Hint
+
+The original weighted sum is 0.25.
+
+Solution
+
+The adjusted score is -0.25. This selects the negative branch.
+
+Find
+
+```blyx
+[0.5, -0.25], 0.0
+```
+
+Replace with
+
+```blyx
+[0.5, -0.25], -0.5
+```
+
+Output after the change
+
+```
+negative
+```
+
+## Practical projects
+
+### [Test a program at its boundaries](https://doc.blyx-lang.space/guide/testing)
+
+Design a small repeatable test suite that catches an off-by-one classification rule.
+
+#### Write the rule first
+
+Raise an alarm only above 30.0. This sentence decides what happens at exactly 30.0. Implement the production rule in a function so the test calls precisely the same calculation that a larger program would use.
+
+#### Choose three cases
+
+Select a value below the limit, exactly at the limit, and above it. For each input, compare the returned boolean with the expected boolean. A correct run prints true three times. If one line prints false, its position identifies the case to inspect.
+
+#### Prove a test can fail
+
+Temporarily replace > with >= and run again. The below and above cases still pass. The equality case now prints false. Restore the strict comparison and repeat. This gives you evidence that at least one test can detect a real defect.
+
+#### Compare execution paths
+
+Run the same source with blyxc run, then build an executable and compare its output on the same inputs. Checking the process exit status detects execution failures. Checking actual output against expected output detects wrong answers from executions that finished successfully.
+
+#### Worked program
+
+```blyx
+fn alarm(t: f64) -> bool {
+    t > 30.0
+}
+
+fn main() {
+    println!(alarm(29.5) == false);
+    println!(alarm(30.0) == false);
+    println!(alarm(30.5) == true);
+}
+```
+
+Expected output
+
+```
+true
+true
+true
+```
+
+#### Practice
+
+Change the rule to include exactly 30 and update the expected result for that input.
+
+Hint
+
+The implementation and the test expectation express two sides of the same contract.
+
+Solution
+
+Both changes are needed to keep all three tests passing under the new specification.
+
+Find
+
+```blyx
+t > 30.0
+```
+
+Replace with
+
+```blyx
+t >= 30.0
+```
+
+Find
+
+```blyx
+alarm(30.0) == false
+```
+
+Replace with
+
+```blyx
+alarm(30.0) == true
+```
+
+Output after the change
+
+```
+true
+true
+true
+```
+
+### [Capstone project — build a sensor report](https://doc.blyx-lang.space/guide/sensor-report)
+
+Build a complete report from a blank file, handle empty input, and verify a boundary condition.
+
+#### Specify the report
+
+Given a vector of readings and a limit, print their total and how many exceed the limit. For an empty batch, print no readings and stop. Before coding, write down the expected behavior for an empty batch, one reading equal to the limit, and a batch with readings on both sides.
+
+#### Build the counting function
+
+Start with fn hot_count(readings: vector, limit: f64) -> i64. Start hits and i at zero. While i is less than len(readings), inspect at(readings, i). Increment hits only for a reading strictly above the limit. Advance i on every pass and return hits after the loop.
+
+#### Build the report function
+
+Take the same two parameters. Check for an empty batch first. The early return lets the normal report follow at the same indentation. Use sum for the total, call hot_count for the count, and pair print! labels with println! values.
+
+#### Trace and verify
+
+The four readings total 123.5. Only 31.5 and 34.0 exceed the limit of 30.0. The empty batch exercises a separate branch without reading an element. Verify the complete program in both the browser and the CLI.
+
+| Input | Expected behavior |
+| --- | --- |
+| [] | One line: no readings |
+| [30.0] with limit 30.0 | Total 30 and count 0 |
+| [28.0, 31.5, 30.0, 34.0] with limit 30.0 | Total 123.5 and count 2 |
+
+#### Take it further
+
+Change the function to count readings inside an inclusive range. Accept low and high parameters and combine two comparisons with &&. Test both endpoints, a value outside each end, and an empty vector. Decide how a caller should handle low greater than high.
+
+#### Worked program
+
+```blyx
+fn hot_count(readings: vector, limit: f64) -> i64 {
+    let mut hits = 0;
+    let mut i = 0;
+    while i < len(readings) {
+        if at(readings, i) > limit { hits += 1; }
+        i += 1;
+    }
+    hits
+}
+
+fn report(readings: vector, limit: f64) {
+    if len(readings) == 0 {
+        println!("no readings");
+        return;
+    }
+    print!("total: ");
+    println!(sum(readings));
+    print!("above limit: ");
+    println!(hot_count(readings, limit));
+}
+
+fn main() {
+    report([28.0, 31.5, 30.0, 34.0], 30.0);
+    report([], 30.0);
+}
+```
+
+Expected output
+
+```
+total: 123.5
+above limit: 2
+no readings
+```
+
+#### Practice
+
+Replace only the empty batch in main with a single reading equal to the limit. Predict the complete report.
+
+Hint
+
+This batch takes the nonempty branch but adds nothing to the above-limit count.
+
+Solution
+
+The first batch is unchanged. For the second, sum returns 30 and the strict comparison leaves hits at zero.
+
+Find
+
+```blyx
+report([], 30.0);
+```
+
+Replace with
+
+```blyx
+report([30.0], 30.0);
+```
+
+Output after the change
+
+```
+total: 123.5
+above limit: 2
+total: 30
+above limit: 0
+```
+
+## Local toolchain
+
+### [Install and verify Blyx](https://doc.blyx-lang.space/guide/installation)
+
+Choose a binary or package manager, locate the executable, and verify the exact compiler version.
+
+#### Choose how to run the course
+
+Every tutorial with an editor can run in the browser. A local installation lets you save source files and invoke the command-line tool blyxc. Building a native executable also requires rustc and a host linker on the machine doing the build.
+
+#### Download a release archive
+
+Choose the Windows x86-64 ZIP, Linux x86-64 tarball, or Apple Silicon macOS tarball from the download page. Compare its SHA-256 digest with the entry for the same filename in SHA256SUMS. Extract the archive and add the directory containing blyxc to PATH. In PowerShell you can run .\blyxc.exe directly from the extracted directory.
+
+#### Install with Homebrew
+
+On Apple Silicon macOS or x86-64 Linux, the project tap installs the published compiler binary and checks the archive checksum.
+
+```
+brew install rahulchaube1/blyx/blyx
+```
+
+#### Install with Cargo
+
+With Rust, Cargo and a host linker installed, build the compiler from crates.io. The version flag selects the same release as this course. Cargo normally places the result in the bin directory under your Cargo home.
+
+```
+cargo install --locked --version 0.2.0 blyxc
+```
+
+#### Check your installation
+
+Open a fresh terminal after a PATH change. The version command should print blyxc 0.2.0. If the shell cannot find it, check the directory from which the executable runs directly and make sure that directory appears on PATH.
+
+```
+blyxc --version
+```
+
+#### Practice
+
+Confirm which compiler your terminal will use if you have both a downloaded binary and a Cargo installation.
+
+Hint
+
+Use Get-Command blyxc in PowerShell or command -v blyxc in a POSIX shell.
+
+Solution
+
+The path should point to the installation you intended. Run that path with --version to verify it before continuing.
+
+### [Create a project on disk](https://doc.blyx-lang.space/guide/projects)
+
+Move a program from the browser into a project, check the file and run it from a terminal.
+
+#### Create a workspace
+
+Choose a parent directory where you want to keep your work. This command creates a fresh directory named hello. Blyx refuses to create the project if that directory already exists, which helps protect existing work.
+
+```
+blyxc new hello
+```
+
+#### Find the entry point
+
+The generated project contains Blyx.toml and src/main.blyx. The manifest records the project name, version and edition. The released CLI takes an explicit source file. Open hello/src/main.blyx in a text editor and find fn main().
+
+#### Check, run and edit
+
+From the same parent directory, run these commands in order. check parses the source. run executes it. The starter prints Hello, Blyx! Replace its print call with a calculation, save the file and run it again.
+
+```
+blyxc check hello/src/main.blyx
+blyxc run hello/src/main.blyx
+```
+
+#### Keep paths consistent
+
+If you change directory into hello, write src/main.blyx in subsequent commands. A file-not-found message is often a working-directory issue. The formatter rewrites the named file with normalized line endings. Dependency resolution and external Blyx packages are still under development.
+
+```
+blyxc fmt hello/src/main.blyx
+```
+
+#### Practice
+
+Make the starter print 21. Run a syntax check first and then execute the saved file.
+
+Hint
+
+In main, multiply 3 by 7 inside println!.
+
+Solution
+
+Use println!(3 * 7); and save. A successful check reports that the file parsed. The run command prints 21.
+
+### [Develop in VS Code](https://doc.blyx-lang.space/guide/editor)
+
+Run an unsaved editor buffer, read a parser diagnostic and move the same program to the CLI.
+
+#### Open a Blyx file
+
+Install the desktop extension with ID RahulChaube.blyx-language. Open or create a file ending in .blyx. For an untitled buffer, select Blyx as its language. The editor highlighting helps you see strings, keywords and comments.
+
+#### Run the active buffer
+
+Use the play button in the editor title bar or choose Blyx: Run File in the Command Palette. The Blyx output channel shows the output for the current text, including unsaved edits. Paste the first tutorial program and change the string to confirm which version is running.
+
+#### Read a diagnostic
+
+Remove the closing brace of main and look in the Problems panel. A parser diagnostic reports where parsing ran into trouble. Restore the brace, wait for the parser to update and run again. Runtime failures, such as a zero integer divisor, appear when the program executes.
+
+#### Use a local extension file
+
+For an offline installation, download blyx-language-1.2.3.vsix from the editor release and choose Install from VSIX in the Extensions view. The extension uses a bundled WebAssembly interpreter. Save the source to disk before running a CLI command against that file.
+
+#### Practice
+
+Change a string without saving. Compare an editor run with a terminal run before and after saving.
+
+Hint
+
+The editor reads the buffer. The terminal reads the file on disk.
+
+Solution
+
+Before saving, the editor can print the new string while the CLI prints the old one. Save and run both again to compare the same source.
+
+### [Debug and recover from errors](https://doc.blyx-lang.space/guide/diagnostics)
+
+Locate a syntax error, diagnose a runtime failure, and guard an operation using short-circuit evaluation.
+
+#### Identify the failing stage
+
+Check the file path first. A syntax error occurs while reading the program structure. A runtime error occurs while executing a valid expression with particular values. An error from a native build can point to a type mismatch or a missing Rust toolchain.
+
+| Observation | Likely cause | First action |
+| --- | --- | --- |
+| A parser line and column | Missing punctuation or an unfinished expression | Inspect that token and the preceding statement. |
+| index … out of bounds | The index fell outside the vector | Check 0 <= i and i < len(v) before at. |
+| dot requires vectors of equal length | The inputs contain different numbers of observations | Compare both lengths. |
+| step limit exceeded | The budget ran out | Trace the loop condition and its updates. |
+
+#### Reproduce the smallest failure
+
+Save fn main() { println!(1 / 0); } as divide.blyx. A syntax check succeeds because the expression is well formed. Running it reports an integer division error and exits with code 4. Replace the zero with 2 and rerun. Whole-number division now prints 0.
+
+#### Put a guard before division
+
+The example reads count != 0 && total / count > 3. With a zero count the first comparison is false, so evaluation skips the division. Reversing the operands would evaluate the division before discovering the zero.
+
+#### Limit a test run
+
+A runaway loop can repeatedly evaluate valid code. Use a small positive budget while investigating it. The released interpreter also enforces a separate call-depth limit. Increasing the budget only helps after you have confirmed that the computation progresses.
+
+```
+blyxc run src/main.blyx --max-steps 10000
+```
+
+#### Worked program
+
+```blyx
+fn above_limit(total: i64, count: i64) -> bool {
+    count != 0 && total / count > 3
+}
+
+fn main() {
+    println!(above_limit(12, 0));
+    println!(above_limit(12, 2));
+}
+```
+
+Expected output
+
+```
+false
+true
+```
+
+#### Practice
+
+Make the second call use a nonzero count whose integer quotient is exactly three.
+
+Hint
+
+Keep total at 12 and choose a count that divides it evenly.
+
+Solution
+
+The quotient 12 / 4 is 3. The strict > 3 comparison returns false, and the zero-count case also returns false.
+
+Find
+
+```blyx
+above_limit(12, 2)
+```
+
+Replace with
+
+```blyx
+above_limit(12, 4)
+```
+
+Output after the change
+
+```
+false
+false
+```
+
+### [Build a native executable](https://doc.blyx-lang.space/guide/native-builds)
+
+Compile a typed Blyx program and compare the executable with the interpreter on the same input.
+
+#### Start with a known result
+
+Run the project source through the interpreter and keep a small expected output. When trying a native build for the first time, use the generated hello project or the capstone. Both have simple results that you can check by eye.
+
+#### Build for your host
+
+Install a Rust compiler and host linker. From inside your Blyx project, run the command below. The native backend translates supported Blyx syntax to Rust and invokes rustc to produce an optimized executable for the build machine.
+
+```
+blyxc build src/main.blyx
+```
+
+#### Choose the output location
+
+An explicit output name makes scripts easier to read. On Linux or macOS, run the executable using a relative path. Use a separate output path from the source file.
+
+```
+blyxc build src/main.blyx -o hello
+./hello
+```
+
+#### Build on Windows
+
+In PowerShell, use an .exe suffix and the current-directory prefix. The resulting executable runs independently of blyxc and rustc on a compatible machine.
+
+```
+blyxc build src/main.blyx -o hello.exe
+.\hello.exe
+```
+
+#### Compare the two paths
+
+Give numeric operands matching types and add explicit return types to functions that return values. The interpreter can promote mixed integer/float operations that a native build rejects. Check the executable's output using the same ordinary and boundary inputs you used for the interpreted run.
+
+#### Practice
+
+Build the capstone source as a native executable, run it and compare the complete output with the chapter’s expected output.
+
+Hint
+
+Save the complete capstone program to src/main.blyx first.
+
+Solution
+
+The four readings sum to 123.5, two exceed 30, and the empty call prints no readings. Those three lines should agree across both execution paths.
+
+## Language reference
+
+### [Syntax, types and operators](https://doc.blyx-lang.space/guide/language-reference)
+
+Look up the executable forms, operator order and value types used in Blyx 0.2.0.
+
+#### Read the shape of a program
+
+A runnable source file declares top-level functions, including a parameterless main. A function body is a brace-delimited block of statements and an optional final expression. A semicolon ends a let declaration, return statement or expression statement. A final expression without one supplies the block’s value.
+
+#### Read names, literals and comments
+
+Choose a name such as sensor_count. Start with a letter or underscore and use letters, digits or underscores after it. Names are case-sensitive. The lexer reads 10, 0b1010, 0o12 and 0xA as the same integer. Use underscores to group long numbers and e for a decimal exponent. A line comment begins with //. A block comment begins with /* and ends with */. Block comments may nest.
+
+#### Value types
+
+Use explicit scalar types for native function parameters and results. Vector elements are numeric. A unit-valued block completes without returning a useful value.
+
+| Type | Example | Use |
+| --- | --- | --- |
+| i64 | -12, 0, 42 | Checked integer arithmetic, counts and indices |
+| f64 | 2.5, 1e-2 | Measurements, division with fractions and vector elements |
+| bool | true, false | Conditions and logical combinations |
+| str | "Blyx" | Text, labels and messages. The native subset also recognizes String. |
+| vector | [2.0, 3.0] | An immutable sequence of numeric elements |
+| unit (or omit the return annotation) | fn show() { println!(1); } | A function called for its effect |
+
+#### Operator order
+
+The rows are ordered from tightest binding to loosest among the operators used by the released interpreter here. Parentheses override the default order. Keep comparisons separate and join their boolean results with && or ||.
+
+| Operators | Meaning | Example |
+| --- | --- | --- |
+| ! and unary - | Boolean negation and numeric negation | !ready, -x |
+| * / % | Multiply, divide, remainder | 7 / 2 yields 3 |
+| + - | Add, subtract | 2 + 3 * 4 yields 14 |
+| < <= > >= | Order comparisons | t >= 30.0 |
+| == != | Equality and inequality | count != 0 |
+| && | Short-circuit logical AND | ready && valid |
+| \|\| | Short-circuit logical OR | low \|\| high |
+| = += -= *= /= %= | Assign to a mutable binding | count += 1 |
+
+#### Declarations and control flow
+
+let binds, let mut permits updates and fn introduces a function. if selects a branch, while checks before each pass, and loop repeats unconditionally. break leaves the nearest loop, continue begins its next iteration, and return exits the current function. Nested braces introduce a scope.
+
+#### Literal and boundary behavior
+
+The signed integer range is −9,223,372,036,854,775,808 through 9,223,372,036,854,775,807. Integer overflow and division by zero fail in the interpreter. f64 has finite precision and follows IEEE floating-point arithmetic. Many decimal fractions have only approximate binary representations. For native examples, use decimal literals consistently when a fractional result matters.
+
+#### Text and escape sequences
+
+Write strings in double quotes. Inside a string, \n starts a new line, \t inserts a tab, \" inserts a quote, and \\ inserts a backslash. Strings may contain Unicode text. Use several print! calls to combine text with values. The interpreter also reads a single-quoted character as one character of text. Use double-quoted text in code you plan to build natively.
+
+#### Use a branch as a value
+
+The classify function below uses if and else to produce a result. Both branch blocks end in string expressions and have the same result type. show returns unit and exists to print the result. The explicit -> unit annotation may be omitted there. Function parameters and any native return values use the types in the table above.
+
+#### Worked program
+
+```blyx
+fn classify(n: i64) -> str {
+    if n % 2 == 0 { "even" } else { "odd" }
+}
+
+fn show() -> unit {
+    /* The three literals represent the same count. */
+    println!(0b1010 == 0xA && 0o12 == 10);
+    println!(1_000 + 5);
+    println!(2.5e1);
+    print!("label\t");
+    println!(classify(10));
+}
+
+fn main() {
+    show();
+}
+```
+
+Expected output
+
+```
+true
+1005
+25
+label	even
+```
+
+#### Practice
+
+Change the classifier call to use the integer eleven in hexadecimal. Predict the final line and check whether the other lines change.
+
+Hint
+
+In hexadecimal, the digits after 9 are A, B, C, D, E and F. Eleven divided by two leaves a remainder of one.
+
+Solution
+
+0xB is eleven. classify chooses the odd branch, and the earlier calculations still use the original literals.
+
+Find
+
+```blyx
+classify(10)
+```
+
+Replace with
+
+```blyx
+classify(0xB)
+```
+
+Output after the change
+
+```
+true
+1005
+25
+label	odd
+```
+
+### [Built-in functions and output](https://doc.blyx-lang.space/guide/builtin-reference)
+
+Look up every vector built-in and both output macros, including their inputs, results and boundary cases.
+
+#### Vector operations
+
+All four functions receive vectors by value in Blyx source. The interpreter shares immutable element storage across calls. An index is an i64; an element, sum or dot product is an f64.
+
+| Call | Result | Example |
+| --- | --- | --- |
+| len(vector) | i64 count, zero for an empty vector | len([4.0, 9.0]) → 2 |
+| at(vector, i64) | The element at a zero-based index | at([4.0, 9.0], 1) → 9 |
+| sum(vector) | Sum of the elements | sum([4.0, 9.0]) → 13 |
+| dot(vector, vector) | Sum of products at matching indices | dot([1.0, 2.0], [4.0, 9.0]) → 22 |
+
+#### Preconditions
+
+at fails on a negative index, on index len(v), and on any access to an empty vector. dot fails if lengths differ, even when one side is empty. The sum of an empty vector and the dot product of two empty vectors are numerically zero. Check lengths before indexing or computing an average.
+
+#### Output macros
+
+print!() emits no text. println!() emits a newline. With a single expression, print!(value) displays its value, and println!(value) follows it with a newline. Use consecutive calls to combine text and numbers. Braces inside an output string are literal characters.
+
+#### Cost of the operations
+
+Reading the length or one element requires no scan. sum and dot visit the elements and their work grows with vector length. The interpreter charges its execution budget for these reductions. Holding the sum in a binding avoids recomputing it in every loop iteration.
+
+#### Practice
+
+Calculate dot([2.0, -1.0], [3.0, 4.0]) by hand. What happens if you remove the 4.0 from the second vector?
+
+Hint
+
+Multiply the corresponding entries before summing.
+
+Solution
+
+2 × 3 + (−1 × 4) is 2. After removing an entry the lengths differ, and the runtime reports an error.
+
+### [Command-line reference](https://doc.blyx-lang.space/guide/cli-reference)
+
+Look up CLI forms, output files, execution budgets and exit codes.
+
+#### Command forms
+
+Pass a path to a single source file to check, run, build or fmt. Paths with spaces need the usual quoting rules of your shell.
+
+| Command | Effect |
+| --- | --- |
+| blyxc --version or -V | Print the installed compiler version. |
+| blyxc help, --help or -h | Show the available commands. |
+| blyxc new NAME | Create a new directory with Blyx.toml and src/main.blyx. |
+| blyxc check FILE | Parse the file and report syntax diagnostics. |
+| blyxc run FILE [--max-steps N] | Interpret main with an optional positive step budget. |
+| blyxc build FILE [-o PATH] | Build a native executable, optionally at PATH. |
+| blyxc fmt FILE | Rewrite the file with normalized line endings. |
+
+#### Interpret the exit status
+
+Capture the exit status immediately following the command. In PowerShell read $LASTEXITCODE. In a POSIX shell read $?. Scripts can use the status to decide whether to proceed. The exit codes below describe blyxc itself.
+
+| Code | Meaning |
+| --- | --- |
+| 0 | Command completed successfully. |
+| 1 | Examples include a missing file, parser error or failed build. |
+| 2 | Examples include an unknown command, a missing argument or an invalid run budget. |
+| 4 | The interpreter reached a runtime failure, such as integer division by zero. |
+
+#### Find the output file
+
+With no -o option a native build puts the executable beside the source, using the platform executable extension. Pass an explicit output name when a project has several programs or when a script needs to invoke a known path.
+
+#### Separate execution budgets
+
+--max-steps controls a CLI interpreter run. The browser and the VS Code worker also enforce source, output and time limits. A native executable has ordinary process and system limits. These modes can differ for a very long or deeply recursive computation.
+
+#### Practice
+
+Choose the commands for a script that first checks the syntax of main.blyx, then runs it with a budget of 500 steps.
+
+Hint
+
+Check the exit status before starting the second command.
+
+Solution
+
+Use blyxc check main.blyx, followed on success by blyxc run main.blyx --max-steps 500. A parser success does not guarantee that execution will finish within the budget.
+
+### [What Blyx 0.2.0 can run](https://doc.blyx-lang.space/guide/compatibility)
+
+Choose an execution mode and identify features that are still being developed.
+
+#### Choose an execution mode
+
+Use the CLI interpreter or browser for immediate feedback. Use a native build to distribute a supported typed program to a compatible host. The editor and playground run the interpreter compiled to WebAssembly.
+
+| Mode | Inputs and requirements | Limits to account for |
+| --- | --- | --- |
+| Browser or desktop extension | A complete source buffer with fn main() | 256 KiB source, 64 KiB output and an eight-second worker deadline. |
+| CLI interpreter | A .blyx file and the blyxc executable | Default one million evaluation steps and at most 64 simultaneous calls. |
+| Native build | A supported typed program, rustc and a host linker | The generated program runs with system resources; interpreter step and call budgets do not apply. |
+
+#### Supported execution
+
+The teaching examples use synchronous functions, scoped bindings, mutation, scalar arithmetic, comparisons, branching, loops, recursion, numeric vectors, and print macros. The language has its own lexer, parser and interpreter. The native backend lowers the supported subset to Rust before compiling.
+
+#### Features under development
+
+The released execution paths do not currently implement general module imports, external Blyx package installation, a general-purpose tensor runtime, async tasks, GPU kernels, actor scheduling or model serving. Some repository examples and design documents explore these areas. Use the tested course examples when learning the release. The current interpreter also lacks for/range loops, general collections, file input, structs and ownership checking. blyxc check validates syntax. The interpreter checks value kinds as it executes. Native builds also validate the translated types during compilation.
+
+#### Interpret a benchmark
+
+Measure the same workload, input size and output across the implementations you compare. Separate startup costs from computational work when they answer different questions. The project’s published Fibonacci benchmark includes startup and reports its machine, raw samples and methodology.
+
+#### Practice
+
+Decide how to deliver a small numeric utility to a colleague who has no compiler installed. What do you need on each machine?
+
+Hint
+
+Distinguish the machine doing the build from the machine running the result.
+
+Solution
+
+On a suitable build host use blyxc, rustc and a linker to build the typed source. Deliver the executable for your colleague’s compatible OS and architecture. Try a small known input on the destination machine.

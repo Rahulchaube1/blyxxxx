@@ -1,0 +1,10 @@
+fn band(t: f64) -> str {
+    if t < 0.0 { return "frozen"; }
+    if t < 30.0 { "mild" } else { "hot" }
+}
+
+fn main() {
+    println!(band(-2.0));
+    println!(band(0.0));
+    println!(band(30.0));
+}

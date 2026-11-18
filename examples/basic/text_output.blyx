@@ -1,0 +1,7 @@
+fn main() {
+    let label = "Total: ";
+    let cost = 3 * 7;
+    print!(label);
+    println!(cost);
+    println!("Paid");
+}

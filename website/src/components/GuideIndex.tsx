@@ -1,77 +1,130 @@
 "use client";
-import { useHydrated } from "@/lib/useHydrated";
 import { useState } from "react";
-import guides from "@/lib/guides.json";
-import { guideLink, docs } from "@/lib/site";
-export default function GuideIndex() {
+import { useHydrated } from "@/lib/useHydrated";
+import { guides, stages } from "@/lib/handbook";
+import { guideLink } from "@/lib/site";
+
+const entries = guides.map((guide) => ({
+    guide,
+    search: [
+        guide.title,
+        guide.group,
+        guide.summary,
+        guide.exercise.prompt,
+        ...guide.sections.flatMap((s) => [
+            s.heading,
+            s.text,
+            s.command,
+            ...(s.table?.rows.flat() ?? []),
+        ]),
+    ]
+        .join(" ")
+        .toLowerCase(),
+}));
+
+export default function GuideIndex({ course = false }: { course?: boolean }) {
     const ready = useHydrated();
     const [query, setQuery] = useState("");
-    const words = query.toLowerCase().trim().split(/\s+/);
-    const results = guides.filter((g) => {
-        const content = [
-            g.title,
-            g.summary,
-            g.group,
-            ...g.sections.map((s) => s.heading + " " + s.text),
-        ]
-            .join(" ")
-            .toLowerCase();
-        return words.every((w) => content.includes(w));
-    });
+    const words = query.trim().toLowerCase().split(/\s+/);
+    const results = entries.filter(({ search }) =>
+        words.every((word) => search.includes(word)),
+    );
     return (
         <main className="wrap">
             <header className="page-head">
                 <div className="crumb">Blyx 0.2.0</div>
-                <h1>Blyx documentation</h1>
+                <h1>{course ? "Learn Blyx" : "Blyx documentation"}</h1>
                 <p>
-                    Learn the language from a running program, then take it from
-                    your browser to a native executable.
+                    New to programming? Start with a greeting you can edit in
+                    your browser. Work through the chapters in order to build
+                    and test a sensor report, then compile a program on your own
+                    computer.
                 </p>
+                <div className="actions">
+                    <a className="button" href={guideLink("first-program")}>
+                        Write your first program →
+                    </a>
+                    <a
+                        className="button secondary"
+                        href={guideLink("language-reference")}
+                    >
+                        Language reference
+                    </a>
+                </div>
             </header>
             <div className="filters">
                 <label>
-                    Search documentation
+                    Search the handbook
                     <input
                         disabled={!ready}
                         type="search"
-                        placeholder="Search the guide"
+                        placeholder="Try recursion, dot, or --max-steps"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                     />
                 </label>
-                <span role="status">{results.length} guides</span>
+                <span role="status">
+                    {results.length}{" "}
+                    {results.length === 1 ? "chapter" : "chapters"}
+                </span>
             </div>
-            {Array.from(new Set(results.map((g) => g.group))).map((group) => (
-                <section className="block" key={group}>
-                    <div className="section-head">
-                        <h2>{group}</h2>
-                    </div>
-                    <div className="grid">
-                        {results
-                            .filter((g) => g.group === group)
-                            .map((g) => (
-                                <a
-                                    className="card card-link"
-                                    key={g.slug}
-                                    href={guideLink(g.slug)}
-                                >
-                                    <h3>{g.title}</h3>
-                                    <p>{g.summary}</p>
-                                    <span>Read guide â†’</span>
-                                </a>
-                            ))}
-                    </div>
-                </section>
-            ))}
-            {!results.length && (
-                <p className="empty">
-                    No guides match this search.{" "}
-                    <button onClick={() => setQuery("")}>Clear search</button>
-                </p>
-            )}
-            <p className="block">
-                <a href={docs + "/guide/print"}>Printable guide â†’</a>
-            </p>
+            <div className="course-index">
+                <nav className="course-sections" aria-label="Handbook sections">
+                    {stages
+                        .filter(([name]) =>
+                            results.some(({ guide }) => guide.group === name),
+                        )
+                        .map(([name]) => (
+                            <a
+                                key={name}
+                                href={
+                                    "#" +
+                                    name.toLowerCase().replaceAll(" ", "-")
+                                }
+                            >
+                                {name}
+                            </a>
+                        ))}
+                    <a href={guideLink("print")}>Printable handbook</a>
+                    <a href="/llms-full.txt">Plain-text handbook</a>
+                </nav>
+                <div>
+                    {stages.map(([name, description]) => {
+                        const matches = results.filter(
+                            ({ guide }) => guide.group === name,
+                        );
+                        if (!matches.length) return null;
+                        return (
+                            <section
+                                className="course-stage"
+                                key={name}
+                                id={name.toLowerCase().replaceAll(" ", "-")}
+                            >
+                                <h2>{name}</h2>
+                                <p>{description}</p>
+                                <ul>
+                                    {matches.map(({ guide }) => (
+                                        <li key={guide.slug}>
+                                            <a href={guideLink(guide.slug)}>
+                                                <strong>{guide.title}</strong>
+                                                <span>{guide.summary}</span>
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </section>
+                        );
+                    })}
+                    {!results.length && (
+                        <p className="empty">
+                            No chapters match this search.{" "}
+                            <button onClick={() => setQuery("")}>
+                                Clear search
+                            </button>
+                        </p>
+                    )}
+                </div>
+            </div>
         </main>
     );
 }

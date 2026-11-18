@@ -1,0 +1,25 @@
+fn hot_count(readings: vector, limit: f64) -> i64 {
+    let mut hits = 0;
+    let mut i = 0;
+    while i < len(readings) {
+        if at(readings, i) > limit { hits += 1; }
+        i += 1;
+    }
+    hits
+}
+
+fn report(readings: vector, limit: f64) {
+    if len(readings) == 0 {
+        println!("no readings");
+        return;
+    }
+    print!("total: ");
+    println!(sum(readings));
+    print!("above limit: ");
+    println!(hot_count(readings, limit));
+}
+
+fn main() {
+    report([28.0, 31.5, 30.0, 34.0], 30.0);
+    report([], 30.0);
+}

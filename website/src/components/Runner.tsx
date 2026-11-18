@@ -10,10 +10,12 @@ type Result = {
 export default function Runner({
     code,
     filename,
+    practiceOutput,
     checkOnly = false,
 }: {
     code: string;
     filename: string;
+    practiceOutput?: string;
     checkOnly?: boolean;
 }) {
     const ready = useHydrated();
@@ -147,6 +149,24 @@ export default function Runner({
                     <pre aria-label="Program output">{output}</pre>
                 </div>
             </div>
+            {practiceOutput !== undefined && state === "Finished" && (
+                <details className="lesson-disclosure">
+                    <summary>Check my practice output</summary>
+                    {output === practiceOutput ? (
+                        <p>This run prints the expected practice output.</p>
+                    ) : (
+                        <>
+                            <p>
+                                Compare your output above with the target below.
+                                Check the values, spaces and line breaks.
+                            </p>
+                            <pre aria-label="Practice target">
+                                {practiceOutput.trimEnd()}
+                            </pre>
+                        </>
+                    )}
+                </details>
+            )}
         </div>
     );
 }

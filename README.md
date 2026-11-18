@@ -6,6 +6,10 @@ Blyx is an experimental, open-source language for writing small numerical progra
 
 [Try the playground](https://www.blyx-lang.space/play) · [Read the language guide](https://doc.blyx-lang.space/) · [Download Blyx](https://www.blyx-lang.space/download) · [Project website](https://www.blyx-lang.space/)
 
+## Learn Blyx
+
+Start with a greeting you can run in your browser. The handbook takes you through decisions, functions, vectors, numerical models, tests, and a sensor-report project. Each chapter includes practice and a worked answer. [Begin the course](https://www.blyx-lang.space/learn) · [Build the sensor report](https://doc.blyx-lang.space/guide/sensor-report) · [Language reference](https://doc.blyx-lang.space/guide/language-reference) · [Plain-text handbook](https://doc.blyx-lang.space/llms-full.txt)
+
 ## Your first program
 
 Save this as `readings.blyx`. The last reading has twice the weight of either of the first two. `dot` computes the weighted total and `sum` computes the total weight.

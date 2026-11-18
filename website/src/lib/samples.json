@@ -106,5 +106,77 @@
         "file": "examples/basic/short_circuit.blyx",
         "expected": "false\ntrue\n",
         "code": "fn above_limit(total: i64, count: i64) -> bool {\n    count != 0 && total / count > 3\n}\n\nfn main() {\n    println!(above_limit(12, 0));\n    println!(above_limit(12, 2));\n}\n"
+    },
+    {
+        "id": "arithmetic",
+        "title": "Pack a crate",
+        "category": "Basics",
+        "description": "Use integer division and remainder to count full rows and leftover items.",
+        "file": "examples/basic/arithmetic.blyx",
+        "code": "fn main() {\n    let items = 23;\n    let row = 5;\n    println!(items / row);\n    println!(items % row);\n    println!(23.0 / 5.0);\n    println!((2 + 3) * 4);\n}\n",
+        "expected": "4\n3\n4.6\n20\n"
+    },
+    {
+        "id": "text-output",
+        "title": "Print a receipt",
+        "category": "Basics",
+        "description": "Print a label and a calculated value on the same line.",
+        "file": "examples/basic/text_output.blyx",
+        "code": "fn main() {\n    let label = \"Total: \";\n    let cost = 3 * 7;\n    print!(label);\n    println!(cost);\n    println!(\"Paid\");\n}\n",
+        "expected": "Total: 21\nPaid\n"
+    },
+    {
+        "id": "decisions",
+        "title": "Classify a temperature",
+        "category": "Control flow",
+        "description": "Choose a label at two exact temperature boundaries.",
+        "file": "examples/basic/decisions.blyx",
+        "code": "fn band(t: f64) -> str {\n    if t < 0.0 { return \"frozen\"; }\n    if t < 30.0 { \"mild\" } else { \"hot\" }\n}\n\nfn main() {\n    println!(band(-2.0));\n    println!(band(0.0));\n    println!(band(30.0));\n}\n",
+        "expected": "frozen\nmild\nhot\n"
+    },
+    {
+        "id": "unit-price",
+        "title": "Calculate an order total",
+        "category": "Basics",
+        "description": "Pass two inputs into a reusable function and return one number.",
+        "file": "examples/basic/unit_price.blyx",
+        "code": "fn total(price: i64, quantity: i64) -> i64 {\n    price * quantity\n}\n\nfn main() {\n    let first = total(7, 3);\n    println!(first);\n    println!(total(4, 2) + first);\n}\n",
+        "expected": "21\n29\n"
+    },
+    {
+        "id": "loop-result",
+        "title": "Find the first multiple",
+        "category": "Control flow",
+        "description": "Use continue and break with a value to find the first matching number.",
+        "file": "examples/basic/loop_result.blyx",
+        "code": "fn main() {\n    let mut n = 9;\n    let found = loop {\n        n += 1;\n        if n % 4 != 0 { continue; }\n        break n;\n    };\n    println!(found);\n}\n",
+        "expected": "12\n"
+    },
+    {
+        "id": "sensor-report",
+        "title": "Build a sensor report",
+        "category": "Projects",
+        "description": "Summarize a vector of readings, flag high values, and handle an empty batch.",
+        "file": "examples/numerics/sensor_report.blyx",
+        "code": "fn hot_count(readings: vector, limit: f64) -> i64 {\n    let mut hits = 0;\n    let mut i = 0;\n    while i < len(readings) {\n        if at(readings, i) > limit { hits += 1; }\n        i += 1;\n    }\n    hits\n}\n\nfn report(readings: vector, limit: f64) {\n    if len(readings) == 0 {\n        println!(\"no readings\");\n        return;\n    }\n    print!(\"total: \");\n    println!(sum(readings));\n    print!(\"above limit: \");\n    println!(hot_count(readings, limit));\n}\n\nfn main() {\n    report([28.0, 31.5, 30.0, 34.0], 30.0);\n    report([], 30.0);\n}\n",
+        "expected": "total: 123.5\nabove limit: 2\nno readings\n"
+    },
+    {
+        "id": "test-boundaries",
+        "title": "Test a threshold rule",
+        "category": "Projects",
+        "description": "Compare computed results with expected values below, at, and above a boundary.",
+        "file": "examples/basic/test_boundaries.blyx",
+        "code": "fn alarm(t: f64) -> bool {\n    t > 30.0\n}\n\nfn main() {\n    println!(alarm(29.5) == false);\n    println!(alarm(30.0) == false);\n    println!(alarm(30.5) == true);\n}\n",
+        "expected": "true\ntrue\ntrue\n"
+    },
+    {
+        "id": "literal-forms",
+        "title": "Read and write Blyx literals",
+        "category": "Basics",
+        "description": "Use three integer bases, a decimal exponent, a tab escape and an if expression.",
+        "file": "examples/basic/literal_forms.blyx",
+        "code": "fn classify(n: i64) -> str {\n    if n % 2 == 0 { \"even\" } else { \"odd\" }\n}\n\nfn show() -> unit {\n    /* The three literals represent the same count. */\n    println!(0b1010 == 0xA && 0o12 == 10);\n    println!(1_000 + 5);\n    println!(2.5e1);\n    print!(\"label\\t\");\n    println!(classify(10));\n}\n\nfn main() {\n    show();\n}\n",
+        "expected": "true\n1005\n25\nlabel\teven\n"
     }
 ]

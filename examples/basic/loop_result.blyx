@@ -1,0 +1,9 @@
+fn main() {
+    let mut n = 9;
+    let found = loop {
+        n += 1;
+        if n % 4 != 0 { continue; }
+        break n;
+    };
+    println!(found);
+}

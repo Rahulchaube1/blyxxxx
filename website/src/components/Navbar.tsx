@@ -8,6 +8,7 @@ export default function Navbar() {
     const [open, setOpen] = useState(false);
     const path = usePathname();
     const links = [
+        ["Learn", mainLink("/learn")],
         ["Documentation", guideLink()],
         ["Examples", mainLink("/examples")],
         ["Playground", mainLink("/play")],

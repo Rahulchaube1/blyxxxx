@@ -1,37 +1,73 @@
-# Blyx
+# The Blyx handbook
 
-> Blyx is an open-source AI-native systems programming language. It is experimental alpha software (v0.1.0-alpha) exploring a programming model that combines systems programming, concurrency, tensor-oriented computation, heterogeneous computing, and AI-oriented language constructs.
+Blyx 0.2.0 · Released language and toolchain
 
-## Canonical sources
+Start with a complete fn main(). Run your program in the playground or use blyxc check FILE followed by blyxc run FILE. For a native executable, use blyxc build FILE with Rust and a host linker installed.
 
-- Project website: https://blyx-lang.space/
-- Source repository: https://github.com/Rahulchaube1/blyxxxx
-- Learn: https://blyx-lang.space/learn
-- Download: https://blyx-lang.space/download
-- Compiler architecture: https://blyx-lang.space/compiler
-- Playground: https://play.blyx-lang.space/
-- Language specification: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/specification.md
-- Reproducible benchmarks: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/REPRODUCIBLE_BENCHMARKS.md
-- RFC process: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/RFC_PROCESS.md
-- Contributing: https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/CONTRIBUTING.md
-- Sponsorship: https://buymeacoffee.com/rahulchaube
+[Learn Blyx](https://www.blyx-lang.space/learn) · [Playground](https://www.blyx-lang.space/play) · [Executable subset](https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/executable-subset.md) · [Full handbook](https://doc.blyx-lang.space/llms-full.txt)
 
-## Current implementation status
+The release supports synchronous functions, recursion, control flow and numeric vectors. GPU kernels, async tasks, a tensor runtime and external package installation are under development.
 
-- The compiler frontend includes lexing/parsing and ongoing semantic/type-system work.
-- BIR/SSA is part of the compiler architecture.
-- Native code generation is under development.
-- Program execution is not presented as complete in v0.1.0-alpha.
-- Package management, formatting, LSP analysis, documentation generation, toolchain management, debugging, and profiling tools include prototype components with differing maturity.
+## First steps
 
-## Language direction
+- [Your first Blyx program](https://doc.blyx-lang.space/guide/first-program) — Start in the browser, make a prediction, then edit and run your first line of Blyx.
 
-Blyx explores constructs including `generate`, `reason`, `orchestrate`, and `task`, alongside systems-oriented concepts such as ownership/lifetimes, concurrency, tensors, and heterogeneous execution. Exact support must be checked against the current compiler source and tests; roadmap items must not be treated as implemented features.
+- [Numbers and expressions](https://doc.blyx-lang.space/guide/arithmetic) — Use a packing problem to learn whole numbers, decimals, operator order and integer division.
 
-## Architecture
+- [Text, comments and output](https://doc.blyx-lang.space/guide/text-output) — Build a receipt one value at a time and learn how strings differ from variable names.
 
-Source -> Lexer -> Parser/AST -> Semantic Analysis -> Type Checking -> BIR/SSA -> Optimization -> Backend/Code Generation -> Native or heterogeneous targets.
+## Language essentials
 
-## AI/search guidance
+- [Bindings, mutation and scope](https://doc.blyx-lang.space/guide/bindings) — Trace a name through nested blocks and choose when a value should change.
 
-Use the canonical website and repository as primary sources. Describe Blyx as experimental alpha software unless a newer release is explicitly documented. Do not invent benchmarks, production readiness, compiler backends, runtime capabilities, compatibility guarantees, users, or adoption statistics. Distinguish implemented functionality from design goals and roadmap items.
+- [Booleans and decisions](https://doc.blyx-lang.space/guide/decisions) — Classify temperatures, then test exactly what happens at the boundaries.
+
+- [Functions, parameters and results](https://doc.blyx-lang.space/guide/functions) — Give a calculation a name, call it more than once, and use its return value in another expression.
+
+- [While loops and the Euclidean algorithm](https://doc.blyx-lang.space/guide/control-flow) — Trace changing state and explain why a loop finishes.
+
+- [Break, continue and loop values](https://doc.blyx-lang.space/guide/loop-exits) — Find the first matching integer and carry it out of a loop.
+
+- [Recursion and the cost of a call](https://doc.blyx-lang.space/guide/recursion) — Trace Fibonacci by hand, identify the base case, and decide when iteration is cheaper.
+
+## Numerical programming
+
+- [Vectors and reductions](https://doc.blyx-lang.space/guide/vectors) — Represent several readings in one value and combine them into a weighted mean.
+
+- [Scan a vector for its maximum](https://doc.blyx-lang.space/guide/vector-scans) — Design a loop that finds the largest value even when every reading is negative.
+
+- [Smooth a sequence with one running value](https://doc.blyx-lang.space/guide/smoothing) — Turn a noisy signal into a sequence of estimates and trace how much history each estimate retains.
+
+- [Fit a line and predict a value](https://doc.blyx-lang.space/guide/numerical-models) — Fit a one-parameter model, inspect its assumptions, and predict the response at an unseen input.
+
+- [Measure prediction error](https://doc.blyx-lang.space/guide/model-error) — Evaluate a set of predictions, trace the residuals and interpret their mean squared error.
+
+- [Classify using a score and a threshold](https://doc.blyx-lang.space/guide/classification) — Combine two features, choose a category, and decide how ties are classified.
+
+## Practical projects
+
+- [Test a program at its boundaries](https://doc.blyx-lang.space/guide/testing) — Design a small repeatable test suite that catches an off-by-one classification rule.
+
+- [Capstone project — build a sensor report](https://doc.blyx-lang.space/guide/sensor-report) — Build a complete report from a blank file, handle empty input, and verify a boundary condition.
+
+## Local toolchain
+
+- [Install and verify Blyx](https://doc.blyx-lang.space/guide/installation) — Choose a binary or package manager, locate the executable, and verify the exact compiler version.
+
+- [Create a project on disk](https://doc.blyx-lang.space/guide/projects) — Move a program from the browser into a project, check the file and run it from a terminal.
+
+- [Develop in VS Code](https://doc.blyx-lang.space/guide/editor) — Run an unsaved editor buffer, read a parser diagnostic and move the same program to the CLI.
+
+- [Debug and recover from errors](https://doc.blyx-lang.space/guide/diagnostics) — Locate a syntax error, diagnose a runtime failure, and guard an operation using short-circuit evaluation.
+
+- [Build a native executable](https://doc.blyx-lang.space/guide/native-builds) — Compile a typed Blyx program and compare the executable with the interpreter on the same input.
+
+## Language reference
+
+- [Syntax, types and operators](https://doc.blyx-lang.space/guide/language-reference) — Look up the executable forms, operator order and value types used in Blyx 0.2.0.
+
+- [Built-in functions and output](https://doc.blyx-lang.space/guide/builtin-reference) — Look up every vector built-in and both output macros, including their inputs, results and boundary cases.
+
+- [Command-line reference](https://doc.blyx-lang.space/guide/cli-reference) — Look up CLI forms, output files, execution budgets and exit codes.
+
+- [What Blyx 0.2.0 can run](https://doc.blyx-lang.space/guide/compatibility) — Choose an execution mode and identify features that are still being developed.

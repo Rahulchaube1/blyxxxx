@@ -3,7 +3,7 @@ import guides from "@/lib/guides.json";
 import { docs, website, bookEdition } from "@/lib/site";
 export default function sitemap(): MetadataRoute.Sitemap {
     const urls = bookEdition
-        ? [docs + "/", ...guides.map((g) => docs + "/guide/" + g.slug)]
+        ? [docs + "/", docs + "/guide/print", ...guides.map((g) => docs + "/guide/" + g.slug)]
         : [
               "",
               "learn",

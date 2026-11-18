@@ -57,7 +57,7 @@ export default function Catalog() {
                                 Open program
                             </a>
                             <a href={repository + "/blob/blyx-main/" + s.file}>
-                                Source Ã¢â€ â€”
+                                View source
                             </a>
                         </div>
                     </article>

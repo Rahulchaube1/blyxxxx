@@ -1,0 +1,9 @@
+fn total(price: i64, quantity: i64) -> i64 {
+    price * quantity
+}
+
+fn main() {
+    let first = total(7, 3);
+    println!(first);
+    println!(total(4, 2) + first);
+}

@@ -26,7 +26,7 @@ The edition is selected at startup and build time. To switch back in PowerShell,
 | What you want to change | Where it lives |
 | --- | --- |
 | An example program | Its `.blyx` file in [examples](../examples/) and its catalog entry in [samples.json](src/lib/samples.json). The entry includes the source path, runnable code, and expected output. |
-| A documentation chapter | [guides.json](src/lib/guides.json). A chapter can reference a catalog example by ID to embed a runnable program. |
+| A documentation chapter | [guides.json](src/lib/guides.json). Each chapter has sections, practice, a hint and a worked solution. Reference a catalog example by ID to embed an editor. Supply the exercise edits and expected output so CI can execute the solution. |
 | A page or editor control | [App routes](src/app/) and [shared components](src/components/). |
 | A redirect from the old book | [Legacy route map](legacy-book.json) and [redirect configuration](next.config.mjs). |
 
@@ -39,7 +39,10 @@ Run the example checks from the **repository root**. They compare the catalog wi
 ```sh
 node editors/code/scripts/prepare.cjs
 node tools/test-editor-runtime.mjs
+node tools/export-handbook.mjs --check
 ```
+
+After editing chapters or examples, run `node tools/export-handbook.mjs` to refresh the plain-text copies in the repository. Both sites generate their plain-text editions from the same content.
 
 From `website/`, run `npm run build` to type-check and create a production build. Use `npm start` to serve that build locally. For the documentation build, set `NEXT_PUBLIC_BLYX_EDITION=docs` before running the build command. Vercel uses `website/` as the project root for both deployments. The `website` project hosts the main site and the `book` project hosts the guide. [Runtime rebuild instructions](../docs/executable-subset.md) · [Test harness](../tools/test-editor-runtime.mjs)
 

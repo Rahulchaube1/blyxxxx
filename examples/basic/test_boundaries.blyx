@@ -1,0 +1,9 @@
+fn alarm(t: f64) -> bool {
+    t > 30.0
+}
+
+fn main() {
+    println!(alarm(29.5) == false);
+    println!(alarm(30.0) == false);
+    println!(alarm(30.5) == true);
+}
