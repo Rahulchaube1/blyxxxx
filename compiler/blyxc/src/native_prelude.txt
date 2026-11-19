@@ -20,7 +20,7 @@ trait Printable { fn emit(&self); }
 macro_rules! printable {
     ($($t:ty),*) => { $(impl Printable for $t { fn emit(&self) { print!("{}", self) } })* }
 }
-printable!(i64, f64, bool, &str);
+printable!(i64, f64, bool, String);
 impl Printable for () { fn emit(&self) {} }
 impl Printable for Vector { fn emit(&self) { print!("{:?}", self) } }
 fn emit(value: impl Printable) { value.emit() }
