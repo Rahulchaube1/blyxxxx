@@ -1,9 +1,10 @@
 //! Lower the statically typed, synchronous subset to a standalone host executable.
 use blyx_ast::{BinOp, Block, BlyxFile, BlyxType, Expr, Item, Lit, Stmt, UnOp};
 use std::{
+    collections::{HashMap, HashSet},
     fs,
     io::Write,
-    path::Path,
+    path::{Path, PathBuf},
     process::{Command, Stdio},
 };
 
@@ -14,7 +15,8 @@ fn ty(t: &BlyxType) -> Lowered {
         BlyxType::I64 => "i64",
         BlyxType::F64 => "f64",
         BlyxType::Bool => "bool",
-        BlyxType::Str | BlyxType::String => "&'static str",
+        BlyxType::Str | BlyxType::String => "String",
+        BlyxType::Named(n, _) if n == "arglist" => "ArgList",
         BlyxType::Named(n, _) if n == "vector" => "Vector",
         BlyxType::Unit => "()",
         other => return Err(format!("unsupported native type {other:?}")),
@@ -43,7 +45,8 @@ fn operator(op: BinOp) -> Lowered {
 }
 
 struct Lowerer<'a> {
-    functions: std::collections::HashSet<&'a str>,
+    functions: HashMap<String, String>,
+    imports: HashSet<&'a str>,
 }
 
 impl Lowerer<'_> {
@@ -91,8 +94,8 @@ impl Lowerer<'_> {
                 ),
                 Lit::Float(n) => format!("f64::from_bits({})", n.to_bits()),
                 Lit::Bool(b) => b.to_string(),
-                Lit::String(s) => format!("{s:?}"),
-                Lit::Char(c) => format!("{:?}", c.to_string()),
+                Lit::String(s) => format!("String::from({s:?})"),
+                Lit::Char(c) => format!("String::from({:?})", c.to_string()),
             },
             Expr::Ident(name, _) => format!("v_{name}.clone()"),
             Expr::ArrayLit(items, _) => {
@@ -151,9 +154,14 @@ impl Lowerer<'_> {
                         "{{emit({value}); {}}}",
                         if name == "println!" { "println!();" } else { "" }
                     )
-                } else if self.functions.contains(name.as_str()) {
-                    format!("f_{name}({})", args.join(","))
+                } else if let Some(symbol) = self.functions.get(name.as_str()) {
+                    format!("{symbol}({})", args.join(","))
                 } else if matches!(name.as_str(), "len" | "sum" | "at" | "dot") {
+                    format!("{name}({})", args.join(","))
+                } else if let Some(module) = host_module(name) {
+                    if !self.imports.contains(module) {
+                        return Err(format!("'{name}' requires use {module};"));
+                    }
                     format!("{name}({})", args.join(","))
                 } else {
                     return Err(format!("unknown function '{name}'"));
@@ -164,44 +172,136 @@ impl Lowerer<'_> {
     }
 }
 
-fn lower(file: &BlyxFile) -> Lowered {
-    let mut functions = Vec::new();
-    for item in &file.items {
-        match item {
-            Item::Fn(f) | Item::Function(f) if !f.is_async && f.generics.is_empty() => {
-                functions.push(f)
-            }
-            _ => return Err("native build supports synchronous, non-generic functions".into()),
+fn host_module(name: &str) -> Option<&'static str> {
+    Some(match name {
+        "cli_args" | "args_new" | "args_len" | "args_at" | "args_item" | "args_tail"
+        | "args_push" | "args_concat" | "args_join" | "env_get" | "exe_dir" | "stdout_terminal"
+        | "stderr_line" | "process_run" | "process_exec" | "process_exit" => "std::cli",
+        "text_starts" | "text_ends" | "text_concat" | "text_before" | "text_after" => "std::text",
+        "path_join" | "is_file" | "read_text" => "std::fs",
+        _ => return None,
+    })
+}
+
+#[derive(Default)]
+struct ModuleGraph {
+    exports: HashMap<PathBuf, HashMap<String, String>>,
+    visiting: HashSet<PathBuf>,
+    code: String,
+    next_id: usize,
+    uses_host: bool,
+}
+
+impl ModuleGraph {
+    fn compile(&mut self, file: &BlyxFile, path: &Path, root: bool) -> Result<(), String> {
+        if self.exports.contains_key(path) {
+            return Ok(());
         }
+        if !self.visiting.insert(path.to_owned()) {
+            return Err(format!("cyclic native import at {}", path.display()));
+        }
+        if self.visiting.len() > 64 {
+            return Err("native import depth exceeds 64".into());
+        }
+        let id = self.next_id;
+        self.next_id += 1;
+        let mut symbols = HashMap::new();
+        let mut public = HashMap::new();
+        let mut imports = HashSet::new();
+        let mut functions = Vec::new();
+        let mut has_main = false;
+        for item in &file.items {
+            match item {
+                Item::Fn(f) | Item::Function(f) if !f.is_async && f.generics.is_empty() => {
+                    let symbol = format!("f_{id}_{}", f.name);
+                    if symbols.insert(f.name.clone(), symbol.clone()).is_some() {
+                        return Err(format!("duplicate function '{}'", f.name));
+                    }
+                    if f.is_pub {
+                        public.insert(f.name.clone(), symbol);
+                    }
+                    if f.name == "main" && f.params.is_empty() {
+                        has_main = true;
+                    }
+                    functions.push(f);
+                }
+                Item::Use(u) if matches!(u.path.as_str(), "std::cli" | "std::fs" | "std::text") => {
+                    self.uses_host = true;
+                    imports.insert(u.path.as_str());
+                }
+                Item::Use(u) => {
+                    if u.path.is_empty() || u.path.starts_with("std::") {
+                        return Err(format!("unknown native import '{}'", u.path));
+                    }
+                    let mut dependency = path.parent().unwrap().to_owned();
+                    dependency.extend(u.path.split("::"));
+                    dependency.set_extension("blyx");
+                    let dependency = dependency
+                        .canonicalize()
+                        .map_err(|e| format!("cannot import {}: {e}", dependency.display()))?;
+                    if !self.exports.contains_key(&dependency) {
+                        let source = fs::read_to_string(&dependency).map_err(|e| e.to_string())?;
+                        let display = dependency.to_string_lossy();
+                        let mut parser = blyx_parser::BlyxParser::with_file(&source, &display);
+                        let parsed = parser.parse_file(&display);
+                        if let Some(err) = parser.errors().first() {
+                            return Err(format!(
+                                "{display}:{}:{}: {}",
+                                err.span.line, err.span.column, err.message
+                            ));
+                        }
+                        self.compile(&parsed, &dependency, false)?;
+                    }
+                    for (name, symbol) in &self.exports[&dependency] {
+                        if symbols.insert(name.clone(), symbol.clone()).is_some() {
+                            return Err(format!("duplicate imported or local function '{name}'"));
+                        }
+                    }
+                }
+                _ => {
+                    return Err(
+                        "native build supports imports and synchronous, non-generic functions"
+                            .into(),
+                    );
+                }
+            }
+        }
+        if root && !has_main {
+            return Err("native build requires fn main()".into());
+        }
+        let lowerer = Lowerer { functions: symbols, imports };
+        for f in functions {
+            let params = f
+                .params
+                .iter()
+                .map(|p| Ok(format!("v_{}: {}", p.name, ty(&p.ty)?)))
+                .collect::<Result<Vec<_>, String>>()?;
+            let result = f.return_type.as_ref().map(ty).transpose()?.unwrap_or_else(|| "()".into());
+            self.code.push_str(&format!(
+                "\nfn {}({}) -> {result} {}\n",
+                lowerer.functions[&f.name],
+                params.join(","),
+                lowerer.block(&f.body)?
+            ));
+        }
+        self.visiting.remove(path);
+        self.exports.insert(path.to_owned(), public);
+        Ok(())
     }
-    let lowerer = Lowerer { functions: functions.iter().map(|f| f.name.as_str()).collect() };
-    if !functions.iter().any(|f| f.name == "main" && f.params.is_empty()) {
-        return Err("native build requires fn main()".into());
-    }
-    let mut code = String::from(include_str!("native_prelude.txt"));
-    for f in functions {
-        let params = f
-            .params
-            .iter()
-            .map(|p| Ok(format!("v_{}: {}", p.name, ty(&p.ty)?)))
-            .collect::<Result<Vec<_>, String>>()?;
-        let result = f.return_type.as_ref().map(ty).transpose()?.unwrap_or_else(|| "()".into());
-        code.push_str(&format!(
-            "\nfn f_{}({}) -> {result} {}\n",
-            f.name,
-            params.join(","),
-            lowerer.block(&f.body)?
-        ));
-    }
-    code.push_str("fn main() { let _ = f_main(); }\n");
-    Ok(code)
 }
 
 pub fn build(file: &BlyxFile, input: &Path, output: &Path) -> Result<(), String> {
-    let code = lower(file)?;
-    if input.canonicalize().ok() == output.canonicalize().ok() {
+    let mut graph = ModuleGraph::default();
+    graph.compile(file, &input.canonicalize().map_err(|e| e.to_string())?, true)?;
+    if output.canonicalize().is_ok_and(|p| graph.exports.contains_key(&p)) {
         return Err("output path would replace the source file".into());
     }
+    let mut code = String::from(include_str!("native_prelude.txt"));
+    if graph.uses_host {
+        code.push_str(include_str!("native_host.rs.inc"));
+    }
+    code.push_str(&graph.code);
+    code.push_str("fn main() { let _ = f_0_main(); }\n");
     let parent = output.parent().filter(|p| !p.as_os_str().is_empty()).unwrap_or(Path::new("."));
     let temp = tempfile::tempdir_in(parent).map_err(|e| e.to_string())?;
     let executable = temp.path().join(format!("program{}", std::env::consts::EXE_SUFFIX));

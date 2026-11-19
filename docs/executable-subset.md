@@ -85,3 +85,27 @@ cp target/wasm32-unknown-unknown/release/blyxc.wasm website/public/runtime/blyx.
 node editors/code/scripts/prepare.cjs
 node tools/test-editor-runtime.mjs
 ```
+
+## Native command-line programs
+
+Build a trusted local program with `blyxc build main.blyx -o mytool`, or compile and execute it once with `blyxc native-run main.blyx -- "hello world"`. Both build commands require Rust and a host linker. An executable produced by `build` can be started directly. The interpreter and browser editor continue to support the portable subset.
+
+```blyx
+use std::cli;
+fn main() {
+    let args = cli_args();
+    println!(args_join(args, ", "));
+}
+```
+
+| Import | Operations |
+| --- | --- |
+| `std::cli` | `cli_args()` returns an `arglist` excluding the executable. Use `args_new()`, `args_len(xs)`, `args_at(xs, i)`, `args_item(xs, i)`, `args_tail(xs, start)`, `args_push(xs, text)`, `args_concat(xs, ys)`, and `args_join(xs, separator)`. |
+| `std::cli` | `env_get(key, fallback)` reads a nonempty Unicode environment value. `exe_dir()` returns the executable directory. `stdout_terminal()`, `stderr_line(text)` and `process_exit(code)` provide terminal I/O and exit status. |
+| `std::cli` | `process_run(program, xs, env)` launches an executable with inherited standard I/O and returns its status. `process_exec(program, xs, env)` replaces the process on Unix and exits with the child status on Windows. Supply alternating environment keys and values, or `args_new()` to inherit the environment. |
+| `std::fs` | `path_join(base, path)`, `is_file(path)` and `read_text(path)` handle native paths and UTF-8 text files. Read errors terminate the program with status 4. |
+| `std::text` | `text_concat(left, right)`, `text_starts(text, prefix)`, `text_ends(text, suffix)`, `text_before(text, separator)`, and `text_after(text, prefix)`. The last removes a matching prefix. |
+
+Argument-list operations return independent values. Indexing starts at zero. An out-of-range index exits with status 4. Slicing at the end returns an empty list. Lists preserve OS argument boundaries and non-Unicode values during forwarding. Converting an argument to text replaces invalid Unicode with U+FFFD. Process startup failures print to stderr and return 1. On Unix a child terminated by a signal reports 128 plus the signal number.
+
+In native builds, `use util;` imports the `pub fn` declarations from a sibling `util.blyx`. Use `use tools::formatting;` for `tools/formatting.blyx` relative to the importing file. Each file declares its own imports. Private helpers are scoped to their file. Cycles and name collisions are compile errors.

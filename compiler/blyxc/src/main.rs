@@ -23,13 +23,25 @@ fn print_usage() {
     println!("  check <file.blyx>   Parse and validate a Blyx source file");
     println!("  build <file.blyx> [-o executable]  Compile the native subset using rustc");
     println!("  run <file.blyx> [--max-steps N]  Interpret with a bounded execution budget");
+    println!("  native-run <file.blyx> [-- args...]  Build and execute a native program");
     println!("  new <project>       Create a minimal Blyx project");
     println!("  fmt <file.blyx>     Normalize source line endings");
     println!("  help                Print this message");
 }
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let mut raw = env::args_os().skip(1);
+    if raw.next().as_deref() == Some(std::ffi::OsStr::new("native-run")) {
+        cmd_native_run(raw);
+    }
+    let args: Vec<String> = env::args_os()
+        .map(|arg| {
+            arg.into_string().unwrap_or_else(|_| {
+                print_error("compiler options must be valid Unicode");
+                exit(2)
+            })
+        })
+        .collect();
     if args.len() < 2 {
         print_usage();
         exit(1);
@@ -120,6 +132,37 @@ fn cmd_build(args: &[String]) {
         exit(1);
     }
     print_success(&format!("built {}", output.display()));
+}
+
+fn cmd_native_run(mut args: impl Iterator<Item = std::ffi::OsString>) -> ! {
+    let path = args.next().and_then(|s| s.into_string().ok()).unwrap_or_else(|| {
+        print_error("usage: blyxc native-run <file.blyx> [-- args...]");
+        exit(2)
+    });
+    if args.next().is_some_and(|s| s != "--") {
+        print_error("program arguments must follow --");
+        exit(2);
+    }
+    let result = (|| -> Result<i32, String> {
+        let file = parse_source(&path);
+        let dir = tempfile::tempdir().map_err(|e| e.to_string())?;
+        let bin = dir.path().join(format!("program{}", env::consts::EXE_SUFFIX));
+        native::build(&file, Path::new(&path), &bin)?;
+        let status =
+            std::process::Command::new(bin).args(args).status().map_err(|e| e.to_string())?;
+        #[cfg(unix)]
+        {
+            use std::os::unix::process::ExitStatusExt;
+            if let Some(signal) = status.signal() {
+                return Ok(128 + signal);
+            }
+        }
+        Ok(status.code().unwrap_or(1))
+    })();
+    exit(result.unwrap_or_else(|e| {
+        print_error(&e);
+        1
+    }))
 }
 
 fn cmd_run(args: &[String]) {
