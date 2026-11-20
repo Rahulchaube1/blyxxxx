@@ -1,0 +1,176 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Blyx",
+  "scopeName": "source.blyx",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#declarations"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#types"
+    },
+    {
+      "include": "#macros"
+    },
+    {
+      "include": "#functions"
+    },
+    {
+      "include": "#operators"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.documentation.blyx",
+          "match": "///[^\\n]*"
+        },
+        {
+          "name": "comment.line.double-slash.blyx",
+          "match": "//[^\\n]*"
+        },
+        {
+          "name": "comment.block.documentation.blyx",
+          "begin": "/\\*\\*",
+          "end": "\\*/"
+        },
+        {
+          "name": "comment.block.blyx",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.blyx",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.blyx",
+              "match": "\\\\(?:[nrt0\\\\\"']|x[0-9a-fA-F]{2}|u\\{[0-9a-fA-F]+\\})"
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.blyx",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.blyx",
+              "match": "\\\\(?:[nrt0\\\\\"']|x[0-9a-fA-F]{2})"
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.blyx",
+          "match": "\\b(?:0[xX][0-9a-fA-F_]+|0[bB][01_]+|0[oO][0-7_]+|[0-9][0-9_]*(?:\\.[0-9][0-9_]*)?(?:[eE][+-]?[0-9][0-9_]*)?)\\b"
+        }
+      ]
+    },
+    "declarations": {
+      "patterns": [
+        {
+          "name": "meta.function.blyx",
+          "match": "\\b(fn)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "storage.type.function.blyx"
+            },
+            "2": {
+              "name": "entity.name.function.blyx"
+            }
+          }
+        },
+        {
+          "name": "meta.type.declaration.blyx",
+          "match": "\\b(struct|enum|trait|type|actor|mod)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+          "captures": {
+            "1": {
+              "name": "storage.type.blyx"
+            },
+            "2": {
+              "name": "entity.name.type.blyx"
+            }
+          }
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.flow.blyx",
+          "match": "\\b(?:if|else|match|loop|while|for|in|break|continue|return)\\b"
+        },
+        {
+          "name": "keyword.control.concurrency.blyx",
+          "match": "\\b(?:async|await|parallel|gpu|spawn|generate|reason|orchestrate|task)\\b"
+        },
+        {
+          "name": "storage.modifier.blyx",
+          "match": "\\b(?:pub|mut|const|unsafe|extern|ref|move|dyn|where|as)\\b"
+        },
+        {
+          "name": "keyword.other.blyx",
+          "match": "\\b(?:fn|let|struct|enum|trait|impl|type|actor|tensor|use|mod)\\b"
+        },
+        {
+          "name": "constant.language.blyx",
+          "match": "\\b(?:true|false|null|self|super)\\b"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "support.type.primitive.blyx",
+          "match": "\\b(?:i8|i16|i32|i64|i128|u8|u16|u32|u64|u128|f32|f64|bool|str|string|char|vector)\\b"
+        }
+      ]
+    },
+    "macros": {
+      "patterns": [
+        {
+          "name": "entity.name.function.macro.blyx",
+          "match": "\\b[A-Za-z_][A-Za-z0-9_]*!"
+        }
+      ]
+    },
+    "functions": {
+      "patterns": [
+        {
+          "name": "entity.name.function.call.blyx",
+          "match": "\\b[A-Za-z_][A-Za-z0-9_]*(?=\\s*\\()"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.blyx",
+          "match": "(?:->|=>|::|\\.\\.=|\\.\\.\\.|\\.\\.|==|!=|<=|>=|&&|\\|\\||<<=?|>>=?|[+\\-*/%]=?|[&|^]=?|[=<>!~?])"
+        }
+      ]
+    }
+  }
+}

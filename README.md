@@ -99,6 +99,10 @@ The editor test checks the browser examples against their source files and expec
 
 **Performance evidence.** The published benchmark measures recursive Fibonacci(22) on one Windows host. Across nine runs after two warm-ups, the median was **7.777 ms** for a native Blyx executable and **27.522 ms** for the Blyx interpreter. Each timing includes process startup. The raw report includes the Rust and CPython baselines, toolchain versions, individual samples, and executable sizes. [Benchmark harness](tools/bench_fibonacci.py) · [Raw results](website/public/data/benchmarks.json) · [Benchmark report](https://www.blyx-lang.space/benchmarks)
 
+## Community projects and GitHub language recognition
+
+Building an independent Blyx project? Share a public repository with reproducible build/run instructions in [community showcase issue #18](https://github.com/Rahulchaube1/blyxxxx/issues/18). We welcome real projects and useful bug reports, not artificially generated files or mirrored examples. [Read the public adoption evidence](docs/linguist-adoption-evidence-2026-11-20.md) and [the official registration requirements](docs/linguist-readiness.md). GitHub Linguist language registration is **not yet complete**.
+
 ## Project and people
 
 Rahul Chaube created Blyx and leads compiler development. Ujjwal Chaudhury is a core contributor. The project is maintained by Neuroblyx and community contributors. [Rahul on GitHub](https://github.com/Rahulchaube1) · [Rahul on LinkedIn](https://www.linkedin.com/in/rahulchaube1) · [Blyx community](https://www.blyx-lang.space/community)
