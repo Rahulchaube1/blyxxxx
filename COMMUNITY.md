@@ -44,3 +44,7 @@ Blyx is currently alpha software. Syntax, APIs, compiler behavior, and tooling c
 ## Share the project responsibly
 
 If you write about Blyx, link to the canonical repository and official website, describe the current alpha status, and avoid presenting experimental results as established production benchmarks.
+
+## Show us what you built
+
+Share an original public Blyx project (not a fork of the compiler or a copied tutorial) in [community showcase issue #18](https://github.com/Rahulchaube1/blyxxxx/issues/18). Include source, the Blyx version, command to reproduce, expected output and current limitations. We review entries before citing them as independent adoption. The [adoption audit evidence](docs/linguist-adoption-evidence-2026-11-20.md) documents why official GitHub language recognition is still pending.
