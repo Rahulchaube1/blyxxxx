@@ -60,4 +60,4 @@ Only independent software projects should be described as community adoption. A 
 
 The best work now is to help developers actually complete small Blyx projects. Keep the stable 0.2.0 subset documented; provide reproducible examples and starter repositories; fix user-discovered compiler problems; encourage external projects and reviews; and maintain an honest, public list of independently verified uses.
 
-See also [the existing GitHub language-recognition guide](github-language-recognition.md).
+Community project evidence and reproducible examples can be submitted to the [Blyx community showcase issue #18](https://github.com/Rahulchaube1/blyxxxx/issues/18). Each external project must still be independently reviewed.\n\nSee also [the existing GitHub language-recognition guide](github-language-recognition.md).
