@@ -61,6 +61,7 @@ const config = {
                     "security",
                     "packages",
                     "frameworks",
+                    "frameworks/logos",
                     "libraries",
                     "libraries/logos",
                     "roadmap",

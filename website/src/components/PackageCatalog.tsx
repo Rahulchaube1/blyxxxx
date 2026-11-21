@@ -44,7 +44,7 @@ export default function PackageCatalog({ items, category }: { items: DirectoryEn
                             {packages.map((p) => (
                                 <article className="card package-card" key={p.slug}>
                                     <div className="package-heading">
-                                        <img className="package-logo" src={p.logo} width={p.category === "library" ? 72 : 54} height={p.category === "library" ? 72 : 54} alt="" loading="lazy" decoding="async" />
+                                        <img className="package-logo" src={p.logo} width="72" height="72" alt="" loading="lazy" decoding="async" />
                                         <div><h3><a href={"/packages/" + p.slug}>{p.title}</a></h3>
                                             <small>{p.kind} · {p.version}</small></div>
                                     </div>
@@ -52,6 +52,7 @@ export default function PackageCatalog({ items, category }: { items: DirectoryEn
                                     <div className="actions">
                                         <a href={"/packages/" + p.slug}>Install and use →</a>
                                         <a href={playLink(p.example)}>Run example</a>
+                                        {p.category === "framework" && <a href={"/packages/" + p.slug + "#editor"}>Install in editor</a>}
                                         {p.category === "framework" && <a href={guideLink(p.guide)}>Handbook</a>}
                                     </div>
                                 </article>

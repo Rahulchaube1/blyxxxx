@@ -7,6 +7,12 @@ export const metadata = {
 };
 const sections = [
     {
+        heading: "Install a framework",
+        body: "Choose a Blyx framework to get its editor extension, example and installation instructions. Each framework also has a direct VSIX download.",
+        label: "Browse framework extensions",
+        href: "/frameworks/logos",
+    },
+    {
         heading: "Train a model with BlyxTorch",
         body: "Install BlyxTorch alongside Blyx Language to fit a sensor model or train a classifier. The extension includes native trainers, two Blyx projects and a starter workspace.",
         label: "BlyxTorch editor downloads and projects",

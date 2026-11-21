@@ -71,9 +71,10 @@ export default async function Chapter({ params }: Props) {
                 <article className="prose">
                     <GuideContent guide={g} />
                     {slug === "editor" && (
-                        <a className="button" href={mainLink("/vscode")}>
-                            Get the editor extension
-                        </a>
+                        <div className="actions">
+                            <a className="button" href={mainLink("/vscode")}>Get the language extension</a>
+                            <a href={mainLink("/frameworks/logos")}>Find a framework extension</a>
+                        </div>
                     )}
                     {slug === "installation" && (
                         <a className="button" href={mainLink("/download")}>

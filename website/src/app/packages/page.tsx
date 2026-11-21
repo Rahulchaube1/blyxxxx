@@ -47,6 +47,7 @@ export default function Packages() {
                     <a href={repository + "/blob/blyx-main/docs/ecosystem-packages.md"}>Package contributor guide →</a>
                     <a href="/packages.json">Catalog JSON</a>
                     <a href="/libraries/logos">Browse the library logos</a>
+                    <a href="/frameworks/logos">Browse the framework birds</a>
                     <a href="/blyx-package-logos.zip" download>Download all package logos</a>
                     <a href="/community">Discuss an idea</a>
                     <a href="/#sponsor">Sponsor Blyx development</a>

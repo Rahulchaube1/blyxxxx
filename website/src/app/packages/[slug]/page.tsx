@@ -48,7 +48,7 @@ export default async function Package({ params }: Props) {
                     {p.trainedExample && <a href={playLink(p.trainedExample)}>Run the trained XOR network →</a>}
                     <a className={p.trainedExample ? undefined : "button"} href={playLink(p.example)}>{p.workflow?.browserTitle ?? (p.trainedExample ? "Differentiate a loss" : "Run the Blyx example →")}</a>
                     <a href={p.release}>Release on GitHub</a>
-                    {p.category === "library" && <a href={p.logo} download={p.slug + ".png"}>Download logo (PNG)</a>}
+                    <a href={p.logo} download={p.slug + ".png"}>Download logo (PNG)</a>
                 </div>
             </header>
             <article className="prose">
@@ -80,14 +80,19 @@ export default async function Package({ params }: Props) {
                 )}
                 {p.editor && (
                     <section id="editor">
-                        <h2>Install BlyxTorch in your editor</h2>
-                        <p>Search Extensions for <strong>RahulChaube.blyxtorch</strong> in VS Code or VSCodium. The extension includes the native CPU trainer for Windows x64, Linux x64 and Apple Silicon macOS. It also installs Blyx Language, which runs the portable examples.</p>
+                        <h2>Install {p.title} in your editor</h2>
+                        <p>Extension <strong>{p.editor.id}</strong> · {p.editor.version}</p>
+                        {slug === "blyxtorch"
+                            ? <p>The extension includes the native CPU trainer for Windows x64, Linux x64 and Apple Silicon macOS, plus two editable training projects.</p>
+                            : <p>The extension includes a runnable Blyx example, function completions and the framework source. For the modular project, extract the starter, open its folder and run <code>blyxc native-run main.blyx</code> with the native toolchain installed.</p>}
                         <div className="actions">
-                            <a className="button" href={p.editor.marketplace}>Visual Studio Marketplace</a>
-                            <a href={p.editor.openVsx}>Open VSX</a>
+                            {p.editor.marketplace && <a className="button" href={p.editor.marketplace}>Visual Studio Marketplace</a>}
+                            {p.editor.openVsx && <a href={p.editor.openVsx}>Open VSX</a>}
                             <a href={p.editor.vsix}>Download the VSIX</a>
+                            {slug !== "blyxtorch" && <a href={p.editor.starter}>Download the starter ZIP</a>}
                         </div>
-                        <p>To run a first model, create <code>sensor.blyx</code>, type <code>bt-sensor</code> and accept the completion. Choose <strong>Blyx: Run File</strong>. For an offline installation, download both VSIX files and use <strong>Extensions: Install from VSIX</strong> for Blyx Language first, then BlyxTorch.</p>
+                        <p>Create an empty <code>.blyx</code> file, type <code>{p.editor.examplePrefix}</code> and accept the completion. Choose <strong>Blyx: Run File</strong> to run the example.</p>
+                        <p>For an offline installation, choose <strong>Extensions: Install from VSIX</strong> for Blyx Language first, then for {p.title}.</p>
                         <a href="https://github.com/Rahulchaube1/blyxxxx/releases/download/editor-v1.2.3/blyx-language-1.2.3.vsix">Download the companion Blyx Language VSIX</a>
                     </section>
                 )}

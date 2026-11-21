@@ -46,7 +46,7 @@
             "commit": "6b67ab026a5dae70f0894dc327dfe0364e18c135",
             "repository": "https://github.com/Rahulchaube1/blyxtorch",
             "release": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.2.0",
-            "logo": "/packages/blyxtorch.png?v=0.1.1",
+            "logo": "/packages/blyxtorch.png?v=7d79e17c3d38",
             "module": "blyxtorch",
             "example": "package-blyxtorch",
             "program": "use vendor::blyxtorch::blyxtorch;\n\nfn main() {\n    let weight = bt_dual(1.0, 1.0);\n    let x = bt_dual(2.0, 0.0);\n    let target = bt_dual(5.0, 0.0);\n    let loss = bt_square(bt_sub(bt_mul(weight, x), target));\n    println!(at(loss, 0));\n    println!(at(loss, 1));\n    let updated = bt_dual(at(weight, 0) - 0.125 * at(loss, 1), 0.0);\n    println!(at(bt_square(bt_sub(bt_mul(updated, x), target)), 0));\n}",
@@ -60,10 +60,14 @@
             "trainedExample": "package-blyxtorch-xor",
             "editor": {
                 "id": "RahulChaube.blyxtorch",
-                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyxtorch",
-                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyxtorch",
-                "vsix": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.2.0/blyxtorch-0.2.0.vsix",
-                "starter": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.2.0/blyxtorch-projects-0.2.0.zip"
+                "version": "0.2.1",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyxtorch-0.2.1.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.2.0/blyxtorch-projects-0.2.0.zip",
+                "examplePrefix": "bt-sensor",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyxtorch/tree/16c7eb4f5be34147c33e7c166dbb1d48a31a4279/editor",
+                "sha256": "ae1ffee10e8898c405026df7cd22bcaa5c80c07d885b9757c8b789ed4d5ddeb8"
             },
             "projects": [
                 {
@@ -78,7 +82,8 @@
                     "description": "Classify four new print jobs using a trained two-input network. The starter includes 16 synthetic training rows and six separate evaluation rows. With seed 7, the mean evaluation loss is about 0.00234.",
                     "source": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.2.0/projects/queue-classifier.blyx"
                 }
-            ]
+            ],
+            "logoAlt": "A blue-crested bird with half-lidded eyes and a bright orange bill."
         },
         {
             "slug": "linearfit",
@@ -110,7 +115,7 @@
             "commit": "6a937457b27d8adf5601025e6244474a1be273e5",
             "repository": "https://github.com/Rahulchaube1/blyx-linearfit",
             "release": "https://github.com/Rahulchaube1/blyx-linearfit/releases/tag/v0.1.1",
-            "logo": "/packages/linearfit.png?v=ad3009606fe1",
+            "logo": "/packages/linearfit.png?v=2a295972d39c",
             "module": "linearfit",
             "example": "package-linearfit",
             "program": "use vendor::linearfit::linearfit;\nfn main() {\n    let training = lf_fit([1, 2, 3, 4], [3, 5, 7, 9], 0.0);\n    println!(at(training, 2));\n    println!(lf_predict(training, 5.0));\n}",
@@ -121,7 +126,18 @@
                 "The model learns slope 2 and predicts 11. Add --ridge 5 to shrink the slope to 1."
             ],
             "guide": "training-and-monitoring",
-            "logoAlt": "Blyx penguin drawing a fitted line through scattered observations."
+            "logoAlt": "An ivory gannet dives along the line of its long blue-grey bill.",
+            "editor": {
+                "id": "RahulChaube.blyx-linearfit",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-linearfit-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-linearfit-starter-0.1.0.zip",
+                "examplePrefix": "blyx-linearfit-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-linearfit/tree/8c3a70e2004e71b94bc0a8a2a86967e0bd6cc1c7/editor",
+                "sha256": "c7ca2bdcdef01877a311e9c03ef939f5d16e49bb005186399d6c6decd89252af"
+            }
         },
         {
             "slug": "conformal",
@@ -149,14 +165,25 @@
             "commit": "2e26e32a67000c06ff0f794c6f8cdcab1efb6734",
             "repository": "https://github.com/Rahulchaube1/blyx-conformal",
             "release": "https://github.com/Rahulchaube1/blyx-conformal/releases/tag/v0.1.0",
-            "logo": "/packages/conformal.png?v=fbc724554f2f",
+            "logo": "/packages/conformal.png?v=62d3fca761b2",
             "module": "conformal",
             "example": "package-conformal",
             "program": "use vendor::conformal::conformal;\nfn main() {\n    let calibration = cf_calibrate([10, 12, 7, 11], [10, 10, 10, 10], 3, 5);\n    let interval = cf_interval(20.0, at(calibration, 0));\n    println!(at(calibration, 0));\n    println!(at(interval, 0));\n    println!(at(interval, 1));\n}",
             "output": "2\n18\n22\n",
             "cli": null,
             "guide": "training-and-monitoring",
-            "logoAlt": "Blyx penguin holding an interval around a central point estimate."
+            "logoAlt": "A snowy owl cups its speckled wings around its body.",
+            "editor": {
+                "id": "RahulChaube.blyx-conformal",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-conformal-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-conformal-starter-0.1.0.zip",
+                "examplePrefix": "blyx-conformal-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-conformal/tree/21df5b80b1174402f042b9e526b86557139b401c/editor",
+                "sha256": "0164b500f520d1f4c0977ca7b69c251bca93ae1204cec931f2de34df8ec59a97"
+            }
         },
         {
             "slug": "moments",
@@ -219,7 +246,7 @@
             "commit": "30b5901f566db191b3fc3a31fa7b06fedbba4f38",
             "repository": "https://github.com/Rahulchaube1/blyx-residualwatch",
             "release": "https://github.com/Rahulchaube1/blyx-residualwatch/releases/tag/v0.1.0",
-            "logo": "/packages/residualwatch.png?v=ea47dd4c423d",
+            "logo": "/packages/residualwatch.png?v=949eff91f4e5",
             "module": "residualwatch",
             "example": "package-residualwatch",
             "program": "use vendor::residualwatch::residualwatch;\nfn main() {\n    let reference = rw_fit([9, 10, 11], [10, 10, 10], 0.0);\n    let first = rw_step(rw_monitor(), reference, 12.0, 10.0, 0.5, 3.0);\n    let second = rw_step(first, reference, 12.0, 10.0, 0.5, 3.0);\n    println!(at(reference, 2));\n    println!(at(first, 2));\n    println!(at(second, 2));\n}",
@@ -230,7 +257,18 @@
                 "Reference residuals have mean 0 and sample deviation 1. The first alert is data row 5. The command exits with code 1."
             ],
             "guide": "training-and-monitoring",
-            "logoAlt": "Blyx penguin watching residuals rise above a baseline on a monitor."
+            "logoAlt": "A blue kingfisher with a ragged crest leans forward to watch.",
+            "editor": {
+                "id": "RahulChaube.blyx-residualwatch",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-residualwatch-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-residualwatch-starter-0.1.0.zip",
+                "examplePrefix": "blyx-residualwatch-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-residualwatch/tree/1da963956d5b22c8c66a065dea8b61c474e459e4/editor",
+                "sha256": "6539b427b16302fdb478e4dbe15227dd268adec834c078cbc5c762d41eae7fd9"
+            }
         },
         {
             "slug": "cusum",
@@ -285,7 +323,7 @@
             "commit": "0aa7b9dd067eaf74f9d3b07ca9ea4a51a9e0d181",
             "repository": "https://github.com/Rahulchaube1/blyx-modelgate",
             "release": "https://github.com/Rahulchaube1/blyx-modelgate/releases/tag/v0.1.2",
-            "logo": "/packages/modelgate.png?v=1a83fd6766a9",
+            "logo": "/packages/modelgate.png?v=95efd5815d41",
             "module": "gate",
             "example": "package-modelgate",
             "program": "use vendor::modelgate::gate;\nfn main() {\n    let baseline_cost = 1.0 / 4.0;\n    let candidate_cost = 5.0 / 4.0;\n    println!(baseline_cost);\n    println!(candidate_cost);\n    println!(gate_passes(0.105, 0.105, baseline_cost, candidate_cost, 0.0));\n}",
@@ -296,7 +334,18 @@
                 "Returns exit code 1. Both models get three rows right, but the candidate misses the more costly positive."
             ],
             "guide": "ai-packages",
-            "logoAlt": "Blyx penguin at a model release gate with pass and stop signals."
+            "logoAlt": "A grey secretarybird raises a black wing beside its copper eye patch.",
+            "editor": {
+                "id": "RahulChaube.blyx-modelgate",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-modelgate-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-modelgate-starter-0.1.0.zip",
+                "examplePrefix": "blyx-modelgate-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-modelgate/tree/c6fbc8a5b7b2ff31922d33d345d0f1392c944709/editor",
+                "sha256": "48efb0fe51664af785da2049489da2ed3e4987303aa77af5c4ccbfb181578a12"
+            }
         },
         {
             "slug": "classification",
@@ -421,14 +470,25 @@
             "commit": "2371260a23c140652d58fcec38a81a6e756a3282",
             "repository": "https://github.com/Rahulchaube1/blyx-backtest",
             "release": "https://github.com/Rahulchaube1/blyx-backtest/releases/tag/v0.1.1",
-            "logo": "/packages/backtest.png?v=9b2ebbb0a1cd",
+            "logo": "/packages/backtest.png?v=4f7453e91a44",
             "module": "backtest",
             "example": "package-backtest",
             "program": "use vendor::backtest::backtest;\n\nfn main() {\n    let demand = [10, 20, 30, 40, 50, 60, 70, 80];\n    let baselines = bt_baselines(demand, 3, 2, 1, 2);\n    println!(at(baselines, 0));\n    println!(at(baselines, 1));\n    println!(at(baselines, 2));\n    let model = bt_score(demand, [45, 55, 65, 75], 3, 2, 1);\n    println!(at(model, 1));\n}",
             "output": "4\n25\n30\n5\n",
             "cli": null,
             "guide": "ai-packages",
-            "logoAlt": "Blyx penguin positioning training and test windows on a timeline."
+            "logoAlt": "A silver Arctic tern banks back towards its forked tail.",
+            "editor": {
+                "id": "RahulChaube.blyx-backtest",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-backtest-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-backtest-starter-0.1.0.zip",
+                "examplePrefix": "blyx-backtest-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-backtest/tree/4464dc2d70238d107678b76d7a23b33d0c313e7a/editor",
+                "sha256": "ddacc55ce9633bc86a4fee052789e089d8f4437a5905cf1fabc8e009ef658cee"
+            }
         },
         {
             "name": "blyx-swiftlet",
@@ -461,7 +521,7 @@
             "commit": "3019450b9aa1174909e3772025c2c2deca127842",
             "repository": "https://github.com/Rahulchaube1/blyx-swiftlet",
             "release": "https://github.com/Rahulchaube1/blyx-swiftlet/releases/tag/v0.1.0",
-            "logo": "/packages/swiftlet.png",
+            "logo": "/packages/swiftlet.png?v=01ffe933b784",
             "module": "swiftlet",
             "example": "package-swiftlet",
             "program": "use vendor::swiftlet::swiftlet;\n\nfn main() {\n    let methods = sw_enable(sw_enable(0, \"GET\"), \"POST\");\n    println!(sw_status(true, methods, \"GET\"));\n    println!(sw_status(true, methods, \"DELETE\"));\n    println!(sw_status(false, methods, \"GET\"));\n}",
@@ -494,6 +554,18 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyx-swiftlet/releases/download/v0.1.0/SHA256SUMS"
+            },
+            "logoAlt": "A dark swiftlet changes direction on long, curved wings.",
+            "editor": {
+                "id": "RahulChaube.blyx-swiftlet",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-swiftlet-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-swiftlet-starter-0.1.0.zip",
+                "examplePrefix": "blyx-swiftlet-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-swiftlet/tree/afec01cad3db3086f124939f9077da3e205589ab/editor",
+                "sha256": "4e851e79f013f7ef4fa588b522e2cc5046e3f116e5a2e85e58f19de4117fbab9"
             }
         },
         {
@@ -523,7 +595,7 @@
             "commit": "facb71a12c9ad3b44e239f8527bcb314e8aa4f25",
             "repository": "https://github.com/Rahulchaube1/blyx-shrike",
             "release": "https://github.com/Rahulchaube1/blyx-shrike/releases/tag/v0.1.0",
-            "logo": "/packages/shrike.png",
+            "logo": "/packages/shrike.png?v=74a937a40f79",
             "module": "shrike",
             "example": "package-shrike",
             "program": "use vendor::shrike::shrike;\n\nfn main() {\n    let lexical = [41, 17, 83];\n    let semantic = [17, 83, 99];\n    let first = sh_next(lexical, semantic, 60.0, -1.0);\n    let second = sh_next(lexical, semantic, 60.0, first);\n    println!(first);\n    println!(second);\n}",
@@ -556,6 +628,18 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyx-shrike/releases/download/v0.1.0/SHA256SUMS"
+            },
+            "logoAlt": "A black-masked shrike turns its small hooked bill.",
+            "editor": {
+                "id": "RahulChaube.blyx-shrike",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-shrike-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-shrike-starter-0.1.0.zip",
+                "examplePrefix": "blyx-shrike-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-shrike/tree/d89d5d656443380df96d33fd256145be3d3ee847/editor",
+                "sha256": "3ac70396050a1892e3db4374651bfdaf67f3758989143f334fbef4d1222fb406"
             }
         },
         {
@@ -585,7 +669,7 @@
             "commit": "381a5fbefcf92e3520abe924c20da41d0dffc7fb",
             "repository": "https://github.com/Rahulchaube1/blyx-bunting",
             "release": "https://github.com/Rahulchaube1/blyx-bunting/releases/tag/v0.1.0",
-            "logo": "/packages/bunting.png",
+            "logo": "/packages/bunting.png?v=f59f908a8bbd",
             "module": "bunting",
             "example": "package-bunting",
             "program": "use vendor::bunting::bunting;\n\nfn main() {\n    let waits = [0, 4, 5, 8, 10, 12];\n    let edges = [5, 10];\n    println!(bu_count(waits, edges, 0));\n    println!(bu_count(waits, edges, 1));\n    println!(bu_count(waits, edges, 2));\n}",
@@ -618,6 +702,18 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyx-bunting/releases/download/v0.1.0/SHA256SUMS"
+            },
+            "logoAlt": "A painted bunting with a cobalt head, red breast and green wing.",
+            "editor": {
+                "id": "RahulChaube.blyx-bunting",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bunting-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bunting-starter-0.1.0.zip",
+                "examplePrefix": "blyx-bunting-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-bunting/tree/438eee1d29db34edf236cab8e38fb3f387a20392/editor",
+                "sha256": "136828d76cc19bdd790295254d8980e6c89f32e52a60f92f1796a3b28355fbba"
             }
         },
         {
@@ -651,7 +747,7 @@
             "commit": "54face061805e7bf749c500aa31b3341eee91b4b",
             "repository": "https://github.com/Rahulchaube1/blyx-wren",
             "release": "https://github.com/Rahulchaube1/blyx-wren/releases/tag/v0.1.0",
-            "logo": "/packages/wren.png",
+            "logo": "/packages/wren.png?v=ace67d14ac8b",
             "module": "wren",
             "example": "package-wren",
             "program": "use vendor::wren::wren;\n\nfn main() {\n    let first = wr_record(wr_start(), wr_near(0.1 + 0.2, 0.3, 0.000001, 0.0), false);\n    let second = wr_record(first, false, true);\n    let result = wr_record(second, 2 * 2 == 5, false);\n    println!(at(result, 0));\n    println!(at(result, 1));\n    println!(at(result, 2));\n    println!(wr_exit(result));\n}",
@@ -684,6 +780,18 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyx-wren/releases/download/v0.1.0/SHA256SUMS"
+            },
+            "logoAlt": "A chestnut wren with a cream eyebrow holds its striped tail upright.",
+            "editor": {
+                "id": "RahulChaube.blyx-wren",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-wren-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-wren-starter-0.1.0.zip",
+                "examplePrefix": "blyx-wren-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-wren/tree/0cf4648e2a09d218d8f11203550471c6993661ae/editor",
+                "sha256": "91d84246245d62e52e01f12296ee9a85816274ba434341777b9be0f49a2d53e0"
             }
         },
         {
@@ -713,7 +821,7 @@
             "commit": "660e7fe3dbf52f721675812af5d7b4730c3044c4",
             "repository": "https://github.com/Rahulchaube1/blyx-weaver",
             "release": "https://github.com/Rahulchaube1/blyx-weaver/releases/tag/v0.1.0",
-            "logo": "/packages/weaver.png",
+            "logo": "/packages/weaver.png?v=9e113ce76ea7",
             "module": "weaver",
             "example": "package-weaver",
             "program": "use vendor::weaver::weaver;\n\nfn main() {\n    let columns = we_columns(320, 8, 8, 80, 6);\n    let second = we_rect(320, 8, 8, columns, 48, 1);\n    println!(columns);\n    println!(at(second, 0));\n    println!(we_hit(320, 8, 8, columns, 48, 5, 113, 19));\n}",
@@ -746,6 +854,18 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyx-weaver/releases/download/v0.1.0/SHA256SUMS"
+            },
+            "logoAlt": "A golden masked weaver grips a green reed in its bill.",
+            "editor": {
+                "id": "RahulChaube.blyx-weaver",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-weaver-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-weaver-starter-0.1.0.zip",
+                "examplePrefix": "blyx-weaver-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-weaver/tree/1e7e8feba190665d4777ab7a2a1ff47f1f76d9bc/editor",
+                "sha256": "2d6890dde8c3243b5bf829d39428e4bcf8a20b7f782bef61848503315f63d49a"
             }
         },
         {
@@ -779,7 +899,7 @@
             "commit": "bd945ed8a3151e302073a37ac3b3c64aa1c1b8f5",
             "repository": "https://github.com/Rahulchaube1/blyx-dipper",
             "release": "https://github.com/Rahulchaube1/blyx-dipper/releases/tag/v0.1.0",
-            "logo": "/packages/dipper.png",
+            "logo": "/packages/dipper.png?v=259e802df82a",
             "module": "dipper",
             "example": "package-dipper",
             "program": "use vendor::dipper::dipper;\n\nfn main() {\n    // Tokens for a quoted field containing a comma followed by a second field.\n    let shape = di_shape([2, 0, 1, 0, 2, 1, 0, 3]);\n    println!(at(shape, 0));\n    println!(at(shape, 1));\n    println!(len(di_shape([2, 0])));\n}",
@@ -812,6 +932,18 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyx-dipper/releases/download/v0.1.0/SHA256SUMS"
+            },
+            "logoAlt": "A round brown dipper with a white breast leans towards a ripple.",
+            "editor": {
+                "id": "RahulChaube.blyx-dipper",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-dipper-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-dipper-starter-0.1.0.zip",
+                "examplePrefix": "blyx-dipper-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-dipper/tree/a44b2daa2a796b91fb7350ce55d1f8a8fddbce34/editor",
+                "sha256": "8ebea95fae166205a2f52faa08aec4f5014dde13b89e68dc542e4512150b598d"
             }
         },
         {
@@ -841,7 +973,7 @@
             "commit": "10469a81c17a5cf4f0b9d02cc1dcd071e1e45648",
             "repository": "https://github.com/Rahulchaube1/blyx-kestrel",
             "release": "https://github.com/Rahulchaube1/blyx-kestrel/releases/tag/v0.1.0",
-            "logo": "/packages/kestrel.png",
+            "logo": "/packages/kestrel.png?v=5ea354885b41",
             "module": "kestrel",
             "example": "package-kestrel",
             "program": "use vendor::kestrel::kestrel;\n\nfn main() {\n    let frame = ke_clock(5.0, 50.0, 10.0, 3);\n    println!(at(frame, 0));\n    println!(at(frame, 1));\n    println!(at(frame, 2));\n    println!(at(frame, 3));\n}",
@@ -874,6 +1006,18 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyx-kestrel/releases/download/v0.1.0/SHA256SUMS"
+            },
+            "logoAlt": "A russet and blue-grey kestrel hovers with its tail spread.",
+            "editor": {
+                "id": "RahulChaube.blyx-kestrel",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-kestrel-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-kestrel-starter-0.1.0.zip",
+                "examplePrefix": "blyx-kestrel-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-kestrel/tree/d72fd9dd2dc65dfecd813c5cd135580fb7d1478d/editor",
+                "sha256": "6ade650f3cf7ed7f7797a66a07d4325ef5feadfca5761cd81d48bdffcfcddd29"
             }
         },
         {
@@ -903,7 +1047,7 @@
             "commit": "945ce68dbeb541d760351f359a71252694b2db06",
             "repository": "https://github.com/Rahulchaube1/blyx-heron",
             "release": "https://github.com/Rahulchaube1/blyx-heron/releases/tag/v0.1.0",
-            "logo": "/packages/heron.png",
+            "logo": "/packages/heron.png?v=0a957ccbcbc3",
             "module": "heron",
             "example": "package-heron",
             "program": "use vendor::heron::heron;\n\nfn main() {\n    let first = he_observe(he_start(), 10.0, 100.0);\n    let next = he_observe(first, 13.0, 120.0);\n    let repeated = he_observe(next, 13.0, 145.0);\n    println!(at(repeated, 5));\n    println!(at(repeated, 3));\n    println!(he_status(repeated, 151.0, 30.0));\n}",
@@ -936,6 +1080,18 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyx-heron/releases/download/v0.1.0/SHA256SUMS"
+            },
+            "logoAlt": "A blue heron folds its neck and points its golden bill forward.",
+            "editor": {
+                "id": "RahulChaube.blyx-heron",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-heron-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-heron-starter-0.1.0.zip",
+                "examplePrefix": "blyx-heron-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-heron/tree/89736c2d2a8e21d42abb6a84de4a09dbd471cd85/editor",
+                "sha256": "0453a8d4dac1561ae6442182280f2736343f55f9bfca50538ea3eaf981f1f18b"
             }
         },
         {
@@ -1021,8 +1177,8 @@
             "commit": "358f4490d88c51b75b6a0736b8d139b4bc52a4b7",
             "repository": "https://github.com/Rahulchaube1/blyx-oriole",
             "release": "https://github.com/Rahulchaube1/blyx-oriole/releases/tag/v0.1.0",
-            "logo": "/packages/oriole.png",
-            "logoAlt": "Oriole bird emblem",
+            "logo": "/packages/oriole.png?v=13bd45032fd6",
+            "logoAlt": "An orange-and-black oriole lifts its head above two white wing bars.",
             "module": "oriole",
             "example": "package-oriole",
             "program": "use vendor::oriole::oriole;\n\nfn main() {\n    let now = 12.0;\n    let opens = 10.0;\n    let closes = 20.0;\n    let reviewers = [4, 4, 8];\n    let required = 2.0;\n    let result = oriole_decide(now, opens, closes, reviewers, required);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -1069,6 +1225,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-oriole",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-oriole-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-oriole-starter-0.1.0.zip",
+                "examplePrefix": "blyx-oriole-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-oriole/tree/15f41f28ed18b584dd91d647a152dd60cc781ac2/editor",
+                "sha256": "49634f92a1e45b72431eb6f6959bdffb6494d393ec51384e2694b023eaadffad"
             }
         },
         {
@@ -1154,8 +1321,8 @@
             "commit": "ca7637637f4620bf2e17b9c6a11af09125ff893e",
             "repository": "https://github.com/Rahulchaube1/blyx-avocet",
             "release": "https://github.com/Rahulchaube1/blyx-avocet/releases/tag/v0.1.0",
-            "logo": "/packages/avocet.png",
-            "logoAlt": "Avocet bird emblem",
+            "logo": "/packages/avocet.png?v=c8b4b80d2d17",
+            "logoAlt": "A pied avocet stretches its neck and sweeps its curved bill upwards.",
             "module": "avocet",
             "example": "package-avocet",
             "program": "use vendor::avocet::avocet;\n\nfn main() {\n    let onhand = 10.0;\n    let holds = [3, 4];\n    let target = 8.0;\n    let lot = 4.0;\n    let result = avocet_plan(onhand, holds, target, lot);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -1202,6 +1369,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-avocet",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-avocet-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-avocet-starter-0.1.0.zip",
+                "examplePrefix": "blyx-avocet-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-avocet/tree/d74f4ee19ee27fd0680d090bb213e1961363745f/editor",
+                "sha256": "19fcf6eac24489b54f8a12e26cedff7ffa086b480f0f8cde6289d0b460afe509"
             }
         },
         {
@@ -1287,8 +1465,8 @@
             "commit": "e007a9495559a3cdfe086ac27b4b758874112094",
             "repository": "https://github.com/Rahulchaube1/blyx-ibis",
             "release": "https://github.com/Rahulchaube1/blyx-ibis/releases/tag/v0.1.1",
-            "logo": "/packages/ibis.png",
-            "logoAlt": "Ibis bird emblem",
+            "logo": "/packages/ibis.png?v=cccdf94e1448",
+            "logoAlt": "A scarlet ibis looks down along its long, curved bill.",
             "module": "ibis",
             "example": "package-ibis",
             "program": "use vendor::ibis::ibis;\n\nfn main() {\n    let units = [2, 1];\n    let prices = [125, 50];\n    let payments = [200, 125];\n    let result = ibis_reconcile(units, prices, payments);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -1335,6 +1513,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-ibis",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-ibis-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-ibis-starter-0.1.0.zip",
+                "examplePrefix": "blyx-ibis-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-ibis/tree/6a2fb72dce50cf6312b7b93df0e48d0ed022bc1d/editor",
+                "sha256": "ad7d40f36899922752a13ea550319d25d1e29a999e8f920060a56016444e2063"
             }
         },
         {
@@ -1420,8 +1609,8 @@
             "commit": "7cbc6b99fa003842082d2b6d6a7e82b8513fe562",
             "repository": "https://github.com/Rahulchaube1/blyx-pipit",
             "release": "https://github.com/Rahulchaube1/blyx-pipit/releases/tag/v0.1.0",
-            "logo": "/packages/pipit.png",
-            "logoAlt": "Pipit bird emblem",
+            "logo": "/packages/pipit.png?v=9afc49baf0e1",
+            "logoAlt": "A streaked meadow pipit steps forward with one foot raised.",
             "module": "pipit",
             "example": "package-pipit",
             "program": "use vendor::pipit::pipit;\n\nfn main() {\n    let codes = [0, 3, 0];\n    let total = 8.0;\n    let batch = 2.0;\n    let tolerance = 1.0;\n    let result = pipit_continue_batch(codes, total, batch, tolerance);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -1468,6 +1657,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-pipit",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pipit-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pipit-starter-0.1.0.zip",
+                "examplePrefix": "blyx-pipit-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-pipit/tree/1fd49be56d980db45ec51cf7b3c53266456cc19e/editor",
+                "sha256": "c8f106b6c745d5be57ee219c59f8bd683d9849549b139e2d7f08d85fb9a5a6a3"
             }
         },
         {
@@ -1553,8 +1753,8 @@
             "commit": "7ac9b7118e56f8c9f0d5e6905e3c833986a36e79",
             "repository": "https://github.com/Rahulchaube1/blyx-nuthatch",
             "release": "https://github.com/Rahulchaube1/blyx-nuthatch/releases/tag/v0.1.0",
-            "logo": "/packages/nuthatch.png",
-            "logoAlt": "Nuthatch bird emblem",
+            "logo": "/packages/nuthatch.png?v=16caf22c46b5",
+            "logoAlt": "A white-breasted nuthatch climbs headfirst down a diagonal perch.",
             "module": "nuthatch",
             "example": "package-nuthatch",
             "program": "use vendor::nuthatch::nuthatch;\n\nfn main() {\n    let widths = [4, 4, 4, 4];\n    let columns = 6.0;\n    let start = 99.0;\n    let height = 2.0;\n    let result = nuthatch_layout(widths, columns, start, height);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -1601,6 +1801,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-nuthatch",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-nuthatch-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-nuthatch-starter-0.1.0.zip",
+                "examplePrefix": "blyx-nuthatch-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-nuthatch/tree/a602b4774cc2f2a432d2d7f598197aa57075d833/editor",
+                "sha256": "8e34d3440c1643ea16bb98cfb83672950122cdcb4ffe638da5f4b9abe89b1508"
             }
         },
         {
@@ -1686,8 +1897,8 @@
             "commit": "bb5e14660a3e17c10fc10565d39aa0976154adf7",
             "repository": "https://github.com/Rahulchaube1/blyx-turnstone",
             "release": "https://github.com/Rahulchaube1/blyx-turnstone/releases/tag/v0.1.0",
-            "logo": "/packages/turnstone.png",
-            "logoAlt": "Turnstone bird emblem",
+            "logo": "/packages/turnstone.png?v=4af2e254596f",
+            "logoAlt": "A ruddy turnstone levers a pebble with its short wedge-shaped bill.",
             "module": "turnstone",
             "example": "package-turnstone",
             "program": "use vendor::turnstone::turnstone;\n\nfn main() {\n    let size = 10.0;\n    let width = 4.0;\n    let checkpoints = [0, 0, 1];\n    let result = turnstone_resume(size, width, checkpoints);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -1734,6 +1945,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-turnstone",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-turnstone-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-turnstone-starter-0.1.0.zip",
+                "examplePrefix": "blyx-turnstone-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-turnstone/tree/7c08c8169b85ad6c20974cc941138a4022c86583/editor",
+                "sha256": "eb094a34aa7c6174c0c61ea41cbca3d796a44a6c85f9800ddfb5eacd6b5016c7"
             }
         },
         {
@@ -1819,8 +2041,8 @@
             "commit": "ed8a8ff2940f6795ce5faa34b89c95b35aac77ba",
             "repository": "https://github.com/Rahulchaube1/blyx-osprey",
             "release": "https://github.com/Rahulchaube1/blyx-osprey/releases/tag/v0.1.0",
-            "logo": "/packages/osprey.png",
-            "logoAlt": "Osprey bird emblem",
+            "logo": "/packages/osprey.png?v=ed74f010fd50",
+            "logoAlt": "A white-crowned osprey looks down beneath a dark eye stripe.",
             "module": "osprey",
             "example": "package-osprey",
             "program": "use vendor::osprey::osprey;\n\nfn main() {\n    let pred = [-2, 0, 2, 2];\n    let truth = [0, 0, 4, 2];\n    let width = 4.0;\n    let height = 4.0;\n    let threshold = 0.5;\n    let result = osprey_compare(pred, truth, width, height, threshold);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -1867,6 +2089,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-osprey",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-osprey-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-osprey-starter-0.1.0.zip",
+                "examplePrefix": "blyx-osprey-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-osprey/tree/fc6e8a1789ff0eef117a0532baef30b4dbfd6ee8/editor",
+                "sha256": "af59cd6fc19b14958ca9e866651b23fd641aad183c8ab451eb5b675cc1241646"
             }
         },
         {
@@ -1952,8 +2185,8 @@
             "commit": "b9876760077cf7fad4cdb28abe1868ff84905ead",
             "repository": "https://github.com/Rahulchaube1/blyx-warbler",
             "release": "https://github.com/Rahulchaube1/blyx-warbler/releases/tag/v0.1.1",
-            "logo": "/packages/warbler.png",
-            "logoAlt": "Warbler bird emblem",
+            "logo": "/packages/warbler.png?v=07f4fdc11ca5",
+            "logoAlt": "A bright yellow warbler raises its bill in song.",
             "module": "warbler",
             "example": "package-warbler",
             "program": "use vendor::warbler::warbler;\n\nfn main() {\n    let samples = [1, -1, 0, 0];\n    let ceiling = 1.0;\n    let allowed = 1.0;\n    let result = warbler_meter(samples, ceiling, allowed);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -2000,6 +2233,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-warbler",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-warbler-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-warbler-starter-0.1.0.zip",
+                "examplePrefix": "blyx-warbler-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-warbler/tree/c2994bb9824aebf4f8a51a39e2169a5d65895f33/editor",
+                "sha256": "e881fbf2bce60fed32e0768f7cdc245fc15dc3c62b0addfec769d95957aff79a"
             }
         },
         {
@@ -2085,8 +2329,8 @@
             "commit": "94e468ce8ca37d16e698c0154963ccdc0e316259",
             "repository": "https://github.com/Rahulchaube1/blyx-linnet",
             "release": "https://github.com/Rahulchaube1/blyx-linnet/releases/tag/v0.1.1",
-            "logo": "/packages/linnet.png",
-            "logoAlt": "Linnet bird emblem",
+            "logo": "/packages/linnet.png?v=c417115b498c",
+            "logoAlt": "A rose-breasted linnet with a crimson forehead opens its small bill.",
             "module": "linnet",
             "example": "package-linnet",
             "program": "use vendor::linnet::linnet;\n\nfn main() {\n    let levels = [0, 3, 0, 3, 0, 0, 3];\n    let threshold = 1.0;\n    let gap = 1.0;\n    let frame_ms = 10.0;\n    let result = linnet_segment(levels, threshold, gap, frame_ms);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -2133,6 +2377,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-linnet",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-linnet-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-linnet-starter-0.1.0.zip",
+                "examplePrefix": "blyx-linnet-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-linnet/tree/5ecffbc810989ef3b389717a0ad4b2be9a848360/editor",
+                "sha256": "94cdd92a658cc6ef1ede0df74d506e44c009fd62137ba436532105cb2daaeaca"
             }
         },
         {
@@ -2218,8 +2473,8 @@
             "commit": "90951d8f102e134f34c68d82d8c6b0de9927fbb8",
             "repository": "https://github.com/Rahulchaube1/blyx-curlew",
             "release": "https://github.com/Rahulchaube1/blyx-curlew/releases/tag/v0.1.0",
-            "logo": "/packages/curlew.png",
-            "logoAlt": "Curlew bird emblem",
+            "logo": "/packages/curlew.png?v=1ee3288e4c40",
+            "logoAlt": "A speckled curlew points its long, curved bill at the ground.",
             "module": "curlew",
             "example": "package-curlew",
             "program": "use vendor::curlew::curlew;\n\nfn main() {\n    let east = [-1, 4];\n    let north = [1, 3];\n    let cell = 2.0;\n    let result = curlew_tile(east, north, cell);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -2266,6 +2521,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-curlew",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-curlew-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-curlew-starter-0.1.0.zip",
+                "examplePrefix": "blyx-curlew-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-curlew/tree/3119edbf50250ad1b95c95223b22306c9f316741/editor",
+                "sha256": "43207c29fdf34b715e0f49f8f8433aa3426e6df3b93347acf32f491cda596edb"
             }
         },
         {
@@ -2351,8 +2617,8 @@
             "commit": "28be52010c166155c3b24fc3ade5009adef6fba6",
             "repository": "https://github.com/Rahulchaube1/blyx-egret",
             "release": "https://github.com/Rahulchaube1/blyx-egret/releases/tag/v0.1.0",
-            "logo": "/packages/egret.png",
-            "logoAlt": "Egret bird emblem",
+            "logo": "/packages/egret.png?v=5bbc7236e900",
+            "logoAlt": "A white egret with trailing plumes stretches its elegant neck.",
             "module": "egret",
             "example": "package-egret",
             "program": "use vendor::egret::egret;\n\nfn main() {\n    let counts = [2, 0, 2];\n    let result = egret_survey(counts);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -2399,6 +2665,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-egret",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-egret-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-egret-starter-0.1.0.zip",
+                "examplePrefix": "blyx-egret-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-egret/tree/b2896852ce3bbd23c45b53bf92a0392ede36ed4a/editor",
+                "sha256": "e57b7c917623879b245f2c0732717bcca3322e7be5231a2bef5ab3cea7a50747"
             }
         },
         {
@@ -2484,8 +2761,8 @@
             "commit": "1d2a585d2b2e595d77b52ae22a8c6d57fbf1bcda",
             "repository": "https://github.com/Rahulchaube1/blyx-tanager",
             "release": "https://github.com/Rahulchaube1/blyx-tanager/releases/tag/v0.1.0",
-            "logo": "/packages/tanager.png",
-            "logoAlt": "Tanager bird emblem",
+            "logo": "/packages/tanager.png?v=b4b4e493c787",
+            "logoAlt": "A lime-headed tanager looks back over its turquoise breast.",
             "module": "tanager",
             "example": "package-tanager",
             "program": "use vendor::tanager::tanager;\n\nfn main() {\n    let starts = [1, 1, 2];\n    let ends = [2, 2, 2];\n    let node = 2.0;\n    let result = tanager_inspect(starts, ends, node);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -2532,6 +2809,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-tanager",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-tanager-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-tanager-starter-0.1.0.zip",
+                "examplePrefix": "blyx-tanager-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-tanager/tree/bcd693a33b6f37da2abebc17c040fc591f762603/editor",
+                "sha256": "98356284186857daf9afc2cccd52ed743cdf4ab23c6678367f0ff47c83f8f0e7"
             }
         },
         {
@@ -2617,8 +2905,8 @@
             "commit": "c4085cb3aa2f26a0a9c84fb4244cf6921d1ab5d6",
             "repository": "https://github.com/Rahulchaube1/blyx-merganser",
             "release": "https://github.com/Rahulchaube1/blyx-merganser/releases/tag/v0.1.0",
-            "logo": "/packages/merganser.png",
-            "logoAlt": "Merganser bird emblem",
+            "logo": "/packages/merganser.png?v=c99d077c684d",
+            "logoAlt": "A hooded merganser displays a broad black-and-white fan crest.",
             "module": "merganser",
             "example": "package-merganser",
             "program": "use vendor::merganser::merganser;\n\nfn main() {\n    let equity = [100, 80, 75, 100];\n    let depth_limit = 0.25;\n    let duration_limit = 1.0;\n    let result = merganser_report(equity, depth_limit, duration_limit);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -2665,6 +2953,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-merganser",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-merganser-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-merganser-starter-0.1.0.zip",
+                "examplePrefix": "blyx-merganser-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-merganser/tree/dd74ded274e8862c6c14b76e32ff0cb994be212a/editor",
+                "sha256": "8eec38f0b2260951b616825b46b3144ef7021891299026eec587e9504346b515"
             }
         },
         {
@@ -2750,8 +3049,8 @@
             "commit": "380c8a3a434e3c688ca8aebfbbbbb1eaeed6b988",
             "repository": "https://github.com/Rahulchaube1/blyx-pintail",
             "release": "https://github.com/Rahulchaube1/blyx-pintail/releases/tag/v0.1.0",
-            "logo": "/packages/pintail.png",
-            "logoAlt": "Pintail bird emblem",
+            "logo": "/packages/pintail.png?v=d3b70360ce9a",
+            "logoAlt": "A chestnut-headed pintail holds its long black tail at an angle.",
             "module": "pintail",
             "example": "package-pintail",
             "program": "use vendor::pintail::pintail;\n\nfn main() {\n    let current = [0.75, 0.25];\n    let target = [0.5, 0.5];\n    let turnover_cap = 0.125;\n    let result = pintail_compare(current, target, turnover_cap);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -2798,6 +3097,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-pintail",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pintail-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pintail-starter-0.1.0.zip",
+                "examplePrefix": "blyx-pintail-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-pintail/tree/b76f69ca4af5bb820ae43302f0899692f98ca5e9/editor",
+                "sha256": "f3b8e340691fa3b9e637f313e0846ac94a363af8299f22f445bde47dc0e580e2"
             }
         },
         {
@@ -2883,8 +3193,8 @@
             "commit": "7fc556c3bf957b90e454937444f8373459b14907",
             "repository": "https://github.com/Rahulchaube1/blyx-siskin",
             "release": "https://github.com/Rahulchaube1/blyx-siskin/releases/tag/v0.1.0",
-            "logo": "/packages/siskin.png",
-            "logoAlt": "Siskin bird emblem",
+            "logo": "/packages/siskin.png?v=f144b002ec91",
+            "logoAlt": "An olive and yellow siskin shows a black cap and bright wing bar.",
             "module": "siskin",
             "example": "package-siskin",
             "program": "use vendor::siskin::siskin;\n\nfn main() {\n    let opening = 20.0;\n    let flows = [-15, -10, 30];\n    let reserve = 10.0;\n    let result = siskin_project(opening, flows, reserve);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -2931,6 +3241,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-siskin",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-siskin-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-siskin-starter-0.1.0.zip",
+                "examplePrefix": "blyx-siskin-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-siskin/tree/89229662e7d3a26bd039c43268418df82a751a54/editor",
+                "sha256": "4f8c37796468dd5d026cc85050668a70f440d132d30f47a9e24514b9567b7d5e"
             }
         },
         {
@@ -3016,8 +3337,8 @@
             "commit": "f5b6ff784571e7dde8ed0a27259eaa35b332c3a5",
             "repository": "https://github.com/Rahulchaube1/blyx-sandpiper",
             "release": "https://github.com/Rahulchaube1/blyx-sandpiper/releases/tag/v0.1.0",
-            "logo": "/packages/sandpiper.png",
-            "logoAlt": "Sandpiper bird emblem",
+            "logo": "/packages/sandpiper.png?v=93030a1b7681",
+            "logoAlt": "A spotted sandpiper pauses mid-step with its tail lifted.",
             "module": "sandpiper",
             "example": "package-sandpiper",
             "program": "use vendor::sandpiper::sandpiper;\n\nfn main() {\n    let issued = 10.0;\n    let ttl = 8.0;\n    let now = 19.0;\n    let base = 2.0;\n    let ceiling = 16.0;\n    let attempt = 1.0;\n    let result = sandpiper_redeliver(issued, ttl, now, base, ceiling, attempt);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -3064,6 +3385,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-sandpiper",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-sandpiper-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-sandpiper-starter-0.1.0.zip",
+                "examplePrefix": "blyx-sandpiper-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-sandpiper/tree/4e8ee29da04b9534f3427ac813538704687b052c/editor",
+                "sha256": "0b5877268741411337767544f0576478436981d71c6c4b985396b0a9db0b33ff"
             }
         },
         {
@@ -3149,8 +3481,8 @@
             "commit": "8207bcf64241ec9e11673d5baa951b91014a1e92",
             "repository": "https://github.com/Rahulchaube1/blyx-petrel",
             "release": "https://github.com/Rahulchaube1/blyx-petrel/releases/tag/v0.1.0",
-            "logo": "/packages/petrel.png",
-            "logoAlt": "Petrel bird emblem",
+            "logo": "/packages/petrel.png?v=647c9d7b647d",
+            "logoAlt": "A charcoal storm petrel touches a wave with its yellow feet.",
             "module": "petrel",
             "example": "package-petrel",
             "program": "use vendor::petrel::petrel;\n\nfn main() {\n    let tokens = 2.0;\n    let capacity = 10.0;\n    let rate = 2.0;\n    let elapsed = 1.0;\n    let cost = 8.0;\n    let deadline = 2.0;\n    let result = petrel_admit(tokens, capacity, rate, elapsed, cost, deadline);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -3197,6 +3529,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-petrel",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-petrel-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-petrel-starter-0.1.0.zip",
+                "examplePrefix": "blyx-petrel-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-petrel/tree/b4a7fd237d54b7ad26589f47d2d377c1095e176e/editor",
+                "sha256": "5c5b0dfc55a60b98f2346a6fcd9a66df9ccfceac85bfb2f2f3b380571b56537e"
             }
         },
         {
@@ -3282,8 +3625,8 @@
             "commit": "6007ac115d4a97cdc162be8876a4633502c0e61b",
             "repository": "https://github.com/Rahulchaube1/blyx-fulmar",
             "release": "https://github.com/Rahulchaube1/blyx-fulmar/releases/tag/v0.1.0",
-            "logo": "/packages/fulmar.png",
-            "logoAlt": "Fulmar bird emblem",
+            "logo": "/packages/fulmar.png?v=05dae77e31eb",
+            "logoAlt": "A grey and white fulmar glides with its wings held level.",
             "module": "fulmar",
             "example": "package-fulmar",
             "program": "use vendor::fulmar::fulmar;\n\nfn main() {\n    let delivered = [4, 6, 5, 6];\n    let acked = [4, 6];\n    let start = 4.0;\n    let result = fulmar_checkpoint(delivered, acked, start);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -3330,6 +3673,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-fulmar",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-fulmar-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-fulmar-starter-0.1.0.zip",
+                "examplePrefix": "blyx-fulmar-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-fulmar/tree/ecf9ce10fb8c6141ea1507e7b0242cd4244ce63f/editor",
+                "sha256": "2ef75b54f3fa452e3e69de66cd7e5bc0d6c75acaaa226e8f9c23e637a6692d4a"
             }
         },
         {
@@ -3415,8 +3769,8 @@
             "commit": "151d0acc73edd71e2ce170fd4bf5292bf3e456ca",
             "repository": "https://github.com/Rahulchaube1/blyx-waxwing",
             "release": "https://github.com/Rahulchaube1/blyx-waxwing/releases/tag/v0.1.0",
-            "logo": "/packages/waxwing.png",
-            "logoAlt": "Waxwing bird emblem",
+            "logo": "/packages/waxwing.png?v=b538f7e89768",
+            "logoAlt": "A crested cinnamon waxwing with a black mask and red wing tips.",
             "module": "waxwing",
             "example": "package-waxwing",
             "program": "use vendor::waxwing::waxwing;\n\nfn main() {\n    let depths = [1, 2, 2];\n    let units = [1, 3, 2];\n    let visits = [1, 4, 2];\n    let max_depth = 3.0;\n    let budget = 15.0;\n    let result = waxwing_budget(depths, units, visits, max_depth, budget);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -3463,6 +3817,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-waxwing",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-waxwing-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-waxwing-starter-0.1.0.zip",
+                "examplePrefix": "blyx-waxwing-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-waxwing/tree/a7e38263ce76b55c917f86ee487ebd70b77f5d4c/editor",
+                "sha256": "1e12f20bc79a6ba9ebaeb3c87dd8029682410e4e26080afb346b00996b8ce720"
             }
         },
         {
@@ -3548,8 +3913,8 @@
             "commit": "a2cf0c721a2d3efa7b906cfdab8d6eb5ad8af310",
             "repository": "https://github.com/Rahulchaube1/blyx-martin",
             "release": "https://github.com/Rahulchaube1/blyx-martin/releases/tag/v0.1.0",
-            "logo": "/packages/martin.png",
-            "logoAlt": "Martin bird emblem",
+            "logo": "/packages/martin.png?v=13a87232034a",
+            "logoAlt": "A blue-and-white house martin arcs through the air on pointed wings.",
             "module": "martin",
             "example": "package-martin",
             "program": "use vendor::martin::martin;\n\nfn main() {\n    let budget = 100.0;\n    let stages = [20, 30];\n    let wait = 10.0;\n    let minimum = 35.0;\n    let status = 14.0;\n    let idempotent = 1.0;\n    let attempts = 1.0;\n    let limit = 3.0;\n    let result = martin_retry(budget, stages, wait, minimum, status, idempotent, attempts, limit);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -3596,6 +3961,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-martin",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-martin-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-martin-starter-0.1.0.zip",
+                "examplePrefix": "blyx-martin-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-martin/tree/420d8a438a5564448525427b746186f9502ed105/editor",
+                "sha256": "0f9d93726020850ce90c70cf00799d6b671b96bfb498a4683232b3827d43c59a"
             }
         },
         {
@@ -3681,8 +4057,8 @@
             "commit": "3425d588518e80673bab51e21bc1adee6d2a0962",
             "repository": "https://github.com/Rahulchaube1/blyx-kinglet",
             "release": "https://github.com/Rahulchaube1/blyx-kinglet/releases/tag/v0.1.0",
-            "logo": "/packages/kinglet.png",
-            "logoAlt": "Kinglet bird emblem",
+            "logo": "/packages/kinglet.png?v=5e04d56cbfd3",
+            "logoAlt": "A small olive kinglet looks up beneath a brilliant gold crown.",
             "module": "kinglet",
             "example": "package-kinglet",
             "program": "use vendor::kinglet::kinglet;\n\nfn main() {\n    let size = 100.0;\n    let mode = 1.0;\n    let first = 90.0;\n    let last = 200.0;\n    let result = kinglet_respond(size, mode, first, last);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -3729,6 +4105,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-kinglet",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-kinglet-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-kinglet-starter-0.1.0.zip",
+                "examplePrefix": "blyx-kinglet-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-kinglet/tree/f81c1371f5e083ec3937ed35e8e4e5b7530700eb/editor",
+                "sha256": "cb064ccc04bf61a302cf54dd2322a9d30d26deaeff9fcbe4ccdfc5e44a68a55c"
             }
         },
         {
@@ -3814,8 +4201,8 @@
             "commit": "ed12bda58e6e43b696763d33fced700d6758cc3a",
             "repository": "https://github.com/Rahulchaube1/blyx-barnowl",
             "release": "https://github.com/Rahulchaube1/blyx-barnowl/releases/tag/v0.1.0",
-            "logo": "/packages/barnowl.png",
-            "logoAlt": "Barnowl bird emblem",
+            "logo": "/packages/barnowl.png?v=b21979a9354d",
+            "logoAlt": "A copper barn owl tilts its heart-shaped white face.",
             "module": "barnowl",
             "example": "package-barnowl",
             "program": "use vendor::barnowl::barnowl;\n\nfn main() {\n    let ids = [40, 42, 42];\n    let times = [10, 14, 12];\n    let result = barnowl_audit(ids, times);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -3862,6 +4249,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-barnowl",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-barnowl-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-barnowl-starter-0.1.0.zip",
+                "examplePrefix": "blyx-barnowl-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-barnowl/tree/3e07936749044c16a8f2ae2f762b48f899664f6c/editor",
+                "sha256": "c98c8b95e3d09e3e304b8d9224496933d46560ef28d100bdfa7a8df2bbfdd302"
             }
         },
         {
@@ -3947,8 +4345,8 @@
             "commit": "ec025b6ac9db4d50ced229358b0a54e7c0d35602",
             "repository": "https://github.com/Rahulchaube1/blyx-harrier",
             "release": "https://github.com/Rahulchaube1/blyx-harrier/releases/tag/v0.1.0",
-            "logo": "/packages/harrier.png",
-            "logoAlt": "Harrier bird emblem",
+            "logo": "/packages/harrier.png?v=a0a25dd9dbd3",
+            "logoAlt": "A silver-grey harrier glides on black-tipped wings.",
             "module": "harrier",
             "example": "package-harrier",
             "program": "use vendor::harrier::harrier;\n\nfn main() {\n    let now = 100.0;\n    let begins = 90.0;\n    let expires = 110.0;\n    let skew = 0.0;\n    let observed = 2.0;\n    let required = 2.0;\n    let auth_time = 92.0;\n    let max_age = 10.0;\n    let result = harrier_session(now, begins, expires, skew, observed, required, auth_time, max_age);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -3995,6 +4393,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-harrier",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-harrier-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-harrier-starter-0.1.0.zip",
+                "examplePrefix": "blyx-harrier-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-harrier/tree/d4cf6e8d128e9626c39bd4c413dcada6e28070b2/editor",
+                "sha256": "1a37bd21026182f8436727253c4f1217be6d4039a1f5e26e5fa0ed058c4694ad"
             }
         },
         {
@@ -4080,8 +4489,8 @@
             "commit": "603e6eca4500d34af035e4b77648d06495e40a50",
             "repository": "https://github.com/Rahulchaube1/blyx-plover",
             "release": "https://github.com/Rahulchaube1/blyx-plover/releases/tag/v0.1.0",
-            "logo": "/packages/plover.png",
-            "logoAlt": "Plover bird emblem",
+            "logo": "/packages/plover.png?v=18bd13424694",
+            "logoAlt": "A sandy plover stands upright with a dark band across its breast.",
             "module": "plover",
             "example": "package-plover",
             "program": "use vendor::plover::plover;\n\nfn main() {\n    let fast_bad = 2.0;\n    let fast_total = 10.0;\n    let slow_bad = 10.0;\n    let slow_total = 100.0;\n    let allowed = 0.05;\n    let trigger = 2.0;\n    let result = plover_alert(fast_bad, fast_total, slow_bad, slow_total, allowed, trigger);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -4128,6 +4537,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-plover",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-plover-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-plover-starter-0.1.0.zip",
+                "examplePrefix": "blyx-plover-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-plover/tree/2da343c11a5d18c0da0e6d060eb93ef8f22021a7/editor",
+                "sha256": "0d910e16e7d6ed6af39b23b859b7726046c1f7c236b4042f4be78f9da6a04a03"
             }
         },
         {
@@ -4213,8 +4633,8 @@
             "commit": "81ac8283a5e938042905b583413bbb9609889c05",
             "repository": "https://github.com/Rahulchaube1/blyx-jacana",
             "release": "https://github.com/Rahulchaube1/blyx-jacana/releases/tag/v0.1.1",
-            "logo": "/packages/jacana.png",
-            "logoAlt": "Jacana bird emblem",
+            "logo": "/packages/jacana.png?v=ced183136c23",
+            "logoAlt": "A chestnut jacana with a red forehead spreads its toes over a lily pad.",
             "module": "jacana",
             "example": "package-jacana",
             "program": "use vendor::jacana::jacana;\n\nfn main() {\n    let events = [0, 6];\n    let trials = [2, 6];\n    let weights = [1, 1];\n    let result = jacana_standardize(events, trials, weights);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -4261,6 +4681,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-jacana",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-jacana-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-jacana-starter-0.1.0.zip",
+                "examplePrefix": "blyx-jacana-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-jacana/tree/a15755d19ba1336efdc28edead2484c8709a3873/editor",
+                "sha256": "0c7f4b6e2131935547303a770292a0fdbb67fe2e8faea3f84bff71399c7e52a5"
             }
         },
         {
@@ -4346,8 +4777,8 @@
             "commit": "4298bb79a12491172685dc8d33de25c979201941",
             "repository": "https://github.com/Rahulchaube1/blyx-redstart",
             "release": "https://github.com/Rahulchaube1/blyx-redstart/releases/tag/v0.1.0",
-            "logo": "/packages/redstart.png",
-            "logoAlt": "Redstart bird emblem",
+            "logo": "/packages/redstart.png?v=97271a8200be",
+            "logoAlt": "A black-and-orange redstart flashes its tail and wing patches.",
             "module": "redstart",
             "example": "package-redstart",
             "program": "use vendor::redstart::redstart;\n\nfn main() {\n    let alpha = 1.0;\n    let beta = 1.0;\n    let positive = 1.0;\n    let negative = 1.0;\n    let result = redstart_posterior(alpha, beta, positive, negative);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -4394,6 +4825,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-redstart",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-redstart-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-redstart-starter-0.1.0.zip",
+                "examplePrefix": "blyx-redstart-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-redstart/tree/fe11254b5678d7a80fe4297857fb885e8f7d7edc/editor",
+                "sha256": "394c593e5331f9644e02ecd07120f79e692cc97309f4dfdb0ecbb06053cb7f43"
             }
         },
         {
@@ -4479,8 +4921,8 @@
             "commit": "9581131fd8b756845514466746e209d790396011",
             "repository": "https://github.com/Rahulchaube1/blyx-quail",
             "release": "https://github.com/Rahulchaube1/blyx-quail/releases/tag/v0.1.0",
-            "logo": "/packages/quail.png",
-            "logoAlt": "Quail bird emblem",
+            "logo": "/packages/quail.png?v=7d39ab28e599",
+            "logoAlt": "A blue-grey quail wears a curved black plume above its face.",
             "module": "quail",
             "example": "package-quail",
             "program": "use vendor::quail::quail;\n\nfn main() {\n    let state = [1, 0];\n    let gates = [1, 2];\n    let zero = 2.0;\n    let one = 6.0;\n    let result = quail_experiment(state, gates, zero, one);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -4527,6 +4969,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-quail",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-quail-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-quail-starter-0.1.0.zip",
+                "examplePrefix": "blyx-quail-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-quail/tree/e7e920a6fba6e6cfda795824825963c2b92d86f8/editor",
+                "sha256": "d6e24ac82be2e4d6535b621d5eed67ea644313234f1bb1521f66435da403ec60"
             }
         },
         {
@@ -4612,8 +5065,8 @@
             "commit": "0eef3f57c44013ca6c7a0f44f587866ff0ef2e04",
             "repository": "https://github.com/Rahulchaube1/blyx-skimmer",
             "release": "https://github.com/Rahulchaube1/blyx-skimmer/releases/tag/v0.1.0",
-            "logo": "/packages/skimmer.png",
-            "logoAlt": "Skimmer bird emblem",
+            "logo": "/packages/skimmer.png?v=051fa61ebf84",
+            "logoAlt": "A skimmer holds its long red-and-black lower bill against the water.",
             "module": "skimmer",
             "example": "package-skimmer",
             "program": "use vendor::skimmer::skimmer;\n\nfn main() {\n    let counts = [4, 0, 0, 4];\n    let expected_even = 1.0;\n    let tolerance = 0.1;\n    let result = skimmer_characterize(counts, expected_even, tolerance);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -4660,6 +5113,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-skimmer",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-skimmer-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-skimmer-starter-0.1.0.zip",
+                "examplePrefix": "blyx-skimmer-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-skimmer/tree/958d535b7713f62401c3553fa36a56c93b2019ef/editor",
+                "sha256": "07a8e965c10fee59e7f33cca83c17e8335650010a52c0ad315659b10e090fd94"
             }
         },
         {
@@ -4745,8 +5209,8 @@
             "commit": "aa811e8dc8d9ea9ce421741e6a5ce8f519c931a0",
             "repository": "https://github.com/Rahulchaube1/blyx-magpie",
             "release": "https://github.com/Rahulchaube1/blyx-magpie/releases/tag/v0.1.0",
-            "logo": "/packages/magpie.png",
-            "logoAlt": "Magpie bird emblem",
+            "logo": "/packages/magpie.png?v=4ad77ca60cd1",
+            "logoAlt": "A black-and-white magpie shows an iridescent blue-green tail.",
             "module": "magpie",
             "example": "package-magpie",
             "program": "use vendor::magpie::magpie;\n\nfn main() {\n    let x = [0, 1, 4];\n    let y = [2, 2, 2];\n    let max_gap = 2.0;\n    let result = magpie_integrate(x, y, max_gap);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -4793,6 +5257,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-magpie",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-magpie-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-magpie-starter-0.1.0.zip",
+                "examplePrefix": "blyx-magpie-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-magpie/tree/869234f4887d5a7b9d3b4b4e56bb9c456bc00448/editor",
+                "sha256": "d81b25b022bb77f89f4bde242542f18e28258b7bb6bf4d8f3ec4b947532bc5e9"
             }
         },
         {
@@ -4878,8 +5353,8 @@
             "commit": "29d3cb8277307954e528f3d60c8f6c0aee6a3439",
             "repository": "https://github.com/Rahulchaube1/blyx-flamingo",
             "release": "https://github.com/Rahulchaube1/blyx-flamingo/releases/tag/v0.1.0",
-            "logo": "/packages/flamingo.png",
-            "logoAlt": "Flamingo bird emblem",
+            "logo": "/packages/flamingo.png?v=b94b2817ccd7",
+            "logoAlt": "A coral flamingo bends its neck above a black-tipped bill.",
             "module": "flamingo",
             "example": "package-flamingo",
             "program": "use vendor::flamingo::flamingo;\n\nfn main() {\n    let samples = [3, 11];\n    let include_zero = 1.0;\n    let intervals = 4.0;\n    let result = flamingo_axis(samples, include_zero, intervals);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -4926,6 +5401,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-flamingo",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-flamingo-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-flamingo-starter-0.1.0.zip",
+                "examplePrefix": "blyx-flamingo-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-flamingo/tree/e78d22e20d9c666004c5fd32d611d16ecce9dcf2/editor",
+                "sha256": "4f80751d148b3961ccfe3733626af287b4e46a4170d4cbcb1c9f53515a7ed78e"
             }
         },
         {
@@ -5011,8 +5497,8 @@
             "commit": "8e77374a87f41d5e27f68e7461d453989b9394d7",
             "repository": "https://github.com/Rahulchaube1/blyx-bittern",
             "release": "https://github.com/Rahulchaube1/blyx-bittern/releases/tag/v0.1.0",
-            "logo": "/packages/bittern.png",
-            "logoAlt": "Bittern bird emblem",
+            "logo": "/packages/bittern.png?v=1937111d8e54",
+            "logoAlt": "A buff-and-brown striped bittern points its bill straight up.",
             "module": "bittern",
             "example": "package-bittern",
             "program": "use vendor::bittern::bittern;\n\nfn main() {\n    let available = [1, 2, 5];\n    let applied = [1, 2];\n    let expected = [10, 20];\n    let actual = [10, 20];\n    let dirty = 0.0;\n    let result = bittern_preflight(available, applied, expected, actual, dirty);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -5059,6 +5545,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-bittern",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bittern-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bittern-starter-0.1.0.zip",
+                "examplePrefix": "blyx-bittern-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-bittern/tree/af7e801d8b4ce4dc4fe84bad5dae5d9508c21c8c/editor",
+                "sha256": "dcd288d55d8b9410b0c06b675578c8444a4f2bf50990709e71cbee6bfa13e75c"
             }
         },
         {
@@ -5144,8 +5641,8 @@
             "commit": "900d079d4aee0b967733c33226d76cc08aff59f7",
             "repository": "https://github.com/Rahulchaube1/blyx-grebe",
             "release": "https://github.com/Rahulchaube1/blyx-grebe/releases/tag/v0.1.0",
-            "logo": "/packages/grebe.png",
-            "logoAlt": "Grebe bird emblem",
+            "logo": "/packages/grebe.png?v=7e81c41441b5",
+            "logoAlt": "A crested grebe spreads its chestnut cheek ruff above the water.",
             "module": "grebe",
             "example": "package-grebe",
             "program": "use vendor::grebe::grebe;\n\nfn main() {\n    let keys = [10, 20, 30, 40];\n    let cursor = 15.0;\n    let size = 2.0;\n    let result = grebe_page(keys, cursor, size);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -5192,6 +5689,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-grebe",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-grebe-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-grebe-starter-0.1.0.zip",
+                "examplePrefix": "blyx-grebe-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-grebe/tree/91ea243ad5ee0f8092107f3e3f78289e75005f00/editor",
+                "sha256": "a01bfd2ebd69b1cd1b9fbaac641ab0849cf00096244bb63f7faf971d73892fa0"
             }
         },
         {
@@ -5277,8 +5785,8 @@
             "commit": "19220f4076dab1f086a2252d862869843a8bbdc2",
             "repository": "https://github.com/Rahulchaube1/blyx-dunlin",
             "release": "https://github.com/Rahulchaube1/blyx-dunlin/releases/tag/v0.1.0",
-            "logo": "/packages/dunlin.png",
-            "logoAlt": "Dunlin bird emblem",
+            "logo": "/packages/dunlin.png?v=89f8ee5a1335",
+            "logoAlt": "A rufous dunlin with a dark belly leans down to inspect the ground.",
             "module": "dunlin",
             "example": "package-dunlin",
             "program": "use vendor::dunlin::dunlin;\n\nfn main() {\n    let parents = [1, 1, 3];\n    let children = [1, 2, 2];\n    let result = dunlin_check(parents, children);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -5325,6 +5833,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-dunlin",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-dunlin-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-dunlin-starter-0.1.0.zip",
+                "examplePrefix": "blyx-dunlin-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-dunlin/tree/85ff6492cdad88e6d9eba42a7cc91bd5de0aebb4/editor",
+                "sha256": "2ef34622febdf6873fa9d98add579f6c67740c8abeff9db6703992b28f2b7b81"
             }
         },
         {
@@ -5410,8 +5929,8 @@
             "commit": "44b22f8bed88b555c358af8133476c1e05f6ef17",
             "repository": "https://github.com/Rahulchaube1/blyx-sanderling",
             "release": "https://github.com/Rahulchaube1/blyx-sanderling/releases/tag/v0.1.0",
-            "logo": "/packages/sanderling.png",
-            "logoAlt": "Sanderling bird emblem",
+            "logo": "/packages/sanderling.png?v=889ffe44c05f",
+            "logoAlt": "A silver-white sanderling runs on short dark legs.",
             "module": "sanderling",
             "example": "package-sanderling",
             "program": "use vendor::sanderling::sanderling;\n\nfn main() {\n    let age_at_store = 8.0;\n    let stored = 100.0;\n    let now = 105.0;\n    let lifetime = 10.0;\n    let grace = 6.0;\n    let mandatory = 0.0;\n    let result = sanderling_lookup(age_at_store, stored, now, lifetime, grace, mandatory);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -5458,6 +5977,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-sanderling",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-sanderling-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-sanderling-starter-0.1.0.zip",
+                "examplePrefix": "blyx-sanderling-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-sanderling/tree/0d21666c7708759e901db85c7767d3fc3d4f4ce2/editor",
+                "sha256": "a076735cd92a293c942d86d61d01e73031fdf2a307ed3102b21919b5d2494ee0"
             }
         },
         {
@@ -5543,8 +6073,8 @@
             "commit": "637e3ebbb24d74f3d45119eccb224666104a9fda",
             "repository": "https://github.com/Rahulchaube1/blyx-cormorant",
             "release": "https://github.com/Rahulchaube1/blyx-cormorant/releases/tag/v0.1.0",
-            "logo": "/packages/cormorant.png",
-            "logoAlt": "Cormorant bird emblem",
+            "logo": "/packages/cormorant.png?v=005ba56b437f",
+            "logoAlt": "A dark cormorant with a turquoise eye extends one wet wing.",
             "module": "cormorant",
             "example": "package-cormorant",
             "program": "use vendor::cormorant::cormorant;\n\nfn main() {\n    let sent = [0, 16];\n    let arrived = [100, 148];\n    let initial = 0.0;\n    let result = cormorant_trace(sent, arrived, initial);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -5591,6 +6121,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-cormorant",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-cormorant-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-cormorant-starter-0.1.0.zip",
+                "examplePrefix": "blyx-cormorant-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-cormorant/tree/16365b30efba463237da277032777fe2f2a76499/editor",
+                "sha256": "afffcd6172512627e2059fce61174122a60115704d37806423679a0aa0fd01d8"
             }
         },
         {
@@ -5676,8 +6217,8 @@
             "commit": "afb3069b24cd370b2edab79c21829b85950fa8d4",
             "repository": "https://github.com/Rahulchaube1/blyx-bulbul",
             "release": "https://github.com/Rahulchaube1/blyx-bulbul/releases/tag/v0.1.0",
-            "logo": "/packages/bulbul.png",
-            "logoAlt": "Bulbul bird emblem",
+            "logo": "/packages/bulbul.png?v=574ea066895f",
+            "logoAlt": "A black-crested bulbul shows a crimson cheek and white throat.",
             "module": "bulbul",
             "example": "package-bulbul",
             "program": "use vendor::bulbul::bulbul;\n\nfn main() {\n    let present = [1, 9];\n    let allowed = [1, 2];\n    let required = [1, 2];\n    let closed = 1.0;\n    let result = bulbul_shape(present, allowed, required, closed);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -5724,6 +6265,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-bulbul",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bulbul-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bulbul-starter-0.1.0.zip",
+                "examplePrefix": "blyx-bulbul-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-bulbul/tree/62cc819fd40bbf41c5694dd186ae28cf9d16f316/editor",
+                "sha256": "bf51c4a32020ea66ed3400c34ef8a66f2c30806c3eaf94e7fb42d3bd598075e3"
             }
         },
         {
@@ -5809,8 +6361,8 @@
             "commit": "6566df3e21c1343135fe97979154eed687724e6e",
             "repository": "https://github.com/Rahulchaube1/blyx-fantail",
             "release": "https://github.com/Rahulchaube1/blyx-fantail/releases/tag/v0.1.0",
-            "logo": "/packages/fantail.png",
-            "logoAlt": "Fantail bird emblem",
+            "logo": "/packages/fantail.png?v=be730049ac00",
+            "logoAlt": "A grey fantail spreads black tail feathers with broad ivory tips.",
             "module": "fantail",
             "example": "package-fantail",
             "program": "use vendor::fantail::fantail;\n\nfn main() {\n    let values = [2, 15, 0];\n    let present = [1, 1, 0];\n    let fallback = 5.0;\n    let minimum = 0.0;\n    let maximum = 10.0;\n    let result = fantail_setting(values, present, fallback, minimum, maximum);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -5857,6 +6409,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-fantail",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-fantail-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-fantail-starter-0.1.0.zip",
+                "examplePrefix": "blyx-fantail-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-fantail/tree/01059f958e132332188a07702a47eca3bd857272/editor",
+                "sha256": "c5998420f9b5e929aabe04e81dee244b9a52ae130797572c5231cb05f191067c"
             }
         },
         {
@@ -5942,8 +6505,8 @@
             "commit": "74d9702c0e820be16279fece9b3738fd7b6b4988",
             "repository": "https://github.com/Rahulchaube1/blyx-swallow",
             "release": "https://github.com/Rahulchaube1/blyx-swallow/releases/tag/v0.1.0",
-            "logo": "/packages/swallow.png",
-            "logoAlt": "Swallow bird emblem",
+            "logo": "/packages/swallow.png?v=203648994e86",
+            "logoAlt": "A cobalt barn swallow turns in flight with twin tail streamers trailing.",
             "module": "swallow",
             "example": "package-swallow",
             "program": "use vendor::swallow::swallow;\n\nfn main() {\n    let lengths = [1, 1];\n    let payload = [65, 66];\n    let offset = 1.0;\n    let checksum = 12976260.0;\n    let result = swallow_inspect(lengths, payload, offset, checksum);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -5990,6 +6553,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-swallow",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-swallow-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-swallow-starter-0.1.0.zip",
+                "examplePrefix": "blyx-swallow-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-swallow/tree/2c51ae2e42d7fd4fe0e3b113188ddad675fadae6/editor",
+                "sha256": "945ed59aa5b488c71f151323702783c00b69b466bf2b264501bb193fb13b443e"
             }
         },
         {
@@ -6075,8 +6649,8 @@
             "commit": "86a0f09bae948e735e29e0ff913b54f9b185293f",
             "repository": "https://github.com/Rahulchaube1/blyx-lapwing",
             "release": "https://github.com/Rahulchaube1/blyx-lapwing/releases/tag/v0.1.0",
-            "logo": "/packages/lapwing.png",
-            "logoAlt": "Lapwing bird emblem",
+            "logo": "/packages/lapwing.png?v=cc7f71cff949",
+            "logoAlt": "A green-winged lapwing looks back beneath a long swept crest.",
             "module": "lapwing",
             "example": "package-lapwing",
             "program": "use vendor::lapwing::lapwing;\n\nfn main() {\n    let blocks = [4, 6, 3];\n    let paper = 120.0;\n    let top = 10.0;\n    let bottom = 10.0;\n    let line = 10.0;\n    let result = lapwing_paginate(blocks, paper, top, bottom, line);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -6123,6 +6697,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-lapwing",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-lapwing-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-lapwing-starter-0.1.0.zip",
+                "examplePrefix": "blyx-lapwing-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-lapwing/tree/7a83559e8306e1ca991eaad0f506de311648199b/editor",
+                "sha256": "4eb9194b06ea8220deb8f322bfffbc3674d23bf8545df49b9a008cae6ef7508d"
             }
         },
         {
@@ -6208,8 +6793,8 @@
             "commit": "977d385cadc36c8f3ccabbc8cde1bf108cc30af4",
             "repository": "https://github.com/Rahulchaube1/blyx-hoopoe",
             "release": "https://github.com/Rahulchaube1/blyx-hoopoe/releases/tag/v0.1.0",
-            "logo": "/packages/hoopoe.png",
-            "logoAlt": "Hoopoe bird emblem",
+            "logo": "/packages/hoopoe.png?v=25c014a57ed3",
+            "logoAlt": "An apricot hoopoe raises a black-tipped fan above its striped wings.",
             "module": "hoopoe",
             "example": "package-hoopoe",
             "program": "use vendor::hoopoe::hoopoe;\n\nfn main() {\n    let width = 400.0;\n    let height = 200.0;\n    let box_w = 100.0;\n    let box_h = 100.0;\n    let channels = 3.0;\n    let align = 4.0;\n    let memory = 14000.0;\n    let result = hoopoe_thumbnail(width, height, box_w, box_h, channels, align, memory);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -6256,6 +6841,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-hoopoe",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-hoopoe-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-hoopoe-starter-0.1.0.zip",
+                "examplePrefix": "blyx-hoopoe-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-hoopoe/tree/2c260c53ca339394b24e4f6a187ec6f39b7bf818/editor",
+                "sha256": "b774e767b8ea0880afdde3c24aec12c37d10b853a7a1c4dbf658f2f867bb2d99"
             }
         },
         {
@@ -6341,8 +6937,8 @@
             "commit": "b9d650e7ec6a346d1060f7f15e54bcfa370f89e3",
             "repository": "https://github.com/Rahulchaube1/blyx-spoonbill",
             "release": "https://github.com/Rahulchaube1/blyx-spoonbill/releases/tag/v0.1.0",
-            "logo": "/packages/spoonbill.png",
-            "logoAlt": "Spoonbill bird emblem",
+            "logo": "/packages/spoonbill.png?v=4b0de0e032d1",
+            "logoAlt": "A roseate spoonbill turns its wide, spoon-shaped bill towards the viewer.",
             "module": "spoonbill",
             "example": "package-spoonbill",
             "program": "use vendor::spoonbill::spoonbill;\n\nfn main() {\n    let starts = [0, 20];\n    let ends = [30, 60];\n    let numerator = 1.0;\n    let denominator = 30.0;\n    let allow_overlap = 0.0;\n    let result = spoonbill_captions(starts, ends, numerator, denominator, allow_overlap);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -6389,6 +6985,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-spoonbill",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-spoonbill-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-spoonbill-starter-0.1.0.zip",
+                "examplePrefix": "blyx-spoonbill-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-spoonbill/tree/06e825ac65c8b160ff275dce9d677de9c7d68614/editor",
+                "sha256": "95103444503a65d815b3d8ffab578a262da1628aab2ae2d3224922ab33c62ec0"
             }
         },
         {
@@ -6474,8 +7081,8 @@
             "commit": "05d73386d29e1d799c458ba47afdfadaa9288b61",
             "repository": "https://github.com/Rahulchaube1/blyx-raven",
             "release": "https://github.com/Rahulchaube1/blyx-raven/releases/tag/v0.1.0",
-            "logo": "/packages/raven.png",
-            "logoAlt": "Raven bird emblem",
+            "logo": "/packages/raven.png?v=3e2de2f81198",
+            "logoAlt": "A black raven with violet highlights and a heavy curved bill.",
             "module": "raven",
             "example": "package-raven",
             "program": "use vendor::raven::raven;\n\nfn main() {\n    let severity = [9, 17, 9, 21, 21];\n    let threshold = 17.0;\n    let capacity = 2.0;\n    let result = raven_buffer(severity, threshold, capacity);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -6522,6 +7129,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-raven",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-raven-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-raven-starter-0.1.0.zip",
+                "examplePrefix": "blyx-raven-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-raven/tree/23224782760f9de1c3a0ab155620eea40477932c/editor",
+                "sha256": "ec4d8da59176e55ad3ab70611bb765254f1fdfe711fdecc7b0de1900a2291faf"
             }
         },
         {
@@ -6607,8 +7225,8 @@
             "commit": "989352e006cf0a359f2890e6fc6a996a9885ea87",
             "repository": "https://github.com/Rahulchaube1/blyx-robin",
             "release": "https://github.com/Rahulchaube1/blyx-robin/releases/tag/v0.1.0",
-            "logo": "/packages/robin.png",
-            "logoAlt": "Robin bird emblem",
+            "logo": "/packages/robin.png?v=5fdf5b8bc176",
+            "logoAlt": "An olive-brown robin lifts its head above a round orange breast.",
             "module": "robin",
             "example": "package-robin",
             "program": "use vendor::robin::robin;\n\nfn main() {\n    let year = 1970.0;\n    let month = 1.0;\n    let day = 1.0;\n    let result = robin_date(year, month, day);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -6655,6 +7273,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-robin",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-robin-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-robin-starter-0.1.0.zip",
+                "examplePrefix": "blyx-robin-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-robin/tree/9c158953322864b924b5758a7fe401bc1886c5ca/editor",
+                "sha256": "b11e54b42e5b9bb85089da30cd1f869e51120422ffb5df8274dfce5759b62182"
             }
         },
         {
@@ -6740,8 +7369,8 @@
             "commit": "c0385686f229dac3cd0b78400006688811b3f138",
             "repository": "https://github.com/Rahulchaube1/blyx-starling",
             "release": "https://github.com/Rahulchaube1/blyx-starling/releases/tag/v0.1.0",
-            "logo": "/packages/starling.png",
-            "logoAlt": "Starling bird emblem",
+            "logo": "/packages/starling.png?v=00cb4aa1e33d",
+            "logoAlt": "An emerald and violet starling shows pale spots and a yellow bill.",
             "module": "starling",
             "example": "package-starling",
             "program": "use vendor::starling::starling;\n\nfn main() {\n    let starts = [0, 2, 4];\n    let ends = [4, 5, 7];\n    let capacity = 1.0;\n    let result = starling_capacity(starts, ends, capacity);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -6788,6 +7417,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-starling",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-starling-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-starling-starter-0.1.0.zip",
+                "examplePrefix": "blyx-starling-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-starling/tree/973ce75d5c41b9485d32a4c7a359cf293d3452a2/editor",
+                "sha256": "76afae31b8098481c5fe43fa09c1a3378f8f51bee0dd4f5d66c94c3151bae561"
             }
         },
         {
@@ -6873,8 +7513,8 @@
             "commit": "30dc8057641e7f2b2d2715cdb5a666304f50571e",
             "repository": "https://github.com/Rahulchaube1/blyx-blackbird",
             "release": "https://github.com/Rahulchaube1/blyx-blackbird/releases/tag/v0.1.0",
-            "logo": "/packages/blackbird.png",
-            "logoAlt": "Blackbird bird emblem",
+            "logo": "/packages/blackbird.png?v=906e2d4ac8b9",
+            "logoAlt": "A charcoal blackbird tilts its head, showing an orange eye ring and bill.",
             "module": "blackbird",
             "example": "package-blackbird",
             "program": "use vendor::blackbird::blackbird;\n\nfn main() {\n    let local = 11000.0;\n    let transition = 10000.0;\n    let before = 3600.0;\n    let after = 0.0;\n    let fold = 1.0;\n    let result = blackbird_resolve(local, transition, before, after, fold);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -6921,6 +7561,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-blackbird",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-blackbird-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-blackbird-starter-0.1.0.zip",
+                "examplePrefix": "blyx-blackbird-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-blackbird/tree/e56244317ccab97e78490de078bdfda1b5b03f68/editor",
+                "sha256": "9f50f0e3f25b51e37e740a7db641cfd4662b17cb73b9cbec009f55d99ad74972"
             }
         },
         {
@@ -7006,8 +7657,8 @@
             "commit": "9b4c90ce714e110b211fc57a31d52f3cfdd2b8e2",
             "repository": "https://github.com/Rahulchaube1/blyx-towhee",
             "release": "https://github.com/Rahulchaube1/blyx-towhee/releases/tag/v0.1.0",
-            "logo": "/packages/towhee.png",
-            "logoAlt": "Towhee bird emblem",
+            "logo": "/packages/towhee.png?v=2c9f3be3d281",
+            "logoAlt": "A black-hooded towhee with rust flanks scratches backwards with one foot.",
             "module": "towhee",
             "example": "package-towhee",
             "program": "use vendor::towhee::towhee;\n\nfn main() {\n    let indent = [0, 4, 12];\n    let widths = [60, 88, 70];\n    let step = 4.0;\n    let limit = 80.0;\n    let result = towhee_lint(indent, widths, step, limit);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -7054,6 +7705,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-towhee",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-towhee-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-towhee-starter-0.1.0.zip",
+                "examplePrefix": "blyx-towhee-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-towhee/tree/6613da44d9c753673812db14a69856dc69c85768/editor",
+                "sha256": "ae33ca9d28200eaaeea095edc52f8d5893f87de6f4c319ce48ce8c25f7ffc9cb"
             }
         },
         {
@@ -7139,8 +7801,8 @@
             "commit": "34b596d9b86ad95870ea1bd493d5f6f9820fc89e",
             "repository": "https://github.com/Rahulchaube1/blyx-bowerbird",
             "release": "https://github.com/Rahulchaube1/blyx-bowerbird/releases/tag/v0.1.0",
-            "logo": "/packages/bowerbird.png",
-            "logoAlt": "Bowerbird bird emblem",
+            "logo": "/packages/bowerbird.png?v=01c662ce008a",
+            "logoAlt": "A deep blue bowerbird selects a small blue petal with its pale bill.",
             "module": "bowerbird",
             "example": "package-bowerbird",
             "program": "use vendor::bowerbird::bowerbird;\n\nfn main() {\n    let installed = [1, 2, 9];\n    let candidate = [1, 10, 0];\n    let lower = [1, 0, 0];\n    let upper = [2, 0, 0];\n    let result = bowerbird_upgrade(installed, candidate, lower, upper);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -7187,6 +7849,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-bowerbird",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bowerbird-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bowerbird-starter-0.1.0.zip",
+                "examplePrefix": "blyx-bowerbird-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-bowerbird/tree/9c995e3fa06b083c697ab7c337e22c55622c716c/editor",
+                "sha256": "64d21dbcb05acfe0045b86ee54a1d8189697a12eaa8b9725c22c92daaf5c4cee"
             }
         },
         {
@@ -7272,8 +7945,8 @@
             "commit": "b2387f24eed18a45ba049ce68f27b62aaa34b491",
             "repository": "https://github.com/Rahulchaube1/blyx-albatross",
             "release": "https://github.com/Rahulchaube1/blyx-albatross/releases/tag/v0.1.0",
-            "logo": "/packages/albatross.png",
-            "logoAlt": "Albatross bird emblem",
+            "logo": "/packages/albatross.png?v=b53b6729133f",
+            "logoAlt": "An ivory albatross glides diagonally on long black-tipped wings.",
             "module": "albatross",
             "example": "package-albatross",
             "program": "use vendor::albatross::albatross;\n\nfn main() {\n    let parents = [-1, 0, 0, 2];\n    let durations = [1, 3, 2, 5];\n    let workers = 2.0;\n    let result = albatross_schedule(parents, durations, workers);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -7320,6 +7993,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-albatross",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-albatross-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-albatross-starter-0.1.0.zip",
+                "examplePrefix": "blyx-albatross-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-albatross/tree/9f78cb5f11a43e4a4e3c859559b73d6b9acb9fff/editor",
+                "sha256": "7640542c202d82a0c496da24e9a9467f11363ba3f7ffab68aa51ee85ad12aa1f"
             }
         },
         {
@@ -7405,8 +8089,8 @@
             "commit": "76d2d9cdad9812cedce6e5ef474a097c5d31dc71",
             "repository": "https://github.com/Rahulchaube1/blyx-chaffinch",
             "release": "https://github.com/Rahulchaube1/blyx-chaffinch/releases/tag/v0.1.0",
-            "logo": "/packages/chaffinch.png",
-            "logoAlt": "Chaffinch bird emblem",
+            "logo": "/packages/chaffinch.png?v=cf46668fc0b5",
+            "logoAlt": "A rose-breasted chaffinch shows a blue-grey crown and double white wing bars.",
             "module": "chaffinch",
             "example": "package-chaffinch",
             "program": "use vendor::chaffinch::chaffinch;\n\nfn main() {\n    let old = [1, 1, 2, 4];\n    let fresh = [2, 2, 3, 4];\n    let result = chaffinch_reconcile(old, fresh);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -7453,6 +8137,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-chaffinch",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-chaffinch-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-chaffinch-starter-0.1.0.zip",
+                "examplePrefix": "blyx-chaffinch-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-chaffinch/tree/607014e9304866f5aa827f8d64404637508863d7/editor",
+                "sha256": "340b8c6bd9aff0af70ae5146e31d53d1d195fed3a2d6091a61adae15c856b664"
             }
         },
         {
@@ -7538,8 +8233,8 @@
             "commit": "0e96f76439d52d5e74ad2785879ac40d4cde32eb",
             "repository": "https://github.com/Rahulchaube1/blyx-pelican",
             "release": "https://github.com/Rahulchaube1/blyx-pelican/releases/tag/v0.1.0",
-            "logo": "/packages/pelican.png",
-            "logoAlt": "Pelican bird emblem",
+            "logo": "/packages/pelican.png?v=23fffecfebda",
+            "logoAlt": "A brown pelican opens its ochre throat pouch beneath a long bill.",
             "module": "pelican",
             "example": "package-pelican",
             "program": "use vendor::pelican::pelican;\n\nfn main() {\n    let starts = [0, 5, 20];\n    let lengths = [4, 3, 2];\n    let gap = 1.0;\n    let block = 8.0;\n    let result = pelican_reads(starts, lengths, gap, block);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -7586,6 +8281,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-pelican",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pelican-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pelican-starter-0.1.0.zip",
+                "examplePrefix": "blyx-pelican-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-pelican/tree/165de7ae8f72c5eb8e5dc6aede859facdc37a417/editor",
+                "sha256": "bfd02a82dbac7a11e6331b32176fbf7bef4bb96f48978a0225cddd59899c22c9"
             }
         },
         {
@@ -7671,8 +8377,8 @@
             "commit": "5219544513c9fea11f7a9026b0210a0799ced8dd",
             "repository": "https://github.com/Rahulchaube1/blyx-nightingale",
             "release": "https://github.com/Rahulchaube1/blyx-nightingale/releases/tag/v0.1.0",
-            "logo": "/packages/nightingale.png",
-            "logoAlt": "Nightingale bird emblem",
+            "logo": "/packages/nightingale.png?v=af042562208d",
+            "logoAlt": "A copper-tailed brown nightingale sings with its head held high.",
             "module": "nightingale",
             "example": "package-nightingale",
             "program": "use vendor::nightingale::nightingale;\n\nfn main() {\n    let counts = [2, 6];\n    let edges = [0, 10, 30];\n    let probability = 0.5;\n    let threshold = 20.0;\n    let result = nightingale_quantile(counts, edges, probability, threshold);\n    if len(result) == 0 { println!(\"invalid\"); return; }\n    let mut i = 0;\n    while i < len(result) {\n        println!(at(result, i));\n        i += 1;\n    }\n}",
@@ -7719,6 +8425,17 @@
                     }
                 ],
                 "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+            },
+            "editor": {
+                "id": "RahulChaube.blyx-nightingale",
+                "version": "0.1.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-nightingale-0.1.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-nightingale-starter-0.1.0.zip",
+                "examplePrefix": "blyx-nightingale-demo",
+                "marketplace": null,
+                "openVsx": null,
+                "source": "https://github.com/Rahulchaube1/blyx-nightingale/tree/d2f94daa92b2f84af69a777972126cc53a2825c9/editor",
+                "sha256": "a2ffb81354b533fa4a825086e691bd9ec6ed50106493b5fefb5c23ba8bd3fd3c"
             }
         }
     ]

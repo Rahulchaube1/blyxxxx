@@ -15,7 +15,8 @@ for (const sample of examples) {
 const guides = JSON.parse(await readFile(new URL("../website/src/lib/guides.json", import.meta.url), "utf8"));
 const catalog = JSON.parse(await readFile(new URL("../website/src/lib/packages.json", import.meta.url), "utf8"));
 assert.equal(new Set(catalog.packages.map((p) => p.slug)).size, catalog.packages.length, "unique package slugs");
-const libraryArtwork = new Set();
+const packageArtwork = new Set();
+const editorIds = new Set();
 for (const p of catalog.packages) {
   assert.ok(["framework", "library"].includes(p.category), p.slug + " directory category");
   if (p.collection) {
@@ -29,12 +30,17 @@ for (const p of catalog.packages) {
   assert.ok(guides.some((g) => g.slug === p.guide), p.slug + " guide");
   const png = await readFile(new URL("../website/public" + p.logo, import.meta.url));
   assert.equal(png.subarray(0, 8).toString("hex"), "89504e470d0a1a0a", p.slug + " logo");
-  if (p.category === "library") {
-    const hash = createHash("sha256").update(png).digest("hex");
-    assert.equal(p.logo, "/packages/" + p.slug + ".png?v=" + hash.slice(0, 12), p.slug + " current artwork URL");
-    assert.ok(p.logoAlt?.trim(), p.slug + " artwork description");
-    assert.ok(!libraryArtwork.has(hash), p.slug + " must have its own artwork");
-    libraryArtwork.add(hash);
+  const hash = createHash("sha256").update(png).digest("hex");
+  assert.equal(p.logo, "/packages/" + p.slug + ".png?v=" + hash.slice(0, 12), p.slug + " current artwork URL");
+  assert.ok(p.logoAlt?.trim(), p.slug + " artwork description");
+  assert.ok(!packageArtwork.has(hash), p.slug + " must have its own artwork");
+  packageArtwork.add(hash);
+  if (p.category === "framework") {
+    assert.match(p.editor.id, /^RahulChaube\.[a-z0-9-]+$/);
+    assert.ok(!editorIds.has(p.editor.id), p.slug + " distinct editor extension");
+    editorIds.add(p.editor.id);
+    assert.ok(p.editor.vsix.endsWith("-" + p.editor.version + ".vsix"), p.slug + " editor download");
+    assert.ok(p.editor.examplePrefix && p.editor.starter, p.slug + " editor starter");
   }
 }
 assert.equal(new Set(guides.map((guide) => guide.slug)).size, guides.length, "unique chapter URLs");

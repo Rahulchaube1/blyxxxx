@@ -97,6 +97,8 @@ To try [Warbler](https://www.blyx-lang.space/packages/warbler), extract the nati
 
 On Linux and Apple Silicon macOS, run `./bin/warbler "1,-1,0,0" 1 1`. The four output lines are `1`, `0.5`, `2` and `1`. They give the peak amplitude, mean-square energy, longest clipped run and alert flag. Change the final argument to `2` to clear the alert. [Edit the example in the playground](https://www.blyx-lang.space/play?example=package-warbler) · [Import a library in your own project](docs/ecosystem-packages.md#use-the-workflow-collection) · [Reproduce the benchmarks](https://www.blyx-lang.space/benchmarks#workflows)
 
+Each framework has a bird logo and its own editor extension. Open a framework in the gallery for its VSIX, starter project and installation guide. [Browse the framework birds and editor downloads](https://www.blyx-lang.space/frameworks/logos)
+
 Other Blyx frameworks offer these project walkthroughs.
 
 | Framework | Example project |
