@@ -1,0 +1,15 @@
+// https://github.com/Rahulchaube1/blyx-modelgate/blob/v0.1.2/gate.blyx
+// All losses are per observation. Brier tolerance is an absolute difference.
+pub fn gate_passes(baseline_brier: f64, candidate_brier: f64, baseline_cost: f64, candidate_cost: f64, brier_tolerance: f64) -> bool {
+    // Binary64 summation can give a different last bit for equal sets of errors.
+    let roundoff = 0.00000000000001;
+    candidate_brier - baseline_brier <= brier_tolerance + roundoff && candidate_cost - baseline_cost <= baseline_cost * roundoff
+}
+
+fn main() {
+    let baseline_cost = 1.0 / 4.0;
+    let candidate_cost = 5.0 / 4.0;
+    println!(baseline_cost);
+    println!(candidate_cost);
+    println!(gate_passes(0.105, 0.105, baseline_cost, candidate_cost, 0.0));
+}

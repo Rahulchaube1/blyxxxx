@@ -1,0 +1,91 @@
+// https://github.com/Rahulchaube1/blyx-conformal/blob/v0.1.0/conformal.blyx
+fn conformal_finite(x: f64) -> bool { x - x == 0.0 }
+fn conformal_absolute(x: f64) -> f64 { if x < 0.0 { return -x; } x }
+
+// ceil((n+1) * numerator / denominator), without a large intermediate product.
+pub fn cf_rank(n: i64, numerator: i64, denominator: i64) -> i64 {
+    if n < 1 || n > 9007199254740991 || numerator < 1 || numerator >= denominator || denominator > 1000000 { return 0; }
+    let m = n + 1;
+    let remainder = (m % denominator) * numerator;
+    (m / denominator) * numerator + (remainder + denominator - 1) / denominator
+}
+
+fn conformal_score(values: vector, predictions: vector, i: i64, paired: bool) -> f64 {
+    if paired { return conformal_absolute(at(values, i) - at(predictions, i)); }
+    at(values, i)
+}
+
+fn conformal_select_radius(values: vector, predictions: vector, paired: bool, num: i64, den: i64) -> vector {
+    let n = len(values);
+    let rank = cf_rank(n, num, den);
+    if rank == 0 || rank > n || (paired && len(predictions) != n) { return []; }
+    let mut lo = conformal_score(values, predictions, 0, paired);
+    let mut hi = lo;
+    let mut i = 0;
+    while i < n {
+        let x = conformal_score(values, predictions, i, paired);
+        if !conformal_finite(x) || x < 0.0 { return []; }
+        if x < lo { lo = x; }
+        if x > hi { hi = x; }
+        i += 1;
+    }
+    // Each pass contracts to actual observed scores. Tied values need no special ordering.
+    while lo < hi {
+        let pivot = lo + (hi - lo) * 0.5;
+        let mut below = 0;
+        let mut equal = 0;
+        let mut largest_below = lo;
+        let mut smallest_above = hi;
+        i = 0;
+        while i < n {
+            let x = conformal_score(values, predictions, i, paired);
+            if x < pivot {
+                below += 1;
+                if x > largest_below { largest_below = x; }
+            } else if x > pivot {
+                if x < smallest_above { smallest_above = x; }
+            } else { equal += 1; }
+            i += 1;
+        }
+        if rank <= below { hi = largest_below; }
+        else if rank > below + equal { lo = smallest_above; }
+        else { return [pivot, rank, n]; }
+    }
+    [lo, rank, n]
+}
+
+pub fn cf_radius(scores: vector, numerator: i64, denominator: i64) -> vector {
+    conformal_select_radius(scores, [], false, numerator, denominator)
+}
+
+pub fn cf_calibrate(actual: vector, predicted: vector, numerator: i64, denominator: i64) -> vector {
+    conformal_select_radius(actual, predicted, true, numerator, denominator)
+}
+
+pub fn cf_interval(prediction: f64, radius: f64) -> vector {
+    let low = prediction - radius;
+    let high = prediction + radius;
+    if radius < 0.0 || !conformal_finite(low) || !conformal_finite(high) { return []; }
+    [low, high]
+}
+
+pub fn cf_coverage(actual: vector, predicted: vector, radius: f64) -> f64 {
+    if !conformal_finite(radius) || radius < 0.0 || len(actual) == 0 || len(actual) != len(predicted) { return -1.0; }
+    let mut hits = 0.0;
+    let mut i = 0;
+    while i < len(actual) {
+        let r = conformal_absolute(at(actual, i) - at(predicted, i));
+        if !conformal_finite(r) { return -1.0; }
+        if r <= radius { hits += 1.0; }
+        i += 1;
+    }
+    hits / at([len(actual)], 0)
+}
+
+fn main() {
+    let calibration = cf_calibrate([10, 12, 7, 11], [10, 10, 10, 10], 3, 5);
+    let interval = cf_interval(20.0, at(calibration, 0));
+    println!(at(calibration, 0));
+    println!(at(interval, 0));
+    println!(at(interval, 1));
+}

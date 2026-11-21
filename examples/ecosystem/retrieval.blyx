@@ -1,4 +1,4 @@
-// Single-file example from https://github.com/Rahulchaube1/blyx-retrieval/tree/v0.1.0
+// Single-file example from https://github.com/Rahulchaube1/blyx-retrieval/tree/v0.1.1
 fn document_id(value: f64) -> bool {
     value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0
 }

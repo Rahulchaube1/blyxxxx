@@ -1,0 +1,116 @@
+{
+  "workload": "Fit one feature with ridge 5 and predict at 7.5 on a valid integer CSV",
+  "measured_utc": "2026-11-21",
+  "rows": 100000,
+  "seed": 7621,
+  "input_sha256": "376ae13fdd95a39a922cb67bad928fd4301044c9e924f2a9a906eccc9deb0f85",
+  "linearfit": "linearfit 0.1.1",
+  "binary_sha256": "b150084b816f7f5769a5fecf239fcfed7b15eab60675ea65cc501c0552810e75",
+  "binary_bytes": 237568,
+  "python": "3.10.6",
+  "release_binaries": {
+    "linearfit 0.1.1": "b150084b816f7f5769a5fecf239fcfed7b15eab60675ea65cc501c0552810e75",
+    "linearfit 0.1.0": "b0b7e4f8f4f6faaa79b49a8732783456a746b2cccb6beebb455c57f1c62c93c7"
+  },
+  "numpy": "2.2.6",
+  "blas_threads": 1,
+  "os": "Windows-10-10.0.26300-SP0",
+  "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+  "warmups": 3,
+  "samples": 9,
+  "reference": {
+    "rows": 100000,
+    "center_x": 1.25429,
+    "center_y": 10.75778,
+    "slope": 3.0000457534427087,
+    "ridge": 5,
+    "prediction": 29.49519576273466
+  },
+  "results": [
+    {
+      "name": "linearfit 0.1.1 CLI, fresh process",
+      "median_ms": 120.42,
+      "min_ms": 109.797,
+      "max_ms": 154.901,
+      "samples_ms": [
+        117.457,
+        154.901,
+        110.713,
+        122.315,
+        109.797,
+        149.542,
+        129.363,
+        120.42,
+        120.032
+      ]
+    },
+    {
+      "name": "linearfit 0.1.0 CLI, fresh process",
+      "median_ms": 142.395,
+      "min_ms": 109.552,
+      "max_ms": 169.104,
+      "samples_ms": [
+        157.637,
+        148.764,
+        128.571,
+        168.753,
+        137.677,
+        169.104,
+        109.552,
+        142.395,
+        137.888
+      ]
+    },
+    {
+      "name": "CPython csv, fresh process",
+      "median_ms": 187.498,
+      "min_ms": 157.057,
+      "max_ms": 281.101,
+      "samples_ms": [
+        207.058,
+        157.057,
+        222.817,
+        281.101,
+        166.814,
+        187.498,
+        159.606,
+        173.375,
+        258.585
+      ]
+    },
+    {
+      "name": "NumPy, warm CSV to JSON",
+      "median_ms": 32.26,
+      "min_ms": 18.096,
+      "max_ms": 45.668,
+      "samples_ms": [
+        18.096,
+        33.273,
+        28.65,
+        27.497,
+        32.26,
+        36.56,
+        36.359,
+        45.668,
+        28.764
+      ]
+    },
+    {
+      "name": "NumPy, arrays already in memory",
+      "median_ms": 1.177,
+      "min_ms": 0.723,
+      "max_ms": 1.367,
+      "samples_ms": [
+        0.723,
+        0.949,
+        1.189,
+        1.126,
+        1.364,
+        1.18,
+        1.177,
+        1.367,
+        1.007
+      ]
+    }
+  ]
+}

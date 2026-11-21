@@ -12,6 +12,18 @@ for (const sample of examples) {
   assert.deepEqual(result, { status: 0, output: sample.expected, diagnostics: [] }, sample.id);
 }
 const guides = JSON.parse(await readFile(new URL("../website/src/lib/guides.json", import.meta.url), "utf8"));
+const catalog = JSON.parse(await readFile(new URL("../website/src/lib/packages.json", import.meta.url), "utf8"));
+assert.equal(new Set(catalog.packages.map((p) => p.slug)).size, catalog.packages.length, "unique package slugs");
+for (const p of catalog.packages) {
+  const demo = examples.find((e) => e.id === p.example);
+  assert.equal(demo?.expected, p.output, p.slug + " documented output");
+  assert.match(p.commit, /^[a-f0-9]{40}$/);
+  assert.equal(p.release, p.repository + "/releases/tag/v" + p.version);
+  assert.ok(p.program.startsWith("use vendor::" + p.slug + "::" + p.module + ";"), p.slug + " import");
+  assert.ok(guides.some((g) => g.slug === p.guide), p.slug + " guide");
+  const png = await readFile(new URL("../website/public" + p.logo, import.meta.url));
+  assert.equal(png.subarray(0, 8).toString("hex"), "89504e470d0a1a0a", p.slug + " logo");
+}
 assert.equal(new Set(guides.map((guide) => guide.slug)).size, guides.length, "unique chapter URLs");
 for (const guide of guides) {
   if (!guide.example) continue;

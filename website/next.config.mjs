@@ -46,6 +46,8 @@ const config = {
         if (book)
             rules.push(
                 redirect("/docs", "/"),
+                redirect("/packages/:slug", "https://www.blyx-lang.space/packages/:slug"),
+                redirect("/packages.json", "https://www.blyx-lang.space/packages.json"),
                 ...[
                     "learn",
                     "download",

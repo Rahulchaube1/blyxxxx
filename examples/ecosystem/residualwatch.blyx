@@ -1,0 +1,150 @@
+// https://github.com/Rahulchaube1/blyx-moments/blob/v0.1.0/moments.blyx
+// A paired summary stores [count, mean_x, mean_y, Sxx, Sxy, Syy].
+fn moments_finite(x: f64) -> bool { x - x == 0.0 }
+
+pub fn mom_empty() -> vector { [0, 0, 0, 0, 0, 0] }
+
+pub fn mom_valid(s: vector) -> bool {
+    if len(s) != 6 { return false; }
+    let n = at(s, 0);
+    if !(n >= 0.0 && n <= 9007199254740991.0) || n % 1.0 != 0.0 { return false; }
+    let mut i = 1;
+    while i < 6 {
+        if !moments_finite(at(s, i)) || (n == 0.0 && at(s, i) != 0.0) { return false; }
+        i += 1;
+    }
+    at(s, 3) >= 0.0 && at(s, 5) >= 0.0
+}
+
+pub fn mom_update(s: vector, x: f64, y: f64) -> vector {
+    if !mom_valid(s) || !moments_finite(x) || !moments_finite(y) { return []; }
+    if at(s, 0) == 0.0 { return [1, x, y, 0, 0, 0]; }
+    let n = at(s, 0) + 1.0;
+    let dx = x - at(s, 1);
+    let dy = y - at(s, 2);
+    let mx = at(s, 1) + dx / n;
+    let my = at(s, 2) + dy / n;
+    let next = [n, mx, my, at(s, 3) + dx * (x - mx),
+                at(s, 4) + dx * (y - my), at(s, 5) + dy * (y - my)];
+    if !mom_valid(next) { return []; }
+    next
+}
+
+pub fn mom_summary(x: vector, y: vector) -> vector {
+    if len(x) != len(y) { return []; }
+    let mut state = mom_empty();
+    let mut i = 0;
+    while i < len(x) {
+        state = mom_update(state, at(x, i), at(y, i));
+        if len(state) == 0 { return []; }
+        i += 1;
+    }
+    state
+}
+
+pub fn mom_merge(a: vector, b: vector) -> vector {
+    if !mom_valid(a) || !mom_valid(b) { return []; }
+    if at(a, 0) == 0.0 { return b; }
+    if at(b, 0) == 0.0 { return a; }
+    let n = at(a, 0) + at(b, 0);
+    let share = at(b, 0) / n;
+    let weight = at(a, 0) * share;
+    let dx = at(b, 1) - at(a, 1);
+    let dy = at(b, 2) - at(a, 2);
+    let next = [n, at(a, 1) + dx * share, at(a, 2) + dy * share,
+                (at(a, 3) + at(b, 3)) + (dx * weight) * dx,
+                (at(a, 4) + at(b, 4)) + (dx * weight) * dy,
+                (at(a, 5) + at(b, 5)) + (dy * weight) * dy];
+    if !mom_valid(next) { return []; }
+    next
+}
+
+// Reduce to [1,4) before Newton iteration, including for subnormal variance.
+fn moments_positive_root(value: f64) -> f64 {
+    if value == 0.0 { return 0.0; }
+    let mut v = value;
+    let mut factor = 1.0;
+    while v >= 4.0 { v /= 4.0; factor *= 2.0; }
+    while v < 1.0 { v *= 4.0; factor /= 2.0; }
+    let mut root = 2.0;
+    let mut i = 0;
+    while i < 6 { root = 0.5 * (root + v / root); i += 1; }
+    root * factor
+}
+
+pub fn mom_sample_sd_y(s: vector) -> f64 {
+    if !mom_valid(s) || at(s, 0) < 2.0 { return -1.0; }
+    moments_positive_root(at(s, 5) / (at(s, 0) - 1.0))
+}
+
+// https://github.com/Rahulchaube1/blyx-cusum/blob/v0.1.0/cusum.blyx
+fn cusum_finite(x: f64) -> bool { x - x == 0.0 }
+
+pub fn cs_empty() -> vector { [0, 0, 0] }
+
+// State contains positive and negative magnitudes, then a signal (-1, 0, 1).
+// A signalled observation belongs to its episode. The next starts at zero.
+pub fn cs_step(state: vector, z: f64, allowance: f64, limit: f64) -> vector {
+    if len(state) != 3 || !cusum_finite(z) || !cusum_finite(allowance) || !cusum_finite(limit) { return []; }
+    if allowance < 0.0 || limit <= 0.0 { return []; }
+    let mut high = at(state, 0);
+    let mut low = at(state, 1);
+    let signal = at(state, 2);
+    if !cusum_finite(high) || !cusum_finite(low) || high < 0.0 || low < 0.0 { return []; }
+    if signal != -1.0 && signal != 0.0 && signal != 1.0 { return []; }
+    if signal != 0.0 { high = 0.0; low = 0.0; }
+    high = (high + z) - allowance;
+    low = (low - z) - allowance;
+    if !cusum_finite(high) || !cusum_finite(low) { return []; }
+    if high < 0.0 { high = 0.0; }
+    if low < 0.0 { low = 0.0; }
+    if high >= limit { return [high, low, 1]; }
+    if low >= limit { return [high, low, -1]; }
+    [high, low, 0]
+}
+
+// https://github.com/Rahulchaube1/blyx-residualwatch/blob/v0.1.0/residualwatch.blyx
+fn residualwatch_finite(x: f64) -> bool { x - x == 0.0 }
+
+pub fn rw_training() -> vector { mom_empty() }
+pub fn rw_train(state: vector, actual: f64, prediction: f64) -> vector {
+    mom_update(state, 0.0, actual - prediction)
+}
+pub fn rw_freeze(state: vector, min_scale: f64) -> vector {
+    if !residualwatch_finite(min_scale) || min_scale < 0.0 { return []; }
+    let mut scale = mom_sample_sd_y(state);
+    if scale < 0.0 { return []; }
+    if scale < min_scale { scale = min_scale; }
+    if scale == 0.0 { return []; }
+    [at(state, 0), at(state, 2), scale]
+}
+pub fn rw_fit(actual: vector, predicted: vector, min_scale: f64) -> vector {
+    if len(actual) != len(predicted) { return []; }
+    let mut s = rw_training();
+    let mut i = 0;
+    while i < len(actual) {
+        s = rw_train(s, at(actual, i), at(predicted, i));
+        if len(s) == 0 { return []; }
+        i += 1;
+    }
+    rw_freeze(s, min_scale)
+}
+
+pub fn rw_monitor() -> vector { cs_empty() }
+pub fn rw_step(state: vector, reference: vector, actual: f64, prediction: f64, allowance: f64, limit: f64) -> vector {
+    if len(reference) != 3 { return []; }
+    let n = at(reference, 0);
+    let scale = at(reference, 2);
+    if !residualwatch_finite(n) || n < 2.0 || n % 1.0 != 0.0 || !residualwatch_finite(scale) || scale <= 0.0 { return []; }
+    let z = ((actual - prediction) - at(reference, 1)) / scale;
+    cs_step(state, z, allowance, limit)
+}
+
+fn main() {
+    let reference = rw_fit([9, 10, 11], [10, 10, 10], 0.0);
+    let first = rw_step(rw_monitor(), reference, 12.0, 10.0, 0.5, 3.0);
+    let second = rw_step(first, reference, 12.0, 10.0, 0.5, 3.0);
+    println!(at(reference, 2));
+    println!(at(first, 2));
+    println!(at(second, 2));
+}

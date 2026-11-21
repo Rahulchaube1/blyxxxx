@@ -303,6 +303,15 @@ button.primary {
 .package-grid {
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 390px), 1fr));
 }
+.package-group { margin-block: 34px; }
+.package-heading { display: flex; gap: 15px; align-items: center; }
+.package-heading small, .package-title span { color: var(--muted); }
+.package-heading h3 a { color: var(--ink); }
+.package-logo { flex: none; border-radius: 12px; border: 1px solid var(--rule); }
+.package-title { margin-block: 18px; }
+.package-title h1 { margin: 0; font-size: clamp(30px, 5vw, 60px); overflow-wrap: anywhere; }
+.package-card { display: flex; flex-direction: column; }
+.package-card .actions { margin-top: auto; }
 .section-head {
 	display: flex;
 	gap: 20px;

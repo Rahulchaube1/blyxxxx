@@ -1,4 +1,4 @@
-// Single-file example from https://github.com/Rahulchaube1/blyx-calibration/tree/v0.1.0
+// Single-file example from https://github.com/Rahulchaube1/blyx-calibration/tree/v0.1.1
 pub fn cal_squared_error(label: f64, score: f64) -> f64 {
     let diff = score - label;
     diff * diff

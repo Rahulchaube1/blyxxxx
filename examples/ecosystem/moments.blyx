@@ -1,0 +1,87 @@
+// https://github.com/Rahulchaube1/blyx-moments/blob/v0.1.0/moments.blyx
+// A paired summary stores [count, mean_x, mean_y, Sxx, Sxy, Syy].
+fn moments_finite(x: f64) -> bool { x - x == 0.0 }
+
+pub fn mom_empty() -> vector { [0, 0, 0, 0, 0, 0] }
+
+pub fn mom_valid(s: vector) -> bool {
+    if len(s) != 6 { return false; }
+    let n = at(s, 0);
+    if !(n >= 0.0 && n <= 9007199254740991.0) || n % 1.0 != 0.0 { return false; }
+    let mut i = 1;
+    while i < 6 {
+        if !moments_finite(at(s, i)) || (n == 0.0 && at(s, i) != 0.0) { return false; }
+        i += 1;
+    }
+    at(s, 3) >= 0.0 && at(s, 5) >= 0.0
+}
+
+pub fn mom_update(s: vector, x: f64, y: f64) -> vector {
+    if !mom_valid(s) || !moments_finite(x) || !moments_finite(y) { return []; }
+    if at(s, 0) == 0.0 { return [1, x, y, 0, 0, 0]; }
+    let n = at(s, 0) + 1.0;
+    let dx = x - at(s, 1);
+    let dy = y - at(s, 2);
+    let mx = at(s, 1) + dx / n;
+    let my = at(s, 2) + dy / n;
+    let next = [n, mx, my, at(s, 3) + dx * (x - mx),
+                at(s, 4) + dx * (y - my), at(s, 5) + dy * (y - my)];
+    if !mom_valid(next) { return []; }
+    next
+}
+
+pub fn mom_summary(x: vector, y: vector) -> vector {
+    if len(x) != len(y) { return []; }
+    let mut state = mom_empty();
+    let mut i = 0;
+    while i < len(x) {
+        state = mom_update(state, at(x, i), at(y, i));
+        if len(state) == 0 { return []; }
+        i += 1;
+    }
+    state
+}
+
+pub fn mom_merge(a: vector, b: vector) -> vector {
+    if !mom_valid(a) || !mom_valid(b) { return []; }
+    if at(a, 0) == 0.0 { return b; }
+    if at(b, 0) == 0.0 { return a; }
+    let n = at(a, 0) + at(b, 0);
+    let share = at(b, 0) / n;
+    let weight = at(a, 0) * share;
+    let dx = at(b, 1) - at(a, 1);
+    let dy = at(b, 2) - at(a, 2);
+    let next = [n, at(a, 1) + dx * share, at(a, 2) + dy * share,
+                (at(a, 3) + at(b, 3)) + (dx * weight) * dx,
+                (at(a, 4) + at(b, 4)) + (dx * weight) * dy,
+                (at(a, 5) + at(b, 5)) + (dy * weight) * dy];
+    if !mom_valid(next) { return []; }
+    next
+}
+
+// Reduce to [1,4) before Newton iteration, including for subnormal variance.
+fn moments_positive_root(value: f64) -> f64 {
+    if value == 0.0 { return 0.0; }
+    let mut v = value;
+    let mut factor = 1.0;
+    while v >= 4.0 { v /= 4.0; factor *= 2.0; }
+    while v < 1.0 { v *= 4.0; factor /= 2.0; }
+    let mut root = 2.0;
+    let mut i = 0;
+    while i < 6 { root = 0.5 * (root + v / root); i += 1; }
+    root * factor
+}
+
+pub fn mom_sample_sd_y(s: vector) -> f64 {
+    if !mom_valid(s) || at(s, 0) < 2.0 { return -1.0; }
+    moments_positive_root(at(s, 5) / (at(s, 0) - 1.0))
+}
+
+fn main() {
+    let morning = mom_summary([1, 2], [10, 12]);
+    let afternoon = mom_summary([3], [14]);
+    let day = mom_merge(morning, afternoon);
+    println!(at(day, 0));
+    println!(at(day, 2));
+    println!(mom_sample_sd_y(day));
+}

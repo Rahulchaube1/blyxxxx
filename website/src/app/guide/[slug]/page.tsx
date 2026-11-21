@@ -71,9 +71,9 @@ export default async function Chapter({ params }: Props) {
                             Choose a download
                         </a>
                     )}
-                    {slug === "ai-packages" && (
+                    {(slug === "ai-packages" || slug === "training-and-monitoring") && (
                         <a className="button" href={mainLink("/packages")}>
-                            Get the packages and ModelGate
+                            Get the Blyx packages
                         </a>
                     )}
                     {slug === "compatibility" && (

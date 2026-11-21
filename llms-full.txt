@@ -1352,7 +1352,7 @@ label,baseline,candidate
 
 #### Run ModelGate
 
-ModelGate 0.1.1 ships as a native executable. On Apple Silicon macOS or x86-64 Linux use the Homebrew command below. On x64 Windows, extract the release ZIP from the ecosystem catalog and run .\modelgate.exe predictions.csv --fn-cost 5 in PowerShell. A release archive also contains fixtures/improved.csv and fixtures/regression.csv.
+ModelGate 0.1.2 ships as a native executable. On Apple Silicon macOS or x86-64 Linux use the Homebrew command below. On x64 Windows, extract the release ZIP from the ecosystem catalog and run .\modelgate.exe predictions.csv --fn-cost 5 in PowerShell. A release archive also contains fixtures/improved.csv and fixtures/regression.csv.
 
 ```
 brew install rahulchaube1/blyx/modelgate
@@ -1379,7 +1379,7 @@ Brier score averages the squared difference between each probability and its bin
 Install Blyx 0.2.1, Rust 1.85 or later and a platform linker for a source build. In an empty project directory, run the clone command below. It puts the release beside the entry file. For a shared project, record the commit in version control, for example as a Git submodule.
 
 ```
-git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-classification.git vendor/classification
+git clone --depth 1 --branch v0.1.1 https://github.com/Rahulchaube1/blyx-classification.git vendor/classification
 ```
 
 #### Use the library in a native program
@@ -1413,7 +1413,7 @@ Use held-out paired data and keep the error costs, threshold and tolerance fixed
 #### Worked program
 
 ```blyx
-// Single-file example from https://github.com/Rahulchaube1/blyx-classification/tree/v0.1.0
+// Single-file example from https://github.com/Rahulchaube1/blyx-classification/tree/v0.1.1
 // Rows in a confusion vector are [true positives, false positives, true negatives, false negatives].
 pub fn class_probability(score: f64) -> bool {
     score >= 0.0 && score <= 1.0
@@ -1506,6 +1506,230 @@ Output after the change
 0.5
 0.5
 11
+```
+
+### [Train, calibrate and monitor a regression model](https://doc.blyx-lang.space/guide/training-and-monitoring)
+
+Fit a regression, attach intervals using held-out errors, and catch persistent underprediction in a later stream. Run each stage in native Blyx or the browser.
+
+#### Keep three sets of observations
+
+Use training pairs to fit the model. Reserve a separate calibration set for choosing an interval radius. Keep a stable, chronological reference period and later labelled predictions for monitoring. Reusing training errors for calibration can make intervals too narrow. Choose data splits before fitting.
+
+#### Fit the relationship
+
+Save x,y pairs as a UTF-8 CSV. The second column is the response. The four rows below follow y = 2x + 1. The centered least-squares fit has feature mean 2.5, response mean 6 and slope 2. At x = 5 it predicts 11.
+
+```
+x,y
+1,3
+2,5
+3,7
+4,9
+```
+
+#### Run LinearFit
+
+Extract the LinearFit archive for your platform and run the included fixture. On Windows, start the command with .\linearfit.exe in PowerShell. On Apple Silicon macOS and x86-64 Linux you can also install it from the Blyx Homebrew tap. Supplying --ridge 5 shrinks the slope to 1 and changes the prediction to 8.5.
+
+```
+./linearfit fixtures/line.csv --predict 5
+```
+
+#### Train by batch or by row
+
+Use lf_fit on aligned vectors for a batch. For incoming observations start with lf_start, pass the state and next training pair to lf_update, and call lf_finish when you need a model. lf_merge combines disjoint training batches. The shared Moments library also exposes their means, centered sums and sample standard deviation.
+
+#### Calibrate an interval
+
+Suppose a separate model predicted 10 for each of four calibration cases whose true values were 10, 12, 7 and 11. The absolute errors are 0, 2, 3 and 1. At target coverage 3/5, take the third smallest error because ceil((4+1)×3/5) = 3. This yields a radius of 2 and the interval [18,22] around a new prediction of 20. At 90% coverage four cases give no finite result.
+
+```
+let cal = cf_calibrate([10, 12, 7, 11], [10, 10, 10, 10], 3, 5);
+let interval = cf_interval(20.0, at(cal, 0));
+```
+
+#### Interpret coverage
+
+Use cf_coverage on separate labelled predictions to measure the fraction inside the intervals. The usual split-conformal guarantee is marginal and assumes calibration and future examples are exchangeable. Inspect time periods or important subgroups separately when that assumption may fail.
+
+#### Detect sustained underprediction
+
+ResidualWatch calculates actual minus predicted. In its shift fixture the first three residuals are −1, 0 and 1, so the frozen center is 0 and the sample scale is 1. Two later residuals of 2 add 1.5 each to the positive CUSUM at allowance 0.5. The second reaches the inclusive limit of 3. The first alert is data row 5, and the CLI exits with status 1.
+
+```
+./residualwatch fixtures/shift.csv --reference 3 --limit 3
+```
+
+#### Use alerts in a job
+
+Keep the JSON report from each run. Exit code 0 means the monitor finished without an alert, 1 means a limit was reached, 2 signals invalid input and 4 signals an I/O failure. Choose an allowance, limit and scale floor using a representative stable period. Investigate drift alarms against labels and feature changes before deciding whether to retrain.
+
+#### Add a package to a native project
+
+With Blyx 0.2.1, Rust and a host linker installed, clone the tagged release next to your entry file. The training and monitoring packages include their pinned Blyx dependencies. Save the imported program as main.blyx and run blyxc native-run main.blyx. The package catalog has the exact import, function reference, runnable example and source for every package.
+
+```
+git clone --depth 1 --branch v0.1.1 https://github.com/Rahulchaube1/blyx-linearfit.git vendor/linearfit
+
+# First line of main.blyx
+use vendor::linearfit::linearfit;
+```
+
+#### Worked program
+
+```blyx
+// https://github.com/Rahulchaube1/blyx-moments/blob/v0.1.0/moments.blyx
+// A paired summary stores [count, mean_x, mean_y, Sxx, Sxy, Syy].
+fn moments_finite(x: f64) -> bool { x - x == 0.0 }
+
+pub fn mom_empty() -> vector { [0, 0, 0, 0, 0, 0] }
+
+pub fn mom_valid(s: vector) -> bool {
+    if len(s) != 6 { return false; }
+    let n = at(s, 0);
+    if !(n >= 0.0 && n <= 9007199254740991.0) || n % 1.0 != 0.0 { return false; }
+    let mut i = 1;
+    while i < 6 {
+        if !moments_finite(at(s, i)) || (n == 0.0 && at(s, i) != 0.0) { return false; }
+        i += 1;
+    }
+    at(s, 3) >= 0.0 && at(s, 5) >= 0.0
+}
+
+pub fn mom_update(s: vector, x: f64, y: f64) -> vector {
+    if !mom_valid(s) || !moments_finite(x) || !moments_finite(y) { return []; }
+    if at(s, 0) == 0.0 { return [1, x, y, 0, 0, 0]; }
+    let n = at(s, 0) + 1.0;
+    let dx = x - at(s, 1);
+    let dy = y - at(s, 2);
+    let mx = at(s, 1) + dx / n;
+    let my = at(s, 2) + dy / n;
+    let next = [n, mx, my, at(s, 3) + dx * (x - mx),
+                at(s, 4) + dx * (y - my), at(s, 5) + dy * (y - my)];
+    if !mom_valid(next) { return []; }
+    next
+}
+
+pub fn mom_summary(x: vector, y: vector) -> vector {
+    if len(x) != len(y) { return []; }
+    let mut state = mom_empty();
+    let mut i = 0;
+    while i < len(x) {
+        state = mom_update(state, at(x, i), at(y, i));
+        if len(state) == 0 { return []; }
+        i += 1;
+    }
+    state
+}
+
+pub fn mom_merge(a: vector, b: vector) -> vector {
+    if !mom_valid(a) || !mom_valid(b) { return []; }
+    if at(a, 0) == 0.0 { return b; }
+    if at(b, 0) == 0.0 { return a; }
+    let n = at(a, 0) + at(b, 0);
+    let share = at(b, 0) / n;
+    let weight = at(a, 0) * share;
+    let dx = at(b, 1) - at(a, 1);
+    let dy = at(b, 2) - at(a, 2);
+    let next = [n, at(a, 1) + dx * share, at(a, 2) + dy * share,
+                (at(a, 3) + at(b, 3)) + (dx * weight) * dx,
+                (at(a, 4) + at(b, 4)) + (dx * weight) * dy,
+                (at(a, 5) + at(b, 5)) + (dy * weight) * dy];
+    if !mom_valid(next) { return []; }
+    next
+}
+
+// Reduce to [1,4) before Newton iteration, including for subnormal variance.
+fn moments_positive_root(value: f64) -> f64 {
+    if value == 0.0 { return 0.0; }
+    let mut v = value;
+    let mut factor = 1.0;
+    while v >= 4.0 { v /= 4.0; factor *= 2.0; }
+    while v < 1.0 { v *= 4.0; factor /= 2.0; }
+    let mut root = 2.0;
+    let mut i = 0;
+    while i < 6 { root = 0.5 * (root + v / root); i += 1; }
+    root * factor
+}
+
+pub fn mom_sample_sd_y(s: vector) -> f64 {
+    if !mom_valid(s) || at(s, 0) < 2.0 { return -1.0; }
+    moments_positive_root(at(s, 5) / (at(s, 0) - 1.0))
+}
+
+// https://github.com/Rahulchaube1/blyx-linearfit/blob/v0.1.1/linearfit.blyx
+fn linearfit_finite(x: f64) -> bool { x - x == 0.0 }
+
+pub fn lf_start() -> vector { mom_empty() }
+pub fn lf_update(s: vector, x: f64, y: f64) -> vector { mom_update(s, x, y) }
+pub fn lf_merge(a: vector, b: vector) -> vector { mom_merge(a, b) }
+
+// Model is centered at the sample means to preserve precision in prediction.
+// penalty multiplies slope squared in the unnormalized sum-of-squares objective.
+pub fn lf_finish(s: vector, penalty: f64) -> vector {
+    if !mom_valid(s) || at(s, 0) < 2.0 || !linearfit_finite(penalty) || penalty < 0.0 { return []; }
+    let denominator = at(s, 3) + penalty;
+    if denominator <= 0.0 || !linearfit_finite(denominator) { return []; }
+    let slope = at(s, 4) / denominator;
+    if !linearfit_finite(slope) { return []; }
+    [at(s, 1), at(s, 2), slope]
+}
+
+pub fn lf_fit(x: vector, y: vector, penalty: f64) -> vector {
+    lf_finish(mom_summary(x, y), penalty)
+}
+
+pub fn lf_predict(model: vector, x: f64) -> f64 {
+    if len(model) != 3 || !linearfit_finite(x) { return 0.0 / 0.0; }
+    let y = at(model, 1) + at(model, 2) * (x - at(model, 0));
+    if !linearfit_finite(y) { return 0.0 / 0.0; }
+    y
+}
+
+fn main() {
+    let training = lf_fit([1, 2, 3, 4], [3, 5, 7, 9], 0.0);
+    println!(at(training, 2));
+    println!(lf_predict(training, 5.0));
+}
+```
+
+Expected output
+
+```
+2
+11
+```
+
+#### Practice
+
+In the worked program, change the training penalty from 0 to 5. What happens to the slope and the prediction at x = 5?
+
+Hint
+
+Sxx is 5 and Sxy is 10. The ridge slope divides Sxy by Sxx plus the penalty.
+
+Solution
+
+The slope becomes 1. The centered prediction is 6 + 1 × (5 − 2.5), or 8.5.
+
+Find
+
+```blyx
+[3, 5, 7, 9], 0.0);
+```
+
+Replace with
+
+```blyx
+[3, 5, 7, 9], 5.0);
+```
+
+Output after the change
+
+```
+1
+8.5
 ```
 
 ## Local toolchain

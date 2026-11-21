@@ -1,0 +1,36 @@
+// https://github.com/Rahulchaube1/blyx-cusum/blob/v0.1.0/cusum.blyx
+fn cusum_finite(x: f64) -> bool { x - x == 0.0 }
+
+pub fn cs_empty() -> vector { [0, 0, 0] }
+
+// State contains positive and negative magnitudes, then a signal (-1, 0, 1).
+// A signalled observation belongs to its episode. The next starts at zero.
+pub fn cs_step(state: vector, z: f64, allowance: f64, limit: f64) -> vector {
+    if len(state) != 3 || !cusum_finite(z) || !cusum_finite(allowance) || !cusum_finite(limit) { return []; }
+    if allowance < 0.0 || limit <= 0.0 { return []; }
+    let mut high = at(state, 0);
+    let mut low = at(state, 1);
+    let signal = at(state, 2);
+    if !cusum_finite(high) || !cusum_finite(low) || high < 0.0 || low < 0.0 { return []; }
+    if signal != -1.0 && signal != 0.0 && signal != 1.0 { return []; }
+    if signal != 0.0 { high = 0.0; low = 0.0; }
+    high = (high + z) - allowance;
+    low = (low - z) - allowance;
+    if !cusum_finite(high) || !cusum_finite(low) { return []; }
+    if high < 0.0 { high = 0.0; }
+    if low < 0.0 { low = 0.0; }
+    if high >= limit { return [high, low, 1]; }
+    if low >= limit { return [high, low, -1]; }
+    [high, low, 0]
+}
+
+fn main() {
+    let mut state = cs_empty();
+    let observations = [2, 2, -3.5];
+    let mut i = 0;
+    while i < len(observations) {
+        state = cs_step(state, at(observations, i), 0.5, 3.0);
+        println!(at(state, 2));
+        i += 1;
+    }
+}

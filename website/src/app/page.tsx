@@ -46,7 +46,7 @@ export default function Home() {
                         <a href="/examples">All examples →</a>
                     </div>
                     <div className="grid">
-                        {["linear-fit", "package-retrieval", "gcd"].map((id) => {
+                        {["weighted-mean", "package-linearfit", "package-retrieval"].map((id) => {
                             const s = samples.find((x) => x.id === id)!;
                             return (
                                 <a
@@ -66,9 +66,12 @@ export default function Home() {
                     </div>
                 </section>
                 <section className="prose block">
-                    <h2>Evaluate a model before you ship it</h2>
-                    <p>Two classifiers can have the same accuracy and make very different mistakes. Compare them on a CSV of paired predictions, or use Blyx libraries to measure calibration and search quality.</p>
-                    <a className="button secondary" href="/packages">Explore the Blyx ecosystem →</a>
+                    <h2>Train a model and track its errors</h2>
+                    <p>Fit a regression from a CSV, add a prediction interval, and detect when a deployed model repeatedly underpredicts. The same Blyx packages run in native programs and in the browser examples.</p>
+                    <div className="actions">
+                        <a className="button secondary" href="/packages">Explore the Blyx ecosystem →</a>
+                        <a href={guideLink("training-and-monitoring")}>Work through the tutorial</a>
+                    </div>
                 </section>
                 <section className="block">
                     <div className="section-head">

@@ -74,23 +74,31 @@ The first line of output is `2`, the fitted slope. The second is `10`, the predi
 | [Threshold classifier](https://www.blyx-lang.space/play?example=threshold) | Vector dot product, bias, and a conditional | `positive` |
 | [Smoothed readings](https://www.blyx-lang.space/play?example=smoothing) | Indexed reads and a rolling calculation | `10`, `12`, `15` |
 
-## Evaluate models with Blyx packages
+## Train and evaluate models with Blyx packages
 
-Two classifiers can both be 75% accurate and have very different costs. In the ModelGate fixture, one false alarm costs 1 and one missed positive costs 5. Replacing the false alarm with a missed positive raises cost per row from 0.25 to 1.25. ModelGate reads paired binary predictions, writes a JSON comparison and exits with code 1 on a regression. Download its platform archive, extract it and run the included fixture. On Windows use `.\modelgate.exe`.
+Fit a regression model from a CSV, estimate prediction intervals on held-out examples, and detect persistent errors after deployment. Each package has a tagged source release, executable tests and a browser example. LinearFit, ResidualWatch and ModelGate also ship native commands for Windows x64, Linux x64 and Apple Silicon macOS.
+
+| Package | What it does |
+| --- | --- |
+| <img src="website/public/packages/linearfit.png" width="32" height="32" alt=""> [LinearFit 0.1.1](https://github.com/Rahulchaube1/blyx-linearfit/releases/tag/v0.1.1) | Train, merge and deploy a single-feature least-squares or ridge regression with an unpenalized intercept. |
+| <img src="website/public/packages/conformal.png" width="32" height="32" alt=""> [Conformal 0.1.0](https://github.com/Rahulchaube1/blyx-conformal/releases/tag/v0.1.0) | Calibrate a regression interval from held-out errors and measure coverage on a separate test set. |
+| <img src="website/public/packages/moments.png" width="32" height="32" alt=""> [Moments 0.1.0](https://github.com/Rahulchaube1/blyx-moments/releases/tag/v0.1.0) | Summarize paired observations as they arrive and merge statistics from independent batches. |
+| <img src="website/public/packages/residualwatch.png" width="32" height="32" alt=""> [ResidualWatch 0.1.0](https://github.com/Rahulchaube1/blyx-residualwatch/releases/tag/v0.1.0) | Freeze a reference distribution and monitor later prediction errors for sustained upward or downward shifts. |
+| <img src="website/public/packages/cusum.png" width="32" height="32" alt=""> [CUSUM 0.1.0](https://github.com/Rahulchaube1/blyx-cusum/releases/tag/v0.1.0) | Detect persistent shifts in a sequence of standardized observations with a two-sided cumulative sum. |
+| <img src="website/public/packages/modelgate.png" width="32" height="32" alt=""> [ModelGate 0.1.2](https://github.com/Rahulchaube1/blyx-modelgate/releases/tag/v0.1.2) | Compare two binary classifiers on the same observations and stop a release when mistake costs or Brier score regress. |
+| <img src="website/public/packages/classification.png" width="32" height="32" alt=""> [Classification 0.1.1](https://github.com/Rahulchaube1/blyx-classification/releases/tag/v0.1.1) | Measure threshold decisions, false alarms, missed positives and their costs. |
+| <img src="website/public/packages/calibration.png" width="32" height="32" alt=""> [Calibration 0.1.1](https://github.com/Rahulchaube1/blyx-calibration/releases/tag/v0.1.1) | Check agreement between predicted probabilities and observed outcomes. |
+| <img src="website/public/packages/retrieval.png" width="32" height="32" alt=""> [Retrieval 0.1.1](https://github.com/Rahulchaube1/blyx-retrieval/releases/tag/v0.1.1) | Score ranked search or RAG results without giving repeated document IDs extra credit. |
+| <img src="website/public/packages/backtest.png" width="32" height="32" alt=""> [Backtest 0.1.1](https://github.com/Rahulchaube1/blyx-backtest/releases/tag/v0.1.1) | Evaluate forecasts in time order with a gap for delayed observations and disjoint test windows. |
+
+The LinearFit fixture learns a slope of 2 and predicts 11 at x = 5. In the ResidualWatch shift fixture the first alert is data row 5. Download the archives, extract each one and run its command in that directory. In PowerShell use `.\linearfit.exe` or `.\residualwatch.exe`.
 
 ```sh
-./modelgate fixtures/regression.csv --fn-cost 5
+./linearfit fixtures/line.csv --predict 5
+./residualwatch fixtures/shift.csv --reference 3 --limit 3
 ```
 
-| Published project | Use it for |
-| --- | --- |
-| [ModelGate 0.1.1](https://github.com/Rahulchaube1/blyx-modelgate/releases/tag/v0.1.1) | Gate a classifier release on mistake costs and probability quality. |
-| [Classification 0.1.0](https://github.com/Rahulchaube1/blyx-classification/tree/v0.1.0) | Calculate confusion counts, precision, recall, F1 and weighted costs. |
-| [Calibration 0.1.0](https://github.com/Rahulchaube1/blyx-calibration/tree/v0.1.0) | Calculate binary Brier score, reliability bins and expected calibration error. |
-| [Retrieval 0.1.0](https://github.com/Rahulchaube1/blyx-retrieval/tree/v0.1.0) | Score ranked document IDs with duplicate-aware precision, recall, reciprocal rank and average precision. |
-| [Backtest 0.1.0](https://github.com/Rahulchaube1/blyx-backtest/tree/v0.1.0) | Plan chronological folds with a gap and compare forecasts with rolling or expanding training baselines. |
-
-Each library has its own Blyx source, tests, examples and tagged release. Import a pinned checkout into a native Blyx project using `use`. [Package catalog and browser demos](https://www.blyx-lang.space/packages) · [Evaluation tutorial](https://doc.blyx-lang.space/guide/ai-packages)
+[Package catalog](https://www.blyx-lang.space/packages) · [Training and monitoring tutorial](https://doc.blyx-lang.space/guide/training-and-monitoring) · [Evaluation tutorial](https://doc.blyx-lang.space/guide/ai-packages) · [Machine-readable catalog](https://www.blyx-lang.space/packages.json) · [Contribute a package](docs/ecosystem-packages.md)
 
 ## What ships in 0.2.1
 
@@ -116,6 +124,8 @@ node tools/test-editor-runtime.mjs
 The editor test checks the browser examples against their source files and expected output, then exercises the editor worker. CI also runs compiler tests on Linux, macOS, and Windows. [Test harness](tools/test-editor-runtime.mjs) · [CI runs](https://github.com/Rahulchaube1/blyxxxx/actions/workflows/ci.yml)
 
 **Model evaluation.** The ModelGate benchmark reads 100,000 paired predictions, checks all JSON metrics and the exit decision against a Python CSV implementation, and times new processes in rotating order. Reproduce it with the release binary and `python tools/bench_modelgate.py --modelgate ./modelgate`. [Benchmark harness](tools/bench_modelgate.py) · [Raw samples and hashes](website/public/data/modelgate-benchmark.json) · [Measured timings](https://www.blyx-lang.space/benchmarks#modelgate)
+
+**Regression training.** The LinearFit benchmark fits one ridge model on 100,000 rows and checks every result against exact rational arithmetic. It times two Blyx releases, standard-library Python, NumPy reading a CSV, and NumPy with arrays already loaded. [Benchmark harness](tools/bench_linearfit.py) · [Raw samples and executable hashes](website/public/data/linearfit-benchmark.json) · [Timing boundaries and results](https://www.blyx-lang.space/benchmarks#linearfit)
 
 **Performance evidence.** The published benchmark measures recursive Fibonacci(22) on one Windows host. Across nine runs after two warm-ups, the median was **7.777 ms** for a native Blyx executable and **27.522 ms** for the Blyx interpreter. Each timing includes process startup. The raw report includes the Rust and CPython baselines, toolchain versions, individual samples, and executable sizes. [Benchmark harness](tools/bench_fibonacci.py) · [Raw results](website/public/data/benchmarks.json) · [Benchmark report](https://www.blyx-lang.space/benchmarks)
 

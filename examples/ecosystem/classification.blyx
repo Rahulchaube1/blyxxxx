@@ -1,4 +1,4 @@
-// Single-file example from https://github.com/Rahulchaube1/blyx-classification/tree/v0.1.0
+// Single-file example from https://github.com/Rahulchaube1/blyx-classification/tree/v0.1.1
 // Rows in a confusion vector are [true positives, false positives, true negatives, false negatives].
 pub fn class_probability(score: f64) -> bool {
     score >= 0.0 && score <= 1.0

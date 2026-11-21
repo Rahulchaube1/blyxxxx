@@ -31,6 +31,15 @@ export default function Download() {
             </div>
             <div className="prose block">
                 <section>
+                    <h2>Download Blyx AI tools</h2>
+                    <p>Use the published executables with your own CSV files. Each release includes sample data and checksums.</p>
+                    <div className="actions">
+                        <a href="/packages/linearfit">Fit a regression with LinearFit</a>
+                        <a href="/packages/residualwatch">Monitor errors with ResidualWatch</a>
+                        <a href="/packages/modelgate">Compare classifiers with ModelGate</a>
+                    </div>
+                </section>
+                <section>
                     <h2>Install with Homebrew</h2>
                     <p>
                         On Apple Silicon macOS or x86-64 Linux, Homebrew installs

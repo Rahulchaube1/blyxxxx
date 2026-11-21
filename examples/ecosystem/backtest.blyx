@@ -1,4 +1,4 @@
-// Single-file example from https://github.com/Rahulchaube1/blyx-backtest/tree/v0.1.0
+// Single-file example from https://github.com/Rahulchaube1/blyx-backtest/tree/v0.1.1
 // All fold positions are zero-based, with exclusive end positions.
 pub fn bt_fold_count(n: i64, initial: i64, horizon: i64, gap: i64) -> i64 {
     if n < 0 || initial < 1 || horizon < 1 || gap < 0 { return -1; }

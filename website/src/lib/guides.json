@@ -710,7 +710,7 @@
             },
             {
                 "heading": "Run ModelGate",
-                "text": "ModelGate 0.1.1 ships as a native executable. On Apple Silicon macOS or x86-64 Linux use the Homebrew command below. On x64 Windows, extract the release ZIP from the ecosystem catalog and run .\\modelgate.exe predictions.csv --fn-cost 5 in PowerShell. A release archive also contains fixtures/improved.csv and fixtures/regression.csv.",
+                "text": "ModelGate 0.1.2 ships as a native executable. On Apple Silicon macOS or x86-64 Linux use the Homebrew command below. On x64 Windows, extract the release ZIP from the ecosystem catalog and run .\\modelgate.exe predictions.csv --fn-cost 5 in PowerShell. A release archive also contains fixtures/improved.csv and fixtures/regression.csv.",
                 "command": "brew install rahulchaube1/blyx/modelgate\nmodelgate predictions.csv --fn-cost 5"
             },
             {
@@ -748,7 +748,7 @@
             {
                 "heading": "Import a versioned library",
                 "text": "Install Blyx 0.2.1, Rust 1.85 or later and a platform linker for a source build. In an empty project directory, run the clone command below. It puts the release beside the entry file. For a shared project, record the commit in version control, for example as a Git submodule.",
-                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-classification.git vendor/classification"
+                "command": "git clone --depth 1 --branch v0.1.1 https://github.com/Rahulchaube1/blyx-classification.git vendor/classification"
             },
             {
                 "heading": "Use the library in a native program",
@@ -780,6 +780,68 @@
                 ]
             ],
             "expected": "0.5\n0.5\n11\n"
+        }
+    },
+    {
+        "slug": "training-and-monitoring",
+        "title": "Train, calibrate and monitor a regression model",
+        "group": "Practical projects",
+        "summary": "Fit a regression, attach intervals using held-out errors, and catch persistent underprediction in a later stream. Run each stage in native Blyx or the browser.",
+        "example": "package-linearfit",
+        "sections": [
+            {
+                "heading": "Keep three sets of observations",
+                "text": "Use training pairs to fit the model. Reserve a separate calibration set for choosing an interval radius. Keep a stable, chronological reference period and later labelled predictions for monitoring. Reusing training errors for calibration can make intervals too narrow. Choose data splits before fitting."
+            },
+            {
+                "heading": "Fit the relationship",
+                "text": "Save x,y pairs as a UTF-8 CSV. The second column is the response. The four rows below follow y = 2x + 1. The centered least-squares fit has feature mean 2.5, response mean 6 and slope 2. At x = 5 it predicts 11.",
+                "command": "x,y\n1,3\n2,5\n3,7\n4,9"
+            },
+            {
+                "heading": "Run LinearFit",
+                "text": "Extract the LinearFit archive for your platform and run the included fixture. On Windows, start the command with .\\linearfit.exe in PowerShell. On Apple Silicon macOS and x86-64 Linux you can also install it from the Blyx Homebrew tap. Supplying --ridge 5 shrinks the slope to 1 and changes the prediction to 8.5.",
+                "command": "./linearfit fixtures/line.csv --predict 5"
+            },
+            {
+                "heading": "Train by batch or by row",
+                "text": "Use lf_fit on aligned vectors for a batch. For incoming observations start with lf_start, pass the state and next training pair to lf_update, and call lf_finish when you need a model. lf_merge combines disjoint training batches. The shared Moments library also exposes their means, centered sums and sample standard deviation."
+            },
+            {
+                "heading": "Calibrate an interval",
+                "text": "Suppose a separate model predicted 10 for each of four calibration cases whose true values were 10, 12, 7 and 11. The absolute errors are 0, 2, 3 and 1. At target coverage 3/5, take the third smallest error because ceil((4+1)×3/5) = 3. This yields a radius of 2 and the interval [18,22] around a new prediction of 20. At 90% coverage four cases give no finite result.",
+                "command": "let cal = cf_calibrate([10, 12, 7, 11], [10, 10, 10, 10], 3, 5);\nlet interval = cf_interval(20.0, at(cal, 0));"
+            },
+            {
+                "heading": "Interpret coverage",
+                "text": "Use cf_coverage on separate labelled predictions to measure the fraction inside the intervals. The usual split-conformal guarantee is marginal and assumes calibration and future examples are exchangeable. Inspect time periods or important subgroups separately when that assumption may fail."
+            },
+            {
+                "heading": "Detect sustained underprediction",
+                "text": "ResidualWatch calculates actual minus predicted. In its shift fixture the first three residuals are −1, 0 and 1, so the frozen center is 0 and the sample scale is 1. Two later residuals of 2 add 1.5 each to the positive CUSUM at allowance 0.5. The second reaches the inclusive limit of 3. The first alert is data row 5, and the CLI exits with status 1.",
+                "command": "./residualwatch fixtures/shift.csv --reference 3 --limit 3"
+            },
+            {
+                "heading": "Use alerts in a job",
+                "text": "Keep the JSON report from each run. Exit code 0 means the monitor finished without an alert, 1 means a limit was reached, 2 signals invalid input and 4 signals an I/O failure. Choose an allowance, limit and scale floor using a representative stable period. Investigate drift alarms against labels and feature changes before deciding whether to retrain."
+            },
+            {
+                "heading": "Add a package to a native project",
+                "text": "With Blyx 0.2.1, Rust and a host linker installed, clone the tagged release next to your entry file. The training and monitoring packages include their pinned Blyx dependencies. Save the imported program as main.blyx and run blyxc native-run main.blyx. The package catalog has the exact import, function reference, runnable example and source for every package.",
+                "command": "git clone --depth 1 --branch v0.1.1 https://github.com/Rahulchaube1/blyx-linearfit.git vendor/linearfit\n\n# First line of main.blyx\nuse vendor::linearfit::linearfit;"
+            }
+        ],
+        "exercise": {
+            "prompt": "In the worked program, change the training penalty from 0 to 5. What happens to the slope and the prediction at x = 5?",
+            "hint": "Sxx is 5 and Sxy is 10. The ridge slope divides Sxy by Sxx plus the penalty.",
+            "answer": "The slope becomes 1. The centered prediction is 6 + 1 × (5 − 2.5), or 8.5.",
+            "edits": [
+                [
+                    "[3, 5, 7, 9], 0.0);",
+                    "[3, 5, 7, 9], 5.0);"
+                ]
+            ],
+            "expected": "1\n8.5\n"
         }
     },
     {

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import guides from "@/lib/guides.json";
+import catalog from "@/lib/packages.json";
 import { docs, website, bookEdition } from "@/lib/site";
 export default function sitemap(): MetadataRoute.Sitemap {
     const urls = bookEdition
@@ -14,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
               "vscode",
               "benchmarks",
               "packages",
+              ...catalog.packages.map((p) => "packages/" + p.slug),
               "blog",
               "about",
               "security",
