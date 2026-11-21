@@ -1,3 +1,4 @@
+import { condaSource } from "@/lib/source-channel";
 import catalog from "@/lib/packages.json";
 import { website } from "@/lib/site";
 
@@ -16,6 +17,7 @@ export function GET() {
             repository: p.repository,
             release: p.release,
             module: p.module + ".blyx",
+            conda: condaSource(p),
             description: p.description,
             cli: (p.cli || p.collection?.libraries.length) ? p.slug : null,
             ...(p.collection && {

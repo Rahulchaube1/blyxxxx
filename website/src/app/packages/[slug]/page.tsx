@@ -1,3 +1,4 @@
+import { condaSource } from "@/lib/source-channel";
 import { pageMetadata } from "@/lib/metadata";
 import StructuredData from "@/components/StructuredData";
 import { notFound } from "next/navigation";
@@ -30,6 +31,7 @@ export default async function Package({ params }: Props) {
     const p = catalog.packages.find((item) => item.slug === slug);
     if (!p) notFound();
     const directory = directoryFor(p.category);
+    const packaged = condaSource(p);
     const clone = "git clone --depth 1 --branch v" + p.version + (slug === "modelgate" ? " --recurse-submodules" : "") + " " + p.repository + ".git vendor/" + slug;
     return (
         <main className="wrap">
@@ -54,6 +56,7 @@ export default async function Package({ params }: Props) {
                 </div>
                 <p>{p.description}</p>
                 <div className="actions">
+                    {packaged && <a href="#conda">Install with Conda</a>}
                     {p.editor && <a className="button" href="#editor">Install in your editor</a>}
                     {p.projects && <a href="#projects">Try the projects</a>}
                     {p.trainedExample && <a href={playLink(p.trainedExample)}>Run the trained XOR network →</a>}
@@ -149,6 +152,17 @@ export default async function Package({ params }: Props) {
                         <p>On Windows x64, add the Blyx Scoop bucket once, then install the tool from PowerShell.</p>
                         <pre>{"scoop bucket add blyx https://github.com/Rahulchaube1/scoop-blyx\nscoop install blyx/" + slug}</pre>
                         <a href={"https://github.com/Rahulchaube1/scoop-blyx/blob/main/bucket/" + slug + ".json"}>Scoop manifest</a>
+                    </section>
+                )}
+                {packaged && (
+                    <section id="conda">
+                        <h2>Install with Conda</h2>
+                        <p>Create an environment containing {p.title} {packaged.version}, its Blyx source and a runnable example.
+                            Run the second command with Blyx {catalog.compiler}, Rust and a host linker installed.</p>
+                        <pre>{'conda create -y --prefix ./blyx-env --override-channels -c ' + packaged.channel + ' ' + packaged.name + '=' + packaged.version + '=' + packaged.build
+                            + '\nblyxc native-run ./blyx-env/share/blyx/' + slug + '/main.blyx'}</pre>
+                        <p>To use this package in your application, copy <code>{'share/blyx/' + slug + '/vendor/' + slug}</code> from the environment into your project's <code>vendor</code> directory.</p>
+                        <a href="/packages#install">Install the full collection with Homebrew or Scoop</a>
                     </section>
                 )}
                 <section id="import">

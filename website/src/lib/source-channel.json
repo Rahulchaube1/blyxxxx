@@ -1,0 +1,1037 @@
+{
+  "release": "2026.11.22",
+  "packages": {
+    "ackprefix": {
+      "name": "blyx-ackprefix",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "4137bdac1d6f882a721770dfc5a5e279c53e4123"
+    },
+    "activityspan": {
+      "name": "blyx-activityspan",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "5868f268f4f7d443e80919c9ca7ff8d67f929452"
+    },
+    "adlerbytes": {
+      "name": "blyx-adlerbytes",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "1b98f7edd41a7df4516cdc800962efe4577fcc98"
+    },
+    "albatross": {
+      "name": "blyx-albatross",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "b2387f24eed18a45ba049ce68f27b62aaa34b491"
+    },
+    "allowfields": {
+      "name": "blyx-allowfields",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "889759d62073a50be5df34e929b2ed16cca54e7d"
+    },
+    "aspectfit": {
+      "name": "blyx-aspectfit",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "2ec8d55a8e8bed44e05a1a77b16679c968ededb4"
+    },
+    "assurancelevel": {
+      "name": "blyx-assurancelevel",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "d19e9add2d02aa7687d41a5ec46aed26345b6b99"
+    },
+    "auditgaps": {
+      "name": "blyx-auditgaps",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "f1aee5fc6f293ab68c1c7fbeeb15adff810bf7ae"
+    },
+    "avocet": {
+      "name": "blyx-avocet",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "ca7637637f4620bf2e17b9c6a11af09125ff893e"
+    },
+    "axisrange": {
+      "name": "blyx-axisrange",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "a8aa8c8280f09ba39aae45e7a3b5860b77ca726a"
+    },
+    "backtest": {
+      "name": "blyx-backtest",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "2371260a23c140652d58fcec38a81a6e756a3282"
+    },
+    "barnowl": {
+      "name": "blyx-barnowl",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "ed12bda58e6e43b696763d33fced700d6758cc3a"
+    },
+    "batchquota": {
+      "name": "blyx-batchquota",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "1470b1547764b0bc89b893e37429aef08385555f"
+    },
+    "betamoment": {
+      "name": "blyx-betamoment",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "7d173028642562a56cd506c703972694522ace69"
+    },
+    "betaupdate": {
+      "name": "blyx-betaupdate",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "a0ed98a55c4f227d775f9aaab60113adec6addd8"
+    },
+    "bitparity": {
+      "name": "blyx-bitparity",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "29d937131c54b3c25cac7473cc2614796e1f59b3"
+    },
+    "bittern": {
+      "name": "blyx-bittern",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "8e77374a87f41d5e27f68e7461d453989b9394d7"
+    },
+    "blackbird": {
+      "name": "blyx-blackbird",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "30dc8057641e7f2b2d2715cdb5a666304f50571e"
+    },
+    "blockspan": {
+      "name": "blyx-blockspan",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "713d0a9be1de771edfe95039432f63eac69ba66a"
+    },
+    "blyxtorch": {
+      "name": "blyxtorch",
+      "version": "0.2.0",
+      "build": "0",
+      "commit": "6b67ab026a5dae70f0894dc327dfe0364e18c135"
+    },
+    "bowerbird": {
+      "name": "blyx-bowerbird",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "34b596d9b86ad95870ea1bd493d5f6f9820fc89e"
+    },
+    "boxclip": {
+      "name": "blyx-boxclip",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "a203befb1e91a9de24cc95bf84eb527d8ee4a380"
+    },
+    "boxoverlap": {
+      "name": "blyx-boxoverlap",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "8f968a367ab84f6ccc917a313a574ddeef929968"
+    },
+    "budgetleft": {
+      "name": "blyx-budgetleft",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "74001c0ba1b126f0d8e1249ad8873fdfc44e5f3b"
+    },
+    "bulbul": {
+      "name": "blyx-bulbul",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "afb3069b24cd370b2edab79c21829b85950fa8d4"
+    },
+    "bunting": {
+      "name": "blyx-bunting",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "381a5fbefcf92e3520abe924c20da41d0dffc7fb"
+    },
+    "byterange": {
+      "name": "blyx-byterange",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "7714f56956cb552d46b1e4b9cef595e22f5da508"
+    },
+    "calibration": {
+      "name": "blyx-calibration",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "f978f7f43e54d068c186cb4b467c737b121d0489"
+    },
+    "cashladder": {
+      "name": "blyx-cashladder",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "523332fa19169aeb8a0497ae7f5ceb261256a30a"
+    },
+    "cashmatch": {
+      "name": "blyx-cashmatch",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "64f8c0ab67c2a8786a89f530214db7517dc59b0d"
+    },
+    "chaffinch": {
+      "name": "blyx-chaffinch",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "76d2d9cdad9812cedce6e5ef474a097c5d31dc71"
+    },
+    "chunkspan": {
+      "name": "blyx-chunkspan",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "5be66afce56794ed8690afdc6395878cfd8e851f"
+    },
+    "civiloffset": {
+      "name": "blyx-civiloffset",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "b2b3910091baf5ee351e60dab366639e049bf8a8"
+    },
+    "claimclock": {
+      "name": "blyx-claimclock",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "8841f7b814d3b0eea565a5f509293fd4980a7739"
+    },
+    "classification": {
+      "name": "blyx-classification",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "d22aecbe930c3b48a3e157b75f5276d4c52037e8"
+    },
+    "clipruns": {
+      "name": "blyx-clipruns",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "83f3aac7999937c5635c56f8d7b9cb4808f83b8e"
+    },
+    "clockfold": {
+      "name": "blyx-clockfold",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "dc677cc5a791a1d19629d33d624ffe4f5f24f648"
+    },
+    "coalesceio": {
+      "name": "blyx-coalesceio",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "66cfd6c94222458644e2279974e0fa2a9a99e69e"
+    },
+    "conformal": {
+      "name": "blyx-conformal",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "2e26e32a67000c06ff0f794c6f8cdcab1efb6734"
+    },
+    "cormorant": {
+      "name": "blyx-cormorant",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "637e3ebbb24d74f3d45119eccb224666104a9fda"
+    },
+    "cueoverlap": {
+      "name": "blyx-cueoverlap",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "5f3f67784579d71f96eba4028816e2377a3f3103"
+    },
+    "curlew": {
+      "name": "blyx-curlew",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "90951d8f102e134f34c68d82d8c6b0de9927fbb8"
+    },
+    "cusum": {
+      "name": "blyx-cusum",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "4e99a0509d16fafb7574b0a85222fc37a340c709"
+    },
+    "dagorder": {
+      "name": "blyx-dagorder",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "a62cd9d499c2b83f25762f9bd2cff335679f0ae5"
+    },
+    "deadlinepath": {
+      "name": "blyx-deadlinepath",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "550861e76e2db7461ef015d16a07b02c5fc1afea"
+    },
+    "dipper": {
+      "name": "blyx-dipper",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "bd945ed8a3151e302073a37ac3b3c64aa1c1b8f5"
+    },
+    "dominance": {
+      "name": "blyx-dominance",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "c3e8c3531e06d84d5154182703a8fc15359ec619"
+    },
+    "drawdepth": {
+      "name": "blyx-drawdepth",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "4cdb0f55e7d37f63973158c2d5df68f7d508749d"
+    },
+    "dunlin": {
+      "name": "blyx-dunlin",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "19220f4076dab1f086a2252d862869843a8bbdc2"
+    },
+    "edgeaudit": {
+      "name": "blyx-edgeaudit",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "d200330580129b9465c73d3c73125bd47351a283"
+    },
+    "egret": {
+      "name": "blyx-egret",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "28be52010c166155c3b24fc3ade5009adef6fba6"
+    },
+    "eventlevels": {
+      "name": "blyx-eventlevels",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "6f006b48a80351f7d4056b67cff0a52c002982f8"
+    },
+    "eventorder": {
+      "name": "blyx-eventorder",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "8742996a0fb9ff572426cd03d2f24e3bf9e57eff"
+    },
+    "exitpolicy": {
+      "name": "blyx-exitpolicy",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "a3e784dc404ca7e766e0d332adb704abd17b8b52"
+    },
+    "fantail": {
+      "name": "blyx-fantail",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "6566df3e21c1343135fe97979154eed687724e6e"
+    },
+    "fieldcost": {
+      "name": "blyx-fieldcost",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "e87b0cb35c57c2c12007a7a8cac880ad4c33550c"
+    },
+    "flamingo": {
+      "name": "blyx-flamingo",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "29d3cb8277307954e528f3d60c8f6c0aee6a3439"
+    },
+    "floorbreach": {
+      "name": "blyx-floorbreach",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "c53a904a68690b904c165f2f087e86c176545794"
+    },
+    "foreignmiss": {
+      "name": "blyx-foreignmiss",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "fb3ce916641d75782f581203a01085c5ae88be9f"
+    },
+    "framesignal": {
+      "name": "blyx-framesignal",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "edd6019161e441d46bc148d95e3d52e92ec8e1e1"
+    },
+    "freshclock": {
+      "name": "blyx-freshclock",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "61e782da4eb0e0deef5676485a577da3813d1d6a"
+    },
+    "fulmar": {
+      "name": "blyx-fulmar",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "6007ac115d4a97cdc162be8876a4633502c0e61b"
+    },
+    "gaphold": {
+      "name": "blyx-gaphold",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "65d7a6c85c9ad15df1bae8da15d3dc6bc5343f0e"
+    },
+    "geobounds": {
+      "name": "blyx-geobounds",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "cbb96386d2ae7943e9e928b0fa24e870bfbe74eb"
+    },
+    "graphdegree": {
+      "name": "blyx-graphdegree",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "88abf00d26d97c12e841bbbca2dcfa309a0f8548"
+    },
+    "grebe": {
+      "name": "blyx-grebe",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "900d079d4aee0b967733c33226d76cc08aff59f7"
+    },
+    "gregorianday": {
+      "name": "blyx-gregorianday",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "ff2663da662bd0a545d04336e660e404ab568348"
+    },
+    "gridcover": {
+      "name": "blyx-gridcover",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "73b5a34971d431eb6b70ece223dfdf4b56a77bdb"
+    },
+    "gridgap": {
+      "name": "blyx-gridgap",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "7d010c19b9bd139ef67f88e686ab21236d15d012"
+    },
+    "harrier": {
+      "name": "blyx-harrier",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "ec025b6ac9db4d50ced229358b0a54e7c0d35602"
+    },
+    "heron": {
+      "name": "blyx-heron",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "945ce68dbeb541d760351f359a71252694b2db06"
+    },
+    "histquantile": {
+      "name": "blyx-histquantile",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "b5dd0b838ad95673533e201d3d9aa70a56ca2e28"
+    },
+    "hoopoe": {
+      "name": "blyx-hoopoe",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "977d385cadc36c8f3ccabbc8cde1bf108cc30af4"
+    },
+    "ibis": {
+      "name": "blyx-ibis",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "e007a9495559a3cdfe086ac27b4b758874112094"
+    },
+    "indentsteps": {
+      "name": "blyx-indentsteps",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "b5e64159a89d096e6974770b63b90858373a78b3"
+    },
+    "intervalunion": {
+      "name": "blyx-intervalunion",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "a3607ec8595ed90551a68166d3c9d199ce3be1d9"
+    },
+    "jacana": {
+      "name": "blyx-jacana",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "81ac8283a5e938042905b583413bbb9609889c05"
+    },
+    "jittermean": {
+      "name": "blyx-jittermean",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "0fb1ac72e6faf46fea90da89589ec4c6860a72b1"
+    },
+    "kestrel": {
+      "name": "blyx-kestrel",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "10469a81c17a5cf4f0b9d02cc1dcd071e1e45648"
+    },
+    "keyduplicates": {
+      "name": "blyx-keyduplicates",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "70a9b12345fa7b2e6bbba3313cfd1f3401840c2b"
+    },
+    "keyorders": {
+      "name": "blyx-keyorders",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "bd4a61e7115b17cb6a1848242ec48b65d0c28d93"
+    },
+    "kinglet": {
+      "name": "blyx-kinglet",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "3425d588518e80673bab51e21bc1adee6d2a0962"
+    },
+    "lapwing": {
+      "name": "blyx-lapwing",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "86a0f09bae948e735e29e0ff913b54f9b185293f"
+    },
+    "leaseclock": {
+      "name": "blyx-leaseclock",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "81b473a7fa20d54feeb1488833a63e6ca1ef7121"
+    },
+    "lineamount": {
+      "name": "blyx-lineamount",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "f9d4b2962c7778ab5840e0579c36c175523086f9"
+    },
+    "linearfit": {
+      "name": "blyx-linearfit",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "6a937457b27d8adf5601025e6244474a1be273e5"
+    },
+    "linefit": {
+      "name": "blyx-linefit",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "afa8b9907f33e6ff9335b4123cde06ab28f2dff9"
+    },
+    "linewidth": {
+      "name": "blyx-linewidth",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "ef8bf6e6e104f8fb17b8a010b2f38d314940c317"
+    },
+    "linnet": {
+      "name": "blyx-linnet",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "94e468ce8ca37d16e698c0154963ccdc0e316259"
+    },
+    "lotround": {
+      "name": "blyx-lotround",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "3f7d79b0853d55de3f6e9eaaeea46d1f90eb4056"
+    },
+    "magpie": {
+      "name": "blyx-magpie",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "aa811e8dc8d9ea9ce421741e6a5ce8f519c931a0"
+    },
+    "martin": {
+      "name": "blyx-martin",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "a2cf0c721a2d3efa7b906cfdab8d6eb5ad8af310"
+    },
+    "merganser": {
+      "name": "blyx-merganser",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "c4085cb3aa2f26a0a9c84fb4244cf6921d1ab5d6"
+    },
+    "mergecounts": {
+      "name": "blyx-mergecounts",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "3bf25828b0c78889340a4172f4056b15c1756b8c"
+    },
+    "modelgate": {
+      "name": "blyx-modelgate",
+      "version": "0.1.2",
+      "build": "0",
+      "commit": "0aa7b9dd067eaf74f9d3b07ca9ea4a51a9e0d181"
+    },
+    "moments": {
+      "name": "blyx-moments",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "15ab010ca2aa4573ca685055108c7eb9cad29d9c"
+    },
+    "nightingale": {
+      "name": "blyx-nightingale",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "5219544513c9fea11f7a9026b0210a0799ced8dd"
+    },
+    "nuthatch": {
+      "name": "blyx-nuthatch",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "7ac9b7118e56f8c9f0d5e6905e3c833986a36e79"
+    },
+    "offsetgap": {
+      "name": "blyx-offsetgap",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "dd4591f47d05c93313aac2f3aeac49ac94c17ef1"
+    },
+    "optionlayer": {
+      "name": "blyx-optionlayer",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "716932ac5f74d70bca93655bce8ab0feac19c300"
+    },
+    "oriole": {
+      "name": "blyx-oriole",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "358f4490d88c51b75b6a0736b8d139b4bc52a4b7"
+    },
+    "osprey": {
+      "name": "blyx-osprey",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "ed8a8ff2940f6795ce5faa34b89c95b35aac77ba"
+    },
+    "pagebreaks": {
+      "name": "blyx-pagebreaks",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "73b7b6c9da98b1ddd0aee9b5b7a2dadc38bc53ea"
+    },
+    "pagecursor": {
+      "name": "blyx-pagecursor",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "dddc7e3e5c60cb0179c77a23fa1166995c66ea63"
+    },
+    "peakslots": {
+      "name": "blyx-peakslots",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "414cd9e1a1ddbb10c7689b8fac62f6b3d6829c51"
+    },
+    "pelican": {
+      "name": "blyx-pelican",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "0e96f76439d52d5e74ad2785879ac40d4cde32eb"
+    },
+    "petrel": {
+      "name": "blyx-petrel",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "8207bcf64241ec9e11673d5baa951b91014a1e92"
+    },
+    "pintail": {
+      "name": "blyx-pintail",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "380c8a3a434e3c688ca8aebfbbbbb1eaeed6b988"
+    },
+    "pipit": {
+      "name": "blyx-pipit",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "7cbc6b99fa003842082d2b6d6a7e82b8513fe562"
+    },
+    "plover": {
+      "name": "blyx-plover",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "603e6eca4500d34af035e4b77648d06495e40a50"
+    },
+    "quail": {
+      "name": "blyx-quail",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "9581131fd8b756845514466746e209d790396011"
+    },
+    "querydepth": {
+      "name": "blyx-querydepth",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "2caf0cebba85bc62c674d793ff903574940bd0fd"
+    },
+    "rankband": {
+      "name": "blyx-rankband",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "f68c5b65335236c4f8e50b84421e83c1ed5a89e7"
+    },
+    "rasterbytes": {
+      "name": "blyx-rasterbytes",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "46033923ce1c0344ae80b5c2933a2830e25d0f1a"
+    },
+    "raven": {
+      "name": "blyx-raven",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "05d73386d29e1d799c458ba47afdfadaa9288b61"
+    },
+    "readoutfreq": {
+      "name": "blyx-readoutfreq",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "5a8e95a0fb3d3398f66590d2068a0ff85374651f"
+    },
+    "realqubit": {
+      "name": "blyx-realqubit",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "0510f5c38682f47c32ce74d8f0ea0f72b02c3bfd"
+    },
+    "recordspan": {
+      "name": "blyx-recordspan",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "c6749ae524987e2537d1f7ef2d62f58021a7c4f3"
+    },
+    "redstart": {
+      "name": "blyx-redstart",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "4298bb79a12491172685dc8d33de25c979201941"
+    },
+    "releasewindow": {
+      "name": "blyx-releasewindow",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "a16228bfc5774e5d89a3f2b8e6385fe7267a0259"
+    },
+    "requiredset": {
+      "name": "blyx-requiredset",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "18e56d72874d671ae95ddf0b23f8e39caed05da8"
+    },
+    "residualwatch": {
+      "name": "blyx-residualwatch",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "30b5901f566db191b3fc3a31fa7b06fedbba4f38"
+    },
+    "resumeindex": {
+      "name": "blyx-resumeindex",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "f0284e9799f4d7fb7dc5ff216e85c9fba37fe2d8"
+    },
+    "retrieval": {
+      "name": "blyx-retrieval",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "3e8be65262314fb823771a09e0947ccf1e5cf8f8"
+    },
+    "retrydelay": {
+      "name": "blyx-retrydelay",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "1464560b8c81ae3f8895cd9d734ae19daaf54760"
+    },
+    "reviewquorum": {
+      "name": "blyx-reviewquorum",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "54a4facca85d1598dc135ed75931cb140bbc3b60"
+    },
+    "richness": {
+      "name": "blyx-richness",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "f1d16767e465aae63c40342c3eaa3ef4c998628b"
+    },
+    "robin": {
+      "name": "blyx-robin",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "989352e006cf0a359f2890e6fc6a996a9885ea87"
+    },
+    "runduration": {
+      "name": "blyx-runduration",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "104c82789e73077af77d018fe8f90b57c9ae9c53"
+    },
+    "samplequota": {
+      "name": "blyx-samplequota",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "56cf88913427a9d99a0fcbe1cb7147416d9b46d1"
+    },
+    "sanderling": {
+      "name": "blyx-sanderling",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "44b22f8bed88b555c358af8133476c1e05f6ef17"
+    },
+    "sandpiper": {
+      "name": "blyx-sandpiper",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "f5b6ff784571e7dde8ed0a27259eaa35b332c3a5"
+    },
+    "schemaguard": {
+      "name": "blyx-schemaguard",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "4699238fb863311cd07259818e54fb00361c9fbc"
+    },
+    "semvercore": {
+      "name": "blyx-semvercore",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "248827e9b3e1fa5c52b36ad63d3b9cd37c7ec5a1"
+    },
+    "shotmargins": {
+      "name": "blyx-shotmargins",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "206922afe9c01da04671dfc96446a2485998007a"
+    },
+    "shrike": {
+      "name": "blyx-shrike",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "facb71a12c9ad3b44e239f8527bcb314e8aa4f25"
+    },
+    "siskin": {
+      "name": "blyx-siskin",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "7fc556c3bf957b90e454937444f8373459b14907"
+    },
+    "skimmer": {
+      "name": "blyx-skimmer",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "0eef3f57c44013ca6c7a0f44f587866ff0ef2e04"
+    },
+    "sloburn": {
+      "name": "blyx-sloburn",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "7d73e76345fd2ce650f585e93e65a8c1cf1e1e19"
+    },
+    "sortruns": {
+      "name": "blyx-sortruns",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "31ff43c96ec634c4389b1103316b85b9070ec659"
+    },
+    "spoonbill": {
+      "name": "blyx-spoonbill",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "b9d650e7ec6a346d1060f7f15e54bcfa370f89e3"
+    },
+    "stalewindow": {
+      "name": "blyx-stalewindow",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "1d649b9186976862aec3c7ba23e4bb11d1f76f65"
+    },
+    "starling": {
+      "name": "blyx-starling",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "c0385686f229dac3cd0b78400006688811b3f138"
+    },
+    "statusretry": {
+      "name": "blyx-statusretry",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "3236a4811f1984bac12effbd7f96dd7bd03f8343"
+    },
+    "stdweight": {
+      "name": "blyx-stdweight",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "7b71c765a8741f357331fc70b30068d060e68602"
+    },
+    "stockledger": {
+      "name": "blyx-stockledger",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "1aabeffc9c728297bcab5b044243ed3d01261258"
+    },
+    "stratamean": {
+      "name": "blyx-stratamean",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "f234c6e54799995c5b930ed13b259db060d12fa6"
+    },
+    "suffixrange": {
+      "name": "blyx-suffixrange",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "46c2e393339320a9adf392ef5f8fc617526389e7"
+    },
+    "swallow": {
+      "name": "blyx-swallow",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "74d9702c0e820be16279fece9b3738fd7b6b4988"
+    },
+    "swiftlet": {
+      "name": "blyx-swiftlet",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "3019450b9aa1174909e3772025c2c2deca127842"
+    },
+    "tanager": {
+      "name": "blyx-tanager",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "1d2a585d2b2e595d77b52ae22a8c6d57fbf1bcda"
+    },
+    "tickstep": {
+      "name": "blyx-tickstep",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "5e0c78e89b7dcd330c213ae54dc40b0939edc0f9"
+    },
+    "timebase": {
+      "name": "blyx-timebase",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "6617f6b0d76d2baf2ca1bc1813f42e217a1c4d90"
+    },
+    "tokenbucket": {
+      "name": "blyx-tokenbucket",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "ad097329fd23035a41388373e2c2614a6453226a"
+    },
+    "towhee": {
+      "name": "blyx-towhee",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "9b4c90ce714e110b211fc57a31d52f3cfdd2b8e2"
+    },
+    "transitspan": {
+      "name": "blyx-transitspan",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "aeb061b8ae894988a13e951deed41f09e9f87b08"
+    },
+    "trapezoid": {
+      "name": "blyx-trapezoid",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "c2f33639f90d218e5127b6952879a252e844f97d"
+    },
+    "turnover": {
+      "name": "blyx-turnover",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "c00f0e03242ec455593d92e4a3d357499d974888"
+    },
+    "turnstone": {
+      "name": "blyx-turnstone",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "bb5e14660a3e17c10fc10565d39aa0976154adf7"
+    },
+    "underwater": {
+      "name": "blyx-underwater",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "d725d1d82883a9c26a0f35bcf45e1632c5514f54"
+    },
+    "valuebounds": {
+      "name": "blyx-valuebounds",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "67af9352e88c415b4a09ce3a774d75cef5261f30"
+    },
+    "versionband": {
+      "name": "blyx-versionband",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "df6b90227e4fc248ae46e208e9e3c5ef6b0bdc2c"
+    },
+    "versionchain": {
+      "name": "blyx-versionchain",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "1a03979840027527de11a25f7ef93d5d102ecbf2"
+    },
+    "viewportion": {
+      "name": "blyx-viewportion",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "06be6b2b954710504cf69dedc48f5969b9a93ff4"
+    },
+    "waitbudget": {
+      "name": "blyx-waitbudget",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "f5a4098b71dd93f46edebd67a97f6362ed9125c1"
+    },
+    "warbler": {
+      "name": "blyx-warbler",
+      "version": "0.1.1",
+      "build": "0",
+      "commit": "b9876760077cf7fad4cdb28abe1868ff84905ead"
+    },
+    "waxwing": {
+      "name": "blyx-waxwing",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "151d0acc73edd71e2ce170fd4bf5292bf3e456ca"
+    },
+    "weaver": {
+      "name": "blyx-weaver",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "660e7fe3dbf52f721675812af5d7b4730c3044c4"
+    },
+    "weightdrift": {
+      "name": "blyx-weightdrift",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "8ab90355b4b0ef3e49c4e9216aa7fd61b5445cce"
+    },
+    "wordrows": {
+      "name": "blyx-wordrows",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "178fe08affe30b0e5685b88314fcedfdf185ce2d"
+    },
+    "wren": {
+      "name": "blyx-wren",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "54face061805e7bf749c500aa31b3341eee91b4b"
+    },
+    "yearorigin": {
+      "name": "blyx-yearorigin",
+      "version": "0.1.0",
+      "build": "0",
+      "commit": "7ebf5895863b1977e5001b6046edb457e6ec69e4"
+    }
+  }
+}

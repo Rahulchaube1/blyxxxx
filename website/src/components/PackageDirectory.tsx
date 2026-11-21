@@ -15,6 +15,7 @@ export default function PackageDirectory({ category }: { category: PackageCatego
                     {category === "framework"
                         ? <a href={repository + "/releases/tag/ecosystem-v0.1.0"}>Download 51 native workflow CLIs</a>
                         : <a href="/packages/framesignal#import">See how to import a library</a>}
+                    <a href="/packages#install">Package manager installation</a>
                     <a href={directory.href + "/logos"}>Browse {category} logos</a>
                     <a href="/downloads/blyx-ecosystem-source.zip" download>Download the workflow collection source</a>
                 </div>

@@ -1,3 +1,4 @@
+import { condaChannel, distributionRepository, sourceCollection } from "@/lib/source-channel";
 import { pageMetadata } from "@/lib/metadata";
 import PackageCatalog from "@/components/PackageCatalog";
 import { packageDirectories } from "@/lib/package-categories";
@@ -17,6 +18,7 @@ export default function Packages() {
             <header className="page-head">
                 <h1>Blyx package catalog</h1>
                 <p>Choose a framework for a complete workflow or a library for functions you can use in your own code.</p>
+                <a href="#install">Install packages with Conda, Homebrew or Scoop</a>
             </header>
             <nav className="grid directory-choices" aria-label="Package directories">
                 {packageDirectories.map((d) => (
@@ -31,6 +33,17 @@ export default function Packages() {
                 ))}
             </nav>
             <PackageCatalog items={items} />
+            <section id="install" className="prose block">
+                <h2>Install Blyx packages</h2>
+                <p>Use the Blyx Conda channel for an individual framework or library. For example, install Moments and run its example from the same directory with the Blyx compiler, Rust and a host linker.</p>
+                <pre>{'conda create -y --prefix ./blyx-env --override-channels -c ' + condaChannel + ' blyx-moments=0.1.0\nblyxc native-run ./blyx-env/share/blyx/moments/main.blyx'}</pre>
+                <p>For the full source collection, use <code>brew install rahulchaube1/blyx/blyx-packages</code> on macOS or Linux. On Windows, add the Blyx bucket with <code>scoop bucket add blyx https://github.com/Rahulchaube1/scoop-blyx</code> and run <code>scoop install blyx/blyx-packages</code>.</p>
+                <div className="actions">
+                    <a href={condaChannel + "/"}>Conda channel</a>
+                    <a href={sourceCollection}>Download the full source ZIP and checksums</a>
+                    <a href={distributionRepository + "#install-the-collection"}>Homebrew and Scoop examples</a>
+                </div>
+            </section>
             <section className="prose block">
                 <h2>Downloads and tutorials</h2>
                 <div className="actions">

@@ -2,6 +2,17 @@
 
 The [framework directory](https://www.blyx-lang.space/frameworks) lists packages that run complete workflows. The [library directory](https://www.blyx-lang.space/libraries) lists modules you can import into your own program. Search both from the [ecosystem page](https://www.blyx-lang.space/packages). Each entry in the [JSON catalog](https://www.blyx-lang.space/packages.json) includes its `kind` (`framework` or `library`), release, commit, importable module, logo and runnable example.
 
+## Install source packages
+
+The [Blyx Conda channel](https://rahulchaube1.github.io/blyx-packages/) distributes each framework and library as a versioned source package. For example, run the commands below in a new project directory with Conda, Blyx 0.2.1, Rust and a host linker installed.
+
+```sh
+conda create -y --prefix ./blyx-env --override-channels -c https://rahulchaube1.github.io/blyx-packages blyx-moments=0.1.0
+blyxc native-run ./blyx-env/share/blyx/moments/main.blyx
+```
+
+Moments prints 3, 12 and 2 on separate lines. The [full collection release](https://github.com/Rahulchaube1/blyx-packages/releases) includes the source projects and SHA-256 checksums. Its [installation guide](https://github.com/Rahulchaube1/blyx-packages#install-the-collection) covers Homebrew on macOS and Linux, and Scoop on Windows. The JSON catalog includes the verified Conda channel, package name, version and build for matching source revisions.
+
 ## Use the workflow collection
 
 The [collection release](https://github.com/Rahulchaube1/blyxxxx/releases/tag/ecosystem-v0.1.0) includes 51 ready-to-run commands for Windows x64, Linux x64 and Apple Silicon macOS. Download the ZIP for your operating system, verify it against the release’s `SHA256SUMS` and extract it. In PowerShell, run `.\bin\warbler.exe --help`. On Linux or macOS, run `./bin/warbler --help`. Running any command without arguments prints its example result.
