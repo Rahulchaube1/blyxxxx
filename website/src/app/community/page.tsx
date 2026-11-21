@@ -1,16 +1,29 @@
+import { cache } from "react";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/metadata";
 import { notFound } from "next/navigation";
-import { repository } from "@/lib/site";
+import { repository, website } from "@/lib/site";
 import { boards, forumLink, isBoard, isPostId, type Board, type Post } from "./forum";
 import { Composer, LiveUpdates } from "./composer";
 import { getPage, getPost } from "./storage";
 import "./community.css";
 
 export const dynamic = "force-dynamic";
-export const metadata = {
-    title: "Blyx community",
-    description: "Ask questions about Blyx, propose changes, and share feedback with other language users.",
-};
+type Props = { searchParams: Promise<Record<string, string | string[] | undefined>> };
+const readTopic = cache(getPost);
+const communityDescription = "Ask questions about Blyx, propose changes, and share feedback with other language users.";
+
+export async function generateMetadata({ searchParams }: Props) {
+    const params = await searchParams;
+    const board = params.board ?? "questions";
+    const { topic, cursor } = params;
+    if (!isBoard(board) || (topic !== undefined && !isPostId(topic)) ||
+        (cursor !== undefined && (typeof cursor !== "string" || cursor.length > 2048))) return {};
+    const url = board === "questions" && !topic && !cursor ? "/community" : forumLink(board, topic, cursor);
+    const post = topic ? await readTopic(board, topic).catch(() => null) : null;
+    const title = post?.title ?? (board === "questions" ? "Blyx community" : boards[board].label + " · Blyx Community");
+    return pageMetadata(title, post?.body.trim().slice(0, 160) || (board === "questions" ? communityDescription : boards[board].prompt), website + url);
+}
 
 function Byline({ post }: { post: Post }) {
     const date = new Intl.DateTimeFormat("en", { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" }).format(new Date(post.published));
@@ -31,9 +44,7 @@ function Resources() {
     );
 }
 
-export default async function Community({ searchParams }: {
-    searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
+export default async function Community({ searchParams }: Props) {
     const params = await searchParams;
     const board = params.board ?? "questions", topic = params.topic, cursor = params.cursor;
     if (!isBoard(board) || (topic !== undefined && !isPostId(topic)) ||
@@ -41,7 +52,7 @@ export default async function Community({ searchParams }: {
     let parent: Post | null = null;
     let page: Awaited<ReturnType<typeof getPage>> | undefined;
     try {
-        if (topic) parent = await getPost(board, topic);
+        if (topic) parent = await readTopic(board, topic);
         if (!topic || parent) page = await getPage(board, topic, cursor);
     } catch (error) {
         console.error("Blyx community read failed", error instanceof Error ? error.name : "unknown");

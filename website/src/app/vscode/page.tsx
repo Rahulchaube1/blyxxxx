@@ -1,10 +1,11 @@
-import { guideLink, repository } from "@/lib/site";
+import { pageMetadata } from "@/lib/metadata";
+import { guideLink, repository, website } from "@/lib/site";
 import ResourcePage from "@/components/ResourcePage";
-export const metadata = {
-    title: "Blyx for VS Code",
-    description:
-        "Run the current Blyx buffer, see parser diagnostics while editing, and use syntax highlighting and snippets.",
-};
+export const metadata = pageMetadata(
+    "Blyx for VS Code",
+    "Run the current Blyx buffer, see parser diagnostics while editing, and use syntax highlighting and snippets.",
+    website + "/vscode",
+);
 const sections = [
     {
         heading: "Install a framework",

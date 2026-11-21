@@ -1,10 +1,15 @@
+import { pageMetadata } from "@/lib/metadata";
 import data from "../../../public/data/benchmarks.json";
 import modelgate from "../../../public/data/modelgate-benchmark.json";
 import linearfit from "../../../public/data/linearfit-benchmark.json";
 import blyxtorch from "../../../public/data/blyxtorch-benchmark.json";
 import workflows from "../../../public/data/workflow-benchmarks.json";
-import { repository } from "@/lib/site";
-export const metadata = { title: "Performance measurements" };
+import { repository, website } from "@/lib/site";
+export const metadata = pageMetadata(
+    "Blyx performance benchmarks",
+    "Compare measured compiler, runtime and package workloads. See the commands, inputs and hardware behind each Blyx benchmark.",
+    website + "/benchmarks",
+);
 export default function Benchmarks() {
     return (
         <main className="wrap">

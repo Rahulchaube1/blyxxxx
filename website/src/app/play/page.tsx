@@ -1,7 +1,13 @@
+import { pageMetadata } from "@/lib/metadata";
+import { website } from "@/lib/site";
 import Runner from "@/components/Runner";
 import ExamplePicker from "./picker";
 import samples from "@/lib/samples.json";
-export const metadata = { title: "Playground" };
+export const metadata = pageMetadata(
+    "Blyx playground",
+    "Write and run Blyx code in your browser with the WebAssembly interpreter. Edit an example and see its output as you type.",
+    website + "/play",
+);
 export default async function Playground({
     searchParams,
 }: {

@@ -236,6 +236,26 @@ button.primary {
 .wrap {
 	padding-block: clamp(32px, 5vw, 65px);
 }
+.site-directory ul {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+	gap: 0 clamp(20px, 4vw, 42px);
+	list-style: none;
+	margin: 18px 0 0;
+	padding: 0;
+}
+.site-directory li {
+	border-top: 1px solid var(--rule);
+	padding: 15px 0 18px;
+}
+.site-directory li a {
+	font-weight: 700;
+	font-size: 19px;
+}
+.site-directory li p {
+	color: var(--muted);
+	margin-top: 5px;
+}
 .page-head {
 	margin-bottom: 30px;
 }
@@ -515,6 +535,8 @@ button.primary {
 	gap: clamp(20px, 5vw, 68px);
 	align-items: start;
 }
+.first-lesson, .course-handbook { margin-bottom: 24px; }
+.first-lesson pre { margin-top: 14px; }
 .course-sections, .guide-nav {
 	position: sticky;
 	top: 16px;

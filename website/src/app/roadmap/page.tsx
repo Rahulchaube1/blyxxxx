@@ -1,10 +1,11 @@
-import { repository } from "@/lib/site";
+import { pageMetadata } from "@/lib/metadata";
+import { repository, website } from "@/lib/site";
 import ResourcePage from "@/components/ResourcePage";
-export const metadata = {
-    title: "Blyx roadmap",
-    description:
-        "Track what ships in the current release and what is still being explored.",
-};
+export const metadata = pageMetadata(
+    "Blyx roadmap",
+    "Track what ships in the current release and what is still being explored.",
+    website + "/roadmap",
+);
 const sections = [
     {
         heading: "Available in 0.2.1",

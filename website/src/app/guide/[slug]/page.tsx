@@ -1,3 +1,4 @@
+import { pageMetadata } from "@/lib/metadata";
 import { notFound } from "next/navigation";
 import { guides, stages } from "@/lib/handbook";
 import catalog from "@/lib/packages.json";
@@ -12,11 +13,7 @@ export async function generateMetadata({ params }: Props) {
     const { slug } = await params;
     const g = guides.find((g) => g.slug === slug);
     return g
-        ? {
-              title: g.title,
-              description: g.summary,
-              alternates: { canonical: docs + "/guide/" + slug },
-          }
+        ? pageMetadata(g.title.includes("Blyx") ? g.title : g.title + " · Blyx Handbook", g.summary, docs + "/guide/" + slug)
         : {};
 }
 export default async function Chapter({ params }: Props) {

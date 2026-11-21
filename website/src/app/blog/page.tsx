@@ -1,5 +1,10 @@
-import { repository, release } from "@/lib/site";
-export const metadata = { title: "Release notes" };
+import { pageMetadata } from "@/lib/metadata";
+import { repository, release, website } from "@/lib/site";
+export const metadata = pageMetadata(
+    "Blyx release notes",
+    "Find published Blyx releases, version history, and links to the release notes and downloads on GitHub.",
+    website + "/blog",
+);
 type Release = {
     tag_name: string;
     name: string | null;

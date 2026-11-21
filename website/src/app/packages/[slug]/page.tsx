@@ -1,3 +1,5 @@
+import { pageMetadata } from "@/lib/metadata";
+import StructuredData from "@/components/StructuredData";
 import { notFound } from "next/navigation";
 import catalog from "@/lib/packages.json";
 import { directoryFor } from "@/lib/package-categories";
@@ -13,15 +15,13 @@ export async function generateMetadata({ params }: Props) {
     const p = catalog.packages.find((item) => item.slug === slug);
     if (!p) return {};
     return {
-        title: "Blyx " + p.title,
-        description: p.description,
-        alternates: { canonical: website + "/packages/" + slug },
+        ...pageMetadata(
+            p.title + " · Blyx " + p.category,
+            p.description,
+            website + "/packages/" + slug,
+            { url: website + p.logo, alt: p.logoAlt ?? p.title + " package logo" },
+        ),
         icons: { icon: p.logo },
-        openGraph: {
-            title: p.title,
-            description: p.description,
-            images: [{ url: website + p.logo, alt: p.logoAlt ?? p.title + " package logo" }],
-        },
     };
 }
 
@@ -33,9 +33,20 @@ export default async function Package({ params }: Props) {
     const clone = "git clone --depth 1 --branch v" + p.version + (slug === "modelgate" ? " --recurse-submodules" : "") + " " + p.repository + ".git vendor/" + slug;
     return (
         <main className="wrap">
+            <StructuredData data={{
+                "@context": "https://schema.org",
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                    { "@type": "ListItem", position: 1, name: "Package catalog", item: website + "/packages" },
+                    { "@type": "ListItem", position: 2, name: directory.title, item: website + directory.href },
+                    { "@type": "ListItem", position: 3, name: p.title, item: website + "/packages/" + slug },
+                ],
+            }} />
             <header className="page-head">
                 <nav className="crumb package-crumb" aria-label="Breadcrumb">
-                    <a href="/packages">Ecosystem</a><span aria-hidden="true">/</span><a href={directory.href}>{directory.title}</a>
+                    <a href="/packages">Package catalog</a><span aria-hidden="true">/</span>
+                    <a href={directory.href}>{directory.title}</a><span aria-hidden="true">/</span>
+                    <span aria-current="page">{p.title}</span>
                 </nav>
                 <div className="package-heading package-title">
                     <img className="package-logo" src={p.logo} alt={p.logoAlt ?? ""} width="88" height="88" />

@@ -1,5 +1,10 @@
-import { assets, guideLink, release } from "@/lib/site";
-export const metadata = { title: "Download Blyx" };
+import { pageMetadata } from "@/lib/metadata";
+import { assets, guideLink, release, website } from "@/lib/site";
+export const metadata = pageMetadata(
+    "Download Blyx",
+    "Install the Blyx compiler on Windows, macOS or Linux. Get the release checksums, package manager commands and installation guide.",
+    website + "/download",
+);
 const targets = [
     ["Windows", "x86-64", "x86_64-pc-windows-msvc.zip"],
     ["macOS", "Apple Silicon", "aarch64-apple-darwin.tar.gz"],

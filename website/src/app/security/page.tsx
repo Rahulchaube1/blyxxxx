@@ -1,10 +1,11 @@
-import { guideLink, repository } from "@/lib/site";
+import { pageMetadata } from "@/lib/metadata";
+import { guideLink, repository, website } from "@/lib/site";
 import ResourcePage from "@/components/ResourcePage";
-export const metadata = {
-    title: "Security policy",
-    description:
-        "Report security issues privately to the Blyx project maintainers.",
-};
+export const metadata = pageMetadata(
+    "Blyx security policy",
+    "Report security issues privately to the Blyx project maintainers.",
+    website + "/security",
+);
 const sections = [
     {
         heading: "Send a private report",

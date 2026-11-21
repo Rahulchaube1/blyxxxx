@@ -1,6 +1,12 @@
+import { pageMetadata } from "@/lib/metadata";
+import { docs } from "@/lib/site";
 import GuideContent from "@/components/GuideContent";
 import { guides } from "@/lib/handbook";
-export const metadata = { title: "Printable Blyx handbook" };
+export const metadata = pageMetadata(
+    "Printable Blyx handbook",
+    "Read or print the complete Blyx handbook in one document, from your first program through framework projects and the language reference.",
+    docs + "/guide/print",
+);
 export default function Print() {
     return (
         <main className="wrap prose">

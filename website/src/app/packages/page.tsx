@@ -1,20 +1,21 @@
+import { pageMetadata } from "@/lib/metadata";
 import PackageCatalog from "@/components/PackageCatalog";
 import { packageDirectories } from "@/lib/package-categories";
 import { packageDirectory } from "@/lib/package-directory";
 import { guideLink, repository, website } from "@/lib/site";
 
-export const metadata = {
-    title: "Blyx ecosystem",
-    description: "Find native Blyx libraries, training and monitoring frameworks, command-line tools, and runnable examples.",
-    alternates: { canonical: website + "/packages" },
-};
+export const metadata = pageMetadata(
+    "Blyx package catalog",
+    "Find Blyx frameworks and libraries by task. Each package includes its source, installation instructions, API and a runnable example.",
+    website + "/packages",
+);
 
 export default function Packages() {
     const items = packageDirectory();
     return (
         <main className="wrap">
             <header className="page-head">
-                <h1>Blyx ecosystem</h1>
+                <h1>Blyx package catalog</h1>
                 <p>Choose a framework for a complete workflow or a library for functions you can use in your own code.</p>
             </header>
             <nav className="grid directory-choices" aria-label="Package directories">

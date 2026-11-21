@@ -1,11 +1,11 @@
-import { buyMeACoffee, githubSponsors, guideLink, mainLink, repository } from "@/lib/site";
+import { bookEdition, buyMeACoffee, githubSponsors, guideLink, mainLink, repository } from "@/lib/site";
 export default function Footer() {
     const groups = [
         [
             "Language",
             [
-                ["Documentation", guideLink()],
-                ["Learn", mainLink("/learn")],
+                ["Documentation", bookEdition ? guideLink() : "/docs"],
+                ["Blyx for beginners", mainLink("/learn")],
                 ["Examples", mainLink("/examples")],
                 ["Playground", mainLink("/play")],
             ],
@@ -16,7 +16,7 @@ export default function Footer() {
                 ["Download", mainLink("/download")],
                 ["Compiler", mainLink("/compiler")],
                 ["VS Code", mainLink("/vscode")],
-                ["Ecosystem", mainLink("/packages")],
+                ["Package catalog", mainLink("/packages")],
                 ["Frameworks", mainLink("/frameworks")],
                 ["Libraries", mainLink("/libraries")],
                 ["Benchmarks", mainLink("/benchmarks")],

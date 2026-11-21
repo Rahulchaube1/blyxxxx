@@ -1,10 +1,11 @@
-import { guideLink, mainLink, repository } from "@/lib/site";
+import { pageMetadata } from "@/lib/metadata";
+import { guideLink, mainLink, repository, website } from "@/lib/site";
 import ResourcePage from "@/components/ResourcePage";
-export const metadata = {
-    title: "About Blyx",
-    description:
-        "Blyx is an open-source experimental programming language created by Rahul Chaube. Its own lexer, parser and runtime support the same source files in the browser, desktop editor and terminal.",
-};
+export const metadata = pageMetadata(
+    "About Blyx",
+    "Blyx is an open-source experimental programming language created by Rahul Chaube. Its own lexer, parser and runtime support the same source files in the browser, desktop editor and terminal.",
+    website + "/about",
+);
 const sections = [
     {
         heading: "How a program runs",

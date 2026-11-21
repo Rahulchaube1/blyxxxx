@@ -1,21 +1,50 @@
+import { handbookSiteName, languageSiteName, pageMetadata } from "@/lib/metadata";
+import StructuredData from "@/components/StructuredData";
 import GuideIndex from "@/components/GuideIndex";
 import { bookEdition, buyMeACoffee, docs, githubSponsors, guideLink, playLink, repository, website } from "@/lib/site";
 import samples from "@/lib/samples.json";
-export const metadata = {
-    alternates: { canonical: (bookEdition ? docs : website) + "/" },
-};
+const home = (bookEdition ? docs : website) + "/";
+const name = bookEdition ? handbookSiteName : languageSiteName;
+export const metadata = pageMetadata(
+    bookEdition ? handbookSiteName : "The Blyx Programming Language",
+    bookEdition
+        ? "The official Blyx handbook. Follow worked lessons or look up syntax, built-in functions, compiler commands and framework recipes."
+        : "Blyx is an open-source programming language for numerical work and native programs. Download the compiler, learn Blyx, and explore its frameworks and libraries.",
+    home,
+);
+
+const destinations = [
+    ["Downloads", "/download", "Install the compiler for Windows, macOS or Linux and verify your download."],
+    ["Blyx for beginners", "/learn", "Run your first program, change what it prints, and work through the first lessons."],
+    ["Documentation", "/docs", "Look up language syntax, built-in functions and compiler commands."],
+    ["Frameworks", "/frameworks", "Choose a workflow for a project, from training a network to processing audio."],
+    ["Libraries", "/libraries", "Find functions to import into your own code, with examples and API references."],
+    ["Package catalog", "/packages", "Search all Blyx packages by name or task and find their source and releases."],
+];
+
 export default function Home() {
-    if (bookEdition) return <GuideIndex />;
+    const identity = (
+        <StructuredData data={{
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "@id": home + "#website",
+            url: home,
+            name,
+            alternateName: bookEdition ? "Blyx Handbook" : ["Blyx Language", "Blyx Programming Language"],
+        }} />
+    );
+    if (bookEdition) return <>{identity}<GuideIndex /></>;
     return (
         <main>
+            {identity}
             <section className="hero">
                 <div className="hero-inner">
                     <div>
                         <h1>The Blyx programming language</h1>
                         <p>
-                            Write a function, explore a dataset, or build a
-                            native executable. Start with a running Blyx program
-                            in your browser.
+                            Blyx is an open-source programming language for numerical work
+                            and native programs. Try a running example in your browser,
+                            then download the compiler to build it locally.
                         </p>
                         <div className="actions">
                             <a className="button" href={playLink("linear-fit")}>
@@ -27,7 +56,6 @@ export default function Home() {
                             >
                                 Learn Blyx
                             </a>
-                            <a href="/packages">Explore the ecosystem</a>
                         </div>
                     </div>
                     <picture className="hero-art">
@@ -43,7 +71,18 @@ export default function Home() {
                 </div>
             </section>
             <div className="wrap">
-                <section>
+                <nav className="site-directory" aria-labelledby="explore-blyx">
+                    <h2 id="explore-blyx">Explore Blyx</h2>
+                    <ul>
+                        {destinations.map(([label, href, description]) => (
+                            <li key={href}>
+                                <a href={href}>{label}</a>
+                                <p>{description}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+                <section className="block">
                     <div className="section-head">
                         <h2>Programs to try</h2>
                         <a href="/examples">All examples →</a>
@@ -68,8 +107,6 @@ export default function Home() {
                         })}
                     </div>
                     <div className="actions">
-                        <a href="/frameworks">Browse frameworks</a>
-                        <a href="/libraries">Browse libraries</a>
                         <a href={repository + "/releases/tag/ecosystem-v0.1.0"}>Download the 51 native workflow commands</a>
                     </div>
                 </section>
@@ -82,39 +119,11 @@ export default function Home() {
                         <a href={guideLink("training-and-monitoring")}>Work through the tutorial</a>
                     </div>
                 </section>
-                <section className="block">
-                    <div className="section-head">
-                        <h2>From editor to executable</h2>
-                    </div>
-                    <div className="grid">
-                        {[
-                            [
-                                "Install Blyx",
-                                "Download the 0.2.1 compiler for your platform.",
-                                "/download",
-                            ],
-                            [
-                                "Write in VS Code",
-                                "Run an unsaved Blyx buffer and get parser diagnostics while typing.",
-                                "/vscode",
-                            ],
-                            [
-                                "Build a program",
-                                "Compile typed Blyx functions into a standalone executable.",
-                                guideLink("native-builds"),
-                            ],
-                        ].map(([title, summary, href]) => (
-                            <a
-                                key={title}
-                                className="card card-link"
-                                href={href}
-                            >
-                                <h3>{title}</h3>
-                                <p>{summary}</p>
-                                <span>Get started →</span>
-                            </a>
-                        ))}
-                    </div>
+                <section className="prose block">
+                    <h2>Build a native program</h2>
+                    <p>Edit a Blyx file with the <a href="/vscode">Blyx extension for VS Code</a>.
+                        When it is ready, follow the <a href={guideLink("native-builds")}>native build guide</a> to
+                        compile an executable for your machine.</p>
                 </section>
                 <section className="sponsor-section block" id="sponsor" aria-labelledby="sponsor-heading">
                     <div>

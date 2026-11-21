@@ -1,8 +1,13 @@
-import { guideLink, mainLink, repository } from "@/lib/site";
+import { pageMetadata } from "@/lib/metadata";
+import { guideLink, mainLink, repository, website } from "@/lib/site";
 import Runner from "@/components/Runner";
 import samples from "@/lib/samples.json";
 import ResourcePage from "@/components/ResourcePage";
-export const metadata = { title: "Compiler and runtime" };
+export const metadata = pageMetadata(
+    "Blyx compiler and runtime",
+    "See how blyxc parses, interprets and compiles Blyx programs. Try the interpreter and follow the native build guide.",
+    website + "/compiler",
+);
 const sections = [
     {
         heading: "Parse a source file",

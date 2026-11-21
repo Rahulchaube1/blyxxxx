@@ -71,6 +71,8 @@ const config = {
                     redirect("/" + p, "https://www.blyx-lang.space/" + p),
                 ),
             );
+        else
+            rules.push(redirect("/guide/:slug", docs + "/guide/:slug"));
         return rules;
     },
 };

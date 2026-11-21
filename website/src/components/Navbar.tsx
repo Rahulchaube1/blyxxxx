@@ -9,7 +9,7 @@ export default function Navbar() {
     const path = usePathname();
     const links = [
         ["Learn", mainLink("/learn")],
-        ["Documentation", guideLink()],
+        ["Documentation", bookEdition ? guideLink() : "/docs"],
         ["Examples", mainLink("/examples")],
         ["Frameworks", mainLink("/frameworks")],
         ["Libraries", mainLink("/libraries")],

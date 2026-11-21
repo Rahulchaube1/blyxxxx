@@ -5,15 +5,8 @@ import Footer from "@/components/Footer";
 import { bookEdition, docs, website } from "@/lib/site";
 export const metadata: Metadata = {
     metadataBase: new URL(bookEdition ? docs : website),
-    title: {
-        default: bookEdition
-            ? "Blyx documentation"
-            : "Blyx programming language",
-        template: "%s · Blyx",
-    },
-    description:
-        "Write, run and build Blyx programs. Explore language guides and runnable numerical examples for Blyx 0.2.1.",
-    icons: { icon: "/blyxlogo.png" },
+    title: bookEdition ? "Blyx Documentation" : "The Blyx Programming Language",
+    icons: { icon: { url: "/favicon-192.png", sizes: "192x192", type: "image/png" } },
 };
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (

@@ -22,23 +22,29 @@ const entries = guides.map((guide) => ({
         .toLowerCase(),
 }));
 
-export default function GuideIndex({ course = false }: { course?: boolean }) {
+const beginnerChapters = new Set([
+    "first-program", "arithmetic", "text-output", "bindings", "decisions", "functions",
+    "control-flow", "vectors", "testing", "sensor-report",
+]);
+
+export default function GuideIndex({ course = false, children }: { course?: boolean; children?: React.ReactNode }) {
     const ready = useHydrated();
     const [query, setQuery] = useState("");
     const words = query.trim().toLowerCase().split(/\s+/);
-    const results = entries.filter(({ search }) =>
-        words.every((word) => search.includes(word)),
+    const results = entries.filter(({ guide, search }) =>
+        course && !query.trim()
+            ? beginnerChapters.has(guide.slug)
+            : words.every((word) => search.includes(word)),
     );
     return (
         <main className="wrap">
             <header className="page-head">
                 <div className="crumb">Blyx 0.2.1</div>
-                <h1>{course ? "Learn Blyx" : "Blyx documentation"}</h1>
+                <h1>{course ? "Blyx for beginners" : "Blyx documentation"}</h1>
                 <p>
-                    New to programming? Start with a greeting you can edit in
-                    your browser. Work through the chapters in order to build
-                    and test a sensor report, then compile a program on your own
-                    computer.
+                    {course
+                        ? "Start with ten lessons you can follow in your browser. By the last one, you will have written and tested a program that turns sensor readings into a report."
+                        : "The Blyx handbook covers your first program, numerical computing, framework projects and native builds. Read in order or search for a function, command or worked example."}
                 </p>
                 <div className="actions">
                     <a className="button" href={guideLink("first-program")}>
@@ -52,6 +58,8 @@ export default function GuideIndex({ course = false }: { course?: boolean }) {
                     </a>
                 </div>
             </header>
+            {children}
+            {course && <p className="course-handbook">Search all handbook chapters below or <a href={guideLink()}>browse the complete handbook</a>.</p>}
             <div className="filters">
                 <label>
                     Search the handbook
