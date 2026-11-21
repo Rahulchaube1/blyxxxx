@@ -1750,6 +1750,12 @@ Train an XOR classifier, inspect a real gradient, then compile a dense network f
 
 XOR labels the input pair (0,1) or (1,0) as positive. A single straight-line decision boundary cannot separate both positive points from the two negative points. The default BlyxTorch model uses two inputs, four tanh hidden units and one output logit. Its 17 parameters include all weights and biases.
 
+#### Start in VS Code or VSCodium
+
+Install the BlyxTorch extension from your editor’s registry. It installs Blyx Language alongside the trainer. Create a file named sensor.blyx, type bt-sensor, accept the completion, and choose Blyx: Run File. Change the final sensor reading and run it again. An offline install uses the two VSIX files linked from the package page.
+
+[Editor installation and offline downloads](https://www.blyx-lang.space/packages/blyxtorch#editor) · [Download the editable starter workspace](https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.2.0/blyxtorch-projects-0.2.0.zip)
+
 #### Train the released classifier
 
 Download and extract the matching archive. From its folder, run the three commands below. Training takes 250 epochs with Adam, a learning rate of 0.03, batches of four and seed 7. The output is a two-line text checkpoint. The prebuilt trainer runs directly. On Windows PowerShell, start commands with .\blyxtorch.exe and save the checkpoint with | Out-File -Encoding ascii xor.bt.
@@ -1760,7 +1766,7 @@ Download and extract the matching archive. From its folder, run the three comman
 ./blyxtorch score xor.bt fixtures/xor.csv
 ```
 
-[Download the native release](https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.1.1) · [Read the framework source](https://github.com/Rahulchaube1/blyxtorch)
+[Download the native release](https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.2.0) · [Read the framework source](https://github.com/Rahulchaube1/blyxtorch)
 
 #### Read the predictions
 
@@ -1807,9 +1813,20 @@ The gradient command returns a per-row loss followed by one derivative per train
 ./blyxtorch gradient xor.bt fixtures/xor.csv
 ```
 
+#### Train and test on different jobs
+
+Extract the starter and open BlyxTorch.code-workspace. Each row describes pages divided by 100 and waiting jobs divided by 10. Select Terminal → Run Task → BlyxTorch: Evaluate print queue. The model trains on 16 synthetic jobs and evaluates six separate labels. The task reports six rows and mean loss near 0.00234. Edit new-jobs.csv and choose Predict new print jobs to score your inputs. A saved checkpoint and the browser program also run inference without retraining.
+
+```
+blyxtorch train-score print-queue/train.csv print-queue/holdout.csv 180 0.03 4 adam 7
+blyxtorch train-predict print-queue/train.csv print-queue/new-jobs.csv 180 0.03 4 adam 7
+```
+
+[Calibrate a desk sensor](https://www.blyx-lang.space/play?example=blyxtorch-sensor) · [Predict print-queue waits](https://www.blyx-lang.space/play?example=blyxtorch-queue)
+
 #### Choose an appropriate workload
 
-BlyxTorch 0.1.1 runs fixed-shape float64 networks on CPU. It supports up to eight affine layers and 1,024 parameters. The published comparison covers five small networks, CPU PyTorch, and a separate CSV-scoring benchmark. GPU execution, convolution, transformer training and arbitrary-rank tensors are outside this release.
+BlyxTorch 0.2.0 runs fixed-shape float64 networks on CPU. It supports up to eight affine layers and 1,024 parameters. The published comparison covers five small networks, CPU PyTorch, and a separate CSV-scoring benchmark. GPU execution, convolution, transformer training and arbitrary-rank tensors are outside this release.
 
 [Compare the timings and measurement boundaries](https://www.blyx-lang.space/benchmarks#blyxtorch) · [Inspect the PyTorch numerical comparisons](https://github.com/Rahulchaube1/blyxtorch/blob/v0.1.0/verification/parity.json)
 

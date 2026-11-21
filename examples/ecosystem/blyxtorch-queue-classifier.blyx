@@ -1,0 +1,101 @@
+// Label four synthetic print jobs using the weights trained on print-queue/train.csv.
+// x0 is pages / 100. x1 is jobs already waiting / 10.
+fn main() {
+    let weights = [
+        -1.4348787312058462, -0.8134696250068579, 1.574074875147636, 1.7193628140919621,
+        -1.1854657266420607, -1.184071409214948, 0.8247326985233264, 1.5332207284920643,
+        1.1076469563310474, -1.6370514332175259, 1.1555672643095425, -1.128736702953046,
+        -3.525366567233751, 4.4018803724314255, -6.632924433251914, 4.188257501504207,
+        -0.6140313836902606
+    ];
+    println!(queue_label(weights, [0.20, 0.15]));
+    println!(queue_label(weights, [0.70, 0.75]));
+    println!(queue_label(weights, [0.50, 0.20]));
+    println!(queue_label(weights, [0.35, 0.95]));
+}
+fn queue_label(weights: vector, job: vector) -> str {
+    if at(bt_predict(weights, job), 0) >= 0.5 { return "long wait"; }
+    "short wait"
+}
+
+// Forward pass from the BlyxTorch-generated 2-4-1 binary classifier.
+pub fn bt_predict(p: vector, x: vector) -> vector {
+    let z=bt_logits(p,x); if len(z)==0 { return []; } bt_transform(z)
+}
+
+fn bt_logits(p: vector, x: vector) -> vector {
+    if !btx_valid(p,bt_parameters()) || !btx_valid(x,bt_inputs()) { return []; }
+    let a0 = x;
+    let a1 = bt_layer0(p, a0);
+    if !btx_valid(a1, 4) { return []; }
+    let a2 = bt_layer1(p, a1);
+    if !btx_valid(a2, 1) { return []; }
+    a2
+}
+
+pub fn bt_inputs() -> i64 { 2 }
+
+pub fn bt_parameters() -> i64 { 17 }
+
+fn bt_transform(z: vector) -> vector {
+    [btx_logistic(at(z,0))]
+}
+
+fn bt_layer0(p: vector, a: vector) -> vector {
+    [
+        btx_tanh_value(btx_affine(p, a, 0, 2, 4, 0)),
+        btx_tanh_value(btx_affine(p, a, 0, 2, 4, 1)),
+        btx_tanh_value(btx_affine(p, a, 0, 2, 4, 2)),
+        btx_tanh_value(btx_affine(p, a, 0, 2, 4, 3))
+    ]
+}
+
+fn bt_layer1(p: vector, a: vector) -> vector {
+    [
+        btx_affine(p, a, 12, 4, 1, 0)
+    ]
+}
+
+fn btx_affine(p: vector, a: vector, base: i64, nin: i64, nout: i64, j: i64) -> f64 {
+    let mut value=at(p,base+nin*nout+j); let mut k=0;
+    while k<nin { value+=at(p,base+j*nin+k)*at(a,k); k+=1; }
+    value
+}
+
+pub fn btx_valid(v: vector, width: i64) -> bool {
+    if len(v) != width { return false; }
+    let mut i = 0;
+    while i < width {
+        if !btx_finite(at(v, i)) { return false; }
+        i += 1;
+    }
+    true
+}
+
+pub fn btx_finite(x: f64) -> bool { x - x == 0.0 }
+
+pub fn btx_logistic(x: f64) -> f64 {
+    if x >= 0.0 { return 1.0 / (1.0 + exp_decay(x)); }
+    let q = exp_decay(-x);
+    q / (1.0 + q)
+}
+
+pub fn btx_tanh_value(x: f64) -> f64 {
+    if x < 0.0 { return -btx_tanh_value(-x); }
+    if x < 0.00001 { return x * (1.0 - x*x/3.0); }
+    let q = exp_decay(2.0*x);
+    (1.0-q)/(1.0+q)
+}
+
+fn exp_decay(x: f64) -> f64 {
+    if x >= 746.0 { return 0.0; }
+    let mut r = -x;
+    let mut levels = 0;
+    while r < -0.35 { r *= 0.5; levels += 1; }
+    let mut term = 1.0;
+    let mut total = 1.0;
+    let mut k = 1.0;
+    while k <= 15.0 { term *= r / k; total += term; k += 1.0; }
+    while levels > 0 { total *= total; levels -= 1; }
+    total
+}

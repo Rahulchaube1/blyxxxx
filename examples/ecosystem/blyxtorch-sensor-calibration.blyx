@@ -1,0 +1,58 @@
+// Fit a desk sensor against five synthetic reference readings.
+fn reading(gain: f64, offset: f64, raw: f64) -> f64 {
+    gain * (raw - 20.0) + offset
+}
+fn sample_loss(gain: vector, offset: vector, raw: f64, target: f64) -> vector {
+    let centered = bt_dual(raw - 20.0, 0.0);
+    let estimate = bt_add(bt_mul(gain, centered), offset);
+    return bt_square(bt_sub(estimate, bt_dual(target, 0.0)));
+}
+fn main() {
+    let raw = [18.0, 19.0, 20.0, 21.0, 22.0];
+    let reference = [18.0, 19.25, 20.5, 21.75, 23.0];
+    let mut gain = 1.0;
+    let mut offset = 19.0;
+    let mut epoch = 0;
+    while epoch < 55 {
+        let mut dg = 0.0;
+        let mut db = 0.0;
+        let mut i = 0;
+        while i < len(raw) {
+            let x = at(raw, i);
+            let y = at(reference, i);
+            dg += at(sample_loss(bt_dual(gain, 1.0), bt_dual(offset, 0.0), x, y), 1);
+            db += at(sample_loss(bt_dual(gain, 0.0), bt_dual(offset, 1.0), x, y), 1);
+            i += 1;
+        }
+        gain -= 0.25 * dg / 5.0;
+        offset -= 0.25 * db / 5.0;
+        epoch += 1;
+    }
+    println!(reading(gain, offset, 18.5));
+    println!(reading(gain, offset, 21.5));
+}
+
+// Portable functions from the BlyxTorch dual-number library.
+pub fn bt_dual(value: f64, tangent: f64) -> vector {
+    if !btx_finite(value) || !btx_finite(tangent) { return []; }
+    [value, tangent]
+}
+
+pub fn bt_add(a: vector, b: vector) -> vector {
+    if len(a) != 2 || len(b) != 2 { return []; }
+    bt_dual(at(a,0)+at(b,0), at(a,1)+at(b,1))
+}
+
+pub fn bt_mul(a: vector, b: vector) -> vector {
+    if len(a) != 2 || len(b) != 2 { return []; }
+    bt_dual(at(a,0)*at(b,0), at(a,1)*at(b,0) + at(a,0)*at(b,1))
+}
+
+pub fn bt_sub(a: vector, b: vector) -> vector {
+    if len(a) != 2 || len(b) != 2 { return []; }
+    bt_dual(at(a,0)-at(b,0), at(a,1)-at(b,1))
+}
+
+pub fn bt_square(a: vector) -> vector { bt_mul(a, a) }
+
+pub fn btx_finite(x: f64) -> bool { x - x == 0.0 }

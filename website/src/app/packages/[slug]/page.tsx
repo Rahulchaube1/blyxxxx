@@ -41,12 +41,44 @@ export default async function Package({ params }: Props) {
                 </div>
                 <p>{p.description}</p>
                 <div className="actions">
-                    {p.trainedExample && <a className="button" href={playLink(p.trainedExample)}>Run the trained XOR network →</a>}
+                    {p.editor && <a className="button" href="#editor">Install in your editor</a>}
+                    {p.projects && <a href="#projects">Try the projects</a>}
+                    {p.trainedExample && <a href={playLink(p.trainedExample)}>Run the trained XOR network →</a>}
                     <a className={p.trainedExample ? undefined : "button"} href={playLink(p.example)}>{p.trainedExample ? "Differentiate a loss" : "Run the Blyx example →"}</a>
                     <a href={p.release}>Release on GitHub</a>
                 </div>
             </header>
             <article className="prose">
+                {p.editor && (
+                    <section id="editor">
+                        <h2>Install BlyxTorch in your editor</h2>
+                        <p>Search Extensions for <strong>RahulChaube.blyxtorch</strong> in VS Code or VSCodium. The extension includes the native CPU trainer for Windows x64, Linux x64 and Apple Silicon macOS. It also installs Blyx Language, which runs the portable examples.</p>
+                        <div className="actions">
+                            <a className="button" href={p.editor.marketplace}>Visual Studio Marketplace</a>
+                            <a href={p.editor.openVsx}>Open VSX</a>
+                            <a href={p.editor.vsix}>Download the VSIX</a>
+                        </div>
+                        <p>To run a first model, create <code>sensor.blyx</code>, type <code>bt-sensor</code> and accept the completion. Choose <strong>Blyx: Run File</strong>. For an offline installation, download both VSIX files and use <strong>Extensions: Install from VSIX</strong> for Blyx Language first, then BlyxTorch.</p>
+                        <a href="https://github.com/Rahulchaube1/blyxxxx/releases/download/editor-v1.2.3/blyx-language-1.2.3.vsix">Download the companion Blyx Language VSIX</a>
+                    </section>
+                )}
+                {p.projects && p.editor && (
+                    <section id="projects">
+                        <h2>Build a project with BlyxTorch</h2>
+                        {p.projects.map((project) => (
+                            <div key={project.id}>
+                                <h3>{project.title}</h3>
+                                <p>{project.description}</p>
+                                <div className="actions">
+                                    <a href={playLink(project.id)} aria-label={project.title + " – run in the playground"}>Run in the playground →</a>
+                                    <a href={project.source} aria-label={project.title + " – read the Blyx source"}>Read the Blyx source</a>
+                                </div>
+                            </div>
+                        ))}
+                        <p>The starter includes the editable programs, CSV data, saved weights and three editor tasks. Extract it, open <code>BlyxTorch.code-workspace</code>, then choose <strong>Terminal → Run Task → BlyxTorch: Evaluate print queue</strong>.</p>
+                        <a className="button" href={p.editor.starter}>Download both projects</a>
+                    </section>
+                )}
                 {p.cli && (
                     <section>
                         <h2>Run the command-line tool</h2>

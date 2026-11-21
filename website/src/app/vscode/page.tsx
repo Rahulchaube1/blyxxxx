@@ -7,6 +7,12 @@ export const metadata = {
 };
 const sections = [
     {
+        heading: "Train a model with BlyxTorch",
+        body: "Install BlyxTorch alongside Blyx Language to fit a sensor model or train a classifier. The extension includes native trainers, two Blyx projects and a starter workspace.",
+        label: "BlyxTorch editor downloads and projects",
+        href: "/packages/blyxtorch#editor",
+    },
+    {
         heading: "Install the 1.2.3 extension",
         body: "Download the versioned VSIX from the Blyx release. Choose Extensions → Install from VSIX in desktop VS Code and select the downloaded file.",
         label: "Download Blyx Language 1.2.3",

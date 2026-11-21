@@ -89,7 +89,7 @@ Fit a regression model from a CSV, estimate prediction intervals on held-out exa
 
 | Package | What it does |
 | --- | --- |
-| <img src="website/public/packages/blyxtorch.png" width="32" alt=""> [BlyxTorch 0.1.1](https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.1.1) | Train dense CPU networks with automatic differentiation, mini-batch SGD and Adam, then deploy a standalone native model. [Tutorial](https://doc.blyx-lang.space/guide/blyxtorch) |
+| <img src="website/public/packages/blyxtorch.png" width="32" alt=""> [BlyxTorch 0.2.0](https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.2.0) | Train dense CPU networks with automatic differentiation, mini-batch SGD and Adam, then deploy a standalone native model. [Editor and projects](https://www.blyx-lang.space/packages/blyxtorch#editor) · [Tutorial](https://doc.blyx-lang.space/guide/blyxtorch) |
 | <img src="website/public/packages/linearfit.png" width="32" height="32" alt=""> [LinearFit 0.1.1](https://github.com/Rahulchaube1/blyx-linearfit/releases/tag/v0.1.1) | Train, merge and deploy a single-feature least-squares or ridge regression with an unpenalized intercept. |
 | <img src="website/public/packages/conformal.png" width="32" height="32" alt=""> [Conformal 0.1.0](https://github.com/Rahulchaube1/blyx-conformal/releases/tag/v0.1.0) | Calibrate a regression interval from held-out errors and measure coverage on a separate test set. |
 | <img src="website/public/packages/moments.png" width="32" height="32" alt=""> [Moments 0.1.0](https://github.com/Rahulchaube1/blyx-moments/releases/tag/v0.1.0) | Summarize paired observations as they arrive and merge statistics from independent batches. |

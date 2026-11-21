@@ -10,7 +10,7 @@
             "group": "Neural networks",
             "kind": "CPU neural-network framework and CLI",
             "description": "Train dense networks with SGD or Adam, inspect parameter gradients, and generate standalone Blyx models for regression or classification.",
-            "contract": "BlyxTorch 0.1.1 uses fixed-shape float64 networks on CPU. Each layer width is 1–64. A model supports up to eight affine layers and 1,024 trainable parameters. The prebuilt 2–4–1 classifier runs immediately. Generating a new executable requires Blyx 0.2.1, Rust and a host linker on the build machine.",
+            "contract": "BlyxTorch 0.2.0 uses fixed-shape float64 networks on CPU. Each layer width is 1–64. A model supports up to eight affine layers and 1,024 trainable parameters. The prebuilt 2–4–1 classifier runs immediately. Generating a new executable requires Blyx 0.2.1, Rust and a host linker on the build machine.",
             "api": [
                 [
                     "bt_dual(value, tangent), bt_square(v)",
@@ -31,12 +31,20 @@
                 [
                     "blyxtorch emit WIDTHS OBJECTIVE ACTIVATION",
                     "Generate a complete Blyx model and CLI. Use mse, binary or softmax with tanh, relu or sigmoid."
+                ],
+                [
+                    "train-score TRAIN.csv LABELLED.csv",
+                    "Train once and report row count and loss on a separate labelled CSV."
+                ],
+                [
+                    "train-predict TRAIN.csv FEATURES.csv",
+                    "Train once and write a probability for each new feature row."
                 ]
             ],
-            "version": "0.1.1",
-            "commit": "cc20fd3c19bcbc49a648758b0c4e377563b8afe0",
+            "version": "0.2.0",
+            "commit": "6b67ab026a5dae70f0894dc327dfe0364e18c135",
             "repository": "https://github.com/Rahulchaube1/blyxtorch",
-            "release": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.1.1",
+            "release": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.2.0",
             "logo": "/packages/blyxtorch.png?v=0.1.1",
             "module": "blyxtorch",
             "example": "package-blyxtorch",
@@ -48,7 +56,28 @@
                 "Training writes a checkpoint to standard output. The handbook shows how to save it, predict and inspect gradients on each platform."
             ],
             "guide": "blyxtorch",
-            "trainedExample": "package-blyxtorch-xor"
+            "trainedExample": "package-blyxtorch-xor",
+            "editor": {
+                "id": "RahulChaube.blyxtorch",
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyxtorch",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyxtorch",
+                "vsix": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.2.0/blyxtorch-0.2.0.vsix",
+                "starter": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.2.0/blyxtorch-projects-0.2.0.zip"
+            },
+            "projects": [
+                {
+                    "id": "blyxtorch-sensor",
+                    "title": "Calibrate a desk sensor",
+                    "description": "Fit a gain and an offset from five synthetic reference readings using BlyxTorch automatic differentiation. The model predicts 18.625 and 22.375 degrees for two readings held out of training.",
+                    "source": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.2.0/projects/sensor-calibration.blyx"
+                },
+                {
+                    "id": "blyxtorch-queue",
+                    "title": "Predict print-queue waits",
+                    "description": "Classify four new print jobs using a trained two-input network. The starter includes 16 synthetic training rows and six separate evaluation rows. With seed 7, the mean evaluation loss is about 0.00234.",
+                    "source": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.2.0/projects/queue-classifier.blyx"
+                }
+            ]
         },
         {
             "slug": "linearfit",
