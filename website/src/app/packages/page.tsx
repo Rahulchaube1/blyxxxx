@@ -21,7 +21,7 @@ export default function Packages() {
                 {packageDirectories.map((d) => (
                     <a className="card card-link directory-choice" key={d.category} href={d.href} aria-labelledby={"choose-" + d.category}>
                         <div className="package-heading">
-                            <img src={d.logo} alt="" width="60" height="60" />
+                            <img src={items.find((p) => p.slug === d.exampleSlug)?.logo} alt="" width="60" height="60" />
                             <h2 id={"choose-" + d.category}>{d.title}</h2>
                         </div>
                         <p>{d.description}</p>
@@ -46,6 +46,7 @@ export default function Packages() {
                 <div className="actions">
                     <a href={repository + "/blob/blyx-main/docs/ecosystem-packages.md"}>Package contributor guide →</a>
                     <a href="/packages.json">Catalog JSON</a>
+                    <a href="/libraries/logos">Browse the library logos</a>
                     <a href="/blyx-package-logos.zip" download>Download all package logos</a>
                     <a href="/community">Discuss an idea</a>
                     <a href="/#sponsor">Sponsor Blyx development</a>

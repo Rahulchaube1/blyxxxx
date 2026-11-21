@@ -4,7 +4,7 @@ export const packageDirectories = [
         title: "Frameworks",
         href: "/frameworks",
         description: "Run a complete workflow. Train a neural network with BlyxTorch or check audio samples for clipping with Warbler.",
-        logo: "/packages/warbler.png",
+        exampleSlug: "warbler",
         placeholder: "Try training, clipping, or routing",
     },
     {
@@ -12,7 +12,7 @@ export const packageDirectories = [
         title: "Libraries",
         href: "/libraries",
         description: "Import functions into your Blyx program. Measure audio levels with FrameSignal or summarize observations with Moments.",
-        logo: "/packages/framesignal.png",
+        exampleSlug: "framesignal",
         placeholder: "Try audio, statistics, or calibration",
     },
 ] as const;

@@ -44,7 +44,7 @@ export default function PackageCatalog({ items, category }: { items: DirectoryEn
                             {packages.map((p) => (
                                 <article className="card package-card" key={p.slug}>
                                     <div className="package-heading">
-                                        <img className="package-logo" src={p.logo} width="54" height="54" alt="" loading="lazy" decoding="async" />
+                                        <img className="package-logo" src={p.logo} width={p.category === "library" ? 72 : 54} height={p.category === "library" ? 72 : 54} alt="" loading="lazy" decoding="async" />
                                         <div><h3><a href={"/packages/" + p.slug}>{p.title}</a></h3>
                                             <small>{p.kind} · {p.version}</small></div>
                                     </div>

@@ -48,6 +48,7 @@ export default async function Package({ params }: Props) {
                     {p.trainedExample && <a href={playLink(p.trainedExample)}>Run the trained XOR network →</a>}
                     <a className={p.trainedExample ? undefined : "button"} href={playLink(p.example)}>{p.workflow?.browserTitle ?? (p.trainedExample ? "Differentiate a loss" : "Run the Blyx example →")}</a>
                     <a href={p.release}>Release on GitHub</a>
+                    {p.category === "library" && <a href={p.logo} download={p.slug + ".png"}>Download logo (PNG)</a>}
                 </div>
             </header>
             <article className="prose">

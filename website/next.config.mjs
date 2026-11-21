@@ -62,6 +62,7 @@ const config = {
                     "packages",
                     "frameworks",
                     "libraries",
+                    "libraries/logos",
                     "roadmap",
                     "about",
                     "vscode",
