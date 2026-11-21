@@ -62,10 +62,10 @@
                 "id": "RahulChaube.blyxtorch",
                 "version": "0.2.1",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyxtorch-0.2.1.vsix",
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyxtorch",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyxtorch",
                 "starter": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.2.0/blyxtorch-projects-0.2.0.zip",
                 "examplePrefix": "bt-sensor",
-                "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyxtorch/tree/16c7eb4f5be34147c33e7c166dbb1d48a31a4279/editor",
                 "sha256": "ae1ffee10e8898c405026df7cd22bcaa5c80c07d885b9757c8b789ed4d5ddeb8"
             },
@@ -131,10 +131,10 @@
                 "id": "RahulChaube.blyx-linearfit",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-linearfit-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-linearfit",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-linearfit-starter-0.1.0.zip",
                 "examplePrefix": "blyx-linearfit-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-linearfit/tree/8c3a70e2004e71b94bc0a8a2a86967e0bd6cc1c7/editor",
                 "sha256": "c7ca2bdcdef01877a311e9c03ef939f5d16e49bb005186399d6c6decd89252af"
             }
@@ -177,10 +177,10 @@
                 "id": "RahulChaube.blyx-conformal",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-conformal-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-conformal",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-conformal-starter-0.1.0.zip",
                 "examplePrefix": "blyx-conformal-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-conformal/tree/21df5b80b1174402f042b9e526b86557139b401c/editor",
                 "sha256": "0164b500f520d1f4c0977ca7b69c251bca93ae1204cec931f2de34df8ec59a97"
             }
@@ -262,10 +262,10 @@
                 "id": "RahulChaube.blyx-residualwatch",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-residualwatch-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-residualwatch",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-residualwatch-starter-0.1.0.zip",
                 "examplePrefix": "blyx-residualwatch-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-residualwatch/tree/1da963956d5b22c8c66a065dea8b61c474e459e4/editor",
                 "sha256": "6539b427b16302fdb478e4dbe15227dd268adec834c078cbc5c762d41eae7fd9"
             }
@@ -339,10 +339,10 @@
                 "id": "RahulChaube.blyx-modelgate",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-modelgate-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-modelgate",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-modelgate-starter-0.1.0.zip",
                 "examplePrefix": "blyx-modelgate-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-modelgate/tree/c6fbc8a5b7b2ff31922d33d345d0f1392c944709/editor",
                 "sha256": "48efb0fe51664af785da2049489da2ed3e4987303aa77af5c4ccbfb181578a12"
             }
@@ -482,10 +482,10 @@
                 "id": "RahulChaube.blyx-backtest",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-backtest-0.1.0.vsix",
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-backtest",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-backtest",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-backtest-starter-0.1.0.zip",
                 "examplePrefix": "blyx-backtest-demo",
-                "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-backtest/tree/4464dc2d70238d107678b76d7a23b33d0c313e7a/editor",
                 "sha256": "ddacc55ce9633bc86a4fee052789e089d8f4437a5905cf1fabc8e009ef658cee"
             }
@@ -560,10 +560,10 @@
                 "id": "RahulChaube.blyx-swiftlet",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-swiftlet-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-swiftlet",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-swiftlet-starter-0.1.0.zip",
                 "examplePrefix": "blyx-swiftlet-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-swiftlet/tree/afec01cad3db3086f124939f9077da3e205589ab/editor",
                 "sha256": "4e851e79f013f7ef4fa588b522e2cc5046e3f116e5a2e85e58f19de4117fbab9"
             }
@@ -634,10 +634,10 @@
                 "id": "RahulChaube.blyx-shrike",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-shrike-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-shrike",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-shrike-starter-0.1.0.zip",
                 "examplePrefix": "blyx-shrike-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-shrike/tree/d89d5d656443380df96d33fd256145be3d3ee847/editor",
                 "sha256": "3ac70396050a1892e3db4374651bfdaf67f3758989143f334fbef4d1222fb406"
             }
@@ -708,10 +708,10 @@
                 "id": "RahulChaube.blyx-bunting",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bunting-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-bunting",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bunting-starter-0.1.0.zip",
                 "examplePrefix": "blyx-bunting-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-bunting/tree/438eee1d29db34edf236cab8e38fb3f387a20392/editor",
                 "sha256": "136828d76cc19bdd790295254d8980e6c89f32e52a60f92f1796a3b28355fbba"
             }
@@ -786,10 +786,10 @@
                 "id": "RahulChaube.blyx-wren",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-wren-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-wren",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-wren-starter-0.1.0.zip",
                 "examplePrefix": "blyx-wren-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-wren/tree/0cf4648e2a09d218d8f11203550471c6993661ae/editor",
                 "sha256": "91d84246245d62e52e01f12296ee9a85816274ba434341777b9be0f49a2d53e0"
             }
@@ -860,10 +860,10 @@
                 "id": "RahulChaube.blyx-weaver",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-weaver-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-weaver",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-weaver-starter-0.1.0.zip",
                 "examplePrefix": "blyx-weaver-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-weaver/tree/1e7e8feba190665d4777ab7a2a1ff47f1f76d9bc/editor",
                 "sha256": "2d6890dde8c3243b5bf829d39428e4bcf8a20b7f782bef61848503315f63d49a"
             }
@@ -938,10 +938,10 @@
                 "id": "RahulChaube.blyx-dipper",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-dipper-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-dipper",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-dipper-starter-0.1.0.zip",
                 "examplePrefix": "blyx-dipper-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-dipper/tree/a44b2daa2a796b91fb7350ce55d1f8a8fddbce34/editor",
                 "sha256": "8ebea95fae166205a2f52faa08aec4f5014dde13b89e68dc542e4512150b598d"
             }
@@ -1012,10 +1012,10 @@
                 "id": "RahulChaube.blyx-kestrel",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-kestrel-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-kestrel",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-kestrel-starter-0.1.0.zip",
                 "examplePrefix": "blyx-kestrel-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-kestrel/tree/d72fd9dd2dc65dfecd813c5cd135580fb7d1478d/editor",
                 "sha256": "6ade650f3cf7ed7f7797a66a07d4325ef5feadfca5761cd81d48bdffcfcddd29"
             }
@@ -1086,10 +1086,10 @@
                 "id": "RahulChaube.blyx-heron",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-heron-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-heron",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-heron-starter-0.1.0.zip",
                 "examplePrefix": "blyx-heron-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-heron/tree/89736c2d2a8e21d42abb6a84de4a09dbd471cd85/editor",
                 "sha256": "0453a8d4dac1561ae6442182280f2736343f55f9bfca50538ea3eaf981f1f18b"
             }
@@ -1230,10 +1230,10 @@
                 "id": "RahulChaube.blyx-oriole",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-oriole-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-oriole",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-oriole-starter-0.1.0.zip",
                 "examplePrefix": "blyx-oriole-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-oriole/tree/15f41f28ed18b584dd91d647a152dd60cc781ac2/editor",
                 "sha256": "49634f92a1e45b72431eb6f6959bdffb6494d393ec51384e2694b023eaadffad"
             }
@@ -1374,10 +1374,10 @@
                 "id": "RahulChaube.blyx-avocet",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-avocet-0.1.0.vsix",
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-avocet",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-avocet",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-avocet-starter-0.1.0.zip",
                 "examplePrefix": "blyx-avocet-demo",
-                "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-avocet/tree/d74f4ee19ee27fd0680d090bb213e1961363745f/editor",
                 "sha256": "19fcf6eac24489b54f8a12e26cedff7ffa086b480f0f8cde6289d0b460afe509"
             }
@@ -1518,10 +1518,10 @@
                 "id": "RahulChaube.blyx-ibis",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-ibis-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-ibis",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-ibis-starter-0.1.0.zip",
                 "examplePrefix": "blyx-ibis-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-ibis/tree/6a2fb72dce50cf6312b7b93df0e48d0ed022bc1d/editor",
                 "sha256": "ad7d40f36899922752a13ea550319d25d1e29a999e8f920060a56016444e2063"
             }
@@ -1662,10 +1662,10 @@
                 "id": "RahulChaube.blyx-pipit",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pipit-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-pipit",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pipit-starter-0.1.0.zip",
                 "examplePrefix": "blyx-pipit-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-pipit/tree/1fd49be56d980db45ec51cf7b3c53266456cc19e/editor",
                 "sha256": "c8f106b6c745d5be57ee219c59f8bd683d9849549b139e2d7f08d85fb9a5a6a3"
             }
@@ -1806,10 +1806,10 @@
                 "id": "RahulChaube.blyx-nuthatch",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-nuthatch-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-nuthatch",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-nuthatch-starter-0.1.0.zip",
                 "examplePrefix": "blyx-nuthatch-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-nuthatch/tree/a602b4774cc2f2a432d2d7f598197aa57075d833/editor",
                 "sha256": "8e34d3440c1643ea16bb98cfb83672950122cdcb4ffe638da5f4b9abe89b1508"
             }
@@ -1950,10 +1950,10 @@
                 "id": "RahulChaube.blyx-turnstone",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-turnstone-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-turnstone",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-turnstone-starter-0.1.0.zip",
                 "examplePrefix": "blyx-turnstone-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-turnstone/tree/7c08c8169b85ad6c20974cc941138a4022c86583/editor",
                 "sha256": "eb094a34aa7c6174c0c61ea41cbca3d796a44a6c85f9800ddfb5eacd6b5016c7"
             }
@@ -2094,10 +2094,10 @@
                 "id": "RahulChaube.blyx-osprey",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-osprey-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-osprey",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-osprey-starter-0.1.0.zip",
                 "examplePrefix": "blyx-osprey-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-osprey/tree/fc6e8a1789ff0eef117a0532baef30b4dbfd6ee8/editor",
                 "sha256": "af59cd6fc19b14958ca9e866651b23fd641aad183c8ab451eb5b675cc1241646"
             }
@@ -2238,10 +2238,10 @@
                 "id": "RahulChaube.blyx-warbler",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-warbler-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-warbler",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-warbler-starter-0.1.0.zip",
                 "examplePrefix": "blyx-warbler-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-warbler/tree/c2994bb9824aebf4f8a51a39e2169a5d65895f33/editor",
                 "sha256": "e881fbf2bce60fed32e0768f7cdc245fc15dc3c62b0addfec769d95957aff79a"
             }
@@ -2382,10 +2382,10 @@
                 "id": "RahulChaube.blyx-linnet",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-linnet-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-linnet",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-linnet-starter-0.1.0.zip",
                 "examplePrefix": "blyx-linnet-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-linnet/tree/5ecffbc810989ef3b389717a0ad4b2be9a848360/editor",
                 "sha256": "94cdd92a658cc6ef1ede0df74d506e44c009fd62137ba436532105cb2daaeaca"
             }
@@ -2526,10 +2526,10 @@
                 "id": "RahulChaube.blyx-curlew",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-curlew-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-curlew",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-curlew-starter-0.1.0.zip",
                 "examplePrefix": "blyx-curlew-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-curlew/tree/3119edbf50250ad1b95c95223b22306c9f316741/editor",
                 "sha256": "43207c29fdf34b715e0f49f8f8433aa3426e6df3b93347acf32f491cda596edb"
             }
@@ -2670,10 +2670,10 @@
                 "id": "RahulChaube.blyx-egret",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-egret-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-egret",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-egret-starter-0.1.0.zip",
                 "examplePrefix": "blyx-egret-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-egret/tree/b2896852ce3bbd23c45b53bf92a0392ede36ed4a/editor",
                 "sha256": "e57b7c917623879b245f2c0732717bcca3322e7be5231a2bef5ab3cea7a50747"
             }
@@ -2814,10 +2814,10 @@
                 "id": "RahulChaube.blyx-tanager",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-tanager-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-tanager",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-tanager-starter-0.1.0.zip",
                 "examplePrefix": "blyx-tanager-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-tanager/tree/bcd693a33b6f37da2abebc17c040fc591f762603/editor",
                 "sha256": "98356284186857daf9afc2cccd52ed743cdf4ab23c6678367f0ff47c83f8f0e7"
             }
@@ -2958,10 +2958,10 @@
                 "id": "RahulChaube.blyx-merganser",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-merganser-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-merganser",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-merganser-starter-0.1.0.zip",
                 "examplePrefix": "blyx-merganser-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-merganser/tree/dd74ded274e8862c6c14b76e32ff0cb994be212a/editor",
                 "sha256": "8eec38f0b2260951b616825b46b3144ef7021891299026eec587e9504346b515"
             }
@@ -3102,10 +3102,10 @@
                 "id": "RahulChaube.blyx-pintail",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pintail-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-pintail",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pintail-starter-0.1.0.zip",
                 "examplePrefix": "blyx-pintail-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-pintail/tree/b76f69ca4af5bb820ae43302f0899692f98ca5e9/editor",
                 "sha256": "f3b8e340691fa3b9e637f313e0846ac94a363af8299f22f445bde47dc0e580e2"
             }
@@ -3246,10 +3246,10 @@
                 "id": "RahulChaube.blyx-siskin",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-siskin-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-siskin",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-siskin-starter-0.1.0.zip",
                 "examplePrefix": "blyx-siskin-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-siskin/tree/89229662e7d3a26bd039c43268418df82a751a54/editor",
                 "sha256": "4f8c37796468dd5d026cc85050668a70f440d132d30f47a9e24514b9567b7d5e"
             }
@@ -3390,10 +3390,10 @@
                 "id": "RahulChaube.blyx-sandpiper",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-sandpiper-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-sandpiper",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-sandpiper-starter-0.1.0.zip",
                 "examplePrefix": "blyx-sandpiper-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-sandpiper/tree/4e8ee29da04b9534f3427ac813538704687b052c/editor",
                 "sha256": "0b5877268741411337767544f0576478436981d71c6c4b985396b0a9db0b33ff"
             }
@@ -3534,10 +3534,10 @@
                 "id": "RahulChaube.blyx-petrel",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-petrel-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-petrel",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-petrel-starter-0.1.0.zip",
                 "examplePrefix": "blyx-petrel-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-petrel/tree/b4a7fd237d54b7ad26589f47d2d377c1095e176e/editor",
                 "sha256": "5c5b0dfc55a60b98f2346a6fcd9a66df9ccfceac85bfb2f2f3b380571b56537e"
             }
@@ -3678,10 +3678,10 @@
                 "id": "RahulChaube.blyx-fulmar",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-fulmar-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-fulmar",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-fulmar-starter-0.1.0.zip",
                 "examplePrefix": "blyx-fulmar-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-fulmar/tree/ecf9ce10fb8c6141ea1507e7b0242cd4244ce63f/editor",
                 "sha256": "2ef75b54f3fa452e3e69de66cd7e5bc0d6c75acaaa226e8f9c23e637a6692d4a"
             }
@@ -3822,10 +3822,10 @@
                 "id": "RahulChaube.blyx-waxwing",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-waxwing-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-waxwing",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-waxwing-starter-0.1.0.zip",
                 "examplePrefix": "blyx-waxwing-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-waxwing/tree/a7e38263ce76b55c917f86ee487ebd70b77f5d4c/editor",
                 "sha256": "1e12f20bc79a6ba9ebaeb3c87dd8029682410e4e26080afb346b00996b8ce720"
             }
@@ -3966,10 +3966,10 @@
                 "id": "RahulChaube.blyx-martin",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-martin-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-martin",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-martin-starter-0.1.0.zip",
                 "examplePrefix": "blyx-martin-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-martin/tree/420d8a438a5564448525427b746186f9502ed105/editor",
                 "sha256": "0f9d93726020850ce90c70cf00799d6b671b96bfb498a4683232b3827d43c59a"
             }
@@ -4110,10 +4110,10 @@
                 "id": "RahulChaube.blyx-kinglet",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-kinglet-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-kinglet",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-kinglet-starter-0.1.0.zip",
                 "examplePrefix": "blyx-kinglet-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-kinglet/tree/f81c1371f5e083ec3937ed35e8e4e5b7530700eb/editor",
                 "sha256": "cb064ccc04bf61a302cf54dd2322a9d30d26deaeff9fcbe4ccdfc5e44a68a55c"
             }
@@ -4254,10 +4254,10 @@
                 "id": "RahulChaube.blyx-barnowl",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-barnowl-0.1.0.vsix",
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-barnowl",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-barnowl",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-barnowl-starter-0.1.0.zip",
                 "examplePrefix": "blyx-barnowl-demo",
-                "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-barnowl/tree/3e07936749044c16a8f2ae2f762b48f899664f6c/editor",
                 "sha256": "c98c8b95e3d09e3e304b8d9224496933d46560ef28d100bdfa7a8df2bbfdd302"
             }
@@ -4398,10 +4398,10 @@
                 "id": "RahulChaube.blyx-harrier",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-harrier-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-harrier",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-harrier-starter-0.1.0.zip",
                 "examplePrefix": "blyx-harrier-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-harrier/tree/d4cf6e8d128e9626c39bd4c413dcada6e28070b2/editor",
                 "sha256": "1a37bd21026182f8436727253c4f1217be6d4039a1f5e26e5fa0ed058c4694ad"
             }
@@ -4542,10 +4542,10 @@
                 "id": "RahulChaube.blyx-plover",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-plover-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-plover",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-plover-starter-0.1.0.zip",
                 "examplePrefix": "blyx-plover-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-plover/tree/2da343c11a5d18c0da0e6d060eb93ef8f22021a7/editor",
                 "sha256": "0d910e16e7d6ed6af39b23b859b7726046c1f7c236b4042f4be78f9da6a04a03"
             }
@@ -4686,10 +4686,10 @@
                 "id": "RahulChaube.blyx-jacana",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-jacana-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-jacana",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-jacana-starter-0.1.0.zip",
                 "examplePrefix": "blyx-jacana-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-jacana/tree/a15755d19ba1336efdc28edead2484c8709a3873/editor",
                 "sha256": "0c7f4b6e2131935547303a770292a0fdbb67fe2e8faea3f84bff71399c7e52a5"
             }
@@ -4830,10 +4830,10 @@
                 "id": "RahulChaube.blyx-redstart",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-redstart-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-redstart",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-redstart-starter-0.1.0.zip",
                 "examplePrefix": "blyx-redstart-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-redstart/tree/fe11254b5678d7a80fe4297857fb885e8f7d7edc/editor",
                 "sha256": "394c593e5331f9644e02ecd07120f79e692cc97309f4dfdb0ecbb06053cb7f43"
             }
@@ -4974,10 +4974,10 @@
                 "id": "RahulChaube.blyx-quail",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-quail-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-quail",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-quail-starter-0.1.0.zip",
                 "examplePrefix": "blyx-quail-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-quail/tree/e7e920a6fba6e6cfda795824825963c2b92d86f8/editor",
                 "sha256": "d6e24ac82be2e4d6535b621d5eed67ea644313234f1bb1521f66435da403ec60"
             }
@@ -5118,10 +5118,10 @@
                 "id": "RahulChaube.blyx-skimmer",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-skimmer-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-skimmer",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-skimmer-starter-0.1.0.zip",
                 "examplePrefix": "blyx-skimmer-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-skimmer/tree/958d535b7713f62401c3553fa36a56c93b2019ef/editor",
                 "sha256": "07a8e965c10fee59e7f33cca83c17e8335650010a52c0ad315659b10e090fd94"
             }
@@ -5262,10 +5262,10 @@
                 "id": "RahulChaube.blyx-magpie",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-magpie-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-magpie",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-magpie-starter-0.1.0.zip",
                 "examplePrefix": "blyx-magpie-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-magpie/tree/869234f4887d5a7b9d3b4b4e56bb9c456bc00448/editor",
                 "sha256": "d81b25b022bb77f89f4bde242542f18e28258b7bb6bf4d8f3ec4b947532bc5e9"
             }
@@ -5406,10 +5406,10 @@
                 "id": "RahulChaube.blyx-flamingo",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-flamingo-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-flamingo",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-flamingo-starter-0.1.0.zip",
                 "examplePrefix": "blyx-flamingo-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-flamingo/tree/e78d22e20d9c666004c5fd32d611d16ecce9dcf2/editor",
                 "sha256": "4f80751d148b3961ccfe3733626af287b4e46a4170d4cbcb1c9f53515a7ed78e"
             }
@@ -5550,10 +5550,10 @@
                 "id": "RahulChaube.blyx-bittern",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bittern-0.1.0.vsix",
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-bittern",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-bittern",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bittern-starter-0.1.0.zip",
                 "examplePrefix": "blyx-bittern-demo",
-                "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-bittern/tree/af7e801d8b4ce4dc4fe84bad5dae5d9508c21c8c/editor",
                 "sha256": "dcd288d55d8b9410b0c06b675578c8444a4f2bf50990709e71cbee6bfa13e75c"
             }
@@ -5694,10 +5694,10 @@
                 "id": "RahulChaube.blyx-grebe",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-grebe-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-grebe",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-grebe-starter-0.1.0.zip",
                 "examplePrefix": "blyx-grebe-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-grebe/tree/91ea243ad5ee0f8092107f3e3f78289e75005f00/editor",
                 "sha256": "a01bfd2ebd69b1cd1b9fbaac641ab0849cf00096244bb63f7faf971d73892fa0"
             }
@@ -5838,10 +5838,10 @@
                 "id": "RahulChaube.blyx-dunlin",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-dunlin-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-dunlin",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-dunlin-starter-0.1.0.zip",
                 "examplePrefix": "blyx-dunlin-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-dunlin/tree/85ff6492cdad88e6d9eba42a7cc91bd5de0aebb4/editor",
                 "sha256": "2ef34622febdf6873fa9d98add579f6c67740c8abeff9db6703992b28f2b7b81"
             }
@@ -5982,10 +5982,10 @@
                 "id": "RahulChaube.blyx-sanderling",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-sanderling-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-sanderling",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-sanderling-starter-0.1.0.zip",
                 "examplePrefix": "blyx-sanderling-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-sanderling/tree/0d21666c7708759e901db85c7767d3fc3d4f4ce2/editor",
                 "sha256": "a076735cd92a293c942d86d61d01e73031fdf2a307ed3102b21919b5d2494ee0"
             }
@@ -6126,10 +6126,10 @@
                 "id": "RahulChaube.blyx-cormorant",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-cormorant-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-cormorant",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-cormorant-starter-0.1.0.zip",
                 "examplePrefix": "blyx-cormorant-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-cormorant/tree/16365b30efba463237da277032777fe2f2a76499/editor",
                 "sha256": "afffcd6172512627e2059fce61174122a60115704d37806423679a0aa0fd01d8"
             }
@@ -6270,10 +6270,10 @@
                 "id": "RahulChaube.blyx-bulbul",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bulbul-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-bulbul",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bulbul-starter-0.1.0.zip",
                 "examplePrefix": "blyx-bulbul-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-bulbul/tree/62cc819fd40bbf41c5694dd186ae28cf9d16f316/editor",
                 "sha256": "bf51c4a32020ea66ed3400c34ef8a66f2c30806c3eaf94e7fb42d3bd598075e3"
             }
@@ -6414,10 +6414,10 @@
                 "id": "RahulChaube.blyx-fantail",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-fantail-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-fantail",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-fantail-starter-0.1.0.zip",
                 "examplePrefix": "blyx-fantail-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-fantail/tree/01059f958e132332188a07702a47eca3bd857272/editor",
                 "sha256": "c5998420f9b5e929aabe04e81dee244b9a52ae130797572c5231cb05f191067c"
             }
@@ -6558,10 +6558,10 @@
                 "id": "RahulChaube.blyx-swallow",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-swallow-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-swallow",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-swallow-starter-0.1.0.zip",
                 "examplePrefix": "blyx-swallow-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-swallow/tree/2c51ae2e42d7fd4fe0e3b113188ddad675fadae6/editor",
                 "sha256": "945ed59aa5b488c71f151323702783c00b69b466bf2b264501bb193fb13b443e"
             }
@@ -6702,10 +6702,10 @@
                 "id": "RahulChaube.blyx-lapwing",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-lapwing-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-lapwing",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-lapwing-starter-0.1.0.zip",
                 "examplePrefix": "blyx-lapwing-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-lapwing/tree/7a83559e8306e1ca991eaad0f506de311648199b/editor",
                 "sha256": "4eb9194b06ea8220deb8f322bfffbc3674d23bf8545df49b9a008cae6ef7508d"
             }
@@ -6846,10 +6846,10 @@
                 "id": "RahulChaube.blyx-hoopoe",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-hoopoe-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-hoopoe",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-hoopoe-starter-0.1.0.zip",
                 "examplePrefix": "blyx-hoopoe-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-hoopoe/tree/2c260c53ca339394b24e4f6a187ec6f39b7bf818/editor",
                 "sha256": "b774e767b8ea0880afdde3c24aec12c37d10b853a7a1c4dbf658f2f867bb2d99"
             }
@@ -6990,10 +6990,10 @@
                 "id": "RahulChaube.blyx-spoonbill",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-spoonbill-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-spoonbill",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-spoonbill-starter-0.1.0.zip",
                 "examplePrefix": "blyx-spoonbill-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-spoonbill/tree/06e825ac65c8b160ff275dce9d677de9c7d68614/editor",
                 "sha256": "95103444503a65d815b3d8ffab578a262da1628aab2ae2d3224922ab33c62ec0"
             }
@@ -7134,10 +7134,10 @@
                 "id": "RahulChaube.blyx-raven",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-raven-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-raven",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-raven-starter-0.1.0.zip",
                 "examplePrefix": "blyx-raven-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-raven/tree/23224782760f9de1c3a0ab155620eea40477932c/editor",
                 "sha256": "ec4d8da59176e55ad3ab70611bb765254f1fdfe711fdecc7b0de1900a2291faf"
             }
@@ -7278,10 +7278,10 @@
                 "id": "RahulChaube.blyx-robin",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-robin-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-robin",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-robin-starter-0.1.0.zip",
                 "examplePrefix": "blyx-robin-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-robin/tree/9c158953322864b924b5758a7fe401bc1886c5ca/editor",
                 "sha256": "b11e54b42e5b9bb85089da30cd1f869e51120422ffb5df8274dfce5759b62182"
             }
@@ -7422,10 +7422,10 @@
                 "id": "RahulChaube.blyx-starling",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-starling-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-starling",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-starling-starter-0.1.0.zip",
                 "examplePrefix": "blyx-starling-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-starling/tree/973ce75d5c41b9485d32a4c7a359cf293d3452a2/editor",
                 "sha256": "76afae31b8098481c5fe43fa09c1a3378f8f51bee0dd4f5d66c94c3151bae561"
             }
@@ -7566,10 +7566,10 @@
                 "id": "RahulChaube.blyx-blackbird",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-blackbird-0.1.0.vsix",
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-blackbird",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-blackbird",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-blackbird-starter-0.1.0.zip",
                 "examplePrefix": "blyx-blackbird-demo",
-                "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-blackbird/tree/e56244317ccab97e78490de078bdfda1b5b03f68/editor",
                 "sha256": "9f50f0e3f25b51e37e740a7db641cfd4662b17cb73b9cbec009f55d99ad74972"
             }
@@ -7710,10 +7710,10 @@
                 "id": "RahulChaube.blyx-towhee",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-towhee-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-towhee",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-towhee-starter-0.1.0.zip",
                 "examplePrefix": "blyx-towhee-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-towhee/tree/6613da44d9c753673812db14a69856dc69c85768/editor",
                 "sha256": "ae33ca9d28200eaaeea095edc52f8d5893f87de6f4c319ce48ce8c25f7ffc9cb"
             }
@@ -7854,10 +7854,10 @@
                 "id": "RahulChaube.blyx-bowerbird",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bowerbird-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-bowerbird",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bowerbird-starter-0.1.0.zip",
                 "examplePrefix": "blyx-bowerbird-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-bowerbird/tree/9c995e3fa06b083c697ab7c337e22c55622c716c/editor",
                 "sha256": "64d21dbcb05acfe0045b86ee54a1d8189697a12eaa8b9725c22c92daaf5c4cee"
             }
@@ -7998,10 +7998,10 @@
                 "id": "RahulChaube.blyx-albatross",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-albatross-0.1.0.vsix",
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-albatross",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-albatross",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-albatross-starter-0.1.0.zip",
                 "examplePrefix": "blyx-albatross-demo",
-                "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-albatross/tree/9f78cb5f11a43e4a4e3c859559b73d6b9acb9fff/editor",
                 "sha256": "7640542c202d82a0c496da24e9a9467f11363ba3f7ffab68aa51ee85ad12aa1f"
             }
@@ -8142,10 +8142,10 @@
                 "id": "RahulChaube.blyx-chaffinch",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-chaffinch-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-chaffinch",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-chaffinch-starter-0.1.0.zip",
                 "examplePrefix": "blyx-chaffinch-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-chaffinch/tree/607014e9304866f5aa827f8d64404637508863d7/editor",
                 "sha256": "340b8c6bd9aff0af70ae5146e31d53d1d195fed3a2d6091a61adae15c856b664"
             }
@@ -8286,10 +8286,10 @@
                 "id": "RahulChaube.blyx-pelican",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pelican-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-pelican",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pelican-starter-0.1.0.zip",
                 "examplePrefix": "blyx-pelican-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-pelican/tree/165de7ae8f72c5eb8e5dc6aede859facdc37a417/editor",
                 "sha256": "bfd02a82dbac7a11e6331b32176fbf7bef4bb96f48978a0225cddd59899c22c9"
             }
@@ -8430,10 +8430,10 @@
                 "id": "RahulChaube.blyx-nightingale",
                 "version": "0.1.0",
                 "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-nightingale-0.1.0.vsix",
+                "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-nightingale",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-nightingale-starter-0.1.0.zip",
                 "examplePrefix": "blyx-nightingale-demo",
                 "marketplace": null,
-                "openVsx": null,
                 "source": "https://github.com/Rahulchaube1/blyx-nightingale/tree/d2f94daa92b2f84af69a777972126cc53a2825c9/editor",
                 "sha256": "a2ffb81354b533fa4a825086e691bd9ec6ed50106493b5fefb5c23ba8bd3fd3c"
             }

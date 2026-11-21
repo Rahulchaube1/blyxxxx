@@ -6,7 +6,7 @@ The [framework directory](https://www.blyx-lang.space/frameworks) lists packages
 
 The [collection release](https://github.com/Rahulchaube1/blyxxxx/releases/tag/ecosystem-v0.1.0) includes 51 ready-to-run commands for Windows x64, Linux x64 and Apple Silicon macOS. Download the ZIP for your operating system, verify it against the release’s `SHA256SUMS` and extract it. In PowerShell, run `.\bin\warbler.exe --help`. On Linux or macOS, run `./bin/warbler --help`. Running any command without arguments prints its example result.
 
-For a Blyx application, extract the [source ZIP](https://www.blyx-lang.space/downloads/blyx-ecosystem-0.1.0-source.zip) in your project directory. Each of the 153 packages lives in `vendor/<module>/`. The top-level `manifest.json` records the version and SHA-256 of every public module. The package directories include the source, licenses, regression tests and worked examples. Framework directories also contain their two library dependencies and CLI.
+For a Blyx application, extract the [source ZIP](https://www.blyx-lang.space/downloads/blyx-ecosystem-source.zip) in your project directory. Each of the 153 packages lives in `vendor/<module>/`. The top-level `manifest.json` records the version, module SHA-256 and logo SHA-256 of every package. The package directories include the source, licenses, regression tests and worked examples. Framework directories also contain their two library dependencies and CLI.
 
 For example, save this as `main.blyx` next to the extracted `vendor` directory. The second field returned by FrameSignal is the mean-square energy.
 
@@ -24,7 +24,7 @@ With Blyx 0.2.1, Rust and a host linker installed, run `blyxc native-run main.bl
 From a checkout of the language repository, run the following to test every package and build the collection for your machine.
 
 ```sh
-python tools/build-ecosystem.py website/public/downloads/blyx-ecosystem-0.1.0-source.zip --out dist
+python tools/build-ecosystem.py website/public/downloads/blyx-ecosystem-source.zip --out dist
 ```
 
 The [framework directory](https://www.blyx-lang.space/frameworks) links each framework to its two modules and editable handbook exercise. Individual package repositories also publish their own versioned source releases.

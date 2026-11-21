@@ -1,4 +1,4 @@
-"""Publish versioned Blyx framework editor packages from the release named in the catalog."""
+"""Publish a batch from the pinned Blyx framework editor release."""
 
 import hashlib
 import json
@@ -7,22 +7,25 @@ from pathlib import Path
 import subprocess
 import sys
 import time
-from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 from zipfile import ZipFile
 
 
-ROOT = Path(__file__).resolve().parents[1]
-CATALOG = ROOT / "website/src/lib/packages.json"
 PUBLISHER = "RahulChaube"
-RELEASE_PREFIX = "https://github.com/Rahulchaube1/blyxxxx/releases/download/"
+RELEASE_PREFIX = "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/"
+MANIFEST_SHA256 = "315bb994f9c7e5b03a2747e5b755f9b85c0583ac96079211eebcee93da029568"
+BATCH_SIZE = 6
 
 
 def frameworks():
-    packages = json.loads(CATALOG.read_text(encoding="utf-8"))["packages"]
-    editors = [item["editor"] for item in packages if item["category"] == "framework"]
+    with urlopen(RELEASE_PREFIX + "framework-editors.json", timeout=40) as response:
+        manifest = response.read()
+    if hashlib.sha256(manifest).hexdigest() != MANIFEST_SHA256:
+        raise ValueError("The release manifest differs from the approved collection")
+    editors = [{"id": row["editorId"], "version": row["editorVersion"], "sha256": row["sha256"], "vsix": row["vsix"]}
+               for row in json.loads(manifest)["frameworks"]]
     identifiers = {editor["id"] for editor in editors}
-    if not editors or len(identifiers) != len(editors):
+    if len(editors) != 65 or len(identifiers) != len(editors):
         raise ValueError("Expected a separate editor for each framework")
     return sorted(editors, key=lambda editor: editor["id"])
 
@@ -31,7 +34,7 @@ def destination(editor, folder):
     publisher, name = editor["id"].split(".", 1)
     filename = name + "-" + editor["version"] + ".vsix"
     url = editor["vsix"]
-    if publisher != PUBLISHER or not url.startswith(RELEASE_PREFIX) or Path(urlsplit(url).path).name != filename:
+    if publisher != PUBLISHER or url != RELEASE_PREFIX + filename or Path(filename).name != filename:
         raise ValueError("Unexpected publisher or release URL for " + editor["id"])
     return folder / filename
 
@@ -84,13 +87,13 @@ def main():
     folder = temp / "framework-vsix"
     folder.mkdir(exist_ok=True)
     mode = sys.argv[1]
-    if mode not in ("download", "publish"):
-        raise ValueError("Expected download or publish")
+    if mode not in ("download", "publish", "plan"):
+        raise ValueError("Expected download, plan or publish")
     editors = frameworks()
     if mode == "download":
         for editor in editors:
             download(editor, destination(editor, folder))
-        print(f"Verified {len(editors)} catalogued editor packages")
+        print(f"Verified {len(editors)} editor packages from the pinned release")
         return
     scope = os.environ.get("BLYX_PUBLISH_SCOPE", "all")
     if scope not in {"existing", "all"}:
@@ -108,12 +111,28 @@ def main():
             release_version = tuple(map(int, editor["version"].split(".")))
             if current_version < release_version:
                 updates.append(editor)
-    for editor in updates + additions:
+    batch = updates + additions[:BATCH_SIZE]
+    print(f"{len(updates)} existing listings to update, {len(additions)} new listings pending. "
+          f"This batch includes {len(batch)} packages.", flush=True)
+    if mode == "plan":
+        for editor in batch:
+            print(editor["id"], editor["version"])
+        return
+    completed = 0
+    for editor in batch:
         path = destination(editor, folder)
         validate(editor, path)
         print(f"Publishing {editor['id']} {editor['version']}", flush=True)
-        subprocess.run([str(cli), "publish", "--oidc", "--skip-duplicate", "--packagePath", str(path)], check=True)
+        result = subprocess.run([str(cli), "publish", "--oidc", "--skip-duplicate", "--packagePath", str(path)],
+                                text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        print(result.stdout, flush=True)
+        if result.returncode and "maximum number of extensions that can be created" in result.stdout.lower():
+            print(f"Microsoft's listing quota stopped this batch after {completed} submissions.", flush=True)
+            break
+        result.check_returncode()
+        completed += 1
         time.sleep(3)
+    print(f"Submitted {completed} packages. Confirm each public listing before marking it available.", flush=True)
 
 
 if __name__ == "__main__":

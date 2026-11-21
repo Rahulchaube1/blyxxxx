@@ -33,7 +33,7 @@ export default function Packages() {
             <section className="prose block">
                 <h2>Downloads and tutorials</h2>
                 <div className="actions">
-                    <a href="/downloads/blyx-ecosystem-0.1.0-source.zip" download>Download 51 frameworks and 102 libraries</a>
+                    <a href="/downloads/blyx-ecosystem-source.zip" download>Download 51 frameworks and 102 libraries</a>
                     <a className="button" href={guideLink("training-and-monitoring")}>Train and monitor a model →</a>
                     <a href="/examples/forecast-monitor.zip" download>Download the Blyx starter project</a>
                     <a href="/packages/blyxtorch">Train a neural network with BlyxTorch</a>

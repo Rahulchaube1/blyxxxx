@@ -103,7 +103,7 @@ export default async function Package({ params }: Props) {
                             {p.collection.libraries.length
                                 ? p.collection.libraries.map((lib) => <a key={lib.slug} href={"/packages/" + lib.slug}>{lib.title}</a>)
                                 : <a href={"/packages/" + p.collection.family}>{p.collection.familyTitle}</a>}
-                            <a href="/downloads/blyx-ecosystem-0.1.0-source.zip" download>Download the source collection</a>
+                            <a href="/downloads/blyx-ecosystem-source.zip" download>Download the source collection</a>
                         </div>
                     </section>
                 )}

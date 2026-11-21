@@ -22,7 +22,7 @@ export function GET() {
                 family: p.collection.family,
                 libraries: p.collection.libraries.map((lib) => lib.slug),
                 sourceDownload: p.repository + "/archive/refs/tags/v" + p.version + ".zip",
-                sourceBundle: website + "/downloads/blyx-ecosystem-0.1.0-source.zip",
+                sourceBundle: website + "/downloads/blyx-ecosystem-source.zip",
             }),
             logo: website + p.logo,
             ...(p.workflow && {
