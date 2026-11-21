@@ -1,0 +1,66 @@
+{
+  "workload": "Read a paired binary-classification CSV, compute both reports and a release decision",
+  "measured_utc": "2026-11-21",
+  "rows": 100000,
+  "seed": 710221,
+  "input_sha256": "227cc73d5b7ef59941a8a04d23556db20b9b14539854665250fffd6009ab8d69",
+  "modelgate_binary_sha256": "c2dd07d8a12b1c88dba3fee42f2d5c7adb611c8c09f7429ad22b8b7fa6f20fc3",
+  "binary_bytes": 234496,
+  "os": "Windows-10-10.0.26300-SP0",
+  "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+  "warmups": 3,
+  "samples": 9,
+  "results": [
+    {
+      "name": "Blyx ModelGate",
+      "median_ms": 147.118,
+      "min_ms": 123.779,
+      "max_ms": 255.805,
+      "samples_ms": [
+        133.635,
+        255.805,
+        123.779,
+        139.101,
+        147.118,
+        135.0,
+        158.461,
+        178.183,
+        162.761
+      ]
+    },
+    {
+      "name": "CPython 3.10.6 csv",
+      "median_ms": 269.468,
+      "min_ms": 208.652,
+      "max_ms": 413.477,
+      "samples_ms": [
+        240.378,
+        208.652,
+        313.542,
+        249.823,
+        269.468,
+        413.477,
+        341.032,
+        292.664,
+        221.24
+      ]
+    },
+    {
+      "name": "CPython 3.14.6 csv",
+      "median_ms": 310.985,
+      "min_ms": 209.925,
+      "max_ms": 382.505,
+      "samples_ms": [
+        209.925,
+        346.779,
+        382.505,
+        224.596,
+        343.437,
+        328.388,
+        309.5,
+        262.19,
+        310.985
+      ]
+    }
+  ]
+}

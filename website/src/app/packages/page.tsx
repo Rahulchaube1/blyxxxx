@@ -46,6 +46,7 @@ export default function Packages() {
                 <div className="actions">
                     <a className="button" href={owner + "/blyx-modelgate/releases/tag/v0.1.1"}>Download ModelGate</a>
                     <a className="button secondary" href={guideLink("ai-packages")}>Follow the evaluation guide →</a>
+                    <a href="/benchmarks#modelgate">Performance measurements</a>
                 </div>
             </section>
             <section className="block">

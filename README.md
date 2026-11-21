@@ -115,6 +115,8 @@ node tools/test-editor-runtime.mjs
 
 The editor test checks the browser examples against their source files and expected output, then exercises the editor worker. CI also runs compiler tests on Linux, macOS, and Windows. [Test harness](tools/test-editor-runtime.mjs) · [CI runs](https://github.com/Rahulchaube1/blyxxxx/actions/workflows/ci.yml)
 
+**Model evaluation.** The ModelGate benchmark reads 100,000 paired predictions, checks all JSON metrics and the exit decision against a Python CSV implementation, and times new processes in rotating order. Reproduce it with the release binary and `python tools/bench_modelgate.py --modelgate ./modelgate`. [Benchmark harness](tools/bench_modelgate.py) · [Raw samples and hashes](website/public/data/modelgate-benchmark.json) · [Measured timings](https://www.blyx-lang.space/benchmarks#modelgate)
+
 **Performance evidence.** The published benchmark measures recursive Fibonacci(22) on one Windows host. Across nine runs after two warm-ups, the median was **7.777 ms** for a native Blyx executable and **27.522 ms** for the Blyx interpreter. Each timing includes process startup. The raw report includes the Rust and CPython baselines, toolchain versions, individual samples, and executable sizes. [Benchmark harness](tools/bench_fibonacci.py) · [Raw results](website/public/data/benchmarks.json) · [Benchmark report](https://www.blyx-lang.space/benchmarks)
 
 ## Community projects and GitHub language recognition
