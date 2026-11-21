@@ -28,7 +28,8 @@ export default async function Package({ params }: Props) {
                 </div>
                 <p>{p.description}</p>
                 <div className="actions">
-                    <a className="button" href={playLink(p.example)}>Run the Blyx example →</a>
+                    {p.trainedExample && <a className="button" href={playLink(p.trainedExample)}>Run the trained XOR network →</a>}
+                    <a className={p.trainedExample ? undefined : "button"} href={playLink(p.example)}>{p.trainedExample ? "Differentiate a loss" : "Run the Blyx example →"}</a>
                     <a href={p.release}>Release on GitHub</a>
                 </div>
             </header>

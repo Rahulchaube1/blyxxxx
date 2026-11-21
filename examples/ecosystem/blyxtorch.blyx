@@ -1,5 +1,16 @@
 // BlyxTorch 0.1.0, MIT OR Apache-2.0.
 // https://github.com/Rahulchaube1/blyxtorch
+fn main() {
+    let weight = bt_dual(1.0, 1.0);
+    let x = bt_dual(2.0, 0.0);
+    let target = bt_dual(5.0, 0.0);
+    let loss = bt_square(bt_sub(bt_mul(weight, x), target));
+    println!(at(loss, 0));
+    println!(at(loss, 1));
+    let updated = bt_dual(at(weight, 0) - 0.125 * at(loss, 1), 0.0);
+    println!(at(bt_square(bt_sub(bt_mul(updated, x), target)), 0));
+}
+
 // Portable f64 primitives and forward-mode automatic differentiation.
 pub fn btx_finite(x: f64) -> bool { x - x == 0.0 }
 pub fn btx_valid(v: vector, width: i64) -> bool {
@@ -128,15 +139,4 @@ pub fn bt_softplus(a: vector) -> vector {
 pub fn bt_bce_logits(a: vector, label: f64) -> vector {
     if !btx_valid(a,2) || !btx_finite(label) || label < 0.0 || label > 1.0 { return []; }
     bt_dual(btx_bce_value(at(a,0),label), btx_bce_slope(at(a,0),label)*at(a,1))
-}
-
-fn main() {
-    let weight = bt_dual(1.0, 1.0);
-    let x = bt_dual(2.0, 0.0);
-    let target = bt_dual(5.0, 0.0);
-    let loss = bt_square(bt_sub(bt_mul(weight, x), target));
-    println!(at(loss, 0));
-    println!(at(loss, 1));
-    let updated = bt_dual(at(weight, 0) - 0.125 * at(loss, 1), 0.0);
-    println!(at(bt_square(bt_sub(bt_mul(updated, x), target)), 0));
 }

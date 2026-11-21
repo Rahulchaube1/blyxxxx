@@ -1764,7 +1764,9 @@ Download and extract the matching archive. From its folder, run the three comman
 
 #### Read the predictions
 
-The mean training loss is about 0.00630 on the four rows. The probabilities below are rounded. To evaluate performance on a real dataset, keep separate labelled observations out of training and run score on those rows.
+The mean training loss is about 0.00630 on the four rows. The probabilities below are rounded. To evaluate performance on a real dataset, keep separate labelled observations out of training and run score on those rows. In the browser example, change the second input from [0, 1] to [0, 0]. Its predicted class changes from true to false.
+
+[Run the trained XOR network in your browser](https://www.blyx-lang.space/play?example=package-blyxtorch-xor)
 
 | x0 | x1 | Target | Probability |
 | --- | --- | --- | --- |
@@ -1816,6 +1818,17 @@ BlyxTorch 0.1.0 runs fixed-shape float64 networks on CPU. It supports up to eigh
 ```blyx
 // BlyxTorch 0.1.0, MIT OR Apache-2.0.
 // https://github.com/Rahulchaube1/blyxtorch
+fn main() {
+    let weight = bt_dual(1.0, 1.0);
+    let x = bt_dual(2.0, 0.0);
+    let target = bt_dual(5.0, 0.0);
+    let loss = bt_square(bt_sub(bt_mul(weight, x), target));
+    println!(at(loss, 0));
+    println!(at(loss, 1));
+    let updated = bt_dual(at(weight, 0) - 0.125 * at(loss, 1), 0.0);
+    println!(at(bt_square(bt_sub(bt_mul(updated, x), target)), 0));
+}
+
 // Portable f64 primitives and forward-mode automatic differentiation.
 pub fn btx_finite(x: f64) -> bool { x - x == 0.0 }
 pub fn btx_valid(v: vector, width: i64) -> bool {
@@ -1944,17 +1957,6 @@ pub fn bt_softplus(a: vector) -> vector {
 pub fn bt_bce_logits(a: vector, label: f64) -> vector {
     if !btx_valid(a,2) || !btx_finite(label) || label < 0.0 || label > 1.0 { return []; }
     bt_dual(btx_bce_value(at(a,0),label), btx_bce_slope(at(a,0),label)*at(a,1))
-}
-
-fn main() {
-    let weight = bt_dual(1.0, 1.0);
-    let x = bt_dual(2.0, 0.0);
-    let target = bt_dual(5.0, 0.0);
-    let loss = bt_square(bt_sub(bt_mul(weight, x), target));
-    println!(at(loss, 0));
-    println!(at(loss, 1));
-    let updated = bt_dual(at(weight, 0) - 0.125 * at(loss, 1), 0.0);
-    println!(at(bt_square(bt_sub(bt_mul(updated, x), target)), 0));
 }
 ```
 

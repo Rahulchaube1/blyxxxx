@@ -887,7 +887,7 @@
             },
             {
                 "heading": "Read the predictions",
-                "text": "The mean training loss is about 0.00630 on the four rows. The probabilities below are rounded. To evaluate performance on a real dataset, keep separate labelled observations out of training and run score on those rows.",
+                "text": "The mean training loss is about 0.00630 on the four rows. The probabilities below are rounded. To evaluate performance on a real dataset, keep separate labelled observations out of training and run score on those rows. In the browser example, change the second input from [0, 1] to [0, 0]. Its predicted class changes from true to false.",
                 "table": {
                     "columns": [
                         "x0",
@@ -921,7 +921,13 @@
                             "0.00846"
                         ]
                     ]
-                }
+                },
+                "links": [
+                    {
+                        "text": "Run the trained XOR network in your browser",
+                        "href": "https://www.blyx-lang.space/play?example=package-blyxtorch-xor"
+                    }
+                ]
             },
             {
                 "heading": "Trace a derivative",

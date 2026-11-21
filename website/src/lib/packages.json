@@ -47,7 +47,8 @@
                 "x0,x1,y0",
                 "Training writes a checkpoint to standard output. The handbook shows how to save it, predict and inspect gradients on each platform."
             ],
-            "guide": "blyxtorch"
+            "guide": "blyxtorch",
+            "trainedExample": "package-blyxtorch-xor"
         },
         {
             "slug": "linearfit",
