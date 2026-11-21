@@ -60,6 +60,25 @@ def download(editor, path):
             time.sleep(3 * (attempt + 1))
 
 
+def marketplace_version(extension_id):
+    criteria = {"filterType": 7, "value": extension_id}
+    body = {"filters": [{"criteria": [criteria], "pageNumber": 1, "pageSize": 1}], "flags": 513}
+    request = Request(
+        "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery",
+        data=json.dumps(body).encode(),
+        headers={"Content-Type": "application/json", "Accept": "application/json;api-version=7.1-preview.1"},
+    )
+    with urlopen(request, timeout=40) as response:
+        matches = json.load(response)["results"][0]["extensions"]
+    if not matches:
+        return None
+    extension = matches[0]
+    identity = extension["publisher"]["publisherName"] + "." + extension["extensionName"]
+    if identity.lower() != extension_id.lower():
+        raise ValueError("Unexpected public listing returned for " + extension_id)
+    return extension["versions"][0]["version"]
+
+
 def main():
     temp = Path(os.environ["RUNNER_TEMP"])
     folder = temp / "framework-vsix"
@@ -73,8 +92,23 @@ def main():
             download(editor, destination(editor, folder))
         print(f"Verified {len(editors)} catalogued editor packages")
         return
+    scope = os.environ.get("BLYX_PUBLISH_SCOPE", "all")
+    if scope not in {"existing", "all"}:
+        raise ValueError("Unknown publication scope")
     cli = temp / "blyx-publisher/node_modules/.bin/vsce"
+    updates = []
+    additions = []
     for editor in editors:
+        current = marketplace_version(editor["id"])
+        if current is None:
+            if scope == "all":
+                additions.append(editor)
+        elif current != editor["version"]:
+            current_version = tuple(map(int, current.split(".")))
+            release_version = tuple(map(int, editor["version"].split(".")))
+            if current_version < release_version:
+                updates.append(editor)
+    for editor in updates + additions:
         path = destination(editor, folder)
         validate(editor, path)
         print(f"Publishing {editor['id']} {editor['version']}", flush=True)

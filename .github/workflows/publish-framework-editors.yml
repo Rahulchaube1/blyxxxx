@@ -1,6 +1,13 @@
 name: Publish Blyx framework editors
 on:
   workflow_dispatch:
+    inputs:
+      scope:
+        description: Which Marketplace listings to publish
+        type: choice
+        required: true
+        default: all
+        options: [all, existing]
 
 permissions:
   contents: read
@@ -30,4 +37,6 @@ jobs:
       - name: Install the Marketplace CLI
         run: npm install --prefix "$RUNNER_TEMP/blyx-publisher" --no-audit --no-fund @vscode/vsce@4.1.1
       - name: Publish the verified packages using Microsoft federated identity
+        env:
+          BLYX_PUBLISH_SCOPE: ${{ inputs.scope }}
         run: python3 tools/publish-framework-editors.py publish
