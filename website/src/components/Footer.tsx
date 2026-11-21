@@ -17,6 +17,7 @@ export default function Footer() {
                 ["Compiler", mainLink("/compiler")],
                 ["VS Code", mainLink("/vscode")],
                 ["Package catalog", mainLink("/packages")],
+                ["Blyx Nest registry", mainLink("/nest")],
                 ["Frameworks", mainLink("/frameworks")],
                 ["Libraries", mainLink("/libraries")],
                 ["Benchmarks", mainLink("/benchmarks")],

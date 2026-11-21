@@ -56,6 +56,7 @@ export default async function Package({ params }: Props) {
                 </div>
                 <p>{p.description}</p>
                 <div className="actions">
+                    {packaged && <a href={"/nest/packages/" + slug + ".html"}>Install from Blyx Nest</a>}
                     {packaged && <a href="#conda">Install with Conda</a>}
                     {p.editor && <a className="button" href="#editor">Install in your editor</a>}
                     {p.projects && <a href="#projects">Try the projects</a>}

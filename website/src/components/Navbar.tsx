@@ -13,6 +13,7 @@ export default function Navbar() {
         ["Examples", mainLink("/examples")],
         ["Frameworks", mainLink("/frameworks")],
         ["Libraries", mainLink("/libraries")],
+        ["Registry", mainLink("/nest")],
         ["Playground", mainLink("/play")],
         ["Download", mainLink("/download")],
         ["Community", mainLink("/community")],

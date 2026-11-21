@@ -3,11 +3,23 @@ const legacy = JSON.parse(
     readFileSync(new URL("./legacy-book.json", import.meta.url), "utf8"),
 );
 const docs = "https://doc.blyx-lang.space";
+const nestOrigin = "https://rahulchaube1.github.io/blyx-nest";
 const book = process.env.NEXT_PUBLIC_BLYX_EDITION === "docs";
 const config = {
     reactStrictMode: true,
     images: { unoptimized: true },
     turbopack: {},
+    async rewrites() {
+        if (book) return [];
+        const nestHost = [{ type: "host", value: "nest\\.blyx-lang\\.space" }];
+        return {
+            beforeFiles: [
+                { source: "/nest/:path+", destination: nestOrigin + "/:path+" },
+                { source: "/", has: nestHost, destination: nestOrigin + "/index.html" },
+                { source: "/:path+", has: nestHost, destination: nestOrigin + "/:path+" },
+            ],
+        };
+    },
     async redirects() {
         const redirect = (source, destination) => ({
             source,
@@ -17,6 +29,7 @@ const config = {
         const rules = Object.entries(legacy).map(([path, slug]) =>
             redirect(path, slug ? docs + "/guide/" + slug : docs + "/"),
         );
+        if (!book) rules.push({ source: "/nest", destination: "/nest/index.html", permanent: false });
         rules.push(
             ...[
                 "/learn/book",

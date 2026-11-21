@@ -18,6 +18,7 @@ export default function Packages() {
             <header className="page-head">
                 <h1>Blyx package catalog</h1>
                 <p>Choose a framework for a complete workflow or a library for functions you can use in your own code.</p>
+                <div className="actions"><a className="button" href="/nest">Browse the Blyx Nest registry</a><a href="/nest/publish.html">Publish a Blyx package</a></div>
                 <a href="#install">Install packages with Conda, Homebrew or Scoop</a>
             </header>
             <nav className="grid directory-choices" aria-label="Package directories">
