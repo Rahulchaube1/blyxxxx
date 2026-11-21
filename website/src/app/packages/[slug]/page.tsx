@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import catalog from "@/lib/packages.json";
+import { directoryFor } from "@/lib/package-categories";
 import { guideLink, playLink, website } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -28,11 +29,14 @@ export default async function Package({ params }: Props) {
     const { slug } = await params;
     const p = catalog.packages.find((item) => item.slug === slug);
     if (!p) notFound();
+    const directory = directoryFor(p.category);
     const clone = "git clone --depth 1 --branch v" + p.version + (slug === "modelgate" ? " --recurse-submodules" : "") + " " + p.repository + ".git vendor/" + slug;
     return (
         <main className="wrap">
             <header className="page-head">
-                <a className="crumb" href="/packages">← Blyx ecosystem</a>
+                <nav className="crumb package-crumb" aria-label="Breadcrumb">
+                    <a href="/packages">Ecosystem</a><span aria-hidden="true">/</span><a href={directory.href}>{directory.title}</a>
+                </nav>
                 <div className="package-heading package-title">
                     <img className="package-logo" src={p.logo} alt={p.logoAlt ?? ""} width="88" height="88" />
                     <div><h1>{p.title}</h1><span>{p.kind} · {p.version}</span></div>
@@ -130,7 +134,7 @@ export default async function Package({ params }: Props) {
                         <a href={"https://github.com/Rahulchaube1/scoop-blyx/blob/main/bucket/" + slug + ".json"}>Scoop manifest</a>
                     </section>
                 )}
-                <section>
+                <section id="import">
                     <h2>Import into a Blyx project</h2>
                     <p>Install Blyx {catalog.compiler}, Rust 1.85 or newer and a host linker. From the directory containing your entry file, clone this tagged release.</p>
                     <pre>{clone}</pre>

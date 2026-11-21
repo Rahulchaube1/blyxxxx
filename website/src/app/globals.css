@@ -128,7 +128,7 @@ pre {
 	margin-left: auto;
 	display: flex;
 	align-items: center;
-	gap: 26px;
+	gap: clamp(12px, 1.6vw, 24px);
 }
 .nav a,
 .book-mark {
@@ -317,6 +317,39 @@ button.primary {
 }
 .package-grid {
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 390px), 1fr));
+}
+.directory-choices {
+	margin-bottom: 30px;
+}
+.directory-choice h2 {
+	font-size: clamp(24px, 3vw, 32px);
+}
+.directory-switch {
+	display: flex;
+	gap: 6px;
+	border-bottom: 1px solid var(--rule);
+	margin-bottom: 22px;
+}
+.directory-switch a {
+	padding: 8px 16px;
+	border-bottom: 3px solid transparent;
+	text-decoration: none;
+	font-weight: 650;
+}
+.directory-switch a:hover {
+	text-decoration: underline;
+}
+.directory-switch a[aria-current="page"] {
+	color: var(--ink);
+	border-bottom-color: var(--teal);
+}
+.package-crumb {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+.directory-page .page-head > .actions {
+	margin-top: 14px;
 }
 .package-group { margin-block: 34px; }
 .package-heading { display: flex; gap: 15px; align-items: center; }

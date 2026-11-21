@@ -15,6 +15,10 @@ const guides = JSON.parse(await readFile(new URL("../website/src/lib/guides.json
 const catalog = JSON.parse(await readFile(new URL("../website/src/lib/packages.json", import.meta.url), "utf8"));
 assert.equal(new Set(catalog.packages.map((p) => p.slug)).size, catalog.packages.length, "unique package slugs");
 for (const p of catalog.packages) {
+  assert.ok(["framework", "library"].includes(p.category), p.slug + " directory category");
+  if (p.collection) {
+    assert.equal(p.category, p.collection.family === p.slug ? "framework" : "library", p.slug + " collection role");
+  }
   const demo = examples.find((e) => e.id === p.example);
   assert.equal(demo?.expected, p.output, p.slug + " documented output");
   assert.match(p.commit, /^[a-f0-9]{40}$/);

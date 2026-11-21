@@ -27,7 +27,7 @@ export default function Home() {
                             >
                                 Learn Blyx
                             </a>
-                            <a href="/frameworks">Explore frameworks</a>
+                            <a href="/packages">Explore the ecosystem</a>
                         </div>
                     </div>
                     <picture className="hero-art">
@@ -68,7 +68,8 @@ export default function Home() {
                         })}
                     </div>
                     <div className="actions">
-                        <a href="/frameworks">Browse workflow frameworks by task</a>
+                        <a href="/frameworks">Browse frameworks</a>
+                        <a href="/libraries">Browse libraries</a>
                         <a href={repository + "/releases/tag/ecosystem-v0.1.0"}>Download the 51 native workflow commands</a>
                     </div>
                 </section>

@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
               "benchmarks",
               "packages",
               "frameworks",
+              "libraries",
               ...catalog.packages.map((p) => "packages/" + p.slug),
               "blog",
               "about",

@@ -90,7 +90,7 @@ export default function Benchmarks() {
                 <div className="actions">
                     <a href={repository + "/blob/blyx-main/tools/bench_modelgate.py"}>Benchmark source</a>
                     <a href="/data/modelgate-benchmark.json">Samples and file hashes</a>
-                    <a href="/packages">Get ModelGate →</a>
+                    <a href="/packages/modelgate">Get ModelGate →</a>
                 </div>
             </section>
             <h2 className="block">Compute Fibonacci(22)</h2>

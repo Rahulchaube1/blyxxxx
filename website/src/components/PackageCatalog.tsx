@@ -2,23 +2,29 @@
 
 import { useState } from "react";
 import type { DirectoryEntry } from "@/lib/package-directory";
+import { directoryFor, packageDirectories, type PackageCategory } from "@/lib/package-categories";
 import { useHydrated } from "@/lib/useHydrated";
 import { guideLink, playLink } from "@/lib/site";
 
-export default function PackageCatalog({ items, frameworks = false }: { items: DirectoryEntry[]; frameworks?: boolean }) {
+export default function PackageCatalog({ items, category }: { items: DirectoryEntry[]; category?: PackageCategory }) {
     const ready = useHydrated();
     const [query, setQuery] = useState("");
     const [group, setGroup] = useState("");
     const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
     const groups = [...new Set(items.map((p) => p.group))];
     const matches = items.filter((p) => (!group || p.group === group) && terms.every((t) => p.search.includes(t)));
-    const noun = frameworks ? "framework" : "package";
+    const directory = category && directoryFor(category);
+    const plural = directory?.title.toLowerCase() ?? "packages";
+    const showResults = Boolean(category || terms.length || group);
+    const sections = category
+        ? groups.map((name) => ({ name, packages: matches.filter((p) => p.group === name) }))
+        : packageDirectories.map((d) => ({ name: d.title, packages: matches.filter((p) => p.category === d.category) }));
     return (
-        <section aria-label="Package catalog">
+        <section aria-label={directory?.title ?? "Search the ecosystem"}>
             <div className="filters">
                 <label>
-                    Search {frameworks ? "frameworks" : "packages"}
-                    <input type="search" value={query} disabled={!ready} onChange={(e) => setQuery(e.target.value)} placeholder="Try CSV, routing, layout, or training" />
+                    Search {plural}
+                    <input type="search" value={query} disabled={!ready} onChange={(e) => setQuery(e.target.value)} placeholder={directory?.placeholder ?? "Search by name, task, or function"} />
                 </label>
                 <label>
                     Task
@@ -27,13 +33,12 @@ export default function PackageCatalog({ items, frameworks = false }: { items: D
                         {groups.map((name) => <option key={name}>{name}</option>)}
                     </select>
                 </label>
-                <span role="status">{matches.length} {noun}{matches.length === 1 ? "" : "s"}</span>
+                <span role="status">{matches.length} {matches.length === 1 ? (category ?? "package") : plural}</span>
             </div>
-            {groups.map((name) => {
-                const packages = matches.filter((p) => p.group === name);
+            {showResults && sections.map(({ name, packages }) => {
                 if (!packages.length) return null;
                 return (
-                    <section className="package-group" key={name}>
+                    <section className="package-group" aria-label={name} key={name}>
                         <div className="section-head"><h2>{name}</h2></div>
                         <div className="grid package-grid">
                             {packages.map((p) => (
@@ -47,7 +52,7 @@ export default function PackageCatalog({ items, frameworks = false }: { items: D
                                     <div className="actions">
                                         <a href={"/packages/" + p.slug}>Install and use →</a>
                                         <a href={playLink(p.example)}>Run example</a>
-                                        {frameworks && <a href={guideLink(p.guide)}>Handbook</a>}
+                                        {p.category === "framework" && <a href={guideLink(p.guide)}>Handbook</a>}
                                     </div>
                                 </article>
                             ))}
@@ -55,7 +60,7 @@ export default function PackageCatalog({ items, frameworks = false }: { items: D
                     </section>
                 );
             })}
-            {!matches.length && <p className="empty">No matching packages. <button onClick={() => { setQuery(""); setGroup(""); }}>Clear filters</button></p>}
+            {!matches.length && <p className="empty">No matching {plural}. <button onClick={() => { setQuery(""); setGroup(""); }}>Clear filters</button></p>}
         </section>
     );
 }

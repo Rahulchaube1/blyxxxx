@@ -10,6 +10,7 @@ export function GET() {
         license: catalog.license,
         packages: catalog.packages.map((p) => ({
             name: p.name ?? "blyx-" + p.slug,
+            kind: p.category,
             version: p.version,
             commit: p.commit,
             repository: p.repository,
@@ -18,7 +19,6 @@ export function GET() {
             description: p.description,
             cli: (p.cli || p.collection?.libraries.length) ? p.slug : null,
             ...(p.collection && {
-                kind: p.collection.libraries.length ? "framework" : "library",
                 family: p.collection.family,
                 libraries: p.collection.libraries.map((lib) => lib.slug),
                 sourceDownload: p.repository + "/archive/refs/tags/v" + p.version + ".zip",

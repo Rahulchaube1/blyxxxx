@@ -1,12 +1,14 @@
 import catalog from "./packages.json";
+import type { PackageCategory } from "./package-categories";
 
-export function packageDirectory(frameworksOnly = false) {
+export function packageDirectory(category?: PackageCategory) {
     return catalog.packages
-        .filter((item) => !frameworksOnly || item.kind.toLowerCase().includes("framework"))
+        .filter((item) => !category || item.category === category)
         .map((p) => ({
             slug: p.slug,
             title: p.title,
             kind: p.kind,
+            category: p.category,
             version: p.version,
             description: p.description,
             group: p.group,
@@ -14,7 +16,7 @@ export function packageDirectory(frameworksOnly = false) {
             guide: p.guide,
             example: p.example,
             search: [...new Set(
-                [p.title, p.kind, p.group, p.description, p.contract, ...p.api.flat()]
+                [p.title, p.category, p.kind, p.group, p.description, p.contract, ...p.api.flat()]
                     .join(" ").toLowerCase().split(/\s+/),
             )].join(" "),
         }));

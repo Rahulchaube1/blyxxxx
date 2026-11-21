@@ -61,6 +61,7 @@ const config = {
                     "security",
                     "packages",
                     "frameworks",
+                    "libraries",
                     "roadmap",
                     "about",
                     "vscode",

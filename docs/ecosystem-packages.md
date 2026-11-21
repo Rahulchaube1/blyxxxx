@@ -1,6 +1,6 @@
 # Contribute a Blyx package
 
-The [package catalog](https://www.blyx-lang.space/packages) lists versioned native Blyx libraries, frameworks and command-line tools. The [JSON catalog](https://www.blyx-lang.space/packages.json) provides the release, commit, importable module, logo and runnable example for each entry.
+The [framework directory](https://www.blyx-lang.space/frameworks) lists packages that run complete workflows. The [library directory](https://www.blyx-lang.space/libraries) lists modules you can import into your own program. Search both from the [ecosystem page](https://www.blyx-lang.space/packages). Each entry in the [JSON catalog](https://www.blyx-lang.space/packages.json) includes its `kind` (`framework` or `library`), release, commit, importable module, logo and runnable example.
 
 ## Use the workflow collection
 
@@ -53,7 +53,7 @@ From a tagged library checkout, run `blyxc native-run tests.blyx` and `blyxc nat
 ## Propose a catalog entry
 
 1. Publish the package source with a license, a versioned tag, a small example with expected output, and its input and error contracts. Give developers a command that works from a new project.
-2. Open a pull request in the language repository. Add the package to `website/src/lib/packages.json` and place its logo in `website/public/packages/`. Record the exact release version and commit. The catalog, individual package page, JSON feed and sitemap use this entry.
+2. Open a pull request in the language repository. Add the package to `website/src/lib/packages.json` and place its logo in `website/public/packages/`. Set `category` to `framework` or `library` according to its primary use. Describe its specific role in `kind` and record the exact release version and commit. The directories, individual package page, JSON feed and sitemap use this entry.
 3. Provide a single-file portable example in `examples/ecosystem/` and its matching entry in `website/src/lib/samples.json`. The browser interpreter runs a complete buffer. Native examples can import local modules. Keep upstream source attribution in a portable example that includes a library implementation.
 4. Run the native example from a clean tagged checkout. From the language repository run `node editors/code/scripts/prepare.cjs`, `node tools/test-editor-runtime.mjs`, and `node tools/export-handbook.mjs --check`. If the package adds a chapter, regenerate the plain-text handbook with `node tools/export-handbook.mjs`.
 
