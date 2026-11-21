@@ -1,5 +1,5 @@
 import GuideIndex from "@/components/GuideIndex";
-import { bookEdition, guideLink, playLink, docs, website } from "@/lib/site";
+import { bookEdition, buyMeACoffee, docs, githubSponsors, guideLink, playLink, website } from "@/lib/site";
 import samples from "@/lib/samples.json";
 export const metadata = {
     alternates: { canonical: (bookEdition ? docs : website) + "/" },
@@ -107,6 +107,16 @@ export default function Home() {
                                 <span>Get started →</span>
                             </a>
                         ))}
+                    </div>
+                </section>
+                <section className="sponsor-section block" id="sponsor" aria-labelledby="sponsor-heading">
+                    <div>
+                        <h2 id="sponsor-heading">Support Blyx development</h2>
+                        <p>Blyx is open source. Sponsoring Rahul Chaube helps fund compiler development, package testing on Windows, Linux and macOS, and the free Blyx handbook.</p>
+                    </div>
+                    <div className="actions">
+                        <a className="button" href={buyMeACoffee}>Buy Me a Coffee</a>
+                        <a className="button secondary" href={githubSponsors}>GitHub Sponsors</a>
                     </div>
                 </section>
             </div>

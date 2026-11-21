@@ -22,7 +22,7 @@ export default function Frameworks() {
                 {[...featured, ...others].map((item) => (
                     <article className="card package-card" key={item.slug}>
                         <div className="package-heading">
-                            <img className="package-logo" src={item.logo} alt="" width="54" height="54" />
+                            <img className="package-logo" src={item.logo} alt="" width="54" height="54" loading="lazy" decoding="async" />
                             <div><small>{item.group}</small><h2><a href={"/packages/" + item.slug}>{item.title}</a></h2></div>
                         </div>
                         <p>{item.description}</p>

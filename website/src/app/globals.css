@@ -300,6 +300,26 @@ button.primary {
 .block {
 	margin-top: 42px;
 }
+.sponsor-section {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px 32px;
+	padding: clamp(22px, 4vw, 38px);
+	border: 1px solid var(--rule);
+	border-inline-start: 4px solid var(--teal);
+	border-radius: 12px;
+	background: var(--card);
+}
+.sponsor-section > div:first-child {
+	flex: 1 1 28rem;
+}
+.sponsor-section p {
+	margin-top: 10px;
+	max-width: 60ch;
+	color: var(--muted);
+}
 .package-grid {
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 390px), 1fr));
 }
@@ -497,7 +517,7 @@ button.primary {
 }
 .foot-inner {
 	display: grid;
-	grid-template-columns: 2fr repeat(3, 1fr);
+	grid-template-columns: 1.6fr repeat(4, minmax(0, 1fr));
 	gap: 24px;
 	padding-block: 42px;
 }
@@ -554,6 +574,9 @@ button.primary {
 	}
 	.foot-inner {
 		grid-template-columns: 1fr 1fr;
+	}
+	.foot-inner > div:first-child {
+		grid-column: 1 / -1;
 	}
 	.guide-shell {
 		display: block;

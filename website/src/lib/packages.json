@@ -108,7 +108,7 @@
             "commit": "6a937457b27d8adf5601025e6244474a1be273e5",
             "repository": "https://github.com/Rahulchaube1/blyx-linearfit",
             "release": "https://github.com/Rahulchaube1/blyx-linearfit/releases/tag/v0.1.1",
-            "logo": "/packages/linearfit.png",
+            "logo": "/packages/linearfit.png?v=ad3009606fe1",
             "module": "linearfit",
             "example": "package-linearfit",
             "program": "use vendor::linearfit::linearfit;\nfn main() {\n    let training = lf_fit([1, 2, 3, 4], [3, 5, 7, 9], 0.0);\n    println!(at(training, 2));\n    println!(lf_predict(training, 5.0));\n}",
@@ -118,7 +118,8 @@
                 "x,y",
                 "The model learns slope 2 and predicts 11. Add --ridge 5 to shrink the slope to 1."
             ],
-            "guide": "training-and-monitoring"
+            "guide": "training-and-monitoring",
+            "logoAlt": "Blyx penguin drawing a fitted line through scattered observations."
         },
         {
             "slug": "conformal",
@@ -145,13 +146,14 @@
             "commit": "2e26e32a67000c06ff0f794c6f8cdcab1efb6734",
             "repository": "https://github.com/Rahulchaube1/blyx-conformal",
             "release": "https://github.com/Rahulchaube1/blyx-conformal/releases/tag/v0.1.0",
-            "logo": "/packages/conformal.png",
+            "logo": "/packages/conformal.png?v=fbc724554f2f",
             "module": "conformal",
             "example": "package-conformal",
             "program": "use vendor::conformal::conformal;\nfn main() {\n    let calibration = cf_calibrate([10, 12, 7, 11], [10, 10, 10, 10], 3, 5);\n    let interval = cf_interval(20.0, at(calibration, 0));\n    println!(at(calibration, 0));\n    println!(at(interval, 0));\n    println!(at(interval, 1));\n}",
             "output": "2\n18\n22\n",
             "cli": null,
-            "guide": "training-and-monitoring"
+            "guide": "training-and-monitoring",
+            "logoAlt": "Blyx penguin holding an interval around a central point estimate."
         },
         {
             "slug": "moments",
@@ -178,13 +180,14 @@
             "commit": "15ab010ca2aa4573ca685055108c7eb9cad29d9c",
             "repository": "https://github.com/Rahulchaube1/blyx-moments",
             "release": "https://github.com/Rahulchaube1/blyx-moments/releases/tag/v0.1.0",
-            "logo": "/packages/moments.png",
+            "logo": "/packages/moments.png?v=8c95df3b2550",
             "module": "moments",
             "example": "package-moments",
             "program": "use vendor::moments::moments;\n\nfn main() {\n    let morning = mom_summary([1, 2], [10, 12]);\n    let afternoon = mom_summary([3], [14]);\n    let day = mom_merge(morning, afternoon);\n    println!(at(day, 0));\n    println!(at(day, 2));\n    println!(mom_sample_sd_y(day));\n}",
             "output": "3\n12\n2\n",
             "cli": null,
-            "guide": "training-and-monitoring"
+            "guide": "training-and-monitoring",
+            "logoAlt": "Blyx penguin merging two groups of observations into one mean."
         },
         {
             "slug": "residualwatch",
@@ -211,7 +214,7 @@
             "commit": "30b5901f566db191b3fc3a31fa7b06fedbba4f38",
             "repository": "https://github.com/Rahulchaube1/blyx-residualwatch",
             "release": "https://github.com/Rahulchaube1/blyx-residualwatch/releases/tag/v0.1.0",
-            "logo": "/packages/residualwatch.png",
+            "logo": "/packages/residualwatch.png?v=ea47dd4c423d",
             "module": "residualwatch",
             "example": "package-residualwatch",
             "program": "use vendor::residualwatch::residualwatch;\nfn main() {\n    let reference = rw_fit([9, 10, 11], [10, 10, 10], 0.0);\n    let first = rw_step(rw_monitor(), reference, 12.0, 10.0, 0.5, 3.0);\n    let second = rw_step(first, reference, 12.0, 10.0, 0.5, 3.0);\n    println!(at(reference, 2));\n    println!(at(first, 2));\n    println!(at(second, 2));\n}",
@@ -221,7 +224,8 @@
                 "actual,predicted",
                 "Reference residuals have mean 0 and sample deviation 1. The first alert is data row 5. The command exits with code 1."
             ],
-            "guide": "training-and-monitoring"
+            "guide": "training-and-monitoring",
+            "logoAlt": "Blyx penguin watching residuals rise above a baseline on a monitor."
         },
         {
             "slug": "cusum",
@@ -244,13 +248,14 @@
             "commit": "4e99a0509d16fafb7574b0a85222fc37a340c709",
             "repository": "https://github.com/Rahulchaube1/blyx-cusum",
             "release": "https://github.com/Rahulchaube1/blyx-cusum/releases/tag/v0.1.0",
-            "logo": "/packages/cusum.png",
+            "logo": "/packages/cusum.png?v=b2f7690ca2c8",
             "module": "cusum",
             "example": "package-cusum",
             "program": "use vendor::cusum::cusum;\nfn main() {\n    let mut state = cs_empty();\n    let observations = [2, 2, -3.5];\n    let mut i = 0;\n    while i < len(observations) {\n        state = cs_step(state, at(observations, i), 0.5, 3.0);\n        println!(at(state, 2));\n        i += 1;\n    }\n}",
             "output": "0\n1\n-1\n",
             "cli": null,
-            "guide": "training-and-monitoring"
+            "guide": "training-and-monitoring",
+            "logoAlt": "Blyx penguin tracing cumulative steps across a threshold."
         },
         {
             "slug": "modelgate",
@@ -273,7 +278,7 @@
             "commit": "0aa7b9dd067eaf74f9d3b07ca9ea4a51a9e0d181",
             "repository": "https://github.com/Rahulchaube1/blyx-modelgate",
             "release": "https://github.com/Rahulchaube1/blyx-modelgate/releases/tag/v0.1.2",
-            "logo": "/packages/modelgate.png",
+            "logo": "/packages/modelgate.png?v=1a83fd6766a9",
             "module": "gate",
             "example": "package-modelgate",
             "program": "use vendor::modelgate::gate;\nfn main() {\n    let baseline_cost = 1.0 / 4.0;\n    let candidate_cost = 5.0 / 4.0;\n    println!(baseline_cost);\n    println!(candidate_cost);\n    println!(gate_passes(0.105, 0.105, baseline_cost, candidate_cost, 0.0));\n}",
@@ -283,7 +288,8 @@
                 "label,baseline,candidate",
                 "Returns exit code 1. Both models get three rows right, but the candidate misses the more costly positive."
             ],
-            "guide": "ai-packages"
+            "guide": "ai-packages",
+            "logoAlt": "Blyx penguin at a model release gate with pass and stop signals."
         },
         {
             "slug": "classification",
@@ -310,13 +316,14 @@
             "commit": "d22aecbe930c3b48a3e157b75f5276d4c52037e8",
             "repository": "https://github.com/Rahulchaube1/blyx-classification",
             "release": "https://github.com/Rahulchaube1/blyx-classification/releases/tag/v0.1.1",
-            "logo": "/packages/classification.png",
+            "logo": "/packages/classification.png?v=1141c62386d5",
             "module": "classification",
             "example": "package-classification",
             "program": "use vendor::classification::classification;\n\nfn main() {\n    let table = class_confusion([1, 0, 1, 0], [0.9, 0.6, 0.4, 0.1], 0.5);\n    println!(class_precision(at(table, 0), at(table, 1)));\n    println!(class_recall(at(table, 0), at(table, 3)));\n    println!(class_cost(at(table, 1), at(table, 3), 1.0, 5.0));\n}",
             "output": "0.5\n0.5\n6\n",
             "cli": null,
-            "guide": "ai-packages"
+            "guide": "ai-packages",
+            "logoAlt": "Blyx penguin sorting circles and diamonds into a confusion matrix."
         },
         {
             "slug": "calibration",
@@ -343,13 +350,14 @@
             "commit": "f978f7f43e54d068c186cb4b467c737b121d0489",
             "repository": "https://github.com/Rahulchaube1/blyx-calibration",
             "release": "https://github.com/Rahulchaube1/blyx-calibration/releases/tag/v0.1.1",
-            "logo": "/packages/calibration.png",
+            "logo": "/packages/calibration.png?v=122ede161eea",
             "module": "calibration",
             "example": "package-calibration",
             "program": "use vendor::calibration::calibration;\n\nfn main() {\n    let labels = [0, 0, 1, 1];\n    let scores = [0.25, 0.25, 0.75, 0.75];\n    println!(cal_brier(labels, scores));\n    println!(cal_ece(labels, scores, 2));\n}",
             "output": "0.0625\n0.25\n",
             "cli": null,
-            "guide": "ai-packages"
+            "guide": "ai-packages",
+            "logoAlt": "Blyx penguin comparing a calibration curve with a diagonal reference."
         },
         {
             "slug": "retrieval",
@@ -368,13 +376,14 @@
             "commit": "3e8be65262314fb823771a09e0947ccf1e5cf8f8",
             "repository": "https://github.com/Rahulchaube1/blyx-retrieval",
             "release": "https://github.com/Rahulchaube1/blyx-retrieval/releases/tag/v0.1.1",
-            "logo": "/packages/retrieval.png",
+            "logo": "/packages/retrieval.png?v=1db12d32f1ac",
             "module": "retrieval",
             "example": "package-retrieval",
             "program": "use vendor::retrieval::retrieval;\nfn main() {\n    let result = retrieval_at_k([7, 7, 9, 12], [7, 9], 3);\n    println!(at(result, 1));\n    println!(at(result, 2));\n}",
             "output": "1\n1\n",
             "cli": null,
-            "guide": "ai-packages"
+            "guide": "ai-packages",
+            "logoAlt": "Blyx penguin examining ranked search results through a magnifying glass."
         },
         {
             "slug": "backtest",
@@ -401,13 +410,14 @@
             "commit": "2371260a23c140652d58fcec38a81a6e756a3282",
             "repository": "https://github.com/Rahulchaube1/blyx-backtest",
             "release": "https://github.com/Rahulchaube1/blyx-backtest/releases/tag/v0.1.1",
-            "logo": "/packages/backtest.png",
+            "logo": "/packages/backtest.png?v=9b2ebbb0a1cd",
             "module": "backtest",
             "example": "package-backtest",
             "program": "use vendor::backtest::backtest;\n\nfn main() {\n    let demand = [10, 20, 30, 40, 50, 60, 70, 80];\n    let baselines = bt_baselines(demand, 3, 2, 1, 2);\n    println!(at(baselines, 0));\n    println!(at(baselines, 1));\n    println!(at(baselines, 2));\n    let model = bt_score(demand, [45, 55, 65, 75], 3, 2, 1);\n    println!(at(model, 1));\n}",
             "output": "4\n25\n30\n5\n",
             "cli": null,
-            "guide": "ai-packages"
+            "guide": "ai-packages",
+            "logoAlt": "Blyx penguin positioning training and test windows on a timeline."
         },
         {
             "name": "blyx-swiftlet",

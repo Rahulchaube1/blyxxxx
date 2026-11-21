@@ -15,14 +15,12 @@ export async function generateMetadata({ params }: Props) {
         title: "Blyx " + p.title,
         description: p.description,
         alternates: { canonical: website + "/packages/" + slug },
-        ...((slug === "blyxtorch" || p.workflow) && {
-            icons: { icon: p.logo },
-            openGraph: {
-                title: p.title,
-                description: p.description,
-                images: [{ url: website + p.logo, alt: p.title + " bird logo" }],
-            },
-        }),
+        icons: { icon: p.logo },
+        openGraph: {
+            title: p.title,
+            description: p.description,
+            images: [{ url: website + p.logo, alt: p.logoAlt ?? p.title + " package logo" }],
+        },
     };
 }
 
@@ -36,7 +34,7 @@ export default async function Package({ params }: Props) {
             <header className="page-head">
                 <a className="crumb" href="/packages">← Blyx ecosystem</a>
                 <div className="package-heading package-title">
-                    <img className="package-logo" src={p.logo} alt="" width="88" height="88" />
+                    <img className="package-logo" src={p.logo} alt={p.logoAlt ?? ""} width="88" height="88" />
                     <div><h1>{p.title}</h1><span>{p.kind} · {p.version}</span></div>
                 </div>
                 <p>{p.description}</p>

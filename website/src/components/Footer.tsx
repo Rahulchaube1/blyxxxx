@@ -1,4 +1,4 @@
-import { guideLink, mainLink, repository } from "@/lib/site";
+import { buyMeACoffee, githubSponsors, guideLink, mainLink, repository } from "@/lib/site";
 export default function Footer() {
     const groups = [
         [
@@ -28,6 +28,13 @@ export default function Footer() {
                 ["Release notes", mainLink("/blog")],
                 ["Roadmap", mainLink("/roadmap")],
                 ["Security", mainLink("/security")],
+            ],
+        ],
+        [
+            "Support Blyx",
+            [
+                ["Buy Me a Coffee", buyMeACoffee],
+                ["GitHub Sponsors", githubSponsors],
             ],
         ],
     ] as const;

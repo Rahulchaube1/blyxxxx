@@ -30,6 +30,7 @@ export default function Packages() {
                     <a href="/packages.json">Catalog JSON</a>
                     <a href="/blyx-package-logos.zip" download>Download all package logos</a>
                     <a href="/community">Discuss an idea</a>
+                    <a href="/#sponsor">Sponsor Blyx development</a>
                 </div>
             </section>
         </main>
