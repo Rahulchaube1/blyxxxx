@@ -2,6 +2,33 @@ use std::{fs, path::Path, process::Command};
 
 const DRIVER: &str = env!("CARGO_BIN_EXE_blyxc");
 
+#[test]
+fn native_text_reads_numeric_rows_without_losing_empty_fields() {
+    let dir = tempfile::tempdir().unwrap();
+    let path = source(
+        dir.path(),
+        "rows.blyx",
+        r#"
+        use std::cli;
+        use std::text;
+        fn main() {
+            let rows = text_lines("a,b\r\n1e-1,\r\n");
+            let cells = text_split(args_at(rows, 1), ",");
+            println!(int_text(args_len(rows)));
+            println!(text_number(args_at(cells, 0)));
+            println!(text_is_number(args_at(cells, 1)));
+            println!(text_is_number("NaN") || text_is_number("1e9999"));
+            println!(text_trim(" x "));
+        }"#,
+    );
+    let run = Command::new(DRIVER).arg("native-run").arg(path).output().unwrap();
+    assert!(run.status.success(), "{}", String::from_utf8_lossy(&run.stderr));
+    assert_eq!(
+        String::from_utf8(run.stdout).unwrap().lines().collect::<Vec<_>>(),
+        ["2", "0.1", "false", "false", "x"]
+    );
+}
+
 fn source(dir: &Path, name: &str, text: &str) -> std::path::PathBuf {
     let path = dir.join(name);
     fs::write(&path, text).unwrap();

@@ -60,6 +60,22 @@ fn text_before(text: String, separator: String) -> String {
 fn text_after(text: String, prefix: String) -> String {
     text.strip_prefix(&prefix).unwrap_or(&text).to_owned()
 }
+fn text_lines(text: String) -> ArgList {
+    Rc::new(text.lines().map(OsString::from).collect())
+}
+fn text_split(text: String, delimiter: String) -> ArgList {
+    if delimiter.is_empty() { fail("text_split needs a nonempty delimiter") }
+    Rc::new(text.split(&delimiter).map(OsString::from).collect())
+}
+fn text_trim(text: String) -> String { text.trim().to_owned() }
+fn finite_number(text: &str) -> Option<f64> {
+    text.trim().parse::<f64>().ok().filter(|n| n.is_finite())
+}
+fn text_is_number(text: String) -> bool { finite_number(&text).is_some() }
+fn text_number(text: String) -> f64 {
+    finite_number(&text).unwrap_or_else(|| fail("expected a finite number"))
+}
+fn int_text(value: i64) -> String { value.to_string() }
 fn read_text(path: String) -> String {
     std::fs::read_to_string(&path).unwrap_or_else(|e| fail(&format!("cannot read {path}: {e}")))
 }

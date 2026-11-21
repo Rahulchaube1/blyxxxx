@@ -177,7 +177,9 @@ fn host_module(name: &str) -> Option<&'static str> {
         "cli_args" | "args_new" | "args_len" | "args_at" | "args_item" | "args_tail"
         | "args_push" | "args_concat" | "args_join" | "env_get" | "exe_dir" | "stdout_terminal"
         | "stderr_line" | "process_run" | "process_exec" | "process_exit" => "std::cli",
-        "text_starts" | "text_ends" | "text_concat" | "text_before" | "text_after" => "std::text",
+        "text_starts" | "text_ends" | "text_concat" | "text_before" | "text_after"
+        | "text_lines" | "text_split" | "text_trim" | "text_is_number" | "text_number"
+        | "int_text" => "std::text",
         "path_join" | "is_file" | "read_text" => "std::fs",
         _ => return None,
     })
