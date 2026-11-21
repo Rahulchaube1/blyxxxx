@@ -40,6 +40,14 @@ export default function Download() {
                     </div>
                 </section>
                 <section>
+                    <h2>Install on Windows with Scoop</h2>
+                    <p>On Windows x64, add the Blyx bucket once in PowerShell, then install the compiler or individual AI tools by name.</p>
+                    <pre>{"scoop bucket add blyx https://github.com/Rahulchaube1/scoop-blyx\nscoop install blyx/blyx"}</pre>
+                    <p>To train from CSV, monitor prediction errors and compare classifiers, install the three command-line tools.</p>
+                    <pre>scoop install blyx/linearfit blyx/residualwatch blyx/modelgate</pre>
+                    <a href="https://github.com/Rahulchaube1/scoop-blyx">Windows manifests and a sample prediction</a>
+                </section>
+                <section>
                     <h2>Install with Homebrew</h2>
                     <p>
                         On Apple Silicon macOS or x86-64 Linux, Homebrew installs

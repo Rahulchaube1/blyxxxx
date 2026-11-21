@@ -44,6 +44,9 @@ export default async function Package({ params }: Props) {
                             <a href={"https://github.com/Rahulchaube1/homebrew-blyx/blob/main/Formula/" + slug + ".rb"}>Homebrew formula</a>
                         </div>
                         <pre>{"brew install rahulchaube1/blyx/" + slug}</pre>
+                        <p>On Windows x64, add the Blyx Scoop bucket once, then install the tool from PowerShell.</p>
+                        <pre>{"scoop bucket add blyx https://github.com/Rahulchaube1/scoop-blyx\nscoop install blyx/" + slug}</pre>
+                        <a href={"https://github.com/Rahulchaube1/scoop-blyx/blob/main/bucket/" + slug + ".json"}>Scoop manifest</a>
                     </section>
                 )}
                 <section>

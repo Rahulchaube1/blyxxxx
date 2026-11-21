@@ -865,6 +865,11 @@
                 "command": "brew install rahulchaube1/blyx/blyx"
             },
             {
+                "heading": "Install on Windows with Scoop",
+                "text": "On Windows x64, add the project bucket once from PowerShell, then install the compiler and check its version. Scoop checks the release archive against the SHA-256 in the manifest. You can also install the native AI commands with scoop install blyx/linearfit blyx/residualwatch blyx/modelgate.",
+                "command": "scoop bucket add blyx https://github.com/Rahulchaube1/scoop-blyx\nscoop install blyx/blyx\nblyxc --version"
+            },
+            {
                 "heading": "Install with Cargo",
                 "text": "With Rust, Cargo and a host linker installed, build the compiler from crates.io. The version flag selects the same release as this course. Cargo normally places the result in the bin directory under your Cargo home.",
                 "command": "cargo install --locked --version 0.2.1 blyxc"

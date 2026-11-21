@@ -26,7 +26,16 @@ The program prints **`7.5`**. You can change a weight in the browser and see the
 
 ### Run it locally
 
-On Apple Silicon macOS and x86-64 Linux, install the compiler with Homebrew:
+On Windows x64 with Scoop, install the compiler from the project bucket.
+
+```powershell
+scoop bucket add blyx https://github.com/Rahulchaube1/scoop-blyx
+scoop install blyx/blyx
+```
+
+The same bucket distributes LinearFit, ResidualWatch and ModelGate. [Windows commands and example](https://github.com/Rahulchaube1/scoop-blyx)
+
+On Apple Silicon macOS and x86-64 Linux, install the compiler with Homebrew.
 
 ```sh
 brew install rahulchaube1/blyx/blyx
