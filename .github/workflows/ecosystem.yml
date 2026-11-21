@@ -1,0 +1,27 @@
+name: Build ecosystem CLIs
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'website/public/downloads/blyx-ecosystem-*-source.zip'
+      - 'tools/build-ecosystem.py'
+      - '.github/workflows/ecosystem.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-15]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: cargo install --locked --version 0.2.1 blyxc
+      - name: Test the packages and execute the native commands
+        run: python tools/build-ecosystem.py website/public/downloads/blyx-ecosystem-0.1.0-source.zip --out dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ecosystem-${{ matrix.os }}
+          path: dist/blyx-ecosystem-*.zip
+          if-no-files-found: error
