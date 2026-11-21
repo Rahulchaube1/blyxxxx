@@ -10,7 +10,20 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props) {
     const { slug } = await params;
     const p = catalog.packages.find((item) => item.slug === slug);
-    return p ? { title: "Blyx " + p.title, description: p.description, alternates: { canonical: website + "/packages/" + slug } } : {};
+    if (!p) return {};
+    return {
+        title: "Blyx " + p.title,
+        description: p.description,
+        alternates: { canonical: website + "/packages/" + slug },
+        ...(slug === "blyxtorch" && {
+            icons: { icon: p.logo },
+            openGraph: {
+                title: p.title,
+                description: p.description,
+                images: [{ url: website + p.logo, alt: "BlyxTorch bird logo" }],
+            },
+        }),
+    };
 }
 
 export default async function Package({ params }: Props) {

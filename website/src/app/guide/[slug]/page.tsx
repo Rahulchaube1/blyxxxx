@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { guides, stages } from "@/lib/handbook";
+import catalog from "@/lib/packages.json";
 import { docs, guideLink, mainLink } from "@/lib/site";
 import GuideContent from "@/components/GuideContent";
 type Props = { params: Promise<{ slug: string }> };
@@ -23,6 +24,7 @@ export default async function Chapter({ params }: Props) {
     const index = guides.findIndex((g) => g.slug === slug);
     if (index < 0) notFound();
     const g = guides[index];
+    const subject = catalog.packages.find((p) => p.slug === slug && p.guide === slug);
     const contents = stages.map(([stage]) => (
         <div key={stage} className="chapter-group">
             <strong>{stage}</strong>
@@ -56,7 +58,14 @@ export default async function Chapter({ params }: Props) {
                     <div className="crumb">
                         <a href={guideLink()}>Documentation</a> / {g.group}
                     </div>
-                    <h1>{g.title}</h1>
+                    {subject ? (
+                        <div className="package-heading">
+                            <img className="package-logo" src={mainLink(subject.logo)} alt="" width="66" height="66" />
+                            <h1>{g.title}</h1>
+                        </div>
+                    ) : (
+                        <h1>{g.title}</h1>
+                    )}
                     <p>{g.summary}</p>
                 </header>
                 <article className="prose">

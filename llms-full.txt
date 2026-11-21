@@ -1760,7 +1760,7 @@ Download and extract the matching archive. From its folder, run the three comman
 ./blyxtorch score xor.bt fixtures/xor.csv
 ```
 
-[Download the native release](https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.1.0) · [Read the framework source](https://github.com/Rahulchaube1/blyxtorch)
+[Download the native release](https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.1.1) · [Read the framework source](https://github.com/Rahulchaube1/blyxtorch)
 
 #### Read the predictions
 
@@ -1809,7 +1809,7 @@ The gradient command returns a per-row loss followed by one derivative per train
 
 #### Choose an appropriate workload
 
-BlyxTorch 0.1.0 runs fixed-shape float64 networks on CPU. It supports up to eight affine layers and 1,024 parameters. The published comparison covers five small networks, CPU PyTorch, and a separate CSV-scoring benchmark. GPU execution, convolution, transformer training and arbitrary-rank tensors are outside this release.
+BlyxTorch 0.1.1 runs fixed-shape float64 networks on CPU. It supports up to eight affine layers and 1,024 parameters. The published comparison covers five small networks, CPU PyTorch, and a separate CSV-scoring benchmark. GPU execution, convolution, transformer training and arbitrary-rank tensors are outside this release.
 
 [Compare the timings and measurement boundaries](https://www.blyx-lang.space/benchmarks#blyxtorch) · [Inspect the PyTorch numerical comparisons](https://github.com/Rahulchaube1/blyxtorch/blob/v0.1.0/verification/parity.json)
 

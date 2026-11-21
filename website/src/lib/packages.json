@@ -10,7 +10,7 @@
             "group": "Neural networks",
             "kind": "CPU neural-network framework and CLI",
             "description": "Train dense networks with SGD or Adam, inspect parameter gradients, and generate standalone Blyx models for regression or classification.",
-            "contract": "BlyxTorch 0.1.0 uses fixed-shape float64 networks on CPU. Each layer width is 1–64. A model supports up to eight affine layers and 1,024 trainable parameters. The prebuilt 2–4–1 classifier runs immediately. Generating a new executable requires Blyx 0.2.1, Rust and a host linker on the build machine.",
+            "contract": "BlyxTorch 0.1.1 uses fixed-shape float64 networks on CPU. Each layer width is 1–64. A model supports up to eight affine layers and 1,024 trainable parameters. The prebuilt 2–4–1 classifier runs immediately. Generating a new executable requires Blyx 0.2.1, Rust and a host linker on the build machine.",
             "api": [
                 [
                     "bt_dual(value, tangent), bt_square(v)",
@@ -33,11 +33,11 @@
                     "Generate a complete Blyx model and CLI. Use mse, binary or softmax with tanh, relu or sigmoid."
                 ]
             ],
-            "version": "0.1.0",
-            "commit": "85be772e11154500a760de2d4b28168ed5ae055e",
+            "version": "0.1.1",
+            "commit": "cc20fd3c19bcbc49a648758b0c4e377563b8afe0",
             "repository": "https://github.com/Rahulchaube1/blyxtorch",
-            "release": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.1.0",
-            "logo": "/packages/blyxtorch.png",
+            "release": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.1.1",
+            "logo": "/packages/blyxtorch.png?v=0.1.1",
             "module": "blyxtorch",
             "example": "package-blyxtorch",
             "program": "use vendor::blyxtorch::blyxtorch;\n\nfn main() {\n    let weight = bt_dual(1.0, 1.0);\n    let x = bt_dual(2.0, 0.0);\n    let target = bt_dual(5.0, 0.0);\n    let loss = bt_square(bt_sub(bt_mul(weight, x), target));\n    println!(at(loss, 0));\n    println!(at(loss, 1));\n    let updated = bt_dual(at(weight, 0) - 0.125 * at(loss, 1), 0.0);\n    println!(at(bt_square(bt_sub(bt_mul(updated, x), target)), 0));\n}",

@@ -877,7 +877,7 @@
                 "links": [
                     {
                         "text": "Download the native release",
-                        "href": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.1.0"
+                        "href": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.1.1"
                     },
                     {
                         "text": "Read the framework source",
@@ -973,7 +973,7 @@
             },
             {
                 "heading": "Choose an appropriate workload",
-                "text": "BlyxTorch 0.1.0 runs fixed-shape float64 networks on CPU. It supports up to eight affine layers and 1,024 parameters. The published comparison covers five small networks, CPU PyTorch, and a separate CSV-scoring benchmark. GPU execution, convolution, transformer training and arbitrary-rank tensors are outside this release.",
+                "text": "BlyxTorch 0.1.1 runs fixed-shape float64 networks on CPU. It supports up to eight affine layers and 1,024 parameters. The published comparison covers five small networks, CPU PyTorch, and a separate CSV-scoring benchmark. GPU execution, convolution, transformer training and arbitrary-rank tensors are outside this release.",
                 "links": [
                     {
                         "text": "Compare the timings and measurement boundaries",
