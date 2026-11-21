@@ -50,3 +50,11 @@ From `website/`, run `npm run build` to type-check and create a production build
 ## Project
 
 Rahul Chaube leads the Blyx project. For site corrections, include the page URL, the affected text or program, and the expected behavior. [Project repository](https://github.com/Rahulchaube1/blyxxxx) · [Issue tracker](https://github.com/Rahulchaube1/blyxxxx/issues) · [Rahul on GitHub](https://github.com/Rahulchaube1) · [Rahul on LinkedIn](https://www.linkedin.com/in/rahulchaube1)
+
+## Connect with Rahul Chaube
+
+[Portfolio](https://www.rahulchaube1.com/) · [GitHub](https://github.com/Rahulchaube1) · [LinkedIn](https://www.linkedin.com/in/rahulchaube1) · [Hugging Face](https://huggingface.co/oncody) · [X](https://x.com/RahulChaube_) · [EverestQ](https://www.everestqai.com/) · [Contact](https://www.rahulchaube1.com/contact)
+
+[Blyx website](https://www.blyx-lang.space/) · [BlyxTorch](https://www.blyx-lang.space/packages/blyxtorch) · [Handbook](https://doc.blyx-lang.space/) · [Community](https://www.blyx-lang.space/community)
+
+Support Rahul’s open-source work through [GitHub Sponsors](https://github.com/sponsors/Rahulchaube1) or [Buy Me a Coffee](https://buymeacoffee.com/rahulchaube).

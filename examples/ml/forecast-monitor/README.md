@@ -24,3 +24,11 @@ blyxc native-run main.blyx
 The model predicts 21 at x = 10. The five absolute calibration errors are 1, 0, 1, 2 and 2. Their fifth order statistic gives a radius of 2 and an interval from 19 to 23. Split-conformal coverage assumes exchangeable calibration and future examples. ResidualWatch uses the signed calibration errors as its baseline. The last two outputs show the monitoring decisions. The first large positive error does not cross the threshold. The second triggers an upward alert.
 
 [Training and monitoring handbook](https://doc.blyx-lang.space/guide/training-and-monitoring) · [Blyx package catalog](https://www.blyx-lang.space/packages)
+
+## Connect with Rahul Chaube
+
+[Portfolio](https://www.rahulchaube1.com/) · [GitHub](https://github.com/Rahulchaube1) · [LinkedIn](https://www.linkedin.com/in/rahulchaube1) · [Hugging Face](https://huggingface.co/oncody) · [X](https://x.com/RahulChaube_) · [EverestQ](https://www.everestqai.com/) · [Contact](https://www.rahulchaube1.com/contact)
+
+[Blyx website](https://www.blyx-lang.space/) · [BlyxTorch](https://www.blyx-lang.space/packages/blyxtorch) · [Handbook](https://doc.blyx-lang.space/) · [Community](https://www.blyx-lang.space/community)
+
+Support Rahul’s open-source work through [GitHub Sponsors](https://github.com/sponsors/Rahulchaube1) or [Buy Me a Coffee](https://buymeacoffee.com/rahulchaube).
