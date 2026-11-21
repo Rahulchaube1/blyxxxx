@@ -18,7 +18,7 @@ export default async function Playground({
                     stays in your browser.
                 </p>
             </header>
-            <ExamplePicker id={active.id} />
+            <ExamplePicker id={active.id} samples={samples.map(({ id, title }) => ({ id, title }))} />
             <div className="block">
                 <h2>{active.title}</h2>
                 <p className="subtle">{active.description}</p>

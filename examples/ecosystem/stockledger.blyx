@@ -1,0 +1,63 @@
+// StockLedger 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-stockledger/tree/v0.1.0
+
+fn stockledger_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn stockledger_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn stockledger_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn stockledger_compute(onhand: f64, holds: vector) -> vector {
+    let used = sum(holds);
+    if used > 9007199254740991.0 {
+        return [];
+    }
+    [stockledger_max2(0.0, onhand - used), stockledger_max2(0.0, used - onhand)]
+}
+
+// Reconcile on-hand inventory with individual outstanding reservations.
+// Returns [available units, overcommitted units]. Reservations are nonnegative whole units.
+pub fn stockledger_balance(onhand: f64, holds: vector) -> vector {
+    if !(onhand >= 0.0 && onhand <= 9007199254740991.0 && onhand % 1.0 == 0.0) { return []; }
+    if !stockledger_counts(holds) { return []; }
+    let result = stockledger_compute(onhand, holds);
+    if !stockledger_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let onhand = 10.0;
+    let holds = [2, 3];
+    let result = stockledger_balance(onhand, holds);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

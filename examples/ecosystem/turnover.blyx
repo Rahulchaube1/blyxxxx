@@ -1,0 +1,74 @@
+// Turnover 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-turnover/tree/v0.1.0
+
+fn turnover_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn turnover_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn turnover_probabilities(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 1.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn turnover_compute(current: vector, target: vector) -> vector {
+    if len(current) != len(target) || turnover_absolute(sum(current) - 1.0) > 0.000000001 || turnover_absolute(sum(target) - 1.0) > 0.000000001 {
+        return [];
+    }
+    let mut buys = 0.0;
+    let mut sells = 0.0;
+    let mut i = 0;
+    while i < len(current) {
+        let d = at(target, i) - at(current, i);
+        if d > 0.0 {
+            buys += d;
+        } else {
+            sells -= d;
+        }
+        i += 1;
+    }
+    [(buys + sells) / 2.0, buys, sells]
+}
+
+// Calculate one-way turnover for two fully allocated long-only weight vectors.
+// Returns [one-way turnover, total weight increases, total weight decreases]. Each portfolio must sum to one within 1e-9.
+pub fn turnover_one_way(current: vector, target: vector) -> vector {
+    if !turnover_probabilities(current) { return []; }
+    if !turnover_probabilities(target) { return []; }
+    let result = turnover_compute(current, target);
+    if !turnover_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let current = [0.75, 0.25];
+    let target = [0.5, 0.5];
+    let result = turnover_one_way(current, target);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

@@ -1,0 +1,87 @@
+// FloorBreach 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-floorbreach/tree/v0.1.0
+
+fn floorbreach_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn floorbreach_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn floorbreach_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn floorbreach_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn floorbreach_compute(opening: f64, flows: vector, reserve: f64) -> vector {
+    let mut cash = opening;
+    let mut first = -1;
+    let mut count = 0;
+    let mut gap = 0.0;
+    let mut i = 0;
+    while i < len(flows) {
+        cash += at(flows, i);
+        if floorbreach_absolute(cash) > 9007199254740991.0 {
+            return [];
+        }
+        if cash < reserve {
+            if first < 0 {
+                first = i;
+            }
+            count += 1;
+            gap = floorbreach_max2(gap, reserve - cash);
+        }
+        i += 1;
+    }
+    [first, count, gap]
+}
+
+// Locate the first reserve breach and count all deficient period ends.
+// Returns [first deficient period, deficient periods, largest shortfall]. The opening balance initializes the trace; only period ends are counted.
+pub fn floorbreach_trace(opening: f64, flows: vector, reserve: f64) -> vector {
+    if !(opening >= -9007199254740991.0 && opening <= 9007199254740991.0 && opening % 1.0 == 0.0) { return []; }
+    if !floorbreach_integers(flows) { return []; }
+    if !(reserve >= -9007199254740991.0 && reserve <= 9007199254740991.0 && reserve % 1.0 == 0.0) { return []; }
+    let result = floorbreach_compute(opening, flows, reserve);
+    if !floorbreach_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let opening = 20.0;
+    let flows = [-15, -10, 30];
+    let reserve = 10.0;
+    let result = floorbreach_trace(opening, flows, reserve);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

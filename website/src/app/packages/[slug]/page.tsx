@@ -51,8 +51,12 @@ export default async function Package({ params }: Props) {
                     <section id="project">
                         <h2>{p.workflow.title}</h2>
                         <p>{p.workflow.description}</p>
-                        <h3>Download the standalone example</h3>
-                        <p>Extract the archive and run <code>{p.slug + "-demo.exe"}</code> on Windows or <code>{"./" + p.slug + "-demo"}</code> on Linux and macOS. Each archive includes the Blyx source and tests.</p>
+                        <h3>{p.collection ? "Run the native CLI" : "Download the standalone example"}</h3>
+                        {p.collection ? (
+                            <p>Extract the workflow collection for your platform. Run <code>{".\\bin\\" + slug + ".exe --help"}</code> in PowerShell or <code>{"./bin/" + slug + " --help"}</code> on Linux and macOS. Running the command with no arguments prints the worked example.</p>
+                        ) : (
+                            <p>Extract the archive and run <code>{p.slug + "-demo.exe"}</code> on Windows or <code>{"./" + p.slug + "-demo"}</code> on Linux and macOS. Each archive includes the Blyx source and tests.</p>
+                        )}
                         <div className="actions">
                             {p.workflow.downloads.map((download) => <a href={download.url} key={download.platform}>{download.platform}</a>)}
                             <a href={p.workflow.checksums}>SHA-256 checksums</a>
@@ -80,6 +84,17 @@ export default async function Package({ params }: Props) {
                         </div>
                         <p>To run a first model, create <code>sensor.blyx</code>, type <code>bt-sensor</code> and accept the completion. Choose <strong>Blyx: Run File</strong>. For an offline installation, download both VSIX files and use <strong>Extensions: Install from VSIX</strong> for Blyx Language first, then BlyxTorch.</p>
                         <a href="https://github.com/Rahulchaube1/blyxxxx/releases/download/editor-v1.2.3/blyx-language-1.2.3.vsix">Download the companion Blyx Language VSIX</a>
+                    </section>
+                )}
+                {p.collection && (
+                    <section>
+                        <h2>{p.collection.libraries.length ? "Libraries in this framework" : "Framework using this library"}</h2>
+                        <div className="actions">
+                            {p.collection.libraries.length
+                                ? p.collection.libraries.map((lib) => <a key={lib.slug} href={"/packages/" + lib.slug}>{lib.title}</a>)
+                                : <a href={"/packages/" + p.collection.family}>{p.collection.familyTitle}</a>}
+                            <a href="/downloads/blyx-ecosystem-0.1.0-source.zip" download>Download the source collection</a>
+                        </div>
                     </section>
                 )}
                 {p.projects && p.editor && (
@@ -119,6 +134,7 @@ export default async function Package({ params }: Props) {
                     <h2>Import into a Blyx project</h2>
                     <p>Install Blyx {catalog.compiler}, Rust 1.85 or newer and a host linker. From the directory containing your entry file, clone this tagged release.</p>
                     <pre>{clone}</pre>
+                    {p.collection && <p>You can also <a href={p.repository + "/archive/refs/tags/v" + p.version + ".zip"}>download {p.title} as a ZIP</a>. Extract its contents into <code>{"vendor/" + slug}</code>.</p>}
                     <p>Save this as <code>main.blyx</code> beside <code>vendor</code> and run <code>blyxc native-run main.blyx</code>.</p>
                     <pre>{p.program}</pre>
                     <p>Expected output</p><pre>{p.output.trimEnd()}</pre>
@@ -139,6 +155,7 @@ export default async function Package({ params }: Props) {
                         <a href={p.repository + "/issues"}>Package issues</a>
                         <a href={guideLink(p.guide)}>Handbook tutorial →</a>
                         {(slug === "linearfit" || slug === "modelgate" || slug === "blyxtorch") && <a href={"/benchmarks#" + slug}>Measured performance</a>}
+                        {(slug === "warbler" || slug === "robin") && <a href="/benchmarks#workflows">Measured performance</a>}
                     </div>
                 </section>
             </article>

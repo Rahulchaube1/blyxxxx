@@ -1,0 +1,61 @@
+// RetryDelay 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-retrydelay/tree/v0.1.0
+
+fn retrydelay_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn retrydelay_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn retrydelay_compute(base: f64, ceiling: f64, attempt: f64) -> vector {
+    if ceiling < base {
+        return [];
+    }
+    let mut delay = base;
+    let mut i = 0.0;
+    while i < attempt && delay < ceiling {
+        delay = retrydelay_min2(ceiling, delay * 2.0);
+        i += 1.0;
+    }
+    if delay == ceiling {
+        return [delay, 1];
+    }
+    [delay, 0]
+}
+
+// Compute saturating exponential retry delays without unbounded exponentiation.
+// Returns [delay ticks, cap reached]. Attempt zero uses the base. Ceilings below base are invalid.
+pub fn retrydelay_capped(base: f64, ceiling: f64, attempt: f64) -> vector {
+    if !(base >= 1.0 && base <= 9007199254740991.0 && base % 1.0 == 0.0) { return []; }
+    if !(ceiling >= 1.0 && ceiling <= 9007199254740991.0 && ceiling % 1.0 == 0.0) { return []; }
+    if !(attempt >= 0.0 && attempt <= 9007199254740991.0 && attempt % 1.0 == 0.0) { return []; }
+    let result = retrydelay_compute(base, ceiling, attempt);
+    if !retrydelay_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let base = 3.0;
+    let ceiling = 20.0;
+    let attempt = 2.0;
+    let result = retrydelay_capped(base, ceiling, attempt);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

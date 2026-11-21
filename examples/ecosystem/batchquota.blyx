@@ -1,0 +1,53 @@
+// BatchQuota 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-batchquota/tree/v0.1.0
+
+fn batchquota_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn batchquota_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn batchquota_compute(done: f64, total: f64, limit: f64) -> vector {
+    if done > total {
+        return [];
+    }
+    let take = batchquota_min2(limit, total - done);
+    [done, take, total - done - take]
+}
+
+// Bound the next batch of an interrupted command.
+// Returns [next offset, batch length, remaining after batch]. A finished batch has zero length.
+pub fn batchquota_allow(done: f64, total: f64, limit: f64) -> vector {
+    if !(done >= 0.0 && done <= 9007199254740991.0 && done % 1.0 == 0.0) { return []; }
+    if !(total >= 0.0 && total <= 9007199254740991.0 && total % 1.0 == 0.0) { return []; }
+    if !(limit >= 1.0 && limit <= 9007199254740991.0 && limit % 1.0 == 0.0) { return []; }
+    let result = batchquota_compute(done, total, limit);
+    if !batchquota_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let done = 4.0;
+    let total = 10.0;
+    let limit = 3.0;
+    let result = batchquota_allow(done, total, limit);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

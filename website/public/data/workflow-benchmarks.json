@@ -1,0 +1,77 @@
+{
+  "iterations": 20000,
+  "measuredRuns": 9,
+  "warmupPairs": 2,
+  "scope": "Process launch, batch computation and checksum output; compilation excluded.",
+  "system": "Windows 10 AMD64",
+  "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+  "python": "3.10.6",
+  "blyxc": "blyxc 0.2.1",
+  "rustc": "rustc 1.92.0 (ded5c06cf 2025-12-08)",
+  "workloads": [
+    {
+      "slug": "warbler",
+      "checksum": 69896.228515625,
+      "runsMs": {
+        "blyx": [
+          27.12,
+          37.277,
+          32.717,
+          39.828,
+          55.158,
+          33.135,
+          35.157,
+          49.27,
+          56.035
+        ],
+        "python": [
+          358.689,
+          319.5,
+          396.118,
+          380.837,
+          392.179,
+          319.745,
+          326.7,
+          435.673,
+          365.426
+        ]
+      },
+      "medianMs": {
+        "blyx": 37.277,
+        "python": 365.426
+      }
+    },
+    {
+      "slug": "robin",
+      "checksum": 14606648807.0,
+      "runsMs": {
+        "blyx": [
+          23.254,
+          28.232,
+          31.809,
+          29.996,
+          27.785,
+          28.322,
+          36.381,
+          22.942,
+          23.28
+        ],
+        "python": [
+          92.061,
+          95.377,
+          89.996,
+          99.118,
+          105.39,
+          97.962,
+          97.928,
+          96.855,
+          88.165
+        ]
+      },
+      "medianMs": {
+        "blyx": 28.232,
+        "python": 96.855
+      }
+    }
+  ]
+}

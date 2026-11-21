@@ -1,0 +1,78 @@
+// FieldCost 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-fieldcost/tree/v0.1.0
+
+fn fieldcost_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn fieldcost_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn fieldcost_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn fieldcost_compute(units: vector, visits: vector) -> vector {
+    if len(units) != len(visits) {
+        return [];
+    }
+    let mut total = 0.0;
+    let mut largest = -1.0;
+    let mut idx = -1;
+    let mut i = 0;
+    while i < len(units) {
+        let cost = at(units, i) * at(visits, i);
+        if cost > 9007199254740991.0 - total {
+            return [];
+        }
+        total += cost;
+        if cost > largest {
+            largest = cost;
+            idx = i;
+        }
+        i += 1;
+    }
+    [total, idx, fieldcost_max2(0.0, largest)]
+}
+
+// Estimate expanded resolver work using per-field costs and visit counts.
+// Returns [total work, costliest field index, largest single field contribution]. Empty input uses index -1. Inputs come from the host query planner.
+pub fn fieldcost_weighted(units: vector, visits: vector) -> vector {
+    if !fieldcost_counts(units) { return []; }
+    if !fieldcost_counts(visits) { return []; }
+    let result = fieldcost_compute(units, visits);
+    if !fieldcost_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let units = [1, 5, 2];
+    let visits = [1, 4, 3];
+    let result = fieldcost_weighted(units, visits);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

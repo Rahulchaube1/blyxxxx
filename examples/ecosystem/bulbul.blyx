@@ -1,0 +1,202 @@
+// Bulbul 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-bulbul/tree/v0.1.0
+
+fn allowfields_hasid(values: vector, key: f64) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        if at(values, i) == key {
+            return true;
+        }
+        i += 1;
+    }
+    false
+}
+
+fn allowfields_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn allowfields_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn allowfields_compute(present: vector, allowed: vector) -> vector {
+    let mut extras = 0;
+    let mut first = -1;
+    let mut i = 0;
+    while i < len(present) {
+        if !allowfields_hasid(allowed, at(present, i)) {
+            if first < 0 {
+                first = i;
+            }
+            extras += 1;
+        }
+        i += 1;
+    }
+    [extras, first]
+}
+
+// Find unrecognized fields after mapping schema keys to stable IDs.
+// Returns [extra occurrences, first extra position]. Required-property presence is a separate check.
+pub fn allowfields_extra(present: vector, allowed: vector) -> vector {
+    if !allowfields_counts(present) { return []; }
+    if !allowfields_counts(allowed) { return []; }
+    let result = allowfields_compute(present, allowed);
+    if !allowfields_finite(result) { return []; }
+    result
+}
+
+fn requiredset_hasid(values: vector, key: f64) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        if at(values, i) == key {
+            return true;
+        }
+        i += 1;
+    }
+    false
+}
+
+fn requiredset_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn requiredset_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn requiredset_compute(present: vector, required: vector) -> vector {
+    let mut missing = 0;
+    let mut first = -1.0;
+    let mut i = 0;
+    while i < len(required) {
+        let id = at(required, i);
+        let mut j = 0;
+        while j < i {
+            if at(required, j) == id {
+                return [];
+            }
+            j += 1;
+        }
+        if !requiredset_hasid(present, id) {
+            if missing == 0 {
+                first = id;
+            }
+            missing += 1;
+        }
+        i += 1;
+    }
+    [missing, first]
+}
+
+// Find missing unique required keys in an object shape.
+// Returns [missing keys, first missing key ID]. Duplicate requirements are rejected as a malformed schema.
+pub fn requiredset_missing(present: vector, required: vector) -> vector {
+    if !requiredset_counts(present) { return []; }
+    if !requiredset_counts(required) { return []; }
+    let result = requiredset_compute(present, required);
+    if !requiredset_finite(result) { return []; }
+    result
+}
+
+fn bulbul_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn bulbul_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn bulbul_compute(present: vector, allowed: vector, required: vector, closed: f64) -> vector {
+    if closed > 1.0 {
+        return [];
+    }
+    let schema = allowfields_extra(required, allowed);
+    if len(schema) == 0 || at(schema, 0) > 0.0 {
+        return [];
+    }
+    let extra = allowfields_extra(present, allowed);
+    let needed = requiredset_missing(present, required);
+    if len(extra) == 0 || len(needed) == 0 {
+        return [];
+    }
+    let mut ok = 0;
+    if at(needed, 0) == 0.0 && (closed == 0.0 || at(extra, 0) == 0.0) {
+        ok = 1;
+    }
+    [ok, at(needed, 0), at(extra, 0), at(needed, 1)]
+}
+
+// Check required and extra fields in an already parsed object.
+// Returns [accepted, missing count, extra count, first missing ID]. Use an explicit field-name-to-ID map. Closed mode rejects extra fields; required IDs must be in the declared allowed set.
+pub fn bulbul_shape(present: vector, allowed: vector, required: vector, closed: f64) -> vector {
+    if !bulbul_counts(present) { return []; }
+    if !bulbul_counts(allowed) { return []; }
+    if !bulbul_counts(required) { return []; }
+    if !(closed >= 0.0 && closed <= 9007199254740991.0 && closed % 1.0 == 0.0) { return []; }
+    let result = bulbul_compute(present, allowed, required, closed);
+    if !bulbul_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let present = [1, 9];
+    let allowed = [1, 2];
+    let required = [1, 2];
+    let closed = 1.0;
+    let result = bulbul_shape(present, allowed, required, closed);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

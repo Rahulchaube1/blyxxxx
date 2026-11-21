@@ -1,4 +1,5 @@
 import Catalog from "./catalog";
+import samples from "@/lib/samples.json";
 export const metadata = { title: "Runnable examples" };
 export default function Examples() {
     return (
@@ -10,7 +11,7 @@ export default function Examples() {
                     build locally.
                 </p>
             </header>
-            <Catalog />
+            <Catalog samples={samples.map(({ id, title, category, description, file }) => ({ id, title, category, description, file }))} />
         </main>
     );
 }

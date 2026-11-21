@@ -1,0 +1,51 @@
+// SuffixRange 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-suffixrange/tree/v0.1.0
+
+fn suffixrange_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn suffixrange_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn suffixrange_compute(size: f64, suffix: f64) -> vector {
+    if suffix == 0.0 || size == 0.0 {
+        return [0, 0, 0];
+    }
+    let count = suffixrange_min2(size, suffix);
+    [1, size - count, count]
+}
+
+// Resolve an HTTP suffix-byte specification without negative offsets.
+// Returns [satisfiable, offset, length]. A suffix longer than the entity selects the full entity. Zero bytes or an empty entity produce an unsatisfied range.
+pub fn suffixrange_resolve(size: f64, suffix: f64) -> vector {
+    if !(size >= 0.0 && size <= 9007199254740991.0 && size % 1.0 == 0.0) { return []; }
+    if !(suffix >= 0.0 && suffix <= 9007199254740991.0 && suffix % 1.0 == 0.0) { return []; }
+    let result = suffixrange_compute(size, suffix);
+    if !suffixrange_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let size = 10.0;
+    let suffix = 3.0;
+    let result = suffixrange_resolve(size, suffix);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

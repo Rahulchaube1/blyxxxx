@@ -1,0 +1,87 @@
+// StdWeight 0.1.1 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-stdweight/tree/v0.1.1
+
+fn stdweight_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn stdweight_magnitudes(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn stdweight_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn stdweight_compute(events: vector, trials: vector, weights: vector) -> vector {
+    if len(events) != len(trials) || len(events) != len(weights) {
+        return [];
+    }
+    let w = sum(weights);
+    if w <= 0.0 {
+        return [];
+    }
+    let mut result = 0.0;
+    let mut i = 0;
+    while i < len(events) {
+        let n = at(trials, i);
+        let e = at(events, i);
+        let part = at(weights, i);
+        if e > n || (part > 0.0 && n == 0.0) {
+            return [];
+        }
+        if part > 0.0 {
+            result += (part / w) * (e / n);
+        }
+        i += 1;
+    }
+    [result, w]
+}
+
+// Directly standardize stratum-specific rates to a reference population.
+// Returns [standardized rate, total reference weight]. Positive-weight strata require observations. Zero-weight strata may be empty.
+pub fn stdweight_direct(events: vector, trials: vector, weights: vector) -> vector {
+    if !stdweight_counts(events) { return []; }
+    if !stdweight_counts(trials) { return []; }
+    if !stdweight_magnitudes(weights) { return []; }
+    let result = stdweight_compute(events, trials, weights);
+    if !stdweight_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let events = [1, 6];
+    let trials = [4, 8];
+    let weights = [1, 1];
+    let result = stdweight_direct(events, trials, weights);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

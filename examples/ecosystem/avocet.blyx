@@ -1,0 +1,160 @@
+// Avocet 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-avocet/tree/v0.1.0
+
+fn stockledger_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn stockledger_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn stockledger_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn stockledger_compute(onhand: f64, holds: vector) -> vector {
+    let used = sum(holds);
+    if used > 9007199254740991.0 {
+        return [];
+    }
+    [stockledger_max2(0.0, onhand - used), stockledger_max2(0.0, used - onhand)]
+}
+
+// Reconcile on-hand inventory with individual outstanding reservations.
+// Returns [available units, overcommitted units]. Reservations are nonnegative whole units.
+pub fn stockledger_balance(onhand: f64, holds: vector) -> vector {
+    if !(onhand >= 0.0 && onhand <= 9007199254740991.0 && onhand % 1.0 == 0.0) { return []; }
+    if !stockledger_counts(holds) { return []; }
+    let result = stockledger_compute(onhand, holds);
+    if !stockledger_finite(result) { return []; }
+    result
+}
+
+fn lotround_ceilpos(value: f64) -> f64 {
+    let rest = value % 1.0;
+    if rest > 0.0 {
+        return value - rest + 1.0;
+    }
+    value
+}
+
+fn lotround_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn lotround_compute(need: f64, lot: f64) -> vector {
+    let lots = lotround_ceilpos(need / lot);
+    let units = lots * lot;
+    if units > 9007199254740991.0 {
+        return [];
+    }
+    [lots, units, units - need]
+}
+
+// Round a shortage to a supplier's whole purchase lots.
+// Returns [lots to order, supplied units, surplus]. A zero shortage orders zero lots.
+pub fn lotround_order(need: f64, lot: f64) -> vector {
+    if !(need >= 0.0 && need <= 9007199254740991.0 && need % 1.0 == 0.0) { return []; }
+    if !(lot >= 1.0 && lot <= 9007199254740991.0 && lot % 1.0 == 0.0) { return []; }
+    let result = lotround_compute(need, lot);
+    if !lotround_finite(result) { return []; }
+    result
+}
+
+fn avocet_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn avocet_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn avocet_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn avocet_compute(onhand: f64, holds: vector, target: f64, lot: f64) -> vector {
+    let stock = stockledger_balance(onhand, holds);
+    if len(stock) == 0 {
+        return [];
+    }
+    let missing = avocet_max2(0.0, target - at(stock, 0) + at(stock, 1));
+    let order = lotround_order(missing, lot);
+    if len(order) == 0 {
+        return [];
+    }
+    [at(stock, 0), at(stock, 1), at(order, 1), at(stock, 0) - at(stock, 1) + at(order, 1)]
+}
+
+// Plan replenishment after existing reservations and supplier lot sizes.
+// Returns [available, existing shortage, purchase units, projected free units]. Target is the desired free stock after all holds.
+pub fn avocet_plan(onhand: f64, holds: vector, target: f64, lot: f64) -> vector {
+    if !(onhand >= 0.0 && onhand <= 9007199254740991.0 && onhand % 1.0 == 0.0) { return []; }
+    if !avocet_counts(holds) { return []; }
+    if !(target >= 0.0 && target <= 9007199254740991.0 && target % 1.0 == 0.0) { return []; }
+    if !(lot >= 1.0 && lot <= 9007199254740991.0 && lot % 1.0 == 0.0) { return []; }
+    let result = avocet_compute(onhand, holds, target, lot);
+    if !avocet_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let onhand = 10.0;
+    let holds = [3, 4];
+    let target = 8.0;
+    let lot = 4.0;
+    let result = avocet_plan(onhand, holds, target, lot);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

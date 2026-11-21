@@ -1,0 +1,89 @@
+// TickStep 0.1.1 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-tickstep/tree/v0.1.1
+
+fn tickstep_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn tickstep_floorreal(value: f64) -> f64 {
+    let trunc = value - value % 1.0;
+    if trunc > value {
+        return trunc - 1.0;
+    }
+    trunc
+}
+
+fn tickstep_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn tickstep_compute(lo: f64, hi: f64, intervals: f64) -> vector {
+    if hi <= lo {
+        return [];
+    }
+    let raw = (hi - lo) / intervals;
+    if raw < 1.0e-100 || raw > 1.0e100 {
+        return [];
+    }
+    let mut unit = 1.0;
+    while unit * 10.0 <= raw {
+        unit *= 10.0;
+    }
+    while unit > raw {
+        unit /= 10.0;
+    }
+    let ratio = raw / unit;
+    let mut step = unit;
+    if ratio > 5.0 {
+        step *= 10.0;
+    } else {
+        if ratio > 2.0 {
+            step *= 5.0;
+        } else {
+            if ratio > 1.0 {
+                step *= 2.0;
+            }
+        }
+    }
+    let first = tickstep_floorreal(lo / step);
+    let last = -tickstep_floorreal(-hi / step);
+    if tickstep_absolute(first) > 9007199254740991.0 || tickstep_absolute(last) > 9007199254740991.0 {
+        return [];
+    }
+    [first * step, last * step, step, last - first + 1.0]
+}
+
+// Choose a covering linear tick lattice using steps 1, 2, 5 or 10 times a power of ten.
+// Returns [first tick, last tick, step, tick count]. Interval count is a target. Supported raw steps range from 1e-100 to 1e100.
+pub fn tickstep_cover(lo: f64, hi: f64, intervals: f64) -> vector {
+    if !(lo - lo == 0.0) { return []; }
+    if !(hi - hi == 0.0) { return []; }
+    if !(intervals >= 1.0 && intervals <= 9007199254740991.0 && intervals % 1.0 == 0.0) { return []; }
+    let result = tickstep_compute(lo, hi, intervals);
+    if !tickstep_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let lo = -3.0;
+    let hi = 11.0;
+    let intervals = 4.0;
+    let result = tickstep_cover(lo, hi, intervals);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

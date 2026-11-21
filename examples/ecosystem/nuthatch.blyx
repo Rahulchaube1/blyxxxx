@@ -1,0 +1,161 @@
+// Nuthatch 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-nuthatch/tree/v0.1.0
+
+fn wordrows_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn wordrows_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn wordrows_compute(widths: vector, columns: f64) -> vector {
+    let mut lines = 0;
+    let mut used = 0.0;
+    let mut i = 0;
+    while i < len(widths) {
+        let width = at(widths, i);
+        if width == 0.0 || width > columns {
+            return [];
+        }
+        if used == 0.0 || used + 1.0 + width > columns {
+            lines += 1;
+            used = width;
+        } else {
+            used += 1.0 + width;
+        }
+        i += 1;
+    }
+    [lines, used]
+}
+
+// Count greedy terminal lines from premeasured word widths.
+// Returns [lines, last line width]. One display cell separates words. Empty input uses zero lines; zero-width and oversize words are rejected.
+pub fn wordrows_measure(widths: vector, columns: f64) -> vector {
+    if !wordrows_counts(widths) { return []; }
+    if !(columns >= 1.0 && columns <= 9007199254740991.0 && columns % 1.0 == 0.0) { return []; }
+    let result = wordrows_compute(widths, columns);
+    if !wordrows_finite(result) { return []; }
+    result
+}
+
+fn viewportion_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn viewportion_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn viewportion_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn viewportion_compute(rows: f64, start: f64, height: f64) -> vector {
+    let first = viewportion_min2(start, viewportion_max2(0.0, rows - height));
+    let end = viewportion_min2(rows, first + height);
+    [first, end, rows - end]
+}
+
+// Clamp a terminal scroll offset to a filled viewport.
+// Returns [first visible row, exclusive end row, rows hidden below]. A short document starts at zero.
+pub fn viewportion_slice(rows: f64, start: f64, height: f64) -> vector {
+    if !(rows >= 0.0 && rows <= 9007199254740991.0 && rows % 1.0 == 0.0) { return []; }
+    if !(start >= 0.0 && start <= 9007199254740991.0 && start % 1.0 == 0.0) { return []; }
+    if !(height >= 1.0 && height <= 9007199254740991.0 && height % 1.0 == 0.0) { return []; }
+    let result = viewportion_compute(rows, start, height);
+    if !viewportion_finite(result) { return []; }
+    result
+}
+
+fn nuthatch_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn nuthatch_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn nuthatch_compute(widths: vector, columns: f64, start: f64, height: f64) -> vector {
+    let flow = wordrows_measure(widths, columns);
+    if len(flow) == 0 {
+        return [];
+    }
+    let view = viewportion_slice(at(flow, 0), start, height);
+    if len(view) == 0 {
+        return [];
+    }
+    [at(flow, 0), at(view, 0), at(view, 1), at(flow, 1)]
+}
+
+// Wrap a message and preserve a valid scroll position after resizing a terminal.
+// Returns [wrapped line count, first visible line, exclusive end, last line width]. The host supplies display-cell widths for its font.
+pub fn nuthatch_layout(widths: vector, columns: f64, start: f64, height: f64) -> vector {
+    if !nuthatch_counts(widths) { return []; }
+    if !(columns >= 1.0 && columns <= 9007199254740991.0 && columns % 1.0 == 0.0) { return []; }
+    if !(start >= 0.0 && start <= 9007199254740991.0 && start % 1.0 == 0.0) { return []; }
+    if !(height >= 1.0 && height <= 9007199254740991.0 && height % 1.0 == 0.0) { return []; }
+    let result = nuthatch_compute(widths, columns, start, height);
+    if !nuthatch_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let widths = [4, 4, 4, 4];
+    let columns = 6.0;
+    let start = 99.0;
+    let height = 2.0;
+    let result = nuthatch_layout(widths, columns, start, height);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

@@ -1,0 +1,55 @@
+// ClaimClock 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-claimclock/tree/v0.1.0
+
+fn claimclock_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn claimclock_compute(now: f64, begins: f64, expires: f64, skew: f64) -> vector {
+    if expires <= begins {
+        return [];
+    }
+    let early = begins - now;
+    let late = now - expires;
+    if early > skew {
+        return [0, early, 0];
+    }
+    if late >= skew {
+        return [0, 0, late];
+    }
+    [1, 0, 0]
+}
+
+// Evaluate activation and expiration bounds on previously verified claims.
+// Returns [time accepted, early ticks, expired ticks]. Expiration is exclusive and applies symmetric caller-supplied clock tolerance.
+pub fn claimclock_check(now: f64, begins: f64, expires: f64, skew: f64) -> vector {
+    if !(now >= -9007199254740991.0 && now <= 9007199254740991.0 && now % 1.0 == 0.0) { return []; }
+    if !(begins >= -9007199254740991.0 && begins <= 9007199254740991.0 && begins % 1.0 == 0.0) { return []; }
+    if !(expires >= -9007199254740991.0 && expires <= 9007199254740991.0 && expires % 1.0 == 0.0) { return []; }
+    if !(skew >= 0.0 && skew <= 9007199254740991.0 && skew % 1.0 == 0.0) { return []; }
+    let result = claimclock_compute(now, begins, expires, skew);
+    if !claimclock_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let now = 100.0;
+    let begins = 90.0;
+    let expires = 110.0;
+    let skew = 0.0;
+    let result = claimclock_check(now, begins, expires, skew);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

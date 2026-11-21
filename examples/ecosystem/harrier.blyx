@@ -1,0 +1,140 @@
+// Harrier 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-harrier/tree/v0.1.0
+
+fn claimclock_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn claimclock_compute(now: f64, begins: f64, expires: f64, skew: f64) -> vector {
+    if expires <= begins {
+        return [];
+    }
+    let early = begins - now;
+    let late = now - expires;
+    if early > skew {
+        return [0, early, 0];
+    }
+    if late >= skew {
+        return [0, 0, late];
+    }
+    [1, 0, 0]
+}
+
+// Evaluate activation and expiration bounds on previously verified claims.
+// Returns [time accepted, early ticks, expired ticks]. Expiration is exclusive and applies symmetric caller-supplied clock tolerance.
+pub fn claimclock_check(now: f64, begins: f64, expires: f64, skew: f64) -> vector {
+    if !(now >= -9007199254740991.0 && now <= 9007199254740991.0 && now % 1.0 == 0.0) { return []; }
+    if !(begins >= -9007199254740991.0 && begins <= 9007199254740991.0 && begins % 1.0 == 0.0) { return []; }
+    if !(expires >= -9007199254740991.0 && expires <= 9007199254740991.0 && expires % 1.0 == 0.0) { return []; }
+    if !(skew >= 0.0 && skew <= 9007199254740991.0 && skew % 1.0 == 0.0) { return []; }
+    let result = claimclock_compute(now, begins, expires, skew);
+    if !claimclock_finite(result) { return []; }
+    result
+}
+
+fn assurancelevel_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn assurancelevel_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn assurancelevel_compute(observed: f64, required: f64, auth_time: f64, now: f64, max_age: f64) -> vector {
+    if auth_time > now {
+        return [];
+    }
+    let age = now - auth_time;
+    let gap = assurancelevel_max2(0.0, required - observed);
+    if gap == 0.0 && age <= max_age {
+        return [1, age, 0];
+    }
+    [0, age, gap]
+}
+
+// Check session freshness and an application-defined ordered assurance level.
+// Returns [meets both, age, missing assurance levels]. A future authentication time is invalid; equality at the age limit is accepted.
+pub fn assurancelevel_policy(observed: f64, required: f64, auth_time: f64, now: f64, max_age: f64) -> vector {
+    if !(observed >= 0.0 && observed <= 9007199254740991.0 && observed % 1.0 == 0.0) { return []; }
+    if !(required >= 0.0 && required <= 9007199254740991.0 && required % 1.0 == 0.0) { return []; }
+    if !(auth_time >= -9007199254740991.0 && auth_time <= 9007199254740991.0 && auth_time % 1.0 == 0.0) { return []; }
+    if !(now >= -9007199254740991.0 && now <= 9007199254740991.0 && now % 1.0 == 0.0) { return []; }
+    if !(max_age >= 0.0 && max_age <= 9007199254740991.0 && max_age % 1.0 == 0.0) { return []; }
+    let result = assurancelevel_compute(observed, required, auth_time, now, max_age);
+    if !assurancelevel_finite(result) { return []; }
+    result
+}
+
+fn harrier_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn harrier_compute(now: f64, begins: f64, expires: f64, skew: f64, observed: f64, required: f64, auth_time: f64, max_age: f64) -> vector {
+    let claim = claimclock_check(now, begins, expires, skew);
+    let level = assurancelevel_policy(observed, required, auth_time, now, max_age);
+    if len(claim) == 0 || len(level) == 0 {
+        return [];
+    }
+    [at(claim, 0) * at(level, 0), at(claim, 0), at(level, 0), at(level, 1)]
+}
+
+// Apply time and assurance policy to a session after upstream identity verification.
+// Returns [policy accepted, claims time accepted, assurance/freshness accepted, session age]. Use only after the host has authenticated and verified the issuer, audience and signature.
+pub fn harrier_session(now: f64, begins: f64, expires: f64, skew: f64, observed: f64, required: f64, auth_time: f64, max_age: f64) -> vector {
+    if !(now >= -9007199254740991.0 && now <= 9007199254740991.0 && now % 1.0 == 0.0) { return []; }
+    if !(begins >= -9007199254740991.0 && begins <= 9007199254740991.0 && begins % 1.0 == 0.0) { return []; }
+    if !(expires >= -9007199254740991.0 && expires <= 9007199254740991.0 && expires % 1.0 == 0.0) { return []; }
+    if !(skew >= 0.0 && skew <= 9007199254740991.0 && skew % 1.0 == 0.0) { return []; }
+    if !(observed >= 0.0 && observed <= 9007199254740991.0 && observed % 1.0 == 0.0) { return []; }
+    if !(required >= 0.0 && required <= 9007199254740991.0 && required % 1.0 == 0.0) { return []; }
+    if !(auth_time >= -9007199254740991.0 && auth_time <= 9007199254740991.0 && auth_time % 1.0 == 0.0) { return []; }
+    if !(max_age >= 0.0 && max_age <= 9007199254740991.0 && max_age % 1.0 == 0.0) { return []; }
+    let result = harrier_compute(now, begins, expires, skew, observed, required, auth_time, max_age);
+    if !harrier_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let now = 100.0;
+    let begins = 90.0;
+    let expires = 110.0;
+    let skew = 0.0;
+    let observed = 2.0;
+    let required = 2.0;
+    let auth_time = 92.0;
+    let max_age = 10.0;
+    let result = harrier_session(now, begins, expires, skew, observed, required, auth_time, max_age);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

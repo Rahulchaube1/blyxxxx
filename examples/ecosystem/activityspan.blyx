@@ -1,0 +1,66 @@
+// ActivitySpan 0.1.1 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-activityspan/tree/v0.1.1
+
+fn activityspan_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn activityspan_magnitudes(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn activityspan_compute(levels: vector, threshold: f64) -> vector {
+    let mut first = -1;
+    let mut end = -1;
+    let mut count = 0;
+    let mut i = 0;
+    while i < len(levels) {
+        if at(levels, i) > threshold {
+            if first < 0 {
+                first = i;
+            }
+            end = i + 1;
+            count += 1;
+        }
+        i += 1;
+    }
+    [first, end, count]
+}
+
+// Locate active frames in a sequence of nonnegative signal levels.
+// Returns [first active index, exclusive final active index, active frames]. Silence returns [-1,-1,0]. Activity is strictly above threshold.
+pub fn activityspan_bounds(levels: vector, threshold: f64) -> vector {
+    if !activityspan_magnitudes(levels) { return []; }
+    if !(threshold >= 0.0 && threshold - threshold == 0.0) { return []; }
+    let result = activityspan_compute(levels, threshold);
+    if !activityspan_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let levels = [0, 2, 0, 3, 0];
+    let threshold = 1.0;
+    let result = activityspan_bounds(levels, threshold);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

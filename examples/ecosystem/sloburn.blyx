@@ -1,0 +1,46 @@
+// SloBurn 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-sloburn/tree/v0.1.0
+
+fn sloburn_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn sloburn_compute(bad: f64, total: f64, allowed: f64) -> vector {
+    if bad > total || allowed > 1.0 {
+        return [];
+    }
+    let rate = bad / total;
+    [rate, rate / allowed]
+}
+
+// Normalize observed failures by an allowed error fraction.
+// Returns [observed error fraction, burn multiple]. The allowed error fraction is greater than zero and at most one.
+pub fn sloburn_rate(bad: f64, total: f64, allowed: f64) -> vector {
+    if !(bad >= 0.0 && bad <= 9007199254740991.0 && bad % 1.0 == 0.0) { return []; }
+    if !(total >= 1.0 && total <= 9007199254740991.0 && total % 1.0 == 0.0) { return []; }
+    if !(allowed > 0.0 && allowed - allowed == 0.0) { return []; }
+    let result = sloburn_compute(bad, total, allowed);
+    if !sloburn_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let bad = 4.0;
+    let total = 100.0;
+    let allowed = 0.02;
+    let result = sloburn_rate(bad, total, allowed);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

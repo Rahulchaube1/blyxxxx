@@ -1,0 +1,63 @@
+// DeadlinePath 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-deadlinepath/tree/v0.1.0
+
+fn deadlinepath_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn deadlinepath_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn deadlinepath_magnitudes(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn deadlinepath_compute(budget: f64, stages: vector, reserve: f64) -> vector {
+    let elapsed = sum(stages);
+    let left = budget - elapsed - reserve;
+    [deadlinepath_max2(0.0, left), deadlinepath_max2(0.0, -left), elapsed]
+}
+
+// Propagate a parent time budget across elapsed RPC stages.
+// Returns [usable child budget, overrun after reserve, elapsed total]. Durations use one clock unit.
+pub fn deadlinepath_remaining(budget: f64, stages: vector, reserve: f64) -> vector {
+    if !(budget >= 0.0 && budget - budget == 0.0) { return []; }
+    if !deadlinepath_magnitudes(stages) { return []; }
+    if !(reserve >= 0.0 && reserve - reserve == 0.0) { return []; }
+    let result = deadlinepath_compute(budget, stages, reserve);
+    if !deadlinepath_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let budget = 100.0;
+    let stages = [20, 35];
+    let reserve = 10.0;
+    let result = deadlinepath_remaining(budget, stages, reserve);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

@@ -1,0 +1,62 @@
+// RealQubit 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-realqubit/tree/v0.1.0
+
+fn realqubit_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn realqubit_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn realqubit_compute(state: vector, gate: f64) -> vector {
+    if len(state) != 2 || realqubit_absolute(dot(state, state) - 1.0) > 0.000000001 || gate > 3.0 {
+        return [];
+    }
+    let a = at(state, 0);
+    let b = at(state, 1);
+    if gate == 0.0 {
+        return [a, b];
+    }
+    if gate == 1.0 {
+        return [b, a];
+    }
+    if gate == 2.0 {
+        return [a, -b];
+    }
+    let scale = 0.7071067811865475;
+    [(a + b) * scale, (a - b) * scale]
+}
+
+// Apply I, X, Z or Hadamard to a normalized real-amplitude qubit.
+// Input [a,b] must have unit squared norm within 1e-9. Gate IDs 0,1,2,3 denote I,X,Z,H. Returns transformed amplitudes.
+pub fn realqubit_gate(state: vector, gate: f64) -> vector {
+    if !realqubit_finite(state) { return []; }
+    if !(gate >= 0.0 && gate <= 9007199254740991.0 && gate % 1.0 == 0.0) { return []; }
+    let result = realqubit_compute(state, gate);
+    if !realqubit_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let state = [1, 0];
+    let gate = 1.0;
+    let result = realqubit_gate(state, gate);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

@@ -1,0 +1,62 @@
+// TokenBucket 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-tokenbucket/tree/v0.1.0
+
+fn tokenbucket_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn tokenbucket_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn tokenbucket_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn tokenbucket_compute(tokens: f64, capacity: f64, rate: f64, elapsed: f64) -> vector {
+    if tokens > capacity {
+        return [];
+    }
+    let grown = tokens + rate * elapsed;
+    [tokenbucket_min2(capacity, grown), tokenbucket_max2(0.0, grown - capacity)]
+}
+
+// Refill a rate bucket up to its burst capacity.
+// Returns [available tokens, refill discarded at capacity]. Tokens, capacity and rate use the same work unit.
+pub fn tokenbucket_refill(tokens: f64, capacity: f64, rate: f64, elapsed: f64) -> vector {
+    if !(tokens >= 0.0 && tokens - tokens == 0.0) { return []; }
+    if !(capacity > 0.0 && capacity - capacity == 0.0) { return []; }
+    if !(rate > 0.0 && rate - rate == 0.0) { return []; }
+    if !(elapsed >= 0.0 && elapsed - elapsed == 0.0) { return []; }
+    let result = tokenbucket_compute(tokens, capacity, rate, elapsed);
+    if !tokenbucket_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let tokens = 2.0;
+    let capacity = 10.0;
+    let rate = 3.0;
+    let elapsed = 4.0;
+    let result = tokenbucket_refill(tokens, capacity, rate, elapsed);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

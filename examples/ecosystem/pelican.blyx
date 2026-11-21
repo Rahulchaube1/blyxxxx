@@ -1,0 +1,215 @@
+// Pelican 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-pelican/tree/v0.1.0
+
+fn blockspan_ceilpos(value: f64) -> f64 {
+    let rest = value % 1.0;
+    if rest > 0.0 {
+        return value - rest + 1.0;
+    }
+    value
+}
+
+fn blockspan_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn blockspan_compute(offset: f64, length: f64, block: f64) -> vector {
+    if length == 0.0 {
+        return [offset, 0, 0];
+    }
+    let stop = offset + length;
+    if stop > 9007199254740991.0 {
+        return [];
+    }
+    let first = offset - offset % block;
+    let tail = blockspan_ceilpos(stop / block) * block;
+    if tail > 9007199254740991.0 {
+        return [];
+    }
+    [first, tail - first, offset - first]
+}
+
+// Expand a byte request to whole storage blocks.
+// Returns [aligned start, bytes to read, requested start within read]. A zero-length request incurs zero reads. Counts must remain exactly representable.
+pub fn blockspan_align(offset: f64, length: f64, block: f64) -> vector {
+    if !(offset >= 0.0 && offset <= 9007199254740991.0 && offset % 1.0 == 0.0) { return []; }
+    if !(length >= 0.0 && length <= 9007199254740991.0 && length % 1.0 == 0.0) { return []; }
+    if !(block >= 1.0 && block <= 9007199254740991.0 && block % 1.0 == 0.0) { return []; }
+    let result = blockspan_compute(offset, length, block);
+    if !blockspan_finite(result) { return []; }
+    result
+}
+
+fn coalesceio_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn coalesceio_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn coalesceio_positive_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 1.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn coalesceio_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn coalesceio_compute(starts: vector, lengths: vector, gap: f64) -> vector {
+    if len(starts) != len(lengths) {
+        return [];
+    }
+    let mut end = 0.0;
+    let mut fetched = 0.0;
+    let mut extra = 0.0;
+    let mut reads = 0;
+    let mut i = 0;
+    while i < len(starts) {
+        let a = at(starts, i);
+        let b = a + at(lengths, i);
+        if b > 9007199254740991.0 || (i > 0 && a < at(starts, i - 1)) {
+            return [];
+        }
+        if i == 0 || a - end > gap {
+            reads += 1;
+            fetched += b - a;
+            end = b;
+        } else {
+            extra += coalesceio_max2(0.0, a - end);
+            fetched += coalesceio_max2(0.0, b - end);
+            end = coalesceio_max2(end, b);
+        }
+        i += 1;
+    }
+    [reads, fetched, extra]
+}
+
+// Count merged reads and extra gap bytes for sorted byte requests.
+// Returns [merged reads, fetched bytes, extra bytes spanning gaps]. Overlapping bytes are counted once. Positive request lengths are required.
+pub fn coalesceio_plan(starts: vector, lengths: vector, gap: f64) -> vector {
+    if !coalesceio_counts(starts) { return []; }
+    if !coalesceio_positive_counts(lengths) { return []; }
+    if !(gap >= 0.0 && gap <= 9007199254740991.0 && gap % 1.0 == 0.0) { return []; }
+    let result = coalesceio_compute(starts, lengths, gap);
+    if !coalesceio_finite(result) { return []; }
+    result
+}
+
+fn pelican_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn pelican_positive_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 1.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn pelican_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn pelican_compute(starts: vector, lengths: vector, gap: f64, block: f64) -> vector {
+    let merged = coalesceio_plan(starts, lengths, gap);
+    if len(merged) == 0 {
+        return [];
+    }
+    let mut total = 0.0;
+    let mut i = 0;
+    while i < len(starts) {
+        let span = blockspan_align(at(starts, i), at(lengths, i), block);
+        if len(span) == 0 {
+            return [];
+        }
+        total += at(span, 1);
+        if total > 9007199254740991.0 {
+            return [];
+        }
+        i += 1;
+    }
+    [total, at(merged, 0), at(merged, 1), at(merged, 2)]
+}
+
+// Compare per-request aligned I/O with coalesced unaligned reads for a sorted trace.
+// Returns [independent aligned bytes, coalesced read count, coalesced bytes, bridge-gap bytes]. Values describe two explicitly defined read strategies.
+pub fn pelican_reads(starts: vector, lengths: vector, gap: f64, block: f64) -> vector {
+    if !pelican_counts(starts) { return []; }
+    if !pelican_positive_counts(lengths) { return []; }
+    if !(gap >= 0.0 && gap <= 9007199254740991.0 && gap % 1.0 == 0.0) { return []; }
+    if !(block >= 1.0 && block <= 9007199254740991.0 && block % 1.0 == 0.0) { return []; }
+    let result = pelican_compute(starts, lengths, gap, block);
+    if !pelican_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let starts = [0, 5, 20];
+    let lengths = [4, 3, 2];
+    let gap = 1.0;
+    let block = 8.0;
+    let result = pelican_reads(starts, lengths, gap, block);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

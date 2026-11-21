@@ -1,35 +1,27 @@
-import catalog from "@/lib/packages.json";
-import { guideLink, website } from "@/lib/site";
+import PackageCatalog from "@/components/PackageCatalog";
+import { packageDirectory } from "@/lib/package-directory";
+import { repository, website } from "@/lib/site";
 
 export const metadata = {
     title: "Blyx frameworks",
-    description: "Choose a Blyx framework by the project you want to build, from web APIs and CSV imports to neural networks and games.",
+    description: "Find a Blyx workflow by domain, try its example in the playground, and download its native CLI or source.",
     alternates: { canonical: website + "/frameworks" },
 };
 
 export default function Frameworks() {
-    const frameworks = catalog.packages.filter((item) => item.kind.toLowerCase().includes("framework"));
-    const featured = frameworks.filter((item) => item.workflow);
-    const others = frameworks.filter((item) => !item.workflow);
+    const frameworks = packageDirectory(true);
     return (
         <main className="wrap">
             <header className="page-head">
                 <a className="crumb" href="/packages">← Blyx ecosystem</a>
                 <h1>Blyx frameworks</h1>
                 <p>Choose a project, run its example, then import the same Blyx code into your application.</p>
+                <div className="actions">
+                    <a className="button" href={repository + "/releases/tag/ecosystem-v0.1.0"}>Download native workflow CLIs</a>
+                    <a href="/downloads/blyx-ecosystem-0.1.0-source.zip" download>Get the workflow collection source</a>
+                </div>
             </header>
-            <section className="grid package-grid" aria-label="Framework projects">
-                {[...featured, ...others].map((item) => (
-                    <article className="card package-card" key={item.slug}>
-                        <div className="package-heading">
-                            <img className="package-logo" src={item.logo} alt="" width="54" height="54" loading="lazy" decoding="async" />
-                            <div><small>{item.group}</small><h2><a href={"/packages/" + item.slug}>{item.title}</a></h2></div>
-                        </div>
-                        <p>{item.description}</p>
-                        <a href={guideLink(item.guide)}>{item.workflow?.title ?? "Open the tutorial"} →</a>
-                    </article>
-                ))}
-            </section>
+            <PackageCatalog items={frameworks} frameworks />
         </main>
     );
 }

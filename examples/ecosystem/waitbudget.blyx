@@ -1,0 +1,63 @@
+// WaitBudget 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-waitbudget/tree/v0.1.0
+
+fn waitbudget_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn waitbudget_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn waitbudget_compute(tokens: f64, capacity: f64, rate: f64, cost: f64, deadline: f64) -> vector {
+    if tokens > capacity {
+        return [];
+    }
+    if cost > capacity {
+        return [0, -1];
+    }
+    let wait = waitbudget_max2(0.0, (cost - tokens) / rate);
+    if wait <= deadline {
+        return [1, wait];
+    }
+    [0, wait]
+}
+
+// Compute the wait required for a token charge within a relative deadline.
+// Returns [admissible by deadline, required wait]. A charge above capacity has no feasible wait and returns [0,-1].
+pub fn waitbudget_admit(tokens: f64, capacity: f64, rate: f64, cost: f64, deadline: f64) -> vector {
+    if !(tokens >= 0.0 && tokens - tokens == 0.0) { return []; }
+    if !(capacity > 0.0 && capacity - capacity == 0.0) { return []; }
+    if !(rate > 0.0 && rate - rate == 0.0) { return []; }
+    if !(cost > 0.0 && cost - cost == 0.0) { return []; }
+    if !(deadline >= 0.0 && deadline - deadline == 0.0) { return []; }
+    let result = waitbudget_compute(tokens, capacity, rate, cost, deadline);
+    if !waitbudget_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let tokens = 2.0;
+    let capacity = 10.0;
+    let rate = 2.0;
+    let cost = 8.0;
+    let deadline = 3.0;
+    let result = waitbudget_admit(tokens, capacity, rate, cost, deadline);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

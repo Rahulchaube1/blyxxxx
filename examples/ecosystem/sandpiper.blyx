@@ -1,0 +1,144 @@
+// Sandpiper 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-sandpiper/tree/v0.1.0
+
+fn leaseclock_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn leaseclock_compute(issued: f64, ttl: f64, now: f64) -> vector {
+    if now < issued {
+        return [];
+    }
+    let age = now - issued;
+    if age < ttl {
+        return [1, ttl - age, 0];
+    }
+    [0, 0, age - ttl]
+}
+
+// Classify a message lease against a single monotonic clock.
+// Returns [active, remaining ticks, overdue ticks]. A lease expires exactly at its TTL; clocks earlier than issuance are invalid.
+pub fn leaseclock_remaining(issued: f64, ttl: f64, now: f64) -> vector {
+    if !(issued >= 0.0 && issued <= 9007199254740991.0 && issued % 1.0 == 0.0) { return []; }
+    if !(ttl >= 1.0 && ttl <= 9007199254740991.0 && ttl % 1.0 == 0.0) { return []; }
+    if !(now >= 0.0 && now <= 9007199254740991.0 && now % 1.0 == 0.0) { return []; }
+    let result = leaseclock_compute(issued, ttl, now);
+    if !leaseclock_finite(result) { return []; }
+    result
+}
+
+fn retrydelay_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn retrydelay_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn retrydelay_compute(base: f64, ceiling: f64, attempt: f64) -> vector {
+    if ceiling < base {
+        return [];
+    }
+    let mut delay = base;
+    let mut i = 0.0;
+    while i < attempt && delay < ceiling {
+        delay = retrydelay_min2(ceiling, delay * 2.0);
+        i += 1.0;
+    }
+    if delay == ceiling {
+        return [delay, 1];
+    }
+    [delay, 0]
+}
+
+// Compute saturating exponential retry delays without unbounded exponentiation.
+// Returns [delay ticks, cap reached]. Attempt zero uses the base. Ceilings below base are invalid.
+pub fn retrydelay_capped(base: f64, ceiling: f64, attempt: f64) -> vector {
+    if !(base >= 1.0 && base <= 9007199254740991.0 && base % 1.0 == 0.0) { return []; }
+    if !(ceiling >= 1.0 && ceiling <= 9007199254740991.0 && ceiling % 1.0 == 0.0) { return []; }
+    if !(attempt >= 0.0 && attempt <= 9007199254740991.0 && attempt % 1.0 == 0.0) { return []; }
+    let result = retrydelay_compute(base, ceiling, attempt);
+    if !retrydelay_finite(result) { return []; }
+    result
+}
+
+fn sandpiper_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn sandpiper_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn sandpiper_compute(issued: f64, ttl: f64, now: f64, base: f64, ceiling: f64, attempt: f64) -> vector {
+    let clock = leaseclock_remaining(issued, ttl, now);
+    let delay = retrydelay_capped(base, ceiling, attempt);
+    if len(clock) == 0 || len(delay) == 0 {
+        return [];
+    }
+    let wait = sandpiper_max2(0.0, at(clock, 1) + at(delay, 0) - at(clock, 2));
+    if wait == 0.0 {
+        return [1, 0, at(delay, 0)];
+    }
+    [0, wait, at(delay, 0)]
+}
+
+// Schedule a deterministic redelivery after both lease expiry and retry backoff.
+// Returns [ready, ticks to eligibility, retry delay]. Delay begins when the lease expires. The queue host owns acknowledgement and delivery.
+pub fn sandpiper_redeliver(issued: f64, ttl: f64, now: f64, base: f64, ceiling: f64, attempt: f64) -> vector {
+    if !(issued >= 0.0 && issued <= 9007199254740991.0 && issued % 1.0 == 0.0) { return []; }
+    if !(ttl >= 1.0 && ttl <= 9007199254740991.0 && ttl % 1.0 == 0.0) { return []; }
+    if !(now >= 0.0 && now <= 9007199254740991.0 && now % 1.0 == 0.0) { return []; }
+    if !(base >= 1.0 && base <= 9007199254740991.0 && base % 1.0 == 0.0) { return []; }
+    if !(ceiling >= 1.0 && ceiling <= 9007199254740991.0 && ceiling % 1.0 == 0.0) { return []; }
+    if !(attempt >= 0.0 && attempt <= 9007199254740991.0 && attempt % 1.0 == 0.0) { return []; }
+    let result = sandpiper_compute(issued, ttl, now, base, ceiling, attempt);
+    if !sandpiper_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let issued = 10.0;
+    let ttl = 8.0;
+    let now = 19.0;
+    let base = 2.0;
+    let ceiling = 16.0;
+    let attempt = 1.0;
+    let result = sandpiper_redeliver(issued, ttl, now, base, ceiling, attempt);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

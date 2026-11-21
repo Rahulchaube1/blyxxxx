@@ -1,0 +1,184 @@
+// Swallow 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-swallow/tree/v0.1.0
+
+fn recordspan_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn recordspan_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn recordspan_compute(lengths: vector, offset: f64) -> vector {
+    let mut start = 0.0;
+    let mut i = 0;
+    while i < len(lengths) {
+        let size = at(lengths, i);
+        let end = start + size;
+        if end > 9007199254740991.0 {
+            return [];
+        }
+        if offset >= start && offset < end {
+            return [i, offset - start, size];
+        }
+        start = end;
+        i += 1;
+    }
+    if offset == start {
+        return [-1, 0, 0];
+    }
+    []
+}
+
+// Locate the nonempty length-prefixed record containing a byte offset.
+// Returns [record index, in-record offset, record length]. At end of stream the index is -1; an offset beyond the end is invalid. Lengths describe decoded payload spans.
+pub fn recordspan_locate(lengths: vector, offset: f64) -> vector {
+    if !recordspan_counts(lengths) { return []; }
+    if !(offset >= 0.0 && offset <= 9007199254740991.0 && offset % 1.0 == 0.0) { return []; }
+    let result = recordspan_compute(lengths, offset);
+    if !recordspan_finite(result) { return []; }
+    result
+}
+
+fn adlerbytes_bytes(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 255.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn adlerbytes_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn adlerbytes_compute(bytes: vector) -> vector {
+    let mut a = 1.0;
+    let mut b = 0.0;
+    let mut i = 0;
+    while i < len(bytes) {
+        a = (a + at(bytes, i)) % 65521.0;
+        b = (b + a) % 65521.0;
+        i += 1;
+    }
+    [b * 65536.0 + a, a, b]
+}
+
+// Compute the RFC 1950 Adler-32 checksum over a sequence of bytes.
+// Returns [unsigned checksum, rolling low accumulator, rolling high accumulator]. The empty digest is 1. Use for accidental corruption detection.
+pub fn adlerbytes_digest(bytes: vector) -> vector {
+    if !adlerbytes_bytes(bytes) { return []; }
+    let result = adlerbytes_compute(bytes);
+    if !adlerbytes_finite(result) { return []; }
+    result
+}
+
+fn swallow_num(value: i64) -> f64 {
+    at([value], 0)
+}
+
+fn swallow_bytes(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 255.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn swallow_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn swallow_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn swallow_compute(lengths: vector, payload: vector, offset: f64, checksum: f64) -> vector {
+    if checksum > 4294967295.0 || sum(lengths) != swallow_num(len(payload)) {
+        return [];
+    }
+    let record = recordspan_locate(lengths, offset);
+    let digest = adlerbytes_digest(payload);
+    if len(record) == 0 || len(digest) == 0 {
+        return [];
+    }
+    let mut same = 0;
+    if at(digest, 0) == checksum {
+        same = 1;
+    }
+    [same, at(digest, 0), at(record, 0), at(record, 1)]
+}
+
+// Validate an exported payload's declared spans and checksum, then locate a byte.
+// Returns [checksum matches, actual Adler-32, record index, in-record offset]. The sum of payload lengths must equal the byte count. Use a verified cryptographic signature when authenticity is required.
+pub fn swallow_inspect(lengths: vector, payload: vector, offset: f64, checksum: f64) -> vector {
+    if !swallow_counts(lengths) { return []; }
+    if !swallow_bytes(payload) { return []; }
+    if !(offset >= 0.0 && offset <= 9007199254740991.0 && offset % 1.0 == 0.0) { return []; }
+    if !(checksum >= 0.0 && checksum <= 9007199254740991.0 && checksum % 1.0 == 0.0) { return []; }
+    let result = swallow_compute(lengths, payload, offset, checksum);
+    if !swallow_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let lengths = [1, 1];
+    let payload = [65, 66];
+    let offset = 1.0;
+    let checksum = 12976260.0;
+    let result = swallow_inspect(lengths, payload, offset, checksum);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

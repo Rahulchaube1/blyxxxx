@@ -1,0 +1,192 @@
+// Fulmar 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-fulmar/tree/v0.1.0
+
+fn offsetgap_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn offsetgap_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn offsetgap_compute(offsets: vector, start: f64) -> vector {
+    let mut next = start;
+    let mut gaps = 0.0;
+    let mut stale = 0;
+    let mut i = 0;
+    while i < len(offsets) {
+        let x = at(offsets, i);
+        if x < next {
+            stale += 1;
+        } else {
+            gaps += x - next;
+            if x == 9007199254740991.0 {
+                return [];
+            }
+            next = x + 1.0;
+        }
+        i += 1;
+    }
+    [gaps, stale, next]
+}
+
+// Audit an ordered offset trace against an expected starting value.
+// Returns [forward gaps counted at first observation, stale or replayed deliveries, next high-water offset]. Late arrivals do not erase earlier gaps.
+pub fn offsetgap_scan(offsets: vector, start: f64) -> vector {
+    if !offsetgap_counts(offsets) { return []; }
+    if !(start >= 0.0 && start <= 9007199254740991.0 && start % 1.0 == 0.0) { return []; }
+    let result = offsetgap_compute(offsets, start);
+    if !offsetgap_finite(result) { return []; }
+    result
+}
+
+fn ackprefix_hasid(values: vector, key: f64) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        if at(values, i) == key {
+            return true;
+        }
+        i += 1;
+    }
+    false
+}
+
+fn ackprefix_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn ackprefix_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn ackprefix_compute(acked: vector, start: f64) -> vector {
+    let mut next = start;
+    while ackprefix_hasid(acked, next) {
+        if next == 9007199254740991.0 {
+            return [];
+        }
+        next += 1.0;
+    }
+    [next, next - start]
+}
+
+// Find the longest contiguous acknowledgement prefix in unordered deliveries.
+// Returns [next unacknowledged offset, advanced count]. Duplicate acknowledgements never advance the cursor twice.
+pub fn ackprefix_advance(acked: vector, start: f64) -> vector {
+    if !ackprefix_counts(acked) { return []; }
+    if !(start >= 0.0 && start <= 9007199254740991.0 && start % 1.0 == 0.0) { return []; }
+    let result = ackprefix_compute(acked, start);
+    if !ackprefix_finite(result) { return []; }
+    result
+}
+
+fn fulmar_hasid(values: vector, key: f64) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        if at(values, i) == key {
+            return true;
+        }
+        i += 1;
+    }
+    false
+}
+
+fn fulmar_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn fulmar_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn fulmar_compute(delivered: vector, acked: vector, start: f64) -> vector {
+    let seen = offsetgap_scan(delivered, start);
+    if len(seen) == 0 {
+        return [];
+    }
+    let mut i = 0;
+    while i < len(acked) {
+        let key = at(acked, i);
+        if key >= start && !fulmar_hasid(delivered, key) {
+            return [];
+        }
+        i += 1;
+    }
+    let prefix = ackprefix_advance(acked, start);
+    if len(prefix) == 0 {
+        return [];
+    }
+    [at(prefix, 0), at(seen, 0), at(seen, 1), at(seen, 2)]
+}
+
+// Choose a contiguous commit offset from an out-of-order delivery trace.
+// Returns [next commit, observed gaps, stale deliveries, per-trace high water]. Acknowledgements at or beyond start must refer to delivered offsets in this trace.
+pub fn fulmar_checkpoint(delivered: vector, acked: vector, start: f64) -> vector {
+    if !fulmar_counts(delivered) { return []; }
+    if !fulmar_counts(acked) { return []; }
+    if !(start >= 0.0 && start <= 9007199254740991.0 && start % 1.0 == 0.0) { return []; }
+    let result = fulmar_compute(delivered, acked, start);
+    if !fulmar_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let delivered = [4, 6, 5, 6];
+    let acked = [4, 6];
+    let start = 4.0;
+    let result = fulmar_checkpoint(delivered, acked, start);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

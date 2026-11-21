@@ -1,0 +1,100 @@
+// VersionBand 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-versionband/tree/v0.1.0
+
+fn versionband_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn versionband_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn versionband_compute(version: vector, lower: vector, upper: vector) -> vector {
+    if len(version) != 3 || len(lower) != 3 || len(upper) != 3 {
+        return [];
+    }
+    let mut bounds = 0;
+    let mut lo = 0;
+    let mut hi = 0;
+    let mut i = 0;
+    while i < 3 {
+        let v = at(version, i);
+        let a = at(lower, i);
+        let b = at(upper, i);
+        if bounds == 0 {
+            if a < b {
+                bounds = -1;
+            }
+            if a > b {
+                bounds = 1;
+            }
+        }
+        if lo == 0 {
+            if v < a {
+                lo = -1;
+            }
+            if v > a {
+                lo = 1;
+            }
+        }
+        if hi == 0 {
+            if v < b {
+                hi = -1;
+            }
+            if v > b {
+                hi = 1;
+            }
+        }
+        i += 1;
+    }
+    if bounds != -1 {
+        return [];
+    }
+    if lo < 0 {
+        return [0, 1, 0];
+    }
+    if hi >= 0 {
+        return [0, 0, 1];
+    }
+    [1, 0, 0]
+}
+
+// Check membership of a numeric-version core in a half-open dependency interval.
+// Returns [inside, below lower, at or above upper]. All versions have three integer components and lower must precede upper.
+pub fn versionband_contains(version: vector, lower: vector, upper: vector) -> vector {
+    if !versionband_counts(version) { return []; }
+    if !versionband_counts(lower) { return []; }
+    if !versionband_counts(upper) { return []; }
+    let result = versionband_compute(version, lower, upper);
+    if !versionband_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let version = [1, 2, 0];
+    let lower = [1, 2, 0];
+    let upper = [2, 0, 0];
+    let result = versionband_contains(version, lower, upper);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

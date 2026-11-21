@@ -1,0 +1,81 @@
+// AxisRange 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-axisrange/tree/v0.1.0
+
+fn axisrange_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn axisrange_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn axisrange_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn axisrange_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn axisrange_compute(samples: vector, zero: f64) -> vector {
+    if len(samples) == 0 || zero > 1.0 {
+        return [];
+    }
+    let mut lo = at(samples, 0);
+    let mut hi = lo;
+    let mut i = 1;
+    while i < len(samples) {
+        lo = axisrange_min2(lo, at(samples, i));
+        hi = axisrange_max2(hi, at(samples, i));
+        i += 1;
+    }
+    if zero == 1.0 {
+        lo = axisrange_min2(lo, 0.0);
+        hi = axisrange_max2(hi, 0.0);
+    }
+    if hi == lo {
+        let pad = axisrange_max2(0.5, axisrange_absolute(lo) * 0.05);
+        lo -= pad;
+        hi += pad;
+    }
+    [lo, hi]
+}
+
+// Compute a chart domain and expand a constant-valued series.
+// Returns [lower, upper]. Set zero to 1 to include the origin. A constant domain receives ±0.5 or ±5% of its magnitude, whichever is larger.
+pub fn axisrange_extent(samples: vector, zero: f64) -> vector {
+    if !axisrange_finite(samples) { return []; }
+    if !(zero >= 0.0 && zero <= 9007199254740991.0 && zero % 1.0 == 0.0) { return []; }
+    let result = axisrange_compute(samples, zero);
+    if !axisrange_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let samples = [4, 8];
+    let zero = 1.0;
+    let result = axisrange_extent(samples, zero);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

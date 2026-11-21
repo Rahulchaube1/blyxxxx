@@ -1,0 +1,67 @@
+// ClipRuns 0.1.1 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-clipruns/tree/v0.1.1
+
+fn clipruns_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn clipruns_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn clipruns_compute(samples: vector, ceiling: f64) -> vector {
+    let mut total = 0;
+    let mut run = 0;
+    let mut longest = 0;
+    let mut runs = 0;
+    let mut i = 0;
+    while i < len(samples) {
+        if clipruns_absolute(at(samples, i)) >= ceiling {
+            if run == 0 {
+                runs += 1;
+            }
+            run += 1;
+            total += 1;
+            if run > longest {
+                longest = run;
+            }
+        } else {
+            run = 0;
+        }
+        i += 1;
+    }
+    [total, longest, runs]
+}
+
+// Count overloaded samples and the longest continuous run.
+// Returns [samples at or above the absolute ceiling, longest run, run count]. Equality counts as a clipped sample.
+pub fn clipruns_count(samples: vector, ceiling: f64) -> vector {
+    if !clipruns_finite(samples) { return []; }
+    if !(ceiling > 0.0 && ceiling - ceiling == 0.0) { return []; }
+    let result = clipruns_compute(samples, ceiling);
+    if !clipruns_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let samples = [1, -1, 0, 1];
+    let ceiling = 1.0;
+    let result = clipruns_count(samples, ceiling);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

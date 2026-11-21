@@ -1,0 +1,71 @@
+// AspectFit 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-aspectfit/tree/v0.1.0
+
+fn aspectfit_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn aspectfit_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn aspectfit_floorpos(value: f64) -> f64 {
+    value - value % 1.0
+}
+
+fn aspectfit_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn aspectfit_compute(width: f64, height: f64, box_w: f64, box_h: f64, upscale: f64) -> vector {
+    if upscale > 1.0 {
+        return [];
+    }
+    let mut scale = aspectfit_min2(box_w / width, box_h / height);
+    if upscale == 0.0 {
+        scale = aspectfit_min2(scale, 1.0);
+    }
+    [aspectfit_max2(1.0, aspectfit_min2(box_w, aspectfit_floorpos(width * scale))), aspectfit_max2(1.0, aspectfit_min2(box_h, aspectfit_floorpos(height * scale))), scale]
+}
+
+// Fit an image inside a box while preserving aspect ratio.
+// Returns [integer output width, height, scale]. Downward rounding and a one-pixel minimum preserve a nonempty raster. Set upscale to 0 to keep small images at native size.
+pub fn aspectfit_contain(width: f64, height: f64, box_w: f64, box_h: f64, upscale: f64) -> vector {
+    if !(width >= 1.0 && width <= 9007199254740991.0 && width % 1.0 == 0.0) { return []; }
+    if !(height >= 1.0 && height <= 9007199254740991.0 && height % 1.0 == 0.0) { return []; }
+    if !(box_w >= 1.0 && box_w <= 9007199254740991.0 && box_w % 1.0 == 0.0) { return []; }
+    if !(box_h >= 1.0 && box_h <= 9007199254740991.0 && box_h % 1.0 == 0.0) { return []; }
+    if !(upscale >= 0.0 && upscale <= 9007199254740991.0 && upscale % 1.0 == 0.0) { return []; }
+    let result = aspectfit_compute(width, height, box_w, box_h, upscale);
+    if !aspectfit_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let width = 400.0;
+    let height = 200.0;
+    let box_w = 100.0;
+    let box_h = 100.0;
+    let upscale = 0.0;
+    let result = aspectfit_contain(width, height, box_w, box_h, upscale);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

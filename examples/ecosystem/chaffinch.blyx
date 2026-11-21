@@ -1,0 +1,201 @@
+// Chaffinch 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-chaffinch/tree/v0.1.0
+
+fn sortruns_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn sortruns_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn sortruns_compute(values: vector) -> vector {
+    if len(values) == 0 {
+        return [0, 0, 0];
+    }
+    let mut kinds = 0;
+    let mut run = 0;
+    let mut best = 0;
+    let mut key = at(values, 0);
+    let mut i = 0;
+    while i < len(values) {
+        let current = at(values, i);
+        if i > 0 && current < at(values, i - 1) {
+            return [];
+        }
+        if i == 0 || current != at(values, i - 1) {
+            kinds += 1;
+            run = 0;
+        }
+        run += 1;
+        if run > best {
+            best = run;
+            key = current;
+        }
+        i += 1;
+    }
+    [kinds, best, key]
+}
+
+// Summarize equal-value runs in a nondecreasing integer stream.
+// Returns [distinct values, longest run length, first key with that run]. Empty input returns [0,0,0]. Rejects descending keys.
+pub fn sortruns_profile(values: vector) -> vector {
+    if !sortruns_integers(values) { return []; }
+    let result = sortruns_compute(values);
+    if !sortruns_finite(result) { return []; }
+    result
+}
+
+fn mergecounts_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn mergecounts_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn mergecounts_compute(left: vector, right: vector) -> vector {
+    let mut k = 1;
+    while k < len(left) {
+        if at(left, k) < at(left, k - 1) {
+            return [];
+        }
+        k += 1;
+    }
+    k = 1;
+    while k < len(right) {
+        if at(right, k) < at(right, k - 1) {
+            return [];
+        }
+        k += 1;
+    }
+    let mut a = 0;
+    let mut b = 0;
+    let mut shared = 0;
+    let mut only_a = 0;
+    let mut only_b = 0;
+    while a < len(left) || b < len(right) {
+        let mut key = 0.0;
+        if b == len(right) || (a < len(left) && at(left, a) < at(right, b)) {
+            key = at(left, a);
+            only_a += 1;
+        } else {
+            if a == len(left) || at(right, b) < at(left, a) {
+                key = at(right, b);
+                only_b += 1;
+            } else {
+                key = at(left, a);
+                shared += 1;
+            }
+        }
+        while a < len(left) && at(left, a) == key {
+            a += 1;
+        }
+        while b < len(right) && at(right, b) == key {
+            b += 1;
+        }
+    }
+    [shared, only_a, only_b]
+}
+
+// Count unique keys shared or exclusive to two sorted streams.
+// Returns [shared, left-only, right-only]. Repeats within a stream count once. Both streams must be nondecreasing; the merge uses two forward cursors.
+pub fn mergecounts_sets(left: vector, right: vector) -> vector {
+    if !mergecounts_integers(left) { return []; }
+    if !mergecounts_integers(right) { return []; }
+    let result = mergecounts_compute(left, right);
+    if !mergecounts_finite(result) { return []; }
+    result
+}
+
+fn chaffinch_num(value: i64) -> f64 {
+    at([value], 0)
+}
+
+fn chaffinch_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn chaffinch_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn chaffinch_compute(old: vector, fresh: vector) -> vector {
+    let previous = sortruns_profile(old);
+    let current = sortruns_profile(fresh);
+    let merged = mergecounts_sets(old, fresh);
+    if len(previous) == 0 || len(current) == 0 || len(merged) == 0 {
+        return [];
+    }
+    [at(merged, 2), at(merged, 1), at(merged, 0), chaffinch_num(len(fresh)) - at(current, 0)]
+}
+
+// Reconcile sorted collection snapshots without materializing their union.
+// Returns [added unique keys, removed unique keys, retained keys, duplicate occurrences in the new snapshot]. Inputs are sorted, allowing forward-only scans.
+pub fn chaffinch_reconcile(old: vector, fresh: vector) -> vector {
+    if !chaffinch_integers(old) { return []; }
+    if !chaffinch_integers(fresh) { return []; }
+    let result = chaffinch_compute(old, fresh);
+    if !chaffinch_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let old = [1, 1, 2, 4];
+    let fresh = [2, 2, 3, 4];
+    let result = chaffinch_reconcile(old, fresh);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

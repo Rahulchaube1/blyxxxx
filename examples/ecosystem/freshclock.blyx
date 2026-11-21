@@ -1,0 +1,55 @@
+// FreshClock 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-freshclock/tree/v0.1.0
+
+fn freshclock_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn freshclock_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn freshclock_compute(age_at_store: f64, stored: f64, now: f64, lifetime: f64) -> vector {
+    if now < stored {
+        return [];
+    }
+    let age = age_at_store + (now - stored);
+    [age, freshclock_max2(0.0, lifetime - age), freshclock_max2(0.0, age - lifetime)]
+}
+
+// Advance an already calculated HTTP cache age on a monotonic clock.
+// Returns [current age, remaining freshness, stale age]. Supply corrected initial age. Equality with freshness lifetime is stale.
+pub fn freshclock_age(age_at_store: f64, stored: f64, now: f64, lifetime: f64) -> vector {
+    if !(age_at_store >= 0.0 && age_at_store - age_at_store == 0.0) { return []; }
+    if !(stored >= 0.0 && stored - stored == 0.0) { return []; }
+    if !(now >= 0.0 && now - now == 0.0) { return []; }
+    if !(lifetime >= 0.0 && lifetime - lifetime == 0.0) { return []; }
+    let result = freshclock_compute(age_at_store, stored, now, lifetime);
+    if !freshclock_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let age_at_store = 4.0;
+    let stored = 100.0;
+    let now = 110.0;
+    let lifetime = 20.0;
+    let result = freshclock_age(age_at_store, stored, now, lifetime);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

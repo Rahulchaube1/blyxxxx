@@ -1,0 +1,160 @@
+// Skimmer 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-skimmer/tree/v0.1.0
+
+fn bitparity_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn bitparity_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn bitparity_compute(counts: vector) -> vector {
+    if len(counts) != 4 {
+        return [];
+    }
+    let total = sum(counts);
+    if total <= 0.0 || total > 9007199254740991.0 {
+        return [];
+    }
+    let even = (at(counts, 0) + at(counts, 3)) / total;
+    let odd = (at(counts, 1) + at(counts, 2)) / total;
+    [even, odd, even - odd]
+}
+
+// Measure even/odd parity from a two-bit measurement histogram.
+// Bin order is 00,01,10,11. Returns [even frequency, odd frequency, parity expectation]. At least one shot is required.
+pub fn bitparity_measure(counts: vector) -> vector {
+    if !bitparity_counts(counts) { return []; }
+    let result = bitparity_compute(counts);
+    if !bitparity_finite(result) { return []; }
+    result
+}
+
+fn shotmargins_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn shotmargins_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn shotmargins_compute(counts: vector) -> vector {
+    if len(counts) != 4 {
+        return [];
+    }
+    let total = sum(counts);
+    if total <= 0.0 || total > 9007199254740991.0 {
+        return [];
+    }
+    [(at(counts, 2) + at(counts, 3)) / total, (at(counts, 1) + at(counts, 3)) / total, total]
+}
+
+// Extract both individual bit frequencies from joint two-bit shots.
+// Bin order is 00,01,10,11. Returns [P(left=1), P(right=1), shots]. At least one shot is required.
+pub fn shotmargins_bits(counts: vector) -> vector {
+    if !shotmargins_counts(counts) { return []; }
+    let result = shotmargins_compute(counts);
+    if !shotmargins_finite(result) { return []; }
+    result
+}
+
+fn skimmer_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn skimmer_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn skimmer_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn skimmer_compute(counts: vector, expected_even: f64, tolerance: f64) -> vector {
+    let joint = bitparity_measure(counts);
+    let margins = shotmargins_bits(counts);
+    if len(joint) == 0 || len(margins) == 0 {
+        return [];
+    }
+    let mut good = 0;
+    if skimmer_absolute(at(joint, 0) - expected_even) <= tolerance {
+        good = 1;
+    }
+    [at(joint, 2), at(margins, 0), at(margins, 1), good]
+}
+
+// Compare parity and marginal balance in two-bit shot data.
+// Returns [parity expectation, left-one frequency, right-one frequency, parity matches target]. A single measurement basis characterizes this histogram only.
+pub fn skimmer_characterize(counts: vector, expected_even: f64, tolerance: f64) -> vector {
+    if !skimmer_counts(counts) { return []; }
+    if !(expected_even >= 0.0 && expected_even <= 1.0) { return []; }
+    if !(tolerance >= 0.0 && tolerance <= 1.0) { return []; }
+    let result = skimmer_compute(counts, expected_even, tolerance);
+    if !skimmer_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let counts = [4, 0, 0, 4];
+    let expected_even = 1.0;
+    let tolerance = 0.1;
+    let result = skimmer_characterize(counts, expected_even, tolerance);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

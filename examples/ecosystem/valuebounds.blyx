@@ -1,0 +1,70 @@
+// ValueBounds 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-valuebounds/tree/v0.1.0
+
+fn valuebounds_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn valuebounds_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn valuebounds_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn valuebounds_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn valuebounds_compute(value: f64, minimum: f64, maximum: f64) -> vector {
+    if minimum > maximum {
+        return [];
+    }
+    let nearest = valuebounds_min2(valuebounds_max2(value, minimum), maximum);
+    if nearest == value {
+        return [1, value, 0];
+    }
+    [0, nearest, valuebounds_absolute(nearest - value)]
+}
+
+// Check a numeric setting against inclusive bounds and explain the violation.
+// Returns [in bounds, nearest legal value, absolute distance outside]. Reversed bounds are invalid.
+pub fn valuebounds_check(value: f64, minimum: f64, maximum: f64) -> vector {
+    if !(value - value == 0.0) { return []; }
+    if !(minimum - minimum == 0.0) { return []; }
+    if !(maximum - maximum == 0.0) { return []; }
+    let result = valuebounds_compute(value, minimum, maximum);
+    if !valuebounds_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let value = 12.0;
+    let minimum = 0.0;
+    let maximum = 10.0;
+    let result = valuebounds_check(value, minimum, maximum);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

@@ -1,19 +1,33 @@
 "use client";
 import { useHydrated } from "@/lib/useHydrated";
-import { useState } from "react";
-import samples from "@/lib/samples.json";
+import { useEffect, useState } from "react";
 import { playLink, repository } from "@/lib/site";
-export default function Catalog() {
+type ExampleSummary = { id: string; title: string; category: string; description: string; file: string };
+
+export default function Catalog({ samples }: { samples: ExampleSummary[] }) {
     const ready = useHydrated();
     const [query, setQuery] = useState(""),
         [category, setCategory] = useState("");
+    const [sources, setSources] = useState<Map<string, string>>();
+    const [sourceError, setSourceError] = useState(false);
+    const needle = query.trim().toLowerCase();
+    const needsSources = Boolean(needle) && !sources;
+    useEffect(() => {
+        if (!needsSources) return;
+        let active = true;
+        setSourceError(false);
+        import("@/lib/samples.json").then(({ default: entries }) => {
+            if (active) setSources(new Map(entries.map((entry) => [entry.id, entry.code.toLowerCase()])));
+        }).catch(() => { if (active) setSourceError(true); });
+        return () => { active = false; };
+    }, [needsSources]);
     const results = samples.filter(
         (s) =>
             (!category || category === s.category) &&
-            [s.title, s.description, s.category, s.code]
+            [s.title, s.description, s.category, sources?.get(s.id) ?? ""]
                 .join(" ")
                 .toLowerCase()
-                .includes(query.trim().toLowerCase()),
+                .includes(needle),
     );
     return (
         <>
@@ -44,7 +58,7 @@ export default function Catalog() {
                         )}
                     </select>
                 </label>
-                <span role="status">{results.length} examples</span>
+                <span role="status">{results.length} {results.length === 1 ? "example" : "examples"}{needsSources && (sourceError ? " · Source search unavailable" : " · Searching source…")}</span>
             </div>
             <div className="grid">
                 {results.map((s) => (
@@ -63,7 +77,7 @@ export default function Catalog() {
                     </article>
                 ))}
             </div>
-            {!results.length && (
+            {!results.length && (!needsSources || sourceError) && (
                 <div className="empty">
                     No matching examples.{" "}
                     <button

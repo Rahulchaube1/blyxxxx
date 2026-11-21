@@ -1,0 +1,183 @@
+// Merganser 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-merganser/tree/v0.1.0
+
+fn drawdepth_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn drawdepth_positive(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value > 0.0 && value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn drawdepth_compute(equity: vector) -> vector {
+    if len(equity) == 0 {
+        return [];
+    }
+    let mut high = at(equity, 0);
+    let mut peak = 0;
+    let mut best = 0.0;
+    let mut start = 0;
+    let mut bottom = 0;
+    let mut i = 1;
+    while i < len(equity) {
+        let x = at(equity, i);
+        if x >= high {
+            high = x;
+            peak = i;
+        } else {
+            let depth = 1.0 - x / high;
+            if depth > best {
+                best = depth;
+                start = peak;
+                bottom = i;
+            }
+        }
+        i += 1;
+    }
+    [best, start, bottom]
+}
+
+// Measure the deepest historical peak-to-trough equity decline.
+// Returns [maximum fractional drawdown, peak index, trough index]. Uses the first trough at the maximum and the most recent equal peak.
+pub fn drawdepth_deepest(equity: vector) -> vector {
+    if !drawdepth_positive(equity) { return []; }
+    let result = drawdepth_compute(equity);
+    if !drawdepth_finite(result) { return []; }
+    result
+}
+
+fn underwater_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn underwater_positive(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value > 0.0 && value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn underwater_compute(equity: vector) -> vector {
+    if len(equity) == 0 {
+        return [];
+    }
+    let mut high = at(equity, 0);
+    let mut run = 0;
+    let mut longest = 0;
+    let mut recover = 0;
+    let mut i = 1;
+    while i < len(equity) {
+        let x = at(equity, i);
+        if x >= high {
+            run = 0;
+            high = x;
+            recover = i;
+        } else {
+            run += 1;
+            if run > longest {
+                longest = run;
+            }
+        }
+        i += 1;
+    }
+    [longest, run, recover]
+}
+
+// Measure how long an equity series stayed below its running peak.
+// Returns [longest consecutive underwater observations, current run, last recovered index]. A return exactly to the prior peak ends a run.
+pub fn underwater_duration(equity: vector) -> vector {
+    if !underwater_positive(equity) { return []; }
+    let result = underwater_compute(equity);
+    if !underwater_finite(result) { return []; }
+    result
+}
+
+fn merganser_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn merganser_positive(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value > 0.0 && value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn merganser_compute(equity: vector, depth_limit: f64, duration_limit: f64) -> vector {
+    let depth = drawdepth_deepest(equity);
+    let time = underwater_duration(equity);
+    if len(depth) == 0 || len(time) == 0 {
+        return [];
+    }
+    let mut flag = 0;
+    if at(depth, 0) > depth_limit || at(time, 0) > duration_limit {
+        flag = 1;
+    }
+    [at(depth, 0), at(depth, 1), at(depth, 2), at(time, 0), flag]
+}
+
+// Report drawdown depth and time below the running peak for a historical series.
+// Returns [deepest fractional loss, peak index, trough index, longest underwater spell, limit breached]. Durations count observations, not calendar days.
+pub fn merganser_report(equity: vector, depth_limit: f64, duration_limit: f64) -> vector {
+    if !merganser_positive(equity) { return []; }
+    if !(depth_limit >= 0.0 && depth_limit <= 1.0) { return []; }
+    if !(duration_limit >= 0.0 && duration_limit <= 9007199254740991.0 && duration_limit % 1.0 == 0.0) { return []; }
+    let result = merganser_compute(equity, depth_limit, duration_limit);
+    if !merganser_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let equity = [100, 80, 75, 100];
+    let depth_limit = 0.25;
+    let duration_limit = 1.0;
+    let result = merganser_report(equity, depth_limit, duration_limit);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

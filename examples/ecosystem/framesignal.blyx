@@ -1,0 +1,65 @@
+// FrameSignal 0.1.1 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-framesignal/tree/v0.1.1
+
+fn framesignal_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn framesignal_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn framesignal_num(value: i64) -> f64 {
+    at([value], 0)
+}
+
+fn framesignal_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn framesignal_compute(samples: vector) -> vector {
+    if len(samples) == 0 {
+        return [];
+    }
+    let mut peak = 0.0;
+    let mut i = 0;
+    while i < len(samples) {
+        peak = framesignal_max2(peak, framesignal_absolute(at(samples, i)));
+        i += 1;
+    }
+    [peak, dot(samples, samples) / framesignal_num(len(samples))]
+}
+
+// Measure peak amplitude and mean-square energy of a signal frame.
+// Returns [peak absolute amplitude, mean square]. Empty frames are invalid. Supply amplitudes in a common linear scale.
+pub fn framesignal_level(samples: vector) -> vector {
+    if !framesignal_finite(samples) { return []; }
+    let result = framesignal_compute(samples);
+    if !framesignal_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let samples = [-1, 0, 1, 0];
+    let result = framesignal_level(samples);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

@@ -1,0 +1,74 @@
+// CashLadder 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-cashladder/tree/v0.1.0
+
+fn cashladder_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn cashladder_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn cashladder_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn cashladder_compute(opening: f64, flows: vector) -> vector {
+    let mut cash = opening;
+    let mut low = cash;
+    let mut idx = -1;
+    let mut i = 0;
+    while i < len(flows) {
+        cash += at(flows, i);
+        if cashladder_absolute(cash) > 9007199254740991.0 {
+            return [];
+        }
+        if cash < low {
+            low = cash;
+            idx = i;
+        }
+        i += 1;
+    }
+    [cash, low, idx]
+}
+
+// Find closing and lowest balances along an ordered cash-flow schedule.
+// Returns [closing, lowest balance including opening, first low index]. Opening uses index -1. Use a single currency's minor units.
+pub fn cashladder_balance(opening: f64, flows: vector) -> vector {
+    if !(opening >= -9007199254740991.0 && opening <= 9007199254740991.0 && opening % 1.0 == 0.0) { return []; }
+    if !cashladder_integers(flows) { return []; }
+    let result = cashladder_compute(opening, flows);
+    if !cashladder_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let opening = 20.0;
+    let flows = [-30, 15];
+    let result = cashladder_balance(opening, flows);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

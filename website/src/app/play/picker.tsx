@@ -1,8 +1,7 @@
 "use client";
 import { useHydrated } from "@/lib/useHydrated";
 import { useRouter } from "next/navigation";
-import samples from "@/lib/samples.json";
-export default function ExamplePicker({ id }: { id: string }) {
+export default function ExamplePicker({ id, samples }: { id: string; samples: { id: string; title: string }[] }) {
     const ready = useHydrated();
     const router = useRouter();
     return (

@@ -1,0 +1,158 @@
+// Pipit 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-pipit/tree/v0.1.0
+
+fn exitpolicy_bytes(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 255.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn exitpolicy_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn exitpolicy_compute(codes: vector) -> vector {
+    let mut failures = 0;
+    let mut first = -1;
+    let mut code = 0.0;
+    let mut i = 0;
+    while i < len(codes) {
+        if at(codes, i) != 0.0 {
+            if first < 0 {
+                first = i;
+                code = at(codes, i);
+            }
+            failures += 1;
+        }
+        i += 1;
+    }
+    [failures, code, first]
+}
+
+// Summarize portable process exit codes without losing the first failure.
+// Returns [failed commands, first nonzero exit code, first failing index]. An all-success run uses index -1.
+pub fn exitpolicy_summarize(codes: vector) -> vector {
+    if !exitpolicy_bytes(codes) { return []; }
+    let result = exitpolicy_compute(codes);
+    if !exitpolicy_finite(result) { return []; }
+    result
+}
+
+fn batchquota_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn batchquota_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn batchquota_compute(done: f64, total: f64, limit: f64) -> vector {
+    if done > total {
+        return [];
+    }
+    let take = batchquota_min2(limit, total - done);
+    [done, take, total - done - take]
+}
+
+// Bound the next batch of an interrupted command.
+// Returns [next offset, batch length, remaining after batch]. A finished batch has zero length.
+pub fn batchquota_allow(done: f64, total: f64, limit: f64) -> vector {
+    if !(done >= 0.0 && done <= 9007199254740991.0 && done % 1.0 == 0.0) { return []; }
+    if !(total >= 0.0 && total <= 9007199254740991.0 && total % 1.0 == 0.0) { return []; }
+    if !(limit >= 1.0 && limit <= 9007199254740991.0 && limit % 1.0 == 0.0) { return []; }
+    let result = batchquota_compute(done, total, limit);
+    if !batchquota_finite(result) { return []; }
+    result
+}
+
+fn pipit_num(value: i64) -> f64 {
+    at([value], 0)
+}
+
+fn pipit_bytes(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 255.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn pipit_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn pipit_compute(codes: vector, total: f64, batch: f64, tolerance: f64) -> vector {
+    let status = exitpolicy_summarize(codes);
+    let next = batchquota_allow(pipit_num(len(codes)), total, batch);
+    if len(next) == 0 || len(status) == 0 {
+        return [];
+    }
+    let mut count = at(next, 1);
+    if at(status, 0) > tolerance {
+        count = 0.0;
+    }
+    [at(next, 0), count, at(status, 0), at(status, 1)]
+}
+
+// Plan the next CLI batch from child exit codes and a failure allowance.
+// Returns [next offset, next count, failures, first nonzero exit]. The next count becomes zero once failures exceed the allowance.
+pub fn pipit_continue_batch(codes: vector, total: f64, batch: f64, tolerance: f64) -> vector {
+    if !pipit_bytes(codes) { return []; }
+    if !(total >= 0.0 && total <= 9007199254740991.0 && total % 1.0 == 0.0) { return []; }
+    if !(batch >= 1.0 && batch <= 9007199254740991.0 && batch % 1.0 == 0.0) { return []; }
+    if !(tolerance >= 0.0 && tolerance <= 9007199254740991.0 && tolerance % 1.0 == 0.0) { return []; }
+    let result = pipit_compute(codes, total, batch, tolerance);
+    if !pipit_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let codes = [0, 3, 0];
+    let total = 8.0;
+    let batch = 2.0;
+    let tolerance = 1.0;
+    let result = pipit_continue_batch(codes, total, batch, tolerance);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

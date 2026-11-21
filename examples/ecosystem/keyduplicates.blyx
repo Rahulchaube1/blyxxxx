@@ -1,0 +1,67 @@
+// KeyDuplicates 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-keyduplicates/tree/v0.1.0
+
+fn keyduplicates_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn keyduplicates_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn keyduplicates_compute(keys: vector) -> vector {
+    let mut duplicates = 0;
+    let mut first = -1;
+    let mut i = 0;
+    while i < len(keys) {
+        let mut j = 0;
+        while j < i {
+            if at(keys, j) == at(keys, i) {
+                duplicates += 1;
+                if first < 0 {
+                    first = i;
+                }
+                break;
+            }
+            j += 1;
+        }
+        i += 1;
+    }
+    [duplicates, first, len(keys) - duplicates]
+}
+
+// Find repeated primary-key occurrences in an offline table export.
+// Returns [duplicate rows beyond first occurrence, first duplicate row, unique keys]. Uses pairwise comparison on a small batch.
+pub fn keyduplicates_count(keys: vector) -> vector {
+    if !keyduplicates_integers(keys) { return []; }
+    let result = keyduplicates_compute(keys);
+    if !keyduplicates_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let keys = [1, 2, 1, 1];
+    let result = keyduplicates_count(keys);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

@@ -1,0 +1,78 @@
+// PageBreaks 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-pagebreaks/tree/v0.1.0
+
+fn pagebreaks_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn pagebreaks_num(value: i64) -> f64 {
+    at([value], 0)
+}
+
+fn pagebreaks_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn pagebreaks_magnitudes(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn pagebreaks_compute(heights: vector, page: f64) -> vector {
+    let mut pages = 0;
+    let mut used = 0.0;
+    let mut i = 0;
+    while i < len(heights) {
+        let h = at(heights, i);
+        if h <= 0.0 || h > page {
+            return [];
+        }
+        if pages == 0 || used + h > page {
+            pages += 1;
+            used = 0.0;
+        }
+        used += h;
+        i += 1;
+    }
+    [pages, used, pagebreaks_max2(0.0, pagebreaks_num(pages) * page - sum(heights))]
+}
+
+// Place unsplittable document blocks on successive pages in input order.
+// Returns [pages used, occupied height on final page, total unused height]. Positive block heights must fit individually. Empty input uses zero pages.
+pub fn pagebreaks_pack(heights: vector, page: f64) -> vector {
+    if !pagebreaks_magnitudes(heights) { return []; }
+    if !(page > 0.0 && page - page == 0.0) { return []; }
+    let result = pagebreaks_compute(heights, page);
+    if !pagebreaks_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let heights = [4, 6, 3];
+    let page = 10.0;
+    let result = pagebreaks_pack(heights, page);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

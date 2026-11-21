@@ -1,0 +1,72 @@
+// GridCover 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-gridcover/tree/v0.1.0
+
+fn gridcover_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn gridcover_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn gridcover_floorreal(value: f64) -> f64 {
+    let trunc = value - value % 1.0;
+    if trunc > value {
+        return trunc - 1.0;
+    }
+    trunc
+}
+
+fn gridcover_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn gridcover_compute(box: vector, cell: f64) -> vector {
+    if len(box) != 4 || at(box, 0) > at(box, 2) || at(box, 1) > at(box, 3) {
+        return [];
+    }
+    let a = at(box, 0) / cell;
+    let b = at(box, 1) / cell;
+    let c = at(box, 2) / cell;
+    let d = at(box, 3) / cell;
+    if gridcover_max2(gridcover_max2(gridcover_absolute(a), gridcover_absolute(b)), gridcover_max2(gridcover_absolute(c), gridcover_absolute(d))) > 9007199254740991.0 {
+        return [];
+    }
+    [gridcover_floorreal(a), gridcover_floorreal(b), gridcover_floorreal(c), gridcover_floorreal(d)]
+}
+
+// Find grid indices containing both extrema of a closed planar extent.
+// Returns [min column, min row, max column, max row]. Grid origin is (0,0); exact upper-boundary points belong to the next cell.
+pub fn gridcover_cells(box: vector, cell: f64) -> vector {
+    if !gridcover_finite(box) { return []; }
+    if !(cell > 0.0 && cell - cell == 0.0) { return []; }
+    let result = gridcover_compute(box, cell);
+    if !gridcover_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let box = [-1, -4, 4, 0];
+    let cell = 2.0;
+    let result = gridcover_cells(box, cell);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

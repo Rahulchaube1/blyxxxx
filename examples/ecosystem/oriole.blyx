@@ -1,0 +1,160 @@
+// Oriole 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-oriole/tree/v0.1.0
+
+fn releasewindow_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn releasewindow_compute(now: f64, opens: f64, closes: f64) -> vector {
+    if closes <= opens {
+        return [];
+    }
+    if now < opens {
+        return [0, opens - now];
+    }
+    if now < closes {
+        return [1, closes - now];
+    }
+    [2, 0]
+}
+
+// Locate a clock tick within a scheduled publication window.
+// Returns [phase, ticks until the next change]. Phase 0 is scheduled, 1 is live and 2 is expired. The closing tick is exclusive.
+pub fn releasewindow_locate(now: f64, opens: f64, closes: f64) -> vector {
+    if !(now >= -9007199254740991.0 && now <= 9007199254740991.0 && now % 1.0 == 0.0) { return []; }
+    if !(opens >= -9007199254740991.0 && opens <= 9007199254740991.0 && opens % 1.0 == 0.0) { return []; }
+    if !(closes >= -9007199254740991.0 && closes <= 9007199254740991.0 && closes % 1.0 == 0.0) { return []; }
+    let result = releasewindow_compute(now, opens, closes);
+    if !releasewindow_finite(result) { return []; }
+    result
+}
+
+fn reviewquorum_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn reviewquorum_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn reviewquorum_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn reviewquorum_compute(reviewers: vector, required: f64) -> vector {
+    let mut unique = 0.0;
+    let mut i = 0;
+    while i < len(reviewers) {
+        let mut j = 0;
+        while j < i && at(reviewers, j) != at(reviewers, i) {
+            j += 1;
+        }
+        if j == i {
+            unique += 1.0;
+        }
+        i += 1;
+    }
+    [unique, reviewquorum_max2(0.0, required - unique)]
+}
+
+// Count independent reviewers and calculate outstanding approvals.
+// Returns [unique reviewer IDs, approvals still required]. A repeated ID contributes once.
+pub fn reviewquorum_tally(reviewers: vector, required: f64) -> vector {
+    if !reviewquorum_counts(reviewers) { return []; }
+    if !(required >= 1.0 && required <= 9007199254740991.0 && required % 1.0 == 0.0) { return []; }
+    let result = reviewquorum_compute(reviewers, required);
+    if !reviewquorum_finite(result) { return []; }
+    result
+}
+
+fn oriole_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn oriole_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn oriole_compute(now: f64, opens: f64, closes: f64, reviewers: vector, required: f64) -> vector {
+    let window = releasewindow_locate(now, opens, closes);
+    let votes = reviewquorum_tally(reviewers, required);
+    if len(window) == 0 || len(votes) == 0 {
+        return [];
+    }
+    let mut publish = 0;
+    if at(window, 0) == 1.0 && at(votes, 1) == 0.0 {
+        publish = 1;
+    }
+    [publish, at(window, 0), at(votes, 1), at(window, 1)]
+}
+
+// Decide whether a scheduled revision can go live after independent review.
+// Returns [publish now, lifecycle phase, approvals missing, ticks to next transition]. The caller supplies the clock and persists the revision.
+pub fn oriole_decide(now: f64, opens: f64, closes: f64, reviewers: vector, required: f64) -> vector {
+    if !(now >= -9007199254740991.0 && now <= 9007199254740991.0 && now % 1.0 == 0.0) { return []; }
+    if !(opens >= -9007199254740991.0 && opens <= 9007199254740991.0 && opens % 1.0 == 0.0) { return []; }
+    if !(closes >= -9007199254740991.0 && closes <= 9007199254740991.0 && closes % 1.0 == 0.0) { return []; }
+    if !oriole_counts(reviewers) { return []; }
+    if !(required >= 1.0 && required <= 9007199254740991.0 && required % 1.0 == 0.0) { return []; }
+    let result = oriole_compute(now, opens, closes, reviewers, required);
+    if !oriole_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let now = 12.0;
+    let opens = 10.0;
+    let closes = 20.0;
+    let reviewers = [4, 4, 8];
+    let required = 2.0;
+    let result = oriole_decide(now, opens, closes, reviewers, required);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

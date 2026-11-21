@@ -1,0 +1,176 @@
+// Dunlin 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-dunlin/tree/v0.1.0
+
+fn keyduplicates_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn keyduplicates_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn keyduplicates_compute(keys: vector) -> vector {
+    let mut duplicates = 0;
+    let mut first = -1;
+    let mut i = 0;
+    while i < len(keys) {
+        let mut j = 0;
+        while j < i {
+            if at(keys, j) == at(keys, i) {
+                duplicates += 1;
+                if first < 0 {
+                    first = i;
+                }
+                break;
+            }
+            j += 1;
+        }
+        i += 1;
+    }
+    [duplicates, first, len(keys) - duplicates]
+}
+
+// Find repeated primary-key occurrences in an offline table export.
+// Returns [duplicate rows beyond first occurrence, first duplicate row, unique keys]. Uses pairwise comparison on a small batch.
+pub fn keyduplicates_count(keys: vector) -> vector {
+    if !keyduplicates_integers(keys) { return []; }
+    let result = keyduplicates_compute(keys);
+    if !keyduplicates_finite(result) { return []; }
+    result
+}
+
+fn foreignmiss_hasid(values: vector, key: f64) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        if at(values, i) == key {
+            return true;
+        }
+        i += 1;
+    }
+    false
+}
+
+fn foreignmiss_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn foreignmiss_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn foreignmiss_compute(parents: vector, children: vector) -> vector {
+    let mut count = 0;
+    let mut first = -1;
+    let mut i = 0;
+    while i < len(children) {
+        if !foreignmiss_hasid(parents, at(children, i)) {
+            if first < 0 {
+                first = i;
+            }
+            count += 1;
+        }
+        i += 1;
+    }
+    [count, first]
+}
+
+// Count child rows referencing absent numeric parent keys.
+// Returns [orphan rows, first orphan row]. Repeated child references are checked independently; represent missing/null separately.
+pub fn foreignmiss_count(parents: vector, children: vector) -> vector {
+    if !foreignmiss_integers(parents) { return []; }
+    if !foreignmiss_integers(children) { return []; }
+    let result = foreignmiss_compute(parents, children);
+    if !foreignmiss_finite(result) { return []; }
+    result
+}
+
+fn dunlin_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn dunlin_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn dunlin_compute(parents: vector, children: vector) -> vector {
+    let dup = keyduplicates_count(parents);
+    let missing = foreignmiss_count(parents, children);
+    if len(dup) == 0 || len(missing) == 0 {
+        return [];
+    }
+    let mut ok = 0;
+    if at(dup, 0) == 0.0 && at(missing, 0) == 0.0 {
+        ok = 1;
+    }
+    [ok, at(dup, 0), at(missing, 0), at(missing, 1)]
+}
+
+// Audit a table export for duplicate parents and orphaned child rows.
+// Returns [load acceptable, duplicate parent rows, orphan child rows, first orphan row]. This local check complements database-enforced constraints.
+pub fn dunlin_check(parents: vector, children: vector) -> vector {
+    if !dunlin_integers(parents) { return []; }
+    if !dunlin_integers(children) { return []; }
+    let result = dunlin_compute(parents, children);
+    if !dunlin_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let parents = [1, 1, 3];
+    let children = [1, 2, 2];
+    let result = dunlin_check(parents, children);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

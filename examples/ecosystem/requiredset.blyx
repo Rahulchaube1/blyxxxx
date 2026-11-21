@@ -1,0 +1,83 @@
+// RequiredSet 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-requiredset/tree/v0.1.0
+
+fn requiredset_hasid(values: vector, key: f64) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        if at(values, i) == key {
+            return true;
+        }
+        i += 1;
+    }
+    false
+}
+
+fn requiredset_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn requiredset_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn requiredset_compute(present: vector, required: vector) -> vector {
+    let mut missing = 0;
+    let mut first = -1.0;
+    let mut i = 0;
+    while i < len(required) {
+        let id = at(required, i);
+        let mut j = 0;
+        while j < i {
+            if at(required, j) == id {
+                return [];
+            }
+            j += 1;
+        }
+        if !requiredset_hasid(present, id) {
+            if missing == 0 {
+                first = id;
+            }
+            missing += 1;
+        }
+        i += 1;
+    }
+    [missing, first]
+}
+
+// Find missing unique required keys in an object shape.
+// Returns [missing keys, first missing key ID]. Duplicate requirements are rejected as a malformed schema.
+pub fn requiredset_missing(present: vector, required: vector) -> vector {
+    if !requiredset_counts(present) { return []; }
+    if !requiredset_counts(required) { return []; }
+    let result = requiredset_compute(present, required);
+    if !requiredset_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let present = [1, 3];
+    let required = [1, 2, 4];
+    let result = requiredset_missing(present, required);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

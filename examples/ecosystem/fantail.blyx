@@ -1,0 +1,179 @@
+// Fantail 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-fantail/tree/v0.1.0
+
+fn optionlayer_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn optionlayer_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn optionlayer_compute(values: vector, present: vector, fallback: f64) -> vector {
+    if len(values) != len(present) {
+        return [];
+    }
+    let mut chosen = fallback;
+    let mut layer = -1;
+    let mut supplied = 0;
+    let mut i = 0;
+    while i < len(values) {
+        let flag = at(present, i);
+        if flag > 1.0 {
+            return [];
+        }
+        if flag == 1.0 {
+            chosen = at(values, i);
+            layer = i;
+            supplied += 1;
+        }
+        i += 1;
+    }
+    [chosen, layer, supplied]
+}
+
+// Resolve a numeric setting across ordered configuration layers.
+// Returns [effective value, winning layer index, number of supplied values]. Later layers win; presence flags distinguish zero from an unset value.
+pub fn optionlayer_resolve(values: vector, present: vector, fallback: f64) -> vector {
+    if !optionlayer_finite(values) { return []; }
+    if !optionlayer_counts(present) { return []; }
+    if !(fallback - fallback == 0.0) { return []; }
+    let result = optionlayer_compute(values, present, fallback);
+    if !optionlayer_finite(result) { return []; }
+    result
+}
+
+fn valuebounds_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn valuebounds_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn valuebounds_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn valuebounds_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn valuebounds_compute(value: f64, minimum: f64, maximum: f64) -> vector {
+    if minimum > maximum {
+        return [];
+    }
+    let nearest = valuebounds_min2(valuebounds_max2(value, minimum), maximum);
+    if nearest == value {
+        return [1, value, 0];
+    }
+    [0, nearest, valuebounds_absolute(nearest - value)]
+}
+
+// Check a numeric setting against inclusive bounds and explain the violation.
+// Returns [in bounds, nearest legal value, absolute distance outside]. Reversed bounds are invalid.
+pub fn valuebounds_check(value: f64, minimum: f64, maximum: f64) -> vector {
+    if !(value - value == 0.0) { return []; }
+    if !(minimum - minimum == 0.0) { return []; }
+    if !(maximum - maximum == 0.0) { return []; }
+    let result = valuebounds_compute(value, minimum, maximum);
+    if !valuebounds_finite(result) { return []; }
+    result
+}
+
+fn fantail_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn fantail_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn fantail_compute(values: vector, present: vector, fallback: f64, minimum: f64, maximum: f64) -> vector {
+    let layer = optionlayer_resolve(values, present, fallback);
+    if len(layer) == 0 {
+        return [];
+    }
+    let rule = valuebounds_check(at(layer, 0), minimum, maximum);
+    if len(rule) == 0 {
+        return [];
+    }
+    [at(rule, 0), at(layer, 0), at(layer, 1), at(rule, 2)]
+}
+
+// Resolve a layered setting and report where an invalid override came from.
+// Returns [accepted, selected value, winning layer, distance outside bounds]. An invalid override remains visible for diagnosis.
+pub fn fantail_setting(values: vector, present: vector, fallback: f64, minimum: f64, maximum: f64) -> vector {
+    if !fantail_finite(values) { return []; }
+    if !fantail_counts(present) { return []; }
+    if !(fallback - fallback == 0.0) { return []; }
+    if !(minimum - minimum == 0.0) { return []; }
+    if !(maximum - maximum == 0.0) { return []; }
+    let result = fantail_compute(values, present, fallback, minimum, maximum);
+    if !fantail_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let values = [2, 15, 0];
+    let present = [1, 1, 0];
+    let fallback = 5.0;
+    let minimum = 0.0;
+    let maximum = 10.0;
+    let result = fantail_setting(values, present, fallback, minimum, maximum);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

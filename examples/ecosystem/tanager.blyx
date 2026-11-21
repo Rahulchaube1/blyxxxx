@@ -1,0 +1,179 @@
+// Tanager 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-tanager/tree/v0.1.0
+
+fn graphdegree_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn graphdegree_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn graphdegree_compute(starts: vector, ends: vector, node: f64) -> vector {
+    if len(starts) != len(ends) {
+        return [];
+    }
+    let mut incoming = 0;
+    let mut outgoing = 0;
+    let mut loops = 0;
+    let mut i = 0;
+    while i < len(starts) {
+        if at(starts, i) == node {
+            outgoing += 1;
+        }
+        if at(ends, i) == node {
+            incoming += 1;
+        }
+        if at(starts, i) == node && at(ends, i) == node {
+            loops += 1;
+        }
+        i += 1;
+    }
+    [incoming, outgoing, loops]
+}
+
+// Count incoming and outgoing edges at a named numeric vertex.
+// Returns [incoming, outgoing, incident self-loops] for a directed multigraph. Each loop adds one to each direction.
+pub fn graphdegree_at_node(starts: vector, ends: vector, node: f64) -> vector {
+    if !graphdegree_integers(starts) { return []; }
+    if !graphdegree_integers(ends) { return []; }
+    if !(node >= -9007199254740991.0 && node <= 9007199254740991.0 && node % 1.0 == 0.0) { return []; }
+    let result = graphdegree_compute(starts, ends, node);
+    if !graphdegree_finite(result) { return []; }
+    result
+}
+
+fn edgeaudit_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn edgeaudit_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn edgeaudit_compute(starts: vector, ends: vector) -> vector {
+    if len(starts) != len(ends) {
+        return [];
+    }
+    let mut dup = 0;
+    let mut loops = 0;
+    let mut i = 0;
+    while i < len(starts) {
+        if at(starts, i) == at(ends, i) {
+            loops += 1;
+        }
+        let mut j = 0;
+        while j < i {
+            if at(starts, i) == at(starts, j) && at(ends, i) == at(ends, j) {
+                dup += 1;
+                break;
+            }
+            j += 1;
+        }
+        i += 1;
+    }
+    [dup, loops, len(starts) - dup]
+}
+
+// Audit exact repeated directed edges and self-loops.
+// Returns [duplicate occurrences beyond the first, self-loop occurrences, unique directed edges]. Reversed edges are distinct.
+pub fn edgeaudit_duplicates(starts: vector, ends: vector) -> vector {
+    if !edgeaudit_integers(starts) { return []; }
+    if !edgeaudit_integers(ends) { return []; }
+    let result = edgeaudit_compute(starts, ends);
+    if !edgeaudit_finite(result) { return []; }
+    result
+}
+
+fn tanager_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn tanager_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn tanager_compute(starts: vector, ends: vector, node: f64) -> vector {
+    let degree = graphdegree_at_node(starts, ends, node);
+    let audit = edgeaudit_duplicates(starts, ends);
+    if len(degree) == 0 || len(audit) == 0 {
+        return [];
+    }
+    let mut simple = 0;
+    if at(audit, 0) == 0.0 && at(audit, 1) == 0.0 {
+        simple = 1;
+    }
+    [at(degree, 0), at(degree, 1), at(audit, 0), at(audit, 1), simple]
+}
+
+// Audit a directed edge list before interpreting a vertex's degree.
+// Returns [incoming, outgoing, graph-wide duplicate edges, graph-wide loops, simple graph flag]. Duplicate detection uses quadratic time for short edge lists.
+pub fn tanager_inspect(starts: vector, ends: vector, node: f64) -> vector {
+    if !tanager_integers(starts) { return []; }
+    if !tanager_integers(ends) { return []; }
+    if !(node >= -9007199254740991.0 && node <= 9007199254740991.0 && node % 1.0 == 0.0) { return []; }
+    let result = tanager_compute(starts, ends, node);
+    if !tanager_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let starts = [1, 1, 2];
+    let ends = [2, 2, 2];
+    let node = 2.0;
+    let result = tanager_inspect(starts, ends, node);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

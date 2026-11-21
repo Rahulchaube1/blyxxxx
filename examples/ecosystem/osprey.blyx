@@ -1,0 +1,164 @@
+// Osprey 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-osprey/tree/v0.1.0
+
+fn boxoverlap_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn boxoverlap_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn boxoverlap_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn boxoverlap_compute(a: vector, b: vector) -> vector {
+    if len(a) != 4 || len(b) != 4 {
+        return [];
+    }
+    let aw = at(a, 2) - at(a, 0);
+    let ah = at(a, 3) - at(a, 1);
+    let bw = at(b, 2) - at(b, 0);
+    let bh = at(b, 3) - at(b, 1);
+    if aw <= 0.0 || ah <= 0.0 || bw <= 0.0 || bh <= 0.0 {
+        return [];
+    }
+    let w = boxoverlap_max2(0.0, boxoverlap_min2(at(a, 2), at(b, 2)) - boxoverlap_max2(at(a, 0), at(b, 0)));
+    let h = boxoverlap_max2(0.0, boxoverlap_min2(at(a, 3), at(b, 3)) - boxoverlap_max2(at(a, 1), at(b, 1)));
+    let hit = w * h;
+    let combined = aw * ah + bw * bh - hit;
+    if combined <= 0.0 {
+        return [];
+    }
+    [hit, combined, hit / combined]
+}
+
+// Measure intersection and union of two axis-aligned image boxes.
+// Each rectangle is [left, top, right, bottom]. Returns [intersection area, union area, IoU]. Zero-area boxes and reversed edges are rejected.
+pub fn boxoverlap_measure(a: vector, b: vector) -> vector {
+    if !boxoverlap_finite(a) { return []; }
+    if !boxoverlap_finite(b) { return []; }
+    let result = boxoverlap_compute(a, b);
+    if !boxoverlap_finite(result) { return []; }
+    result
+}
+
+fn boxclip_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn boxclip_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn boxclip_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn boxclip_compute(box: vector, width: f64, height: f64) -> vector {
+    if len(box) != 4 {
+        return [];
+    }
+    let left = boxclip_max2(0.0, at(box, 0));
+    let top = boxclip_max2(0.0, at(box, 1));
+    let right = boxclip_min2(width, at(box, 2));
+    let bottom = boxclip_min2(height, at(box, 3));
+    if right <= left || bottom <= top {
+        return [];
+    }
+    [left, top, right, bottom]
+}
+
+// Clip a detection rectangle to the visible image.
+// Returns the visible [left, top, right, bottom] in continuous pixel-edge coordinates. An empty intersection is invalid.
+pub fn boxclip_inside(box: vector, width: f64, height: f64) -> vector {
+    if !boxclip_finite(box) { return []; }
+    if !(width > 0.0 && width - width == 0.0) { return []; }
+    if !(height > 0.0 && height - height == 0.0) { return []; }
+    let result = boxclip_compute(box, width, height);
+    if !boxclip_finite(result) { return []; }
+    result
+}
+
+fn osprey_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn osprey_compute(pred: vector, truth: vector, width: f64, height: f64, threshold: f64) -> vector {
+    let pbox = boxclip_inside(pred, width, height);
+    let tbox = boxclip_inside(truth, width, height);
+    let scores = boxoverlap_measure(pbox, tbox);
+    if len(scores) == 0 {
+        return [];
+    }
+    let mut matched = 0;
+    if at(scores, 0) > 0.0 && at(scores, 2) >= threshold {
+        matched = 1;
+    }
+    [at(scores, 2), matched, at(scores, 0)]
+}
+
+// Score a detection against a reference after clipping both to the camera frame.
+// Returns [visible IoU, matched, visible intersection area]. Match requires positive overlap and a score at least equal to the threshold.
+pub fn osprey_compare(pred: vector, truth: vector, width: f64, height: f64, threshold: f64) -> vector {
+    if !osprey_finite(pred) { return []; }
+    if !osprey_finite(truth) { return []; }
+    if !(width > 0.0 && width - width == 0.0) { return []; }
+    if !(height > 0.0 && height - height == 0.0) { return []; }
+    if !(threshold >= 0.0 && threshold <= 1.0) { return []; }
+    let result = osprey_compute(pred, truth, width, height, threshold);
+    if !osprey_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let pred = [-2, 0, 2, 2];
+    let truth = [0, 0, 4, 2];
+    let width = 4.0;
+    let height = 4.0;
+    let threshold = 0.5;
+    let result = osprey_compare(pred, truth, width, height, threshold);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

@@ -1,0 +1,54 @@
+// ReadoutFreq 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-readoutfreq/tree/v0.1.0
+
+fn readoutfreq_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn readoutfreq_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn readoutfreq_compute(state: vector, zero: f64, one: f64) -> vector {
+    if len(state) != 2 || readoutfreq_absolute(dot(state, state) - 1.0) > 0.000000001 || zero + one <= 0.0 || zero + one > 9007199254740991.0 {
+        return [];
+    }
+    let prob = at(state, 1) * at(state, 1);
+    let seen = one / (zero + one);
+    [prob, seen, readoutfreq_absolute(prob - seen)]
+}
+
+// Compare computational-basis shot frequencies to a real qubit's probabilities.
+// Returns [predicted P(1), observed P(1), absolute difference]. At least one observed shot and a normalized two-amplitude state are required.
+pub fn readoutfreq_compare(state: vector, zero: f64, one: f64) -> vector {
+    if !readoutfreq_finite(state) { return []; }
+    if !(zero >= 0.0 && zero <= 9007199254740991.0 && zero % 1.0 == 0.0) { return []; }
+    if !(one >= 0.0 && one <= 9007199254740991.0 && one % 1.0 == 0.0) { return []; }
+    let result = readoutfreq_compute(state, zero, one);
+    if !readoutfreq_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let state = [0, 1];
+    let zero = 2.0;
+    let one = 6.0;
+    let result = readoutfreq_compare(state, zero, one);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

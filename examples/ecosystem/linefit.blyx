@@ -1,0 +1,53 @@
+// LineFit 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-linefit/tree/v0.1.0
+
+fn linefit_floorpos(value: f64) -> f64 {
+    value - value % 1.0
+}
+
+fn linefit_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn linefit_compute(paper: f64, top: f64, bottom: f64, line: f64) -> vector {
+    let area = paper - top - bottom;
+    if area <= 0.0 {
+        return [];
+    }
+    let lines = linefit_floorpos(area / line);
+    [area, lines, area - lines * line]
+}
+
+// Compute the usable print area and whole lines per page.
+// Returns [usable height, whole-line capacity, residual height]. All dimensions use the same unit; a page with no usable height is invalid.
+pub fn linefit_capacity(paper: f64, top: f64, bottom: f64, line: f64) -> vector {
+    if !(paper > 0.0 && paper - paper == 0.0) { return []; }
+    if !(top >= 0.0 && top - top == 0.0) { return []; }
+    if !(bottom >= 0.0 && bottom - bottom == 0.0) { return []; }
+    if !(line > 0.0 && line - line == 0.0) { return []; }
+    let result = linefit_compute(paper, top, bottom, line);
+    if !linefit_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let paper = 100.0;
+    let top = 10.0;
+    let bottom = 15.0;
+    let line = 6.0;
+    let result = linefit_capacity(paper, top, bottom, line);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

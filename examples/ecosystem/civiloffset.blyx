@@ -1,0 +1,54 @@
+// CivilOffset 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-civiloffset/tree/v0.1.0
+
+fn civiloffset_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn civiloffset_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn civiloffset_compute(local: f64, offset: f64) -> vector {
+    if civiloffset_absolute(offset) >= 86400.0 {
+        return [];
+    }
+    let utc = local - offset;
+    if civiloffset_absolute(utc) > 9007199254740991.0 {
+        return [];
+    }
+    [utc, offset]
+}
+
+// Convert a local tick to a candidate UTC tick for a supplied offset.
+// Returns [candidate UTC, offset]. Offsets use seconds and must lie strictly within ±24 hours. Local ticks use the same epoch and unit.
+pub fn civiloffset_candidate(local: f64, offset: f64) -> vector {
+    if !(local >= -9007199254740991.0 && local <= 9007199254740991.0 && local % 1.0 == 0.0) { return []; }
+    if !(offset >= -9007199254740991.0 && offset <= 9007199254740991.0 && offset % 1.0 == 0.0) { return []; }
+    let result = civiloffset_compute(local, offset);
+    if !civiloffset_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let local = 7200.0;
+    let offset = 3600.0;
+    let result = civiloffset_candidate(local, offset);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

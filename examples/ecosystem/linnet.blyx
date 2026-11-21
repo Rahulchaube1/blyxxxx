@@ -1,0 +1,175 @@
+// Linnet 0.1.1 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-linnet/tree/v0.1.1
+
+fn activityspan_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn activityspan_magnitudes(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn activityspan_compute(levels: vector, threshold: f64) -> vector {
+    let mut first = -1;
+    let mut end = -1;
+    let mut count = 0;
+    let mut i = 0;
+    while i < len(levels) {
+        if at(levels, i) > threshold {
+            if first < 0 {
+                first = i;
+            }
+            end = i + 1;
+            count += 1;
+        }
+        i += 1;
+    }
+    [first, end, count]
+}
+
+// Locate active frames in a sequence of nonnegative signal levels.
+// Returns [first active index, exclusive final active index, active frames]. Silence returns [-1,-1,0]. Activity is strictly above threshold.
+pub fn activityspan_bounds(levels: vector, threshold: f64) -> vector {
+    if !activityspan_magnitudes(levels) { return []; }
+    if !(threshold >= 0.0 && threshold - threshold == 0.0) { return []; }
+    let result = activityspan_compute(levels, threshold);
+    if !activityspan_finite(result) { return []; }
+    result
+}
+
+fn gaphold_num(value: i64) -> f64 {
+    at([value], 0)
+}
+
+fn gaphold_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn gaphold_magnitudes(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn gaphold_compute(levels: vector, threshold: f64, gap: f64) -> vector {
+    let mut last = -1;
+    let mut segments = 0;
+    let mut bridged = 0;
+    let mut i = 0;
+    while i < len(levels) {
+        if at(levels, i) > threshold {
+            let silent = i - last - 1;
+            if last < 0 || gaphold_num(silent) > gap {
+                segments += 1;
+            } else {
+                bridged += silent;
+            }
+            last = i;
+        }
+        i += 1;
+    }
+    [segments, bridged]
+}
+
+// Count activity segments while bridging short internal silences.
+// Returns [segments, bridged silent frames]. Leading and trailing silence are excluded. A gap exactly equal to the allowance is bridged.
+pub fn gaphold_segments(levels: vector, threshold: f64, gap: f64) -> vector {
+    if !gaphold_magnitudes(levels) { return []; }
+    if !(threshold >= 0.0 && threshold - threshold == 0.0) { return []; }
+    if !(gap >= 0.0 && gap <= 9007199254740991.0 && gap % 1.0 == 0.0) { return []; }
+    let result = gaphold_compute(levels, threshold, gap);
+    if !gaphold_finite(result) { return []; }
+    result
+}
+
+fn linnet_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn linnet_magnitudes(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn linnet_compute(levels: vector, threshold: f64, gap: f64, frame_ms: f64) -> vector {
+    let span = activityspan_bounds(levels, threshold);
+    let segments = gaphold_segments(levels, threshold, gap);
+    if len(span) == 0 || len(segments) == 0 {
+        return [];
+    }
+    if at(span, 0) < 0.0 {
+        return [-1, -1, 0, 0];
+    }
+    [at(span, 0) * frame_ms, at(span, 1) * frame_ms, at(segments, 0), (at(span, 2) + at(segments, 1)) * frame_ms]
+}
+
+// Summarize speech-activity intervals from a precomputed frame-level envelope.
+// Returns [first active millisecond, exclusive active end, segment count, retained active-or-bridged milliseconds]. A silent trace returns [-1,-1,0,0].
+pub fn linnet_segment(levels: vector, threshold: f64, gap: f64, frame_ms: f64) -> vector {
+    if !linnet_magnitudes(levels) { return []; }
+    if !(threshold >= 0.0 && threshold - threshold == 0.0) { return []; }
+    if !(gap >= 0.0 && gap <= 9007199254740991.0 && gap % 1.0 == 0.0) { return []; }
+    if !(frame_ms > 0.0 && frame_ms - frame_ms == 0.0) { return []; }
+    let result = linnet_compute(levels, threshold, gap, frame_ms);
+    if !linnet_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let levels = [0, 3, 0, 3, 0, 0, 3];
+    let threshold = 1.0;
+    let gap = 1.0;
+    let frame_ms = 10.0;
+    let result = linnet_segment(levels, threshold, gap, frame_ms);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

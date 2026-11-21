@@ -1,0 +1,92 @@
+// MergeCounts 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-mergecounts/tree/v0.1.0
+
+fn mergecounts_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn mergecounts_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn mergecounts_compute(left: vector, right: vector) -> vector {
+    let mut k = 1;
+    while k < len(left) {
+        if at(left, k) < at(left, k - 1) {
+            return [];
+        }
+        k += 1;
+    }
+    k = 1;
+    while k < len(right) {
+        if at(right, k) < at(right, k - 1) {
+            return [];
+        }
+        k += 1;
+    }
+    let mut a = 0;
+    let mut b = 0;
+    let mut shared = 0;
+    let mut only_a = 0;
+    let mut only_b = 0;
+    while a < len(left) || b < len(right) {
+        let mut key = 0.0;
+        if b == len(right) || (a < len(left) && at(left, a) < at(right, b)) {
+            key = at(left, a);
+            only_a += 1;
+        } else {
+            if a == len(left) || at(right, b) < at(left, a) {
+                key = at(right, b);
+                only_b += 1;
+            } else {
+                key = at(left, a);
+                shared += 1;
+            }
+        }
+        while a < len(left) && at(left, a) == key {
+            a += 1;
+        }
+        while b < len(right) && at(right, b) == key {
+            b += 1;
+        }
+    }
+    [shared, only_a, only_b]
+}
+
+// Count unique keys shared or exclusive to two sorted streams.
+// Returns [shared, left-only, right-only]. Repeats within a stream count once. Both streams must be nondecreasing; the merge uses two forward cursors.
+pub fn mergecounts_sets(left: vector, right: vector) -> vector {
+    if !mergecounts_integers(left) { return []; }
+    if !mergecounts_integers(right) { return []; }
+    let result = mergecounts_compute(left, right);
+    if !mergecounts_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let left = [1, 1, 2, 4];
+    let right = [2, 2, 3, 4];
+    let result = mergecounts_sets(left, right);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

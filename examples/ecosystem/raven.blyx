@@ -1,0 +1,172 @@
+// Raven 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-raven/tree/v0.1.0
+
+fn eventlevels_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn eventlevels_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn eventlevels_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn eventlevels_compute(severity: vector, threshold: f64) -> vector {
+    if threshold > 24.0 {
+        return [];
+    }
+    let mut count = 0;
+    let mut first = -1;
+    let mut peak = -1.0;
+    let mut i = 0;
+    while i < len(severity) {
+        let level = at(severity, i);
+        if level > 24.0 {
+            return [];
+        }
+        peak = eventlevels_max2(peak, level);
+        if level >= threshold {
+            if first < 0 {
+                first = i;
+            }
+            count += 1;
+        }
+        i += 1;
+    }
+    [count, peak, first]
+}
+
+// Count log records at or above an OpenTelemetry severity number.
+// Returns [qualifying records, greatest severity, first qualifying index]. Valid severity numbers are 0–24, with 0 unspecified. Empty streams use -1 for the maximum.
+pub fn eventlevels_count(severity: vector, threshold: f64) -> vector {
+    if !eventlevels_counts(severity) { return []; }
+    if !(threshold >= 0.0 && threshold <= 9007199254740991.0 && threshold % 1.0 == 0.0) { return []; }
+    let result = eventlevels_compute(severity, threshold);
+    if !eventlevels_finite(result) { return []; }
+    result
+}
+
+fn samplequota_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn samplequota_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn samplequota_compute(important: f64, ordinary: f64, capacity: f64) -> vector {
+    if important + ordinary > 9007199254740991.0 {
+        return [];
+    }
+    let first = samplequota_min2(important, capacity);
+    let rest = samplequota_min2(ordinary, capacity - first);
+    [first, rest, important + ordinary - first - rest]
+}
+
+// Allocate a bounded log buffer with higher priority for important records.
+// Returns [important retained, ordinary retained, dropped]. This computes counts for a host that selects individual records in arrival order.
+pub fn samplequota_plan(important: f64, ordinary: f64, capacity: f64) -> vector {
+    if !(important >= 0.0 && important <= 9007199254740991.0 && important % 1.0 == 0.0) { return []; }
+    if !(ordinary >= 0.0 && ordinary <= 9007199254740991.0 && ordinary % 1.0 == 0.0) { return []; }
+    if !(capacity >= 0.0 && capacity <= 9007199254740991.0 && capacity % 1.0 == 0.0) { return []; }
+    let result = samplequota_compute(important, ordinary, capacity);
+    if !samplequota_finite(result) { return []; }
+    result
+}
+
+fn raven_num(value: i64) -> f64 {
+    at([value], 0)
+}
+
+fn raven_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn raven_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn raven_compute(severity: vector, threshold: f64, capacity: f64) -> vector {
+    let levels = eventlevels_count(severity, threshold);
+    if len(levels) == 0 {
+        return [];
+    }
+    let important = at(levels, 0);
+    let slots = samplequota_plan(important, raven_num(len(severity)) - important, capacity);
+    if len(slots) == 0 {
+        return [];
+    }
+    [at(slots, 0), at(slots, 1), at(slots, 2), important - at(slots, 0)]
+}
+
+// Budget a bounded log buffer while preserving higher-severity events first.
+// Returns [important retained, ordinary retained, dropped, high-severity drops]. Use the plan to allocate slots in a host logger.
+pub fn raven_buffer(severity: vector, threshold: f64, capacity: f64) -> vector {
+    if !raven_counts(severity) { return []; }
+    if !(threshold >= 0.0 && threshold <= 9007199254740991.0 && threshold % 1.0 == 0.0) { return []; }
+    if !(capacity >= 0.0 && capacity <= 9007199254740991.0 && capacity % 1.0 == 0.0) { return []; }
+    let result = raven_compute(severity, threshold, capacity);
+    if !raven_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let severity = [9, 17, 9, 21, 21];
+    let threshold = 17.0;
+    let capacity = 2.0;
+    let result = raven_buffer(severity, threshold, capacity);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

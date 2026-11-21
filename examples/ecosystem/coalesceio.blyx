@@ -1,0 +1,98 @@
+// CoalesceIO 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-coalesceio/tree/v0.1.0
+
+fn coalesceio_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn coalesceio_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn coalesceio_positive_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 1.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn coalesceio_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn coalesceio_compute(starts: vector, lengths: vector, gap: f64) -> vector {
+    if len(starts) != len(lengths) {
+        return [];
+    }
+    let mut end = 0.0;
+    let mut fetched = 0.0;
+    let mut extra = 0.0;
+    let mut reads = 0;
+    let mut i = 0;
+    while i < len(starts) {
+        let a = at(starts, i);
+        let b = a + at(lengths, i);
+        if b > 9007199254740991.0 || (i > 0 && a < at(starts, i - 1)) {
+            return [];
+        }
+        if i == 0 || a - end > gap {
+            reads += 1;
+            fetched += b - a;
+            end = b;
+        } else {
+            extra += coalesceio_max2(0.0, a - end);
+            fetched += coalesceio_max2(0.0, b - end);
+            end = coalesceio_max2(end, b);
+        }
+        i += 1;
+    }
+    [reads, fetched, extra]
+}
+
+// Count merged reads and extra gap bytes for sorted byte requests.
+// Returns [merged reads, fetched bytes, extra bytes spanning gaps]. Overlapping bytes are counted once. Positive request lengths are required.
+pub fn coalesceio_plan(starts: vector, lengths: vector, gap: f64) -> vector {
+    if !coalesceio_counts(starts) { return []; }
+    if !coalesceio_positive_counts(lengths) { return []; }
+    if !(gap >= 0.0 && gap <= 9007199254740991.0 && gap % 1.0 == 0.0) { return []; }
+    let result = coalesceio_compute(starts, lengths, gap);
+    if !coalesceio_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let starts = [0, 5, 20];
+    let lengths = [4, 3, 2];
+    let gap = 1.0;
+    let result = coalesceio_plan(starts, lengths, gap);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

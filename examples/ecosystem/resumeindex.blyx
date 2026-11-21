@@ -1,0 +1,67 @@
+// ResumeIndex 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-resumeindex/tree/v0.1.0
+
+fn resumeindex_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn resumeindex_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn resumeindex_compute(checkpoints: vector, count: f64) -> vector {
+    let mut next = 0.0;
+    let mut repeats = 0;
+    let mut i = 0;
+    while i < len(checkpoints) {
+        let mark = at(checkpoints, i);
+        if mark >= count || mark > next {
+            return [];
+        }
+        if mark == next {
+            next += 1.0;
+        } else {
+            repeats += 1;
+        }
+        i += 1;
+    }
+    [next, repeats]
+}
+
+// Recover the first unfinished chunk from an ordered checkpoint log.
+// Returns [next chunk, replay count]. Duplicate checkpoints are accepted. A forward gap or out-of-range ID invalidates the log.
+pub fn resumeindex_prefix(checkpoints: vector, count: f64) -> vector {
+    if !resumeindex_counts(checkpoints) { return []; }
+    if !(count >= 0.0 && count <= 9007199254740991.0 && count % 1.0 == 0.0) { return []; }
+    let result = resumeindex_compute(checkpoints, count);
+    if !resumeindex_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let checkpoints = [0, 0, 1];
+    let count = 4.0;
+    let result = resumeindex_prefix(checkpoints, count);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

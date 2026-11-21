@@ -1,0 +1,198 @@
+// Nightingale 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-nightingale/tree/v0.1.0
+
+fn histquantile_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn histquantile_ceilpos(value: f64) -> f64 {
+    let rest = value % 1.0;
+    if rest > 0.0 {
+        return value - rest + 1.0;
+    }
+    value
+}
+
+fn histquantile_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn histquantile_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn histquantile_compute(counts: vector, probability: f64) -> vector {
+    let total = sum(counts);
+    if total <= 0.0 || total > 9007199254740991.0 {
+        return [];
+    }
+    let rank = histquantile_max2(1.0, histquantile_ceilpos(total * probability));
+    let mut seen = 0.0;
+    let mut i = 0;
+    while i < len(counts) {
+        seen += at(counts, i);
+        if seen >= rank {
+            return [i, rank, total];
+        }
+        i += 1;
+    }
+    []
+}
+
+// Locate a nearest-rank quantile in noncumulative histogram counts.
+// Returns [bucket index, one-based rank, total observations]. At probability zero select the first occupied bucket. Empty histograms are invalid.
+pub fn histquantile_bucket(counts: vector, probability: f64) -> vector {
+    if !histquantile_counts(counts) { return []; }
+    if !(probability >= 0.0 && probability <= 1.0) { return []; }
+    let result = histquantile_compute(counts, probability);
+    if !histquantile_finite(result) { return []; }
+    result
+}
+
+fn rankband_num(value: i64) -> f64 {
+    at([value], 0)
+}
+
+fn rankband_slot(key: f64, size: i64) -> i64 {
+    let mut lo = 0;
+    let mut hi = size;
+    while lo < hi {
+        let mid = lo + (hi - lo) / 2;
+        if at([mid], 0) < key {
+            lo = mid + 1;
+        } else {
+            hi = mid;
+        }
+    }
+    lo
+}
+
+fn rankband_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn rankband_compute(edges: vector, index: f64) -> vector {
+    if len(edges) < 2 || index >= rankband_num(len(edges) - 1) {
+        return [];
+    }
+    let mut i = 1;
+    while i < len(edges) {
+        if at(edges, i) <= at(edges, i - 1) {
+            return [];
+        }
+        i += 1;
+    }
+    let j = rankband_slot(index, len(edges));
+    let a = at(edges, j);
+    let b = at(edges, j + 1);
+    [a, b, b - a]
+}
+
+// Look up the finite interval represented by a histogram bin.
+// Edges must be strictly increasing. Returns [lower edge, upper edge, span]. Bins are half-open except the last, which may include its upper edge.
+pub fn rankband_interval(edges: vector, index: f64) -> vector {
+    if !rankband_finite(edges) { return []; }
+    if !(index >= 0.0 && index <= 9007199254740991.0 && index % 1.0 == 0.0) { return []; }
+    let result = rankband_compute(edges, index);
+    if !rankband_finite(result) { return []; }
+    result
+}
+
+fn nightingale_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn nightingale_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn nightingale_compute(counts: vector, edges: vector, probability: f64, threshold: f64) -> vector {
+    if len(edges) != len(counts) + 1 {
+        return [];
+    }
+    let rank = histquantile_bucket(counts, probability);
+    if len(rank) == 0 {
+        return [];
+    }
+    let band = rankband_interval(edges, at(rank, 0));
+    if len(band) == 0 {
+        return [];
+    }
+    let mut decision = 0;
+    if at(band, 1) < threshold {
+        decision = -1;
+    }
+    if at(band, 0) >= threshold {
+        decision = 1;
+    }
+    [at(band, 0), at(band, 1), at(rank, 1), decision]
+}
+
+// Bound a percentile from histogram counts without inventing a within-bin value.
+// Returns [lower bound, upper bound, rank, classification]. Classification is -1 when the whole interval is below threshold, 1 when entirely at or above, and 0 when the bins cannot decide. The upper-bound comparison is deliberately conservative.
+pub fn nightingale_quantile(counts: vector, edges: vector, probability: f64, threshold: f64) -> vector {
+    if !nightingale_counts(counts) { return []; }
+    if !nightingale_finite(edges) { return []; }
+    if !(probability >= 0.0 && probability <= 1.0) { return []; }
+    if !(threshold - threshold == 0.0) { return []; }
+    let result = nightingale_compute(counts, edges, probability, threshold);
+    if !nightingale_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let counts = [2, 6];
+    let edges = [0, 10, 30];
+    let probability = 0.5;
+    let threshold = 20.0;
+    let result = nightingale_quantile(counts, edges, probability, threshold);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

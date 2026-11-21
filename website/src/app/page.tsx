@@ -1,5 +1,5 @@
 import GuideIndex from "@/components/GuideIndex";
-import { bookEdition, buyMeACoffee, docs, githubSponsors, guideLink, playLink, website } from "@/lib/site";
+import { bookEdition, buyMeACoffee, docs, githubSponsors, guideLink, playLink, repository, website } from "@/lib/site";
 import samples from "@/lib/samples.json";
 export const metadata = {
     alternates: { canonical: (bookEdition ? docs : website) + "/" },
@@ -49,7 +49,7 @@ export default function Home() {
                         <a href="/examples">All examples →</a>
                     </div>
                     <div className="grid">
-                        {["weighted-mean", "package-linearfit", "package-retrieval"].map((id) => {
+                        {["weighted-mean", "package-warbler", "package-fulmar"].map((id) => {
                             const s = samples.find((x) => x.id === id)!;
                             return (
                                 <a
@@ -66,6 +66,10 @@ export default function Home() {
                                 </a>
                             );
                         })}
+                    </div>
+                    <div className="actions">
+                        <a href="/frameworks">Browse workflow frameworks by task</a>
+                        <a href={repository + "/releases/tag/ecosystem-v0.1.0"}>Download the 51 native workflow commands</a>
                     </div>
                 </section>
                 <section className="prose block">

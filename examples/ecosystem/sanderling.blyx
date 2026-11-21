@@ -1,0 +1,132 @@
+// Sanderling 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-sanderling/tree/v0.1.0
+
+fn freshclock_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn freshclock_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn freshclock_compute(age_at_store: f64, stored: f64, now: f64, lifetime: f64) -> vector {
+    if now < stored {
+        return [];
+    }
+    let age = age_at_store + (now - stored);
+    [age, freshclock_max2(0.0, lifetime - age), freshclock_max2(0.0, age - lifetime)]
+}
+
+// Advance an already calculated HTTP cache age on a monotonic clock.
+// Returns [current age, remaining freshness, stale age]. Supply corrected initial age. Equality with freshness lifetime is stale.
+pub fn freshclock_age(age_at_store: f64, stored: f64, now: f64, lifetime: f64) -> vector {
+    if !(age_at_store >= 0.0 && age_at_store - age_at_store == 0.0) { return []; }
+    if !(stored >= 0.0 && stored - stored == 0.0) { return []; }
+    if !(now >= 0.0 && now - now == 0.0) { return []; }
+    if !(lifetime >= 0.0 && lifetime - lifetime == 0.0) { return []; }
+    let result = freshclock_compute(age_at_store, stored, now, lifetime);
+    if !freshclock_finite(result) { return []; }
+    result
+}
+
+fn stalewindow_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn stalewindow_compute(age: f64, lifetime: f64, grace: f64, mandatory: f64) -> vector {
+    if mandatory > 1.0 {
+        return [];
+    }
+    if age < lifetime {
+        return [0, lifetime - age];
+    }
+    if mandatory == 0.0 && age - lifetime < grace {
+        return [1, grace - (age - lifetime)];
+    }
+    [2, 0]
+}
+
+// Classify a cache entry under an explicit stale-serving policy.
+// Returns [mode, ticks remaining in current window]. Mode 0 is fresh, 1 is stale within grace, 2 requires validation. Mandatory validation disables grace for stale entries.
+pub fn stalewindow_classify(age: f64, lifetime: f64, grace: f64, mandatory: f64) -> vector {
+    if !(age >= 0.0 && age - age == 0.0) { return []; }
+    if !(lifetime >= 0.0 && lifetime - lifetime == 0.0) { return []; }
+    if !(grace >= 0.0 && grace - grace == 0.0) { return []; }
+    if !(mandatory >= 0.0 && mandatory <= 9007199254740991.0 && mandatory % 1.0 == 0.0) { return []; }
+    let result = stalewindow_compute(age, lifetime, grace, mandatory);
+    if !stalewindow_finite(result) { return []; }
+    result
+}
+
+fn sanderling_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn sanderling_compute(age_at_store: f64, stored: f64, now: f64, lifetime: f64, grace: f64, mandatory: f64) -> vector {
+    let clock = freshclock_age(age_at_store, stored, now, lifetime);
+    if len(clock) == 0 {
+        return [];
+    }
+    let policy = stalewindow_classify(at(clock, 0), lifetime, grace, mandatory);
+    if len(policy) == 0 {
+        return [];
+    }
+    [at(policy, 0), at(clock, 0), at(policy, 1)]
+}
+
+// Choose a cache serving mode from stored age, local elapsed time and grace policy.
+// Returns [mode, current age, ticks until mode changes]. Mode 0 serves fresh, 1 serves under explicit stale grace, and 2 requires validation. The host parses and enforces other cache directives.
+pub fn sanderling_lookup(age_at_store: f64, stored: f64, now: f64, lifetime: f64, grace: f64, mandatory: f64) -> vector {
+    if !(age_at_store >= 0.0 && age_at_store - age_at_store == 0.0) { return []; }
+    if !(stored >= 0.0 && stored - stored == 0.0) { return []; }
+    if !(now >= 0.0 && now - now == 0.0) { return []; }
+    if !(lifetime >= 0.0 && lifetime - lifetime == 0.0) { return []; }
+    if !(grace >= 0.0 && grace - grace == 0.0) { return []; }
+    if !(mandatory >= 0.0 && mandatory <= 9007199254740991.0 && mandatory % 1.0 == 0.0) { return []; }
+    let result = sanderling_compute(age_at_store, stored, now, lifetime, grace, mandatory);
+    if !sanderling_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let age_at_store = 8.0;
+    let stored = 100.0;
+    let now = 105.0;
+    let lifetime = 10.0;
+    let grace = 6.0;
+    let mandatory = 0.0;
+    let result = sanderling_lookup(age_at_store, stored, now, lifetime, grace, mandatory);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

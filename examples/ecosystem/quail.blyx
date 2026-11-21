@@ -1,0 +1,155 @@
+// Quail 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-quail/tree/v0.1.0
+
+fn realqubit_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn realqubit_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn realqubit_compute(state: vector, gate: f64) -> vector {
+    if len(state) != 2 || realqubit_absolute(dot(state, state) - 1.0) > 0.000000001 || gate > 3.0 {
+        return [];
+    }
+    let a = at(state, 0);
+    let b = at(state, 1);
+    if gate == 0.0 {
+        return [a, b];
+    }
+    if gate == 1.0 {
+        return [b, a];
+    }
+    if gate == 2.0 {
+        return [a, -b];
+    }
+    let scale = 0.7071067811865475;
+    [(a + b) * scale, (a - b) * scale]
+}
+
+// Apply I, X, Z or Hadamard to a normalized real-amplitude qubit.
+// Input [a,b] must have unit squared norm within 1e-9. Gate IDs 0,1,2,3 denote I,X,Z,H. Returns transformed amplitudes.
+pub fn realqubit_gate(state: vector, gate: f64) -> vector {
+    if !realqubit_finite(state) { return []; }
+    if !(gate >= 0.0 && gate <= 9007199254740991.0 && gate % 1.0 == 0.0) { return []; }
+    let result = realqubit_compute(state, gate);
+    if !realqubit_finite(result) { return []; }
+    result
+}
+
+fn readoutfreq_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn readoutfreq_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn readoutfreq_compute(state: vector, zero: f64, one: f64) -> vector {
+    if len(state) != 2 || readoutfreq_absolute(dot(state, state) - 1.0) > 0.000000001 || zero + one <= 0.0 || zero + one > 9007199254740991.0 {
+        return [];
+    }
+    let prob = at(state, 1) * at(state, 1);
+    let seen = one / (zero + one);
+    [prob, seen, readoutfreq_absolute(prob - seen)]
+}
+
+// Compare computational-basis shot frequencies to a real qubit's probabilities.
+// Returns [predicted P(1), observed P(1), absolute difference]. At least one observed shot and a normalized two-amplitude state are required.
+pub fn readoutfreq_compare(state: vector, zero: f64, one: f64) -> vector {
+    if !readoutfreq_finite(state) { return []; }
+    if !(zero >= 0.0 && zero <= 9007199254740991.0 && zero % 1.0 == 0.0) { return []; }
+    if !(one >= 0.0 && one <= 9007199254740991.0 && one % 1.0 == 0.0) { return []; }
+    let result = readoutfreq_compute(state, zero, one);
+    if !readoutfreq_finite(result) { return []; }
+    result
+}
+
+fn quail_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn quail_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn quail_compute(state: vector, gates: vector, zero: f64, one: f64) -> vector {
+    let mut wave = realqubit_gate(state, 0.0);
+    if len(wave) == 0 {
+        return [];
+    }
+    let mut i = 0;
+    while i < len(gates) {
+        wave = realqubit_gate(wave, at(gates, i));
+        if len(wave) == 0 {
+            return [];
+        }
+        i += 1;
+    }
+    readoutfreq_compare(wave, zero, one)
+}
+
+// Simulate a short real-amplitude single-qubit circuit and compare shot counts.
+// Returns [predicted P(1), observed P(1), absolute discrepancy]. Gates are applied left to right. Complex phase gates and hardware execution require a different state representation.
+pub fn quail_experiment(state: vector, gates: vector, zero: f64, one: f64) -> vector {
+    if !quail_finite(state) { return []; }
+    if !quail_counts(gates) { return []; }
+    if !(zero >= 0.0 && zero <= 9007199254740991.0 && zero % 1.0 == 0.0) { return []; }
+    if !(one >= 0.0 && one <= 9007199254740991.0 && one % 1.0 == 0.0) { return []; }
+    let result = quail_compute(state, gates, zero, one);
+    if !quail_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let state = [1, 0];
+    let gates = [1, 2];
+    let zero = 2.0;
+    let one = 6.0;
+    let result = quail_experiment(state, gates, zero, one);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

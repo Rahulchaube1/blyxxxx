@@ -1,0 +1,158 @@
+// Hoopoe 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-hoopoe/tree/v0.1.0
+
+fn aspectfit_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn aspectfit_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn aspectfit_floorpos(value: f64) -> f64 {
+    value - value % 1.0
+}
+
+fn aspectfit_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn aspectfit_compute(width: f64, height: f64, box_w: f64, box_h: f64, upscale: f64) -> vector {
+    if upscale > 1.0 {
+        return [];
+    }
+    let mut scale = aspectfit_min2(box_w / width, box_h / height);
+    if upscale == 0.0 {
+        scale = aspectfit_min2(scale, 1.0);
+    }
+    [aspectfit_max2(1.0, aspectfit_min2(box_w, aspectfit_floorpos(width * scale))), aspectfit_max2(1.0, aspectfit_min2(box_h, aspectfit_floorpos(height * scale))), scale]
+}
+
+// Fit an image inside a box while preserving aspect ratio.
+// Returns [integer output width, height, scale]. Downward rounding and a one-pixel minimum preserve a nonempty raster. Set upscale to 0 to keep small images at native size.
+pub fn aspectfit_contain(width: f64, height: f64, box_w: f64, box_h: f64, upscale: f64) -> vector {
+    if !(width >= 1.0 && width <= 9007199254740991.0 && width % 1.0 == 0.0) { return []; }
+    if !(height >= 1.0 && height <= 9007199254740991.0 && height % 1.0 == 0.0) { return []; }
+    if !(box_w >= 1.0 && box_w <= 9007199254740991.0 && box_w % 1.0 == 0.0) { return []; }
+    if !(box_h >= 1.0 && box_h <= 9007199254740991.0 && box_h % 1.0 == 0.0) { return []; }
+    if !(upscale >= 0.0 && upscale <= 9007199254740991.0 && upscale % 1.0 == 0.0) { return []; }
+    let result = aspectfit_compute(width, height, box_w, box_h, upscale);
+    if !aspectfit_finite(result) { return []; }
+    result
+}
+
+fn rasterbytes_ceilpos(value: f64) -> f64 {
+    let rest = value % 1.0;
+    if rest > 0.0 {
+        return value - rest + 1.0;
+    }
+    value
+}
+
+fn rasterbytes_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn rasterbytes_compute(width: f64, height: f64, channels: f64, alignment: f64) -> vector {
+    let raw = width * channels;
+    let stride = rasterbytes_ceilpos(raw / alignment) * alignment;
+    let bytes = stride * height;
+    if bytes > 9007199254740991.0 {
+        return [];
+    }
+    [raw, stride, bytes]
+}
+
+// Estimate uncompressed raster storage with aligned scanlines.
+// Returns [bytes per unpadded row, aligned stride, total bytes]. Each channel takes one byte. Counts must stay in the exact integer range.
+pub fn rasterbytes_storage(width: f64, height: f64, channels: f64, alignment: f64) -> vector {
+    if !(width >= 1.0 && width <= 9007199254740991.0 && width % 1.0 == 0.0) { return []; }
+    if !(height >= 1.0 && height <= 9007199254740991.0 && height % 1.0 == 0.0) { return []; }
+    if !(channels >= 1.0 && channels <= 9007199254740991.0 && channels % 1.0 == 0.0) { return []; }
+    if !(alignment >= 1.0 && alignment <= 9007199254740991.0 && alignment % 1.0 == 0.0) { return []; }
+    let result = rasterbytes_compute(width, height, channels, alignment);
+    if !rasterbytes_finite(result) { return []; }
+    result
+}
+
+fn hoopoe_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn hoopoe_compute(width: f64, height: f64, box_w: f64, box_h: f64, channels: f64, align: f64, memory: f64) -> vector {
+    let fit = aspectfit_contain(width, height, box_w, box_h, 0.0);
+    if len(fit) == 0 {
+        return [];
+    }
+    let cost = rasterbytes_storage(at(fit, 0), at(fit, 1), channels, align);
+    if len(cost) == 0 {
+        return [];
+    }
+    let mut ok = 0;
+    if at(cost, 2) <= memory {
+        ok = 1;
+    }
+    [at(fit, 0), at(fit, 1), at(cost, 1), at(cost, 2), ok]
+}
+
+// Plan a thumbnail and check the decoded pixel buffer against a byte budget.
+// Returns [output width, output height, aligned stride, bytes, fits budget]. Includes one output buffer with one byte per channel. Decoder and encoder overhead are outside this estimate.
+pub fn hoopoe_thumbnail(width: f64, height: f64, box_w: f64, box_h: f64, channels: f64, align: f64, memory: f64) -> vector {
+    if !(width >= 1.0 && width <= 9007199254740991.0 && width % 1.0 == 0.0) { return []; }
+    if !(height >= 1.0 && height <= 9007199254740991.0 && height % 1.0 == 0.0) { return []; }
+    if !(box_w >= 1.0 && box_w <= 9007199254740991.0 && box_w % 1.0 == 0.0) { return []; }
+    if !(box_h >= 1.0 && box_h <= 9007199254740991.0 && box_h % 1.0 == 0.0) { return []; }
+    if !(channels >= 1.0 && channels <= 9007199254740991.0 && channels % 1.0 == 0.0) { return []; }
+    if !(align >= 1.0 && align <= 9007199254740991.0 && align % 1.0 == 0.0) { return []; }
+    if !(memory >= 0.0 && memory <= 9007199254740991.0 && memory % 1.0 == 0.0) { return []; }
+    let result = hoopoe_compute(width, height, box_w, box_h, channels, align, memory);
+    if !hoopoe_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let width = 400.0;
+    let height = 200.0;
+    let box_w = 100.0;
+    let box_h = 100.0;
+    let channels = 3.0;
+    let align = 4.0;
+    let memory = 14000.0;
+    let result = hoopoe_thumbnail(width, height, box_w, box_h, channels, align, memory);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

@@ -74,6 +74,110 @@ The release supports synchronous functions, recursion, control flow and numeric 
 
 - [Heron · Audit a sensor heartbeat trace](https://doc.blyx-lang.space/guide/heron) — Track one sensor feed’s accepted messages, duplicate sequence numbers, out-of-order arrivals and missed deadlines.
 
+## Workflow recipes
+
+- [Oriole · Decide when a reviewed revision can go live](https://doc.blyx-lang.space/guide/oriole) — Decide whether a scheduled revision can go live after independent review.
+
+- [Avocet · Reorder stock after reservations](https://doc.blyx-lang.space/guide/avocet) — Plan replenishment after existing reservations and supplier lot sizes.
+
+- [Ibis · Reconcile split invoice payments](https://doc.blyx-lang.space/guide/ibis) — Reconcile an invoice with split payments in integer minor units.
+
+- [Pipit · Resume a batch after a failed command](https://doc.blyx-lang.space/guide/pipit) — Plan the next CLI batch from child exit codes and a failure allowance.
+
+- [Nuthatch · Keep terminal help visible after a resize](https://doc.blyx-lang.space/guide/nuthatch) — Wrap a message and preserve a valid scroll position after resizing a terminal.
+
+- [Turnstone · Restart an interrupted chunked file job](https://doc.blyx-lang.space/guide/turnstone) — Resume a chunked file job from acknowledged checkpoints.
+
+- [Osprey · Score detections at the edge of a camera frame](https://doc.blyx-lang.space/guide/osprey) — Score a detection against a reference after clipping both to the camera frame.
+
+- [Warbler · Distinguish a clipped transient from a sustained overload](https://doc.blyx-lang.space/guide/warbler) — Flag sustained clipping while reporting the energy of an audio frame.
+
+- [Linnet · Bridge short pauses in a speech-activity trace](https://doc.blyx-lang.space/guide/linnet) — Summarize speech-activity intervals from a precomputed frame-level envelope.
+
+- [Curlew · Cover a survey that crosses a grid origin](https://doc.blyx-lang.space/guide/curlew) — Plan grid tiles covering every observation in a projected point survey.
+
+- [Egret · Compare abundance and diversity in a field survey](https://doc.blyx-lang.space/guide/egret) — Summarize richness, singletons and dominance in an ecological field survey.
+
+- [Tanager · Audit a directed graph export](https://doc.blyx-lang.space/guide/tanager) — Audit a directed edge list before interpreting a vertex's degree.
+
+- [Merganser · Measure a loss that recovered before the final observation](https://doc.blyx-lang.space/guide/merganser) — Report drawdown depth and time below the running peak for a historical series.
+
+- [Pintail · Measure turnover between two weight snapshots](https://doc.blyx-lang.space/guide/pintail) — Compare long-only portfolio snapshots under a one-way turnover budget.
+
+- [Siskin · Find a funding gap inside an otherwise positive cash schedule](https://doc.blyx-lang.space/guide/siskin) — Inspect a cash-flow schedule for shortfalls that disappear by the closing date.
+
+- [Sandpiper · Schedule redelivery after a lease expires](https://doc.blyx-lang.space/guide/sandpiper) — Schedule a deterministic redelivery after both lease expiry and retry backoff.
+
+- [Petrel · Decide whether a queued request can afford to wait](https://doc.blyx-lang.space/guide/petrel) — Admit an immediate charge or report the wait a request can afford.
+
+- [Fulmar · Commit offsets without skipping unfinished deliveries](https://doc.blyx-lang.space/guide/fulmar) — Choose a contiguous commit offset from an out-of-order delivery trace.
+
+- [Waxwing · Budget an expanded GraphQL field plan](https://doc.blyx-lang.space/guide/waxwing) — Check the depth and weighted resolver cost of an expanded GraphQL field plan.
+
+- [Martin · Fit a retry into an RPC deadline](https://doc.blyx-lang.space/guide/martin) — Decide whether another RPC attempt fits the remaining end-to-end deadline.
+
+- [Kinglet · Serve a byte range at end of file](https://doc.blyx-lang.space/guide/kinglet) — Plan a full or single-range HTTP response against a known representation size.
+
+- [Barnowl · Find clock reversals and gaps in an audit export](https://doc.blyx-lang.space/guide/barnowl) — Inspect a supplied audit export for sequence gaps, replays and clock reversals.
+
+- [Harrier · Apply freshness policy to a verified session](https://doc.blyx-lang.space/guide/harrier) — Apply time and assurance policy to a session after upstream identity verification.
+
+- [Plover · Gate an alert on short and long error windows](https://doc.blyx-lang.space/guide/plover) — Gate alerts on error-budget burn in both a short and a long window.
+
+- [Jacana · Compare a crude rate with a standardized rate](https://doc.blyx-lang.space/guide/jacana) — Compare a crude event rate with a directly standardized rate.
+
+- [Redstart · Update a binary-event probability after observations](https://doc.blyx-lang.space/guide/redstart) — Update a binary-event model and report uncertainty in its probability.
+
+- [Quail · Compare a real-qubit circuit with observed shots](https://doc.blyx-lang.space/guide/quail) — Simulate a short real-amplitude single-qubit circuit and compare shot counts.
+
+- [Skimmer · Read parity alongside two-bit marginals](https://doc.blyx-lang.space/guide/skimmer) — Compare parity and marginal balance in two-bit shot data.
+
+- [Magpie · Integrate unevenly spaced observations](https://doc.blyx-lang.space/guide/magpie) — Integrate an increasing sample grid and flag under-sampled sections.
+
+- [Flamingo · Choose chart ticks for an observed range](https://doc.blyx-lang.space/guide/flamingo) — Produce chart-ready axis limits and labeled tick spacing from raw data.
+
+- [Bittern · Decide whether the next database migration can run](https://doc.blyx-lang.space/guide/bittern) — Plan the next migration only after history, fingerprints and dirty state agree.
+
+- [Grebe · Resume a keyset page from its last emitted key](https://doc.blyx-lang.space/guide/grebe) — Build a repeatable keyset page and return the exact next cursor.
+
+- [Dunlin · Audit a parent and child table before import](https://doc.blyx-lang.space/guide/dunlin) — Audit a table export for duplicate parents and orphaned child rows.
+
+- [Sanderling · Carry cache age across a local storage interval](https://doc.blyx-lang.space/guide/sanderling) — Choose a cache serving mode from stored age, local elapsed time and grace policy.
+
+- [Cormorant · Separate packet jitter from a fixed clock offset](https://doc.blyx-lang.space/guide/cormorant) — Separate variation in packet delivery from a constant difference between clocks.
+
+- [Bulbul · Validate required and extra object fields](https://doc.blyx-lang.space/guide/bulbul) — Check required and extra fields in an already parsed object.
+
+- [Fantail · Find which settings layer supplied an invalid override](https://doc.blyx-lang.space/guide/fantail) — Resolve a layered setting and report where an invalid override came from.
+
+- [Swallow · Verify a record table before interpreting a byte offset](https://doc.blyx-lang.space/guide/swallow) — Validate an exported payload's declared spans and checksum, then locate a byte.
+
+- [Lapwing · Paginate a report with indivisible paragraphs](https://doc.blyx-lang.space/guide/lapwing) — Preflight fixed-line document pagination with indivisible paragraphs.
+
+- [Hoopoe · Check a thumbnail buffer before allocation](https://doc.blyx-lang.space/guide/hoopoe) — Plan a thumbnail and check the decoded pixel buffer against a byte budget.
+
+- [Spoonbill · Detect overlapping captions in a rational time base](https://doc.blyx-lang.space/guide/spoonbill) — Preflight caption cue timings against an explicit overlap policy.
+
+- [Raven · Budget a log buffer during an error burst](https://doc.blyx-lang.space/guide/raven) — Budget a bounded log buffer while preserving higher-severity events first.
+
+- [Robin · Convert a civil date into comparable day numbers](https://doc.blyx-lang.space/guide/robin) — Convert a validated civil date into an ordinal, weekday and comparable day number.
+
+- [Starling · Size a resource pool from overlapping bookings](https://doc.blyx-lang.space/guide/starling) — Estimate resource capacity and actual occupied time from a booking schedule.
+
+- [Blackbird · Resolve both occurrences of an ambiguous wall time](https://doc.blyx-lang.space/guide/blackbird) — Resolve a wall-clock timestamp at a known gap or fold without guessing its offset.
+
+- [Towhee · Locate the first actionable source-style violation](https://doc.blyx-lang.space/guide/towhee) — Combine indentation and line-width diagnostics for a measured source file.
+
+- [Bowerbird · Check a proposed dependency upgrade numerically](https://doc.blyx-lang.space/guide/bowerbird) — Decide whether a proposed numeric-core dependency upgrade fits a declared version range.
+
+- [Albatross · Estimate a build's critical-path lower bound](https://doc.blyx-lang.space/guide/albatross) — Estimate a build forest's scheduling lower bound from dependencies and worker capacity.
+
+- [Chaffinch · Reconcile two sorted snapshots with repeated keys](https://doc.blyx-lang.space/guide/chaffinch) — Reconcile sorted collection snapshots without materializing their union.
+
+- [Pelican · Compare merged reads with aligned per-request reads](https://doc.blyx-lang.space/guide/pelican) — Compare per-request aligned I/O with coalesced unaligned reads for a sorted trace.
+
+- [Nightingale · Bound a percentile from histogram counts](https://doc.blyx-lang.space/guide/nightingale) — Bound a percentile from histogram counts without inventing a within-bin value.
+
 ## Local toolchain
 
 - [Install and verify Blyx](https://doc.blyx-lang.space/guide/installation) — Choose a binary or package manager, locate the executable, and verify the exact compiler version.

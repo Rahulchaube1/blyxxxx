@@ -1,0 +1,70 @@
+// GregorianDay 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-gregorianday/tree/v0.1.0
+
+fn gregorianday_num(value: i64) -> f64 {
+    at([value], 0)
+}
+
+fn gregorianday_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn gregorianday_compute(year: f64, month: f64, day: f64) -> vector {
+    if year > 9999.0 || month > 12.0 {
+        return [];
+    }
+    let mut leap = 0.0;
+    if year % 4.0 == 0.0 && (year % 100.0 != 0.0 || year % 400.0 == 0.0) {
+        leap = 1.0;
+    }
+    let months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    let mut i = 0;
+    let mut ordinal = day;
+    while gregorianday_num(i) + 1.0 < month {
+        ordinal += at(months, i);
+        if i == 1 {
+            ordinal += leap;
+        }
+        i += 1;
+    }
+    let mut limit = at(months, i);
+    if i == 1 {
+        limit += leap;
+    }
+    if day > limit {
+        return [];
+    }
+    [ordinal, leap, limit]
+}
+
+// Validate a proleptic Gregorian date and calculate its day-of-year.
+// Returns [ordinal starting at 1, leap-year flag, days in month]. Supported years are 1–9999.
+pub fn gregorianday_ordinal(year: f64, month: f64, day: f64) -> vector {
+    if !(year >= 1.0 && year <= 9007199254740991.0 && year % 1.0 == 0.0) { return []; }
+    if !(month >= 1.0 && month <= 9007199254740991.0 && month % 1.0 == 0.0) { return []; }
+    if !(day >= 1.0 && day <= 9007199254740991.0 && day % 1.0 == 0.0) { return []; }
+    let result = gregorianday_compute(year, month, day);
+    if !gregorianday_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let year = 2000.0;
+    let month = 2.0;
+    let day = 29.0;
+    let result = gregorianday_ordinal(year, month, day);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

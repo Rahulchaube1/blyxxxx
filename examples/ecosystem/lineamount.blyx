@@ -1,0 +1,70 @@
+// LineAmount 0.1.1 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-lineamount/tree/v0.1.1
+
+fn lineamount_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn lineamount_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn lineamount_compute(units: vector, prices: vector) -> vector {
+    if len(units) != len(prices) {
+        return [];
+    }
+    let mut total = 0.0;
+    let mut lines = 0;
+    let mut i = 0;
+    while i < len(units) {
+        let q = at(units, i);
+        let price = at(prices, i);
+        if q > 0.0 && price > (9007199254740991.0 - total) / q {
+            return [];
+        }
+        total += q * price;
+        if q > 0.0 {
+            lines += 1;
+        }
+        i += 1;
+    }
+    [total, lines]
+}
+
+// Extend paired invoice quantities and prices in integer minor units.
+// Returns [subtotal, nonzero lines]. Rejects unmatched columns and totals beyond exact integer representation.
+pub fn lineamount_subtotal(units: vector, prices: vector) -> vector {
+    if !lineamount_counts(units) { return []; }
+    if !lineamount_counts(prices) { return []; }
+    let result = lineamount_compute(units, prices);
+    if !lineamount_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let units = [2, 3];
+    let prices = [100, 50];
+    let result = lineamount_subtotal(units, prices);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

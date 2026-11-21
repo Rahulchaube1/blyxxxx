@@ -1,0 +1,67 @@
+// AuditGaps 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-auditgaps/tree/v0.1.0
+
+fn auditgaps_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn auditgaps_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn auditgaps_compute(ids: vector) -> vector {
+    if len(ids) == 0 {
+        return [0, 0, -1];
+    }
+    let mut high = at(ids, 0);
+    let mut holes = 0.0;
+    let mut replay = 0;
+    let mut i = 1;
+    while i < len(ids) {
+        let id = at(ids, i);
+        if id <= high {
+            replay += 1;
+        } else {
+            holes += id - high - 1.0;
+            high = id;
+        }
+        i += 1;
+    }
+    [holes, replay, high]
+}
+
+// Count forward gaps and nonadvancing IDs in an audit export.
+// Returns [missing at first observation, nonadvancing rows, highest observed ID]. The first row establishes the baseline; the empty sentinel is -1.
+pub fn auditgaps_sequence(ids: vector) -> vector {
+    if !auditgaps_counts(ids) { return []; }
+    let result = auditgaps_compute(ids);
+    if !auditgaps_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let ids = [10, 12, 12, 11, 13];
+    let result = auditgaps_sequence(ids);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

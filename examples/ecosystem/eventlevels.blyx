@@ -1,0 +1,80 @@
+// EventLevels 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-eventlevels/tree/v0.1.0
+
+fn eventlevels_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn eventlevels_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn eventlevels_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn eventlevels_compute(severity: vector, threshold: f64) -> vector {
+    if threshold > 24.0 {
+        return [];
+    }
+    let mut count = 0;
+    let mut first = -1;
+    let mut peak = -1.0;
+    let mut i = 0;
+    while i < len(severity) {
+        let level = at(severity, i);
+        if level > 24.0 {
+            return [];
+        }
+        peak = eventlevels_max2(peak, level);
+        if level >= threshold {
+            if first < 0 {
+                first = i;
+            }
+            count += 1;
+        }
+        i += 1;
+    }
+    [count, peak, first]
+}
+
+// Count log records at or above an OpenTelemetry severity number.
+// Returns [qualifying records, greatest severity, first qualifying index]. Valid severity numbers are 0–24, with 0 unspecified. Empty streams use -1 for the maximum.
+pub fn eventlevels_count(severity: vector, threshold: f64) -> vector {
+    if !eventlevels_counts(severity) { return []; }
+    if !(threshold >= 0.0 && threshold <= 9007199254740991.0 && threshold % 1.0 == 0.0) { return []; }
+    let result = eventlevels_compute(severity, threshold);
+    if !eventlevels_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let severity = [9, 17, 13, 21];
+    let threshold = 17.0;
+    let result = eventlevels_count(severity, threshold);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

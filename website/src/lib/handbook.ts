@@ -45,6 +45,10 @@ export const stages = [
         "Build a complete project with a released framework and test its behavior on an edge case.",
     ],
     [
+        "Workflow recipes",
+        "Work through a concrete decision with a framework, inspect its two libraries, then change the input and check the result.",
+    ],
+    [
         "Local toolchain",
         "Move to a local project, diagnose a failure and build a native executable.",
     ],

@@ -2,6 +2,7 @@ import data from "../../../public/data/benchmarks.json";
 import modelgate from "../../../public/data/modelgate-benchmark.json";
 import linearfit from "../../../public/data/linearfit-benchmark.json";
 import blyxtorch from "../../../public/data/blyxtorch-benchmark.json";
+import workflows from "../../../public/data/workflow-benchmarks.json";
 import { repository } from "@/lib/site";
 export const metadata = { title: "Performance measurements" };
 export default function Benchmarks() {
@@ -13,6 +14,20 @@ export default function Benchmarks() {
                     Timings, inputs and reproduction instructions for Blyx training, evaluation and numerical workloads.
                 </p>
             </header>
+            <section id="workflows" className="prose block">
+                <h2>Audio metering and calendar operations</h2>
+                <p>Warbler measured peak, energy and clipping on a 64-sample frame with a varying threshold. Its CPython reference used one loop. Robin calculated the day number, weekday, day of year and month length. Its reference used Python’s datetime and calendar modules.</p>
+                <div className="table-box"><table>
+                    <caption>Median elapsed milliseconds for {workflows.iterations.toLocaleString("en-US")} calls per process</caption>
+                    <thead><tr><th scope="col">Workflow</th><th scope="col">Native Blyx</th><th scope="col">CPython reference</th></tr></thead>
+                    <tbody>{workflows.workloads.map((w) => <tr key={w.slug}>
+                        <th scope="row"><a href={"/packages/" + w.slug}>{w.slug === "warbler" ? "Warbler" : "Robin"}</a></th>
+                        <td>{w.medianMs.blyx} ms</td><td>{w.medianMs.python} ms</td>
+                    </tr>)}</tbody>
+                </table></div>
+                <p>{workflows.system}, {workflows.blyxc}, CPython {workflows.python}. After {workflows.warmupPairs} warm-up pairs, the harness alternated launch order for {workflows.measuredRuns} measured pairs and checked each output checksum. Timings include process startup and the batch. Both references receive valid inputs. Installation and compilation finish before timing begins.</p>
+                <div className="actions"><a href={repository + "/blob/blyx-main/tools/bench-ecosystem.py"}>Reproduce both workloads</a><a href="/data/workflow-benchmarks.json">All timings and environment</a></div>
+            </section>
             <section id="blyxtorch" className="prose">
                 <h2>Score a small neural network on {blyxtorch.rows.toLocaleString("en-US")} rows</h2>
                 <p>BlyxTorch and CPU PyTorch loaded the same 17 weights, read a numerical CSV and returned the mean binary cross-entropy for a two-input, four-hidden-unit classifier. The harness checked every result. All implementations used one CPU thread on the same Windows x64 machine.</p>

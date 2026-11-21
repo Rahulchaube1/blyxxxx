@@ -1,0 +1,185 @@
+// Pintail 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-pintail/tree/v0.1.0
+
+fn weightdrift_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn weightdrift_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn weightdrift_probabilities(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 1.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn weightdrift_compute(current: vector, target: vector) -> vector {
+    if len(current) == 0 || len(current) != len(target) {
+        return [];
+    }
+    let mut winner = 0;
+    let mut delta = at(current, 0) - at(target, 0);
+    let mut i = 1;
+    while i < len(current) {
+        let d = at(current, i) - at(target, i);
+        if weightdrift_absolute(d) > weightdrift_absolute(delta) {
+            winner = i;
+            delta = d;
+        }
+        i += 1;
+    }
+    [winner, delta, weightdrift_absolute(delta)]
+}
+
+// Find the largest per-asset deviation between two weight vectors.
+// Returns [index, signed current minus target weight, absolute deviation]. First index wins an absolute tie.
+pub fn weightdrift_largest(current: vector, target: vector) -> vector {
+    if !weightdrift_probabilities(current) { return []; }
+    if !weightdrift_probabilities(target) { return []; }
+    let result = weightdrift_compute(current, target);
+    if !weightdrift_finite(result) { return []; }
+    result
+}
+
+fn turnover_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn turnover_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn turnover_probabilities(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 1.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn turnover_compute(current: vector, target: vector) -> vector {
+    if len(current) != len(target) || turnover_absolute(sum(current) - 1.0) > 0.000000001 || turnover_absolute(sum(target) - 1.0) > 0.000000001 {
+        return [];
+    }
+    let mut buys = 0.0;
+    let mut sells = 0.0;
+    let mut i = 0;
+    while i < len(current) {
+        let d = at(target, i) - at(current, i);
+        if d > 0.0 {
+            buys += d;
+        } else {
+            sells -= d;
+        }
+        i += 1;
+    }
+    [(buys + sells) / 2.0, buys, sells]
+}
+
+// Calculate one-way turnover for two fully allocated long-only weight vectors.
+// Returns [one-way turnover, total weight increases, total weight decreases]. Each portfolio must sum to one within 1e-9.
+pub fn turnover_one_way(current: vector, target: vector) -> vector {
+    if !turnover_probabilities(current) { return []; }
+    if !turnover_probabilities(target) { return []; }
+    let result = turnover_compute(current, target);
+    if !turnover_finite(result) { return []; }
+    result
+}
+
+fn pintail_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn pintail_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn pintail_probabilities(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 1.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn pintail_compute(current: vector, target: vector, turnover_cap: f64) -> vector {
+    let drift = weightdrift_largest(current, target);
+    let trades = turnover_one_way(current, target);
+    if len(drift) == 0 || len(trades) == 0 {
+        return [];
+    }
+    [at(drift, 0), at(drift, 2), at(trades, 0), pintail_max2(0.0, at(trades, 0) - turnover_cap)]
+}
+
+// Compare long-only portfolio snapshots under a one-way turnover budget.
+// Returns [largest drift index, absolute asset drift, one-way turnover, excess over the budget]. Inputs are aligned historical or hypothetical weights, including cash if applicable.
+pub fn pintail_compare(current: vector, target: vector, turnover_cap: f64) -> vector {
+    if !pintail_probabilities(current) { return []; }
+    if !pintail_probabilities(target) { return []; }
+    if !(turnover_cap >= 0.0 && turnover_cap <= 1.0) { return []; }
+    let result = pintail_compute(current, target, turnover_cap);
+    if !pintail_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let current = [0.75, 0.25];
+    let target = [0.5, 0.5];
+    let turnover_cap = 0.125;
+    let result = pintail_compare(current, target, turnover_cap);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

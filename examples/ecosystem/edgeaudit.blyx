@@ -1,0 +1,72 @@
+// EdgeAudit 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-edgeaudit/tree/v0.1.0
+
+fn edgeaudit_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn edgeaudit_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn edgeaudit_compute(starts: vector, ends: vector) -> vector {
+    if len(starts) != len(ends) {
+        return [];
+    }
+    let mut dup = 0;
+    let mut loops = 0;
+    let mut i = 0;
+    while i < len(starts) {
+        if at(starts, i) == at(ends, i) {
+            loops += 1;
+        }
+        let mut j = 0;
+        while j < i {
+            if at(starts, i) == at(starts, j) && at(ends, i) == at(ends, j) {
+                dup += 1;
+                break;
+            }
+            j += 1;
+        }
+        i += 1;
+    }
+    [dup, loops, len(starts) - dup]
+}
+
+// Audit exact repeated directed edges and self-loops.
+// Returns [duplicate occurrences beyond the first, self-loop occurrences, unique directed edges]. Reversed edges are distinct.
+pub fn edgeaudit_duplicates(starts: vector, ends: vector) -> vector {
+    if !edgeaudit_integers(starts) { return []; }
+    if !edgeaudit_integers(ends) { return []; }
+    let result = edgeaudit_compute(starts, ends);
+    if !edgeaudit_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let starts = [1, 1, 2];
+    let ends = [2, 2, 2];
+    let result = edgeaudit_duplicates(starts, ends);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

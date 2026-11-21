@@ -1,0 +1,74 @@
+// GapHold 0.1.1 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-gaphold/tree/v0.1.1
+
+fn gaphold_num(value: i64) -> f64 {
+    at([value], 0)
+}
+
+fn gaphold_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn gaphold_magnitudes(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn gaphold_compute(levels: vector, threshold: f64, gap: f64) -> vector {
+    let mut last = -1;
+    let mut segments = 0;
+    let mut bridged = 0;
+    let mut i = 0;
+    while i < len(levels) {
+        if at(levels, i) > threshold {
+            let silent = i - last - 1;
+            if last < 0 || gaphold_num(silent) > gap {
+                segments += 1;
+            } else {
+                bridged += silent;
+            }
+            last = i;
+        }
+        i += 1;
+    }
+    [segments, bridged]
+}
+
+// Count activity segments while bridging short internal silences.
+// Returns [segments, bridged silent frames]. Leading and trailing silence are excluded. A gap exactly equal to the allowance is bridged.
+pub fn gaphold_segments(levels: vector, threshold: f64, gap: f64) -> vector {
+    if !gaphold_magnitudes(levels) { return []; }
+    if !(threshold >= 0.0 && threshold - threshold == 0.0) { return []; }
+    if !(gap >= 0.0 && gap <= 9007199254740991.0 && gap % 1.0 == 0.0) { return []; }
+    let result = gaphold_compute(levels, threshold, gap);
+    if !gaphold_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let levels = [2, 0, 2, 0, 0, 2];
+    let threshold = 1.0;
+    let gap = 1.0;
+    let result = gaphold_segments(levels, threshold, gap);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

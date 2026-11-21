@@ -1,0 +1,67 @@
+// StrataMean 0.1.1 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-stratamean/tree/v0.1.1
+
+fn stratamean_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn stratamean_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn stratamean_compute(events: vector, trials: vector) -> vector {
+    if len(events) == 0 || len(events) != len(trials) {
+        return [];
+    }
+    let mut i = 0;
+    while i < len(events) {
+        if at(trials, i) == 0.0 || at(events, i) > at(trials, i) {
+            return [];
+        }
+        i += 1;
+    }
+    let n = sum(trials);
+    if n > 9007199254740991.0 {
+        return [];
+    }
+    let successes = sum(events);
+    [successes, n, successes / n]
+}
+
+// Pool event counts and expose the crude observed rate.
+// Returns [total events, total trials, crude rate]. Every stratum must have observations and events cannot exceed trials.
+pub fn stratamean_pooled(events: vector, trials: vector) -> vector {
+    if !stratamean_counts(events) { return []; }
+    if !stratamean_counts(trials) { return []; }
+    let result = stratamean_compute(events, trials);
+    if !stratamean_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let events = [2, 6];
+    let trials = [4, 8];
+    let result = stratamean_pooled(events, trials);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

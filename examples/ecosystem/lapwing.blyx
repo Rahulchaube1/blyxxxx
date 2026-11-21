@@ -1,0 +1,167 @@
+// Lapwing 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-lapwing/tree/v0.1.0
+
+fn pagebreaks_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn pagebreaks_num(value: i64) -> f64 {
+    at([value], 0)
+}
+
+fn pagebreaks_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn pagebreaks_magnitudes(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn pagebreaks_compute(heights: vector, page: f64) -> vector {
+    let mut pages = 0;
+    let mut used = 0.0;
+    let mut i = 0;
+    while i < len(heights) {
+        let h = at(heights, i);
+        if h <= 0.0 || h > page {
+            return [];
+        }
+        if pages == 0 || used + h > page {
+            pages += 1;
+            used = 0.0;
+        }
+        used += h;
+        i += 1;
+    }
+    [pages, used, pagebreaks_max2(0.0, pagebreaks_num(pages) * page - sum(heights))]
+}
+
+// Place unsplittable document blocks on successive pages in input order.
+// Returns [pages used, occupied height on final page, total unused height]. Positive block heights must fit individually. Empty input uses zero pages.
+pub fn pagebreaks_pack(heights: vector, page: f64) -> vector {
+    if !pagebreaks_magnitudes(heights) { return []; }
+    if !(page > 0.0 && page - page == 0.0) { return []; }
+    let result = pagebreaks_compute(heights, page);
+    if !pagebreaks_finite(result) { return []; }
+    result
+}
+
+fn linefit_floorpos(value: f64) -> f64 {
+    value - value % 1.0
+}
+
+fn linefit_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn linefit_compute(paper: f64, top: f64, bottom: f64, line: f64) -> vector {
+    let area = paper - top - bottom;
+    if area <= 0.0 {
+        return [];
+    }
+    let lines = linefit_floorpos(area / line);
+    [area, lines, area - lines * line]
+}
+
+// Compute the usable print area and whole lines per page.
+// Returns [usable height, whole-line capacity, residual height]. All dimensions use the same unit; a page with no usable height is invalid.
+pub fn linefit_capacity(paper: f64, top: f64, bottom: f64, line: f64) -> vector {
+    if !(paper > 0.0 && paper - paper == 0.0) { return []; }
+    if !(top >= 0.0 && top - top == 0.0) { return []; }
+    if !(bottom >= 0.0 && bottom - bottom == 0.0) { return []; }
+    if !(line > 0.0 && line - line == 0.0) { return []; }
+    let result = linefit_compute(paper, top, bottom, line);
+    if !linefit_finite(result) { return []; }
+    result
+}
+
+fn lapwing_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn lapwing_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn lapwing_compute(blocks: vector, paper: f64, top: f64, bottom: f64, line: f64) -> vector {
+    let area = linefit_capacity(paper, top, bottom, line);
+    if len(area) == 0 || at(area, 1) < 1.0 {
+        return [];
+    }
+    let pages = pagebreaks_pack(blocks, at(area, 1));
+    if len(pages) == 0 {
+        return [];
+    }
+    [at(pages, 0), at(pages, 1), at(pages, 2), at(area, 1)]
+}
+
+// Preflight fixed-line document pagination with indivisible paragraphs.
+// Returns [pages, lines used on final page, unused line slots, printable lines per page]. Blocks are positive paragraph line counts. The host measures text and renders the resulting pages.
+pub fn lapwing_paginate(blocks: vector, paper: f64, top: f64, bottom: f64, line: f64) -> vector {
+    if !lapwing_counts(blocks) { return []; }
+    if !(paper > 0.0 && paper - paper == 0.0) { return []; }
+    if !(top >= 0.0 && top - top == 0.0) { return []; }
+    if !(bottom >= 0.0 && bottom - bottom == 0.0) { return []; }
+    if !(line > 0.0 && line - line == 0.0) { return []; }
+    let result = lapwing_compute(blocks, paper, top, bottom, line);
+    if !lapwing_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let blocks = [4, 6, 3];
+    let paper = 120.0;
+    let top = 10.0;
+    let bottom = 10.0;
+    let line = 10.0;
+    let result = lapwing_paginate(blocks, paper, top, bottom, line);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

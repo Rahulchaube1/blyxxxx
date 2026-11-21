@@ -1,0 +1,156 @@
+// Warbler 0.1.1 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-warbler/tree/v0.1.1
+
+fn framesignal_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn framesignal_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn framesignal_num(value: i64) -> f64 {
+    at([value], 0)
+}
+
+fn framesignal_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn framesignal_compute(samples: vector) -> vector {
+    if len(samples) == 0 {
+        return [];
+    }
+    let mut peak = 0.0;
+    let mut i = 0;
+    while i < len(samples) {
+        peak = framesignal_max2(peak, framesignal_absolute(at(samples, i)));
+        i += 1;
+    }
+    [peak, dot(samples, samples) / framesignal_num(len(samples))]
+}
+
+// Measure peak amplitude and mean-square energy of a signal frame.
+// Returns [peak absolute amplitude, mean square]. Empty frames are invalid. Supply amplitudes in a common linear scale.
+pub fn framesignal_level(samples: vector) -> vector {
+    if !framesignal_finite(samples) { return []; }
+    let result = framesignal_compute(samples);
+    if !framesignal_finite(result) { return []; }
+    result
+}
+
+fn clipruns_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn clipruns_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn clipruns_compute(samples: vector, ceiling: f64) -> vector {
+    let mut total = 0;
+    let mut run = 0;
+    let mut longest = 0;
+    let mut runs = 0;
+    let mut i = 0;
+    while i < len(samples) {
+        if clipruns_absolute(at(samples, i)) >= ceiling {
+            if run == 0 {
+                runs += 1;
+            }
+            run += 1;
+            total += 1;
+            if run > longest {
+                longest = run;
+            }
+        } else {
+            run = 0;
+        }
+        i += 1;
+    }
+    [total, longest, runs]
+}
+
+// Count overloaded samples and the longest continuous run.
+// Returns [samples at or above the absolute ceiling, longest run, run count]. Equality counts as a clipped sample.
+pub fn clipruns_count(samples: vector, ceiling: f64) -> vector {
+    if !clipruns_finite(samples) { return []; }
+    if !(ceiling > 0.0 && ceiling - ceiling == 0.0) { return []; }
+    let result = clipruns_compute(samples, ceiling);
+    if !clipruns_finite(result) { return []; }
+    result
+}
+
+fn warbler_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn warbler_compute(samples: vector, ceiling: f64, allowed: f64) -> vector {
+    let signal = framesignal_level(samples);
+    let clips = clipruns_count(samples, ceiling);
+    if len(signal) == 0 || len(clips) == 0 {
+        return [];
+    }
+    let mut alert = 0;
+    if at(clips, 1) > allowed {
+        alert = 1;
+    }
+    [at(signal, 0), at(signal, 1), at(clips, 1), alert]
+}
+
+// Flag sustained clipping while reporting the energy of an audio frame.
+// Returns [peak, mean square, longest clipped run, alert]. Alert means the longest run exceeded the allowed number of samples.
+pub fn warbler_meter(samples: vector, ceiling: f64, allowed: f64) -> vector {
+    if !warbler_finite(samples) { return []; }
+    if !(ceiling > 0.0 && ceiling - ceiling == 0.0) { return []; }
+    if !(allowed >= 0.0 && allowed <= 9007199254740991.0 && allowed % 1.0 == 0.0) { return []; }
+    let result = warbler_compute(samples, ceiling, allowed);
+    if !warbler_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let samples = [1, -1, 0, 0];
+    let ceiling = 1.0;
+    let allowed = 1.0;
+    let result = warbler_meter(samples, ceiling, allowed);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

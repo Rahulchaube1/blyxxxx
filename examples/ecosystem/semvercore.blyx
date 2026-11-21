@@ -1,0 +1,65 @@
+// SemVerCore 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-semvercore/tree/v0.1.0
+
+fn semvercore_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn semvercore_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn semvercore_compute(left: vector, right: vector) -> vector {
+    if len(left) != 3 || len(right) != 3 {
+        return [];
+    }
+    let mut i = 0;
+    while i < 3 {
+        if at(left, i) < at(right, i) {
+            return [-1, i];
+        }
+        if at(left, i) > at(right, i) {
+            return [1, i];
+        }
+        i += 1;
+    }
+    [0, -1]
+}
+
+// Compare two numeric semantic-version cores lexicographically.
+// Both inputs are [major, minor, patch]. Returns [ordering (-1,0,1), first differing component or -1]. Prerelease identifiers and build metadata are outside this core.
+pub fn semvercore_compare(left: vector, right: vector) -> vector {
+    if !semvercore_counts(left) { return []; }
+    if !semvercore_counts(right) { return []; }
+    let result = semvercore_compute(left, right);
+    if !semvercore_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let left = [1, 10, 0];
+    let right = [1, 2, 9];
+    let result = semvercore_compare(left, right);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

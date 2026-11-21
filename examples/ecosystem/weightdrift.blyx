@@ -1,0 +1,73 @@
+// WeightDrift 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-weightdrift/tree/v0.1.0
+
+fn weightdrift_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn weightdrift_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn weightdrift_probabilities(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 1.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn weightdrift_compute(current: vector, target: vector) -> vector {
+    if len(current) == 0 || len(current) != len(target) {
+        return [];
+    }
+    let mut winner = 0;
+    let mut delta = at(current, 0) - at(target, 0);
+    let mut i = 1;
+    while i < len(current) {
+        let d = at(current, i) - at(target, i);
+        if weightdrift_absolute(d) > weightdrift_absolute(delta) {
+            winner = i;
+            delta = d;
+        }
+        i += 1;
+    }
+    [winner, delta, weightdrift_absolute(delta)]
+}
+
+// Find the largest per-asset deviation between two weight vectors.
+// Returns [index, signed current minus target weight, absolute deviation]. First index wins an absolute tie.
+pub fn weightdrift_largest(current: vector, target: vector) -> vector {
+    if !weightdrift_probabilities(current) { return []; }
+    if !weightdrift_probabilities(target) { return []; }
+    let result = weightdrift_compute(current, target);
+    if !weightdrift_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let current = [0.75, 0.25];
+    let target = [0.5, 0.5];
+    let result = weightdrift_largest(current, target);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

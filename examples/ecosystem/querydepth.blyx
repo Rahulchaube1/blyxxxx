@@ -1,0 +1,73 @@
+// QueryDepth 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-querydepth/tree/v0.1.0
+
+fn querydepth_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn querydepth_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn querydepth_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn querydepth_compute(depths: vector) -> vector {
+    let mut prev = 0.0;
+    let mut high = 0.0;
+    let mut roots = 0;
+    let mut i = 0;
+    while i < len(depths) {
+        let d = at(depths, i);
+        if d < 1.0 || d > prev + 1.0 {
+            return [];
+        }
+        if d == 1.0 {
+            roots += 1;
+        }
+        high = querydepth_max2(high, d);
+        prev = d;
+        i += 1;
+    }
+    [high, roots, len(depths)]
+}
+
+// Validate a preorder field-depth trace from an expanded query plan.
+// Returns [maximum depth, root fields, total fields]. Depth starts at one. A child can descend only one level; siblings and ascent are allowed.
+pub fn querydepth_shape(depths: vector) -> vector {
+    if !querydepth_counts(depths) { return []; }
+    let result = querydepth_compute(depths);
+    if !querydepth_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let depths = [1, 2, 3, 2, 1];
+    let result = querydepth_shape(depths);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

@@ -1,0 +1,187 @@
+// Flamingo 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-flamingo/tree/v0.1.0
+
+fn axisrange_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn axisrange_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn axisrange_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn axisrange_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn axisrange_compute(samples: vector, zero: f64) -> vector {
+    if len(samples) == 0 || zero > 1.0 {
+        return [];
+    }
+    let mut lo = at(samples, 0);
+    let mut hi = lo;
+    let mut i = 1;
+    while i < len(samples) {
+        lo = axisrange_min2(lo, at(samples, i));
+        hi = axisrange_max2(hi, at(samples, i));
+        i += 1;
+    }
+    if zero == 1.0 {
+        lo = axisrange_min2(lo, 0.0);
+        hi = axisrange_max2(hi, 0.0);
+    }
+    if hi == lo {
+        let pad = axisrange_max2(0.5, axisrange_absolute(lo) * 0.05);
+        lo -= pad;
+        hi += pad;
+    }
+    [lo, hi]
+}
+
+// Compute a chart domain and expand a constant-valued series.
+// Returns [lower, upper]. Set zero to 1 to include the origin. A constant domain receives ±0.5 or ±5% of its magnitude, whichever is larger.
+pub fn axisrange_extent(samples: vector, zero: f64) -> vector {
+    if !axisrange_finite(samples) { return []; }
+    if !(zero >= 0.0 && zero <= 9007199254740991.0 && zero % 1.0 == 0.0) { return []; }
+    let result = axisrange_compute(samples, zero);
+    if !axisrange_finite(result) { return []; }
+    result
+}
+
+fn tickstep_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn tickstep_floorreal(value: f64) -> f64 {
+    let trunc = value - value % 1.0;
+    if trunc > value {
+        return trunc - 1.0;
+    }
+    trunc
+}
+
+fn tickstep_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn tickstep_compute(lo: f64, hi: f64, intervals: f64) -> vector {
+    if hi <= lo {
+        return [];
+    }
+    let raw = (hi - lo) / intervals;
+    if raw < 1.0e-100 || raw > 1.0e100 {
+        return [];
+    }
+    let mut unit = 1.0;
+    while unit * 10.0 <= raw {
+        unit *= 10.0;
+    }
+    while unit > raw {
+        unit /= 10.0;
+    }
+    let ratio = raw / unit;
+    let mut step = unit;
+    if ratio > 5.0 {
+        step *= 10.0;
+    } else {
+        if ratio > 2.0 {
+            step *= 5.0;
+        } else {
+            if ratio > 1.0 {
+                step *= 2.0;
+            }
+        }
+    }
+    let first = tickstep_floorreal(lo / step);
+    let last = -tickstep_floorreal(-hi / step);
+    if tickstep_absolute(first) > 9007199254740991.0 || tickstep_absolute(last) > 9007199254740991.0 {
+        return [];
+    }
+    [first * step, last * step, step, last - first + 1.0]
+}
+
+// Choose a covering linear tick lattice using steps 1, 2, 5 or 10 times a power of ten.
+// Returns [first tick, last tick, step, tick count]. Interval count is a target. Supported raw steps range from 1e-100 to 1e100.
+pub fn tickstep_cover(lo: f64, hi: f64, intervals: f64) -> vector {
+    if !(lo - lo == 0.0) { return []; }
+    if !(hi - hi == 0.0) { return []; }
+    if !(intervals >= 1.0 && intervals <= 9007199254740991.0 && intervals % 1.0 == 0.0) { return []; }
+    let result = tickstep_compute(lo, hi, intervals);
+    if !tickstep_finite(result) { return []; }
+    result
+}
+
+fn flamingo_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn flamingo_compute(samples: vector, include_zero: f64, intervals: f64) -> vector {
+    let domain = axisrange_extent(samples, include_zero);
+    if len(domain) == 0 {
+        return [];
+    }
+    tickstep_cover(at(domain, 0), at(domain, 1), intervals)
+}
+
+// Produce chart-ready axis limits and labeled tick spacing from raw data.
+// Returns [first tick, last tick, step, tick count]. The tick count can differ from the requested interval target.
+pub fn flamingo_axis(samples: vector, include_zero: f64, intervals: f64) -> vector {
+    if !flamingo_finite(samples) { return []; }
+    if !(include_zero >= 0.0 && include_zero <= 9007199254740991.0 && include_zero % 1.0 == 0.0) { return []; }
+    if !(intervals >= 1.0 && intervals <= 9007199254740991.0 && intervals % 1.0 == 0.0) { return []; }
+    let result = flamingo_compute(samples, include_zero, intervals);
+    if !flamingo_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let samples = [3, 11];
+    let include_zero = 1.0;
+    let intervals = 4.0;
+    let result = flamingo_axis(samples, include_zero, intervals);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

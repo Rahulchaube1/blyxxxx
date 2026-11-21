@@ -87,6 +87,18 @@ The first line of output is `2`, the fitted slope. The second is `10`, the predi
 
 [Browse the framework directory](https://www.blyx-lang.space/frameworks) for the project walkthroughs, versioned downloads and input contracts.
 
+The [workflow collection 0.1.0](https://github.com/Rahulchaube1/blyxxxx/releases/tag/ecosystem-v0.1.0) adds **51 frameworks and 102 reusable libraries**. Each framework combines two libraries to solve a specific problem. [Avocet](https://www.blyx-lang.space/packages/avocet) calculates how much stock to buy after reservations. [Fulmar](https://www.blyx-lang.space/packages/fulmar) finds the offset a consumer can commit when deliveries finish out of order. [Blackbird](https://doc.blyx-lang.space/guide/blackbird) selects the intended occurrence of a repeated local time.
+
+To try [Warbler](https://www.blyx-lang.space/packages/warbler), extract the native ZIP for your platform and pass four audio samples, a clipping threshold of one and an allowance of one consecutive clipped sample.
+
+```powershell
+.\bin\warbler.exe "1,-1,0,0" 1 1
+```
+
+On Linux and Apple Silicon macOS, run `./bin/warbler "1,-1,0,0" 1 1`. The four output lines are `1`, `0.5`, `2` and `1`. They give the peak amplitude, mean-square energy, longest clipped run and alert flag. Change the final argument to `2` to clear the alert. [Edit the example in the playground](https://www.blyx-lang.space/play?example=package-warbler) · [Import a library in your own project](docs/ecosystem-packages.md#use-the-workflow-collection) · [Reproduce the benchmarks](https://www.blyx-lang.space/benchmarks#workflows)
+
+Other Blyx frameworks offer these project walkthroughs.
+
 | Framework | Example project |
 | --- | --- |
 | <img src="website/public/packages/swiftlet.png" width="32" alt=""> [Swiftlet](https://github.com/Rahulchaube1/blyx-swiftlet) | Route a book catalog request. [Run the example](https://www.blyx-lang.space/play?example=package-swiftlet) |

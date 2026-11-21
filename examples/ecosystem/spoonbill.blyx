@@ -1,0 +1,176 @@
+// Spoonbill 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-spoonbill/tree/v0.1.0
+
+fn timebase_floorpos(value: f64) -> f64 {
+    value - value % 1.0
+}
+
+fn timebase_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn timebase_compute(tick: f64, numerator: f64, denominator: f64) -> vector {
+    let seconds = (tick / denominator) * numerator;
+    let whole = timebase_floorpos(seconds);
+    [seconds, whole, seconds - whole]
+}
+
+// Convert a nonnegative frame tick to seconds using a rational time base.
+// Returns [seconds, whole seconds, fractional remainder]. numerator/denominator is seconds per tick.
+pub fn timebase_frame(tick: f64, numerator: f64, denominator: f64) -> vector {
+    if !(tick >= 0.0 && tick <= 9007199254740991.0 && tick % 1.0 == 0.0) { return []; }
+    if !(numerator >= 1.0 && numerator <= 9007199254740991.0 && numerator % 1.0 == 0.0) { return []; }
+    if !(denominator >= 1.0 && denominator <= 9007199254740991.0 && denominator % 1.0 == 0.0) { return []; }
+    let result = timebase_compute(tick, numerator, denominator);
+    if !timebase_finite(result) { return []; }
+    result
+}
+
+fn cueoverlap_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn cueoverlap_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn cueoverlap_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn cueoverlap_compute(starts: vector, ends: vector) -> vector {
+    if len(starts) != len(ends) {
+        return [];
+    }
+    if len(starts) == 0 {
+        return [0, -1, 0];
+    }
+    let mut furthest = at(starts, 0);
+    let mut count = 0;
+    let mut first = -1;
+    let mut i = 0;
+    while i < len(starts) {
+        let a = at(starts, i);
+        let b = at(ends, i);
+        if b <= a || (i > 0 && a < at(starts, i - 1)) {
+            return [];
+        }
+        if a < furthest {
+            if first < 0 {
+                first = i;
+            }
+            count += 1;
+        }
+        furthest = cueoverlap_max2(furthest, b);
+        i += 1;
+    }
+    [count, first, furthest - at(starts, 0)]
+}
+
+// Audit a sorted list of half-open subtitle cue intervals.
+// Returns [cues that start before a previous cue has ended, first overlapping cue index, total span in ticks]. Rejects nonpositive durations and unsorted starts.
+pub fn cueoverlap_trace(starts: vector, ends: vector) -> vector {
+    if !cueoverlap_counts(starts) { return []; }
+    if !cueoverlap_counts(ends) { return []; }
+    let result = cueoverlap_compute(starts, ends);
+    if !cueoverlap_finite(result) { return []; }
+    result
+}
+
+fn spoonbill_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn spoonbill_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn spoonbill_compute(starts: vector, ends: vector, numerator: f64, denominator: f64, allow_overlap: f64) -> vector {
+    if allow_overlap > 1.0 {
+        return [];
+    }
+    let cues = cueoverlap_trace(starts, ends);
+    if len(cues) == 0 {
+        return [];
+    }
+    let duration = timebase_frame(at(cues, 2), numerator, denominator);
+    if len(duration) == 0 {
+        return [];
+    }
+    let mut ok = 0;
+    if allow_overlap == 1.0 || at(cues, 0) == 0.0 {
+        ok = 1;
+    }
+    [ok, at(cues, 0), at(cues, 1), at(duration, 0)]
+}
+
+// Preflight caption cue timings against an explicit overlap policy.
+// Returns [accepted, overlapping cue count, first overlap index, cue-track span in seconds]. Some subtitle tracks allow overlaps; the caller chooses the policy.
+pub fn spoonbill_captions(starts: vector, ends: vector, numerator: f64, denominator: f64, allow_overlap: f64) -> vector {
+    if !spoonbill_counts(starts) { return []; }
+    if !spoonbill_counts(ends) { return []; }
+    if !(numerator >= 1.0 && numerator <= 9007199254740991.0 && numerator % 1.0 == 0.0) { return []; }
+    if !(denominator >= 1.0 && denominator <= 9007199254740991.0 && denominator % 1.0 == 0.0) { return []; }
+    if !(allow_overlap >= 0.0 && allow_overlap <= 9007199254740991.0 && allow_overlap % 1.0 == 0.0) { return []; }
+    let result = spoonbill_compute(starts, ends, numerator, denominator, allow_overlap);
+    if !spoonbill_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let starts = [0, 20];
+    let ends = [30, 60];
+    let numerator = 1.0;
+    let denominator = 30.0;
+    let allow_overlap = 0.0;
+    let result = spoonbill_captions(starts, ends, numerator, denominator, allow_overlap);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

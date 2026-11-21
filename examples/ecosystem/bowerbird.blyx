@@ -1,0 +1,201 @@
+// Bowerbird 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-bowerbird/tree/v0.1.0
+
+fn semvercore_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn semvercore_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn semvercore_compute(left: vector, right: vector) -> vector {
+    if len(left) != 3 || len(right) != 3 {
+        return [];
+    }
+    let mut i = 0;
+    while i < 3 {
+        if at(left, i) < at(right, i) {
+            return [-1, i];
+        }
+        if at(left, i) > at(right, i) {
+            return [1, i];
+        }
+        i += 1;
+    }
+    [0, -1]
+}
+
+// Compare two numeric semantic-version cores lexicographically.
+// Both inputs are [major, minor, patch]. Returns [ordering (-1,0,1), first differing component or -1]. Prerelease identifiers and build metadata are outside this core.
+pub fn semvercore_compare(left: vector, right: vector) -> vector {
+    if !semvercore_counts(left) { return []; }
+    if !semvercore_counts(right) { return []; }
+    let result = semvercore_compute(left, right);
+    if !semvercore_finite(result) { return []; }
+    result
+}
+
+fn versionband_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn versionband_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn versionband_compute(version: vector, lower: vector, upper: vector) -> vector {
+    if len(version) != 3 || len(lower) != 3 || len(upper) != 3 {
+        return [];
+    }
+    let mut bounds = 0;
+    let mut lo = 0;
+    let mut hi = 0;
+    let mut i = 0;
+    while i < 3 {
+        let v = at(version, i);
+        let a = at(lower, i);
+        let b = at(upper, i);
+        if bounds == 0 {
+            if a < b {
+                bounds = -1;
+            }
+            if a > b {
+                bounds = 1;
+            }
+        }
+        if lo == 0 {
+            if v < a {
+                lo = -1;
+            }
+            if v > a {
+                lo = 1;
+            }
+        }
+        if hi == 0 {
+            if v < b {
+                hi = -1;
+            }
+            if v > b {
+                hi = 1;
+            }
+        }
+        i += 1;
+    }
+    if bounds != -1 {
+        return [];
+    }
+    if lo < 0 {
+        return [0, 1, 0];
+    }
+    if hi >= 0 {
+        return [0, 0, 1];
+    }
+    [1, 0, 0]
+}
+
+// Check membership of a numeric-version core in a half-open dependency interval.
+// Returns [inside, below lower, at or above upper]. All versions have three integer components and lower must precede upper.
+pub fn versionband_contains(version: vector, lower: vector, upper: vector) -> vector {
+    if !versionband_counts(version) { return []; }
+    if !versionband_counts(lower) { return []; }
+    if !versionband_counts(upper) { return []; }
+    let result = versionband_compute(version, lower, upper);
+    if !versionband_finite(result) { return []; }
+    result
+}
+
+fn bowerbird_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn bowerbird_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn bowerbird_compute(installed: vector, candidate: vector, lower: vector, upper: vector) -> vector {
+    let diff = semvercore_compare(candidate, installed);
+    let allowed = versionband_contains(candidate, lower, upper);
+    if len(diff) == 0 || len(allowed) == 0 {
+        return [];
+    }
+    let mut ok = 0;
+    if at(diff, 0) >= 0.0 && at(allowed, 0) == 1.0 {
+        ok = 1;
+    }
+    [ok, at(diff, 0), at(diff, 1), at(allowed, 0)]
+}
+
+// Decide whether a proposed numeric-core dependency upgrade fits a declared version range.
+// Returns [allowed upgrade, candidate versus installed, major/minor/patch index changed, within range]. Equal versions are allowed. This release handles numeric cores and explicit bounds.
+pub fn bowerbird_upgrade(installed: vector, candidate: vector, lower: vector, upper: vector) -> vector {
+    if !bowerbird_counts(installed) { return []; }
+    if !bowerbird_counts(candidate) { return []; }
+    if !bowerbird_counts(lower) { return []; }
+    if !bowerbird_counts(upper) { return []; }
+    let result = bowerbird_compute(installed, candidate, lower, upper);
+    if !bowerbird_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let installed = [1, 2, 9];
+    let candidate = [1, 10, 0];
+    let lower = [1, 0, 0];
+    let upper = [2, 0, 0];
+    let result = bowerbird_upgrade(installed, candidate, lower, upper);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

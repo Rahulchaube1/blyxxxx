@@ -1,0 +1,68 @@
+// WordRows 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-wordrows/tree/v0.1.0
+
+fn wordrows_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn wordrows_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn wordrows_compute(widths: vector, columns: f64) -> vector {
+    let mut lines = 0;
+    let mut used = 0.0;
+    let mut i = 0;
+    while i < len(widths) {
+        let width = at(widths, i);
+        if width == 0.0 || width > columns {
+            return [];
+        }
+        if used == 0.0 || used + 1.0 + width > columns {
+            lines += 1;
+            used = width;
+        } else {
+            used += 1.0 + width;
+        }
+        i += 1;
+    }
+    [lines, used]
+}
+
+// Count greedy terminal lines from premeasured word widths.
+// Returns [lines, last line width]. One display cell separates words. Empty input uses zero lines; zero-width and oversize words are rejected.
+pub fn wordrows_measure(widths: vector, columns: f64) -> vector {
+    if !wordrows_counts(widths) { return []; }
+    if !(columns >= 1.0 && columns <= 9007199254740991.0 && columns % 1.0 == 0.0) { return []; }
+    let result = wordrows_compute(widths, columns);
+    if !wordrows_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let widths = [3, 2, 4];
+    let columns = 6.0;
+    let result = wordrows_measure(widths, columns);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

@@ -1,0 +1,47 @@
+// YearOrigin 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-yearorigin/tree/v0.1.0
+
+fn yearorigin_floorpos(value: f64) -> f64 {
+    value - value % 1.0
+}
+
+fn yearorigin_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn yearorigin_compute(year: f64) -> vector {
+    if year > 9999.0 {
+        return [];
+    }
+    let y = year - 1.0;
+    let days = y * 365.0 + yearorigin_floorpos(y / 4.0) - yearorigin_floorpos(y / 100.0) + yearorigin_floorpos(y / 400.0);
+    [days, days % 7.0]
+}
+
+// Count Gregorian days before January 1 of a year.
+// Returns [days before year, weekday of January 1]. Monday is zero; year 1 begins on Monday. Supported years are 1–9999.
+pub fn yearorigin_offset(year: f64) -> vector {
+    if !(year >= 1.0 && year <= 9007199254740991.0 && year % 1.0 == 0.0) { return []; }
+    let result = yearorigin_compute(year);
+    if !yearorigin_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let year = 1.0;
+    let result = yearorigin_offset(year);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

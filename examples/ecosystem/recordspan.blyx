@@ -1,0 +1,69 @@
+// RecordSpan 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-recordspan/tree/v0.1.0
+
+fn recordspan_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn recordspan_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn recordspan_compute(lengths: vector, offset: f64) -> vector {
+    let mut start = 0.0;
+    let mut i = 0;
+    while i < len(lengths) {
+        let size = at(lengths, i);
+        let end = start + size;
+        if end > 9007199254740991.0 {
+            return [];
+        }
+        if offset >= start && offset < end {
+            return [i, offset - start, size];
+        }
+        start = end;
+        i += 1;
+    }
+    if offset == start {
+        return [-1, 0, 0];
+    }
+    []
+}
+
+// Locate the nonempty length-prefixed record containing a byte offset.
+// Returns [record index, in-record offset, record length]. At end of stream the index is -1; an offset beyond the end is invalid. Lengths describe decoded payload spans.
+pub fn recordspan_locate(lengths: vector, offset: f64) -> vector {
+    if !recordspan_counts(lengths) { return []; }
+    if !(offset >= 0.0 && offset <= 9007199254740991.0 && offset % 1.0 == 0.0) { return []; }
+    let result = recordspan_compute(lengths, offset);
+    if !recordspan_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let lengths = [0, 3, 2];
+    let offset = 3.0;
+    let result = recordspan_locate(lengths, offset);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

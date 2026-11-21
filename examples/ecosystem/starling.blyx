@@ -1,0 +1,197 @@
+// Starling 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-starling/tree/v0.1.0
+
+fn intervalunion_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn intervalunion_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn intervalunion_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn intervalunion_compute(starts: vector, ends: vector) -> vector {
+    if len(starts) != len(ends) {
+        return [];
+    }
+    if len(starts) == 0 {
+        return [0, 0, 0];
+    }
+    let mut end = at(starts, 0);
+    let mut length = 0.0;
+    let mut components = 0;
+    let mut i = 0;
+    while i < len(starts) {
+        let a = at(starts, i);
+        let b = at(ends, i);
+        if b <= a || (i > 0 && a < at(starts, i - 1)) {
+            return [];
+        }
+        if i == 0 || a > end {
+            components += 1;
+        }
+        length += intervalunion_max2(0.0, b - intervalunion_max2(a, end));
+        end = intervalunion_max2(end, b);
+        i += 1;
+    }
+    [length, components, end - at(starts, 0)]
+}
+
+// Measure union length and coverage components of sorted half-open intervals.
+// Returns [covered ticks, connected components, enclosing span]. Touching intervals are merged. Empty input has zero span.
+pub fn intervalunion_measure(starts: vector, ends: vector) -> vector {
+    if !intervalunion_integers(starts) { return []; }
+    if !intervalunion_integers(ends) { return []; }
+    let result = intervalunion_compute(starts, ends);
+    if !intervalunion_finite(result) { return []; }
+    result
+}
+
+fn peakslots_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn peakslots_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn peakslots_compute(starts: vector, ends: vector) -> vector {
+    if len(starts) != len(ends) {
+        return [];
+    }
+    let mut best = 0;
+    let mut when = 0.0;
+    let mut i = 0;
+    while i < len(starts) {
+        if at(ends, i) <= at(starts, i) {
+            return [];
+        }
+        let t = at(starts, i);
+        let mut count = 0;
+        let mut j = 0;
+        while j < len(starts) {
+            if at(starts, j) <= t && t < at(ends, j) {
+                count += 1;
+            }
+            j += 1;
+        }
+        if count > best || (count == best && t < when) {
+            best = count;
+            when = t;
+        }
+        i += 1;
+    }
+    [best, when]
+}
+
+// Find peak simultaneous occupancy of half-open intervals.
+// Returns [peak active intervals, earliest tick at that peak]. Empty input returns [0,0]. Counts exactly at starts, where occupancy can increase; short batches use quadratic time.
+pub fn peakslots_overlap(starts: vector, ends: vector) -> vector {
+    if !peakslots_integers(starts) { return []; }
+    if !peakslots_integers(ends) { return []; }
+    let result = peakslots_compute(starts, ends);
+    if !peakslots_finite(result) { return []; }
+    result
+}
+
+fn starling_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn starling_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn starling_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn starling_compute(starts: vector, ends: vector, capacity: f64) -> vector {
+    let union = intervalunion_measure(starts, ends);
+    let peak = peakslots_overlap(starts, ends);
+    if len(union) == 0 || len(peak) == 0 {
+        return [];
+    }
+    [at(union, 0), at(peak, 0), at(peak, 1), starling_max2(0.0, at(peak, 0) - capacity)]
+}
+
+// Estimate resource capacity and actual occupied time from a booking schedule.
+// Returns [covered ticks, peak simultaneous bookings, earliest peak, capacity shortfall]. Starts must be sorted; adjacent bookings can share a resource.
+pub fn starling_capacity(starts: vector, ends: vector, capacity: f64) -> vector {
+    if !starling_integers(starts) { return []; }
+    if !starling_integers(ends) { return []; }
+    if !(capacity >= 1.0 && capacity <= 9007199254740991.0 && capacity % 1.0 == 0.0) { return []; }
+    let result = starling_compute(starts, ends, capacity);
+    if !starling_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let starts = [0, 2, 4];
+    let ends = [4, 5, 7];
+    let capacity = 1.0;
+    let result = starling_capacity(starts, ends, capacity);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

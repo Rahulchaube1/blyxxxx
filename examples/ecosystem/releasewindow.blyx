@@ -1,0 +1,51 @@
+// ReleaseWindow 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-releasewindow/tree/v0.1.0
+
+fn releasewindow_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn releasewindow_compute(now: f64, opens: f64, closes: f64) -> vector {
+    if closes <= opens {
+        return [];
+    }
+    if now < opens {
+        return [0, opens - now];
+    }
+    if now < closes {
+        return [1, closes - now];
+    }
+    [2, 0]
+}
+
+// Locate a clock tick within a scheduled publication window.
+// Returns [phase, ticks until the next change]. Phase 0 is scheduled, 1 is live and 2 is expired. The closing tick is exclusive.
+pub fn releasewindow_locate(now: f64, opens: f64, closes: f64) -> vector {
+    if !(now >= -9007199254740991.0 && now <= 9007199254740991.0 && now % 1.0 == 0.0) { return []; }
+    if !(opens >= -9007199254740991.0 && opens <= 9007199254740991.0 && opens % 1.0 == 0.0) { return []; }
+    if !(closes >= -9007199254740991.0 && closes <= 9007199254740991.0 && closes % 1.0 == 0.0) { return []; }
+    let result = releasewindow_compute(now, opens, closes);
+    if !releasewindow_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let now = 12.0;
+    let opens = 10.0;
+    let closes = 20.0;
+    let result = releasewindow_locate(now, opens, closes);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

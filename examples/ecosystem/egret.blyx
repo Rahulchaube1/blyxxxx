@@ -1,0 +1,164 @@
+// Egret 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-egret/tree/v0.1.0
+
+fn richness_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn richness_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn richness_compute(counts: vector) -> vector {
+    let mut taxa = 0;
+    let mut singles = 0;
+    let mut i = 0;
+    while i < len(counts) {
+        let x = at(counts, i);
+        if x > 0.0 {
+            taxa += 1;
+        }
+        if x == 1.0 {
+            singles += 1;
+        }
+        i += 1;
+    }
+    let total = sum(counts);
+    if total > 9007199254740991.0 {
+        return [];
+    }
+    [taxa, singles, total]
+}
+
+// Count observed taxa and singletons from an abundance vector.
+// Returns [observed taxa, singletons, individuals]. Zero-count categories do not increase richness.
+pub fn richness_observe(counts: vector) -> vector {
+    if !richness_counts(counts) { return []; }
+    let result = richness_compute(counts);
+    if !richness_finite(result) { return []; }
+    result
+}
+
+fn dominance_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn dominance_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn dominance_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn dominance_compute(counts: vector) -> vector {
+    let total = sum(counts);
+    if total == 0.0 || total > 9007199254740991.0 {
+        return [];
+    }
+    let mut concentration = 0.0;
+    let mut i = 0;
+    while i < len(counts) {
+        let share = at(counts, i) / total;
+        concentration += share * share;
+        i += 1;
+    }
+    [concentration, dominance_max2(0.0, 1.0 - concentration)]
+}
+
+// Compute Simpson dominance and its complement from abundance counts.
+// Returns [sum of squared relative abundances, Gini–Simpson diversity]. Uses sampling with replacement. Empty surveys have no proportions.
+pub fn dominance_simpson(counts: vector) -> vector {
+    if !dominance_counts(counts) { return []; }
+    let result = dominance_compute(counts);
+    if !dominance_finite(result) { return []; }
+    result
+}
+
+fn egret_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn egret_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn egret_compute(counts: vector) -> vector {
+    let detail = richness_observe(counts);
+    let conc = dominance_simpson(counts);
+    if len(detail) == 0 || len(conc) == 0 {
+        return [];
+    }
+    [at(detail, 2), at(detail, 0), at(detail, 1), at(conc, 0), 1.0 / at(conc, 0)]
+}
+
+// Summarize richness, singletons and dominance in an ecological field survey.
+// Returns [individuals, observed taxa, singletons, dominance, effective taxa]. An entirely empty survey has no diversity estimate.
+pub fn egret_survey(counts: vector) -> vector {
+    if !egret_counts(counts) { return []; }
+    let result = egret_compute(counts);
+    if !egret_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let counts = [2, 0, 2];
+    let result = egret_survey(counts);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

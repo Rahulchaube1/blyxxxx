@@ -1,0 +1,76 @@
+// IndentSteps 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-indentsteps/tree/v0.1.0
+
+fn indentsteps_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn indentsteps_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn indentsteps_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn indentsteps_compute(indent: vector, step: f64) -> vector {
+    let mut errors = 0;
+    let mut first = -1;
+    let mut deepest = 0.0;
+    let mut prev = 0.0;
+    let mut i = 0;
+    while i < len(indent) {
+        let col = at(indent, i);
+        if (i == 0 && col != 0.0) || col % step != 0.0 || col > prev + step {
+            if first < 0 {
+                first = i;
+            }
+            errors += 1;
+        }
+        deepest = indentsteps_max2(deepest, col);
+        prev = col;
+        i += 1;
+    }
+    [errors, first, deepest]
+}
+
+// Audit fixed-step indentation measured on nonblank source lines.
+// Returns [off-grid or illegal jump count, first offending row, deepest column]. The first nonblank row starts at zero and one line can increase by at most one indent step.
+pub fn indentsteps_audit(indent: vector, step: f64) -> vector {
+    if !indentsteps_counts(indent) { return []; }
+    if !(step >= 1.0 && step <= 9007199254740991.0 && step % 1.0 == 0.0) { return []; }
+    let result = indentsteps_compute(indent, step);
+    if !indentsteps_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let indent = [0, 4, 12, 8, 0];
+    let step = 4.0;
+    let result = indentsteps_audit(indent, step);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

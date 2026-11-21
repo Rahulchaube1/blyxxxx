@@ -1,0 +1,70 @@
+// CashMatch 0.1.1 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-cashmatch/tree/v0.1.1
+
+fn cashmatch_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn cashmatch_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn cashmatch_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn cashmatch_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn cashmatch_compute(due: f64, payments: vector) -> vector {
+    let paid = sum(payments);
+    if paid > 9007199254740991.0 {
+        return [];
+    }
+    [cashmatch_min2(paid, due), cashmatch_max2(0.0, due - paid), cashmatch_max2(0.0, paid - due)]
+}
+
+// Apply posted payments and preserve customer credit separately.
+// Returns [applied, still due, overpayment] in a single currency's minor units.
+pub fn cashmatch_apply(due: f64, payments: vector) -> vector {
+    if !(due >= 0.0 && due <= 9007199254740991.0 && due % 1.0 == 0.0) { return []; }
+    if !cashmatch_counts(payments) { return []; }
+    let result = cashmatch_compute(due, payments);
+    if !cashmatch_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let due = 200.0;
+    let payments = [125, 100];
+    let result = cashmatch_apply(due, payments);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

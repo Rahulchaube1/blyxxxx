@@ -1,26 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import catalog from "@/lib/packages.json";
+import type { DirectoryEntry } from "@/lib/package-directory";
 import { useHydrated } from "@/lib/useHydrated";
-import { playLink } from "@/lib/site";
+import { guideLink, playLink } from "@/lib/site";
 
-const groups = Array.from(new Set(catalog.packages.map((p) => p.group)));
-
-export default function PackageCatalog() {
+export default function PackageCatalog({ items, frameworks = false }: { items: DirectoryEntry[]; frameworks?: boolean }) {
     const ready = useHydrated();
     const [query, setQuery] = useState("");
     const [group, setGroup] = useState("");
     const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
-    const matches = catalog.packages.filter((p) => {
-        const text = [p.title, p.kind, p.group, p.description, p.contract, ...p.api.flat()].join(" ").toLowerCase();
-        return (!group || p.group === group) && terms.every((t) => text.includes(t));
-    });
+    const groups = [...new Set(items.map((p) => p.group))];
+    const matches = items.filter((p) => (!group || p.group === group) && terms.every((t) => p.search.includes(t)));
+    const noun = frameworks ? "framework" : "package";
     return (
         <section aria-label="Package catalog">
             <div className="filters">
                 <label>
-                    Search packages
+                    Search {frameworks ? "frameworks" : "packages"}
                     <input type="search" value={query} disabled={!ready} onChange={(e) => setQuery(e.target.value)} placeholder="Try CSV, routing, layout, or training" />
                 </label>
                 <label>
@@ -30,7 +27,7 @@ export default function PackageCatalog() {
                         {groups.map((name) => <option key={name}>{name}</option>)}
                     </select>
                 </label>
-                <span role="status">{matches.length} {matches.length === 1 ? "package" : "packages"}</span>
+                <span role="status">{matches.length} {noun}{matches.length === 1 ? "" : "s"}</span>
             </div>
             {groups.map((name) => {
                 const packages = matches.filter((p) => p.group === name);
@@ -50,6 +47,7 @@ export default function PackageCatalog() {
                                     <div className="actions">
                                         <a href={"/packages/" + p.slug}>Install and use →</a>
                                         <a href={playLink(p.example)}>Run example</a>
+                                        {frameworks && <a href={guideLink(p.guide)}>Handbook</a>}
                                     </div>
                                 </article>
                             ))}

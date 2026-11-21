@@ -1,0 +1,174 @@
+// Ibis 0.1.1 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-ibis/tree/v0.1.1
+
+fn lineamount_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn lineamount_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn lineamount_compute(units: vector, prices: vector) -> vector {
+    if len(units) != len(prices) {
+        return [];
+    }
+    let mut total = 0.0;
+    let mut lines = 0;
+    let mut i = 0;
+    while i < len(units) {
+        let q = at(units, i);
+        let price = at(prices, i);
+        if q > 0.0 && price > (9007199254740991.0 - total) / q {
+            return [];
+        }
+        total += q * price;
+        if q > 0.0 {
+            lines += 1;
+        }
+        i += 1;
+    }
+    [total, lines]
+}
+
+// Extend paired invoice quantities and prices in integer minor units.
+// Returns [subtotal, nonzero lines]. Rejects unmatched columns and totals beyond exact integer representation.
+pub fn lineamount_subtotal(units: vector, prices: vector) -> vector {
+    if !lineamount_counts(units) { return []; }
+    if !lineamount_counts(prices) { return []; }
+    let result = lineamount_compute(units, prices);
+    if !lineamount_finite(result) { return []; }
+    result
+}
+
+fn cashmatch_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn cashmatch_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn cashmatch_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn cashmatch_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn cashmatch_compute(due: f64, payments: vector) -> vector {
+    let paid = sum(payments);
+    if paid > 9007199254740991.0 {
+        return [];
+    }
+    [cashmatch_min2(paid, due), cashmatch_max2(0.0, due - paid), cashmatch_max2(0.0, paid - due)]
+}
+
+// Apply posted payments and preserve customer credit separately.
+// Returns [applied, still due, overpayment] in a single currency's minor units.
+pub fn cashmatch_apply(due: f64, payments: vector) -> vector {
+    if !(due >= 0.0 && due <= 9007199254740991.0 && due % 1.0 == 0.0) { return []; }
+    if !cashmatch_counts(payments) { return []; }
+    let result = cashmatch_compute(due, payments);
+    if !cashmatch_finite(result) { return []; }
+    result
+}
+
+fn ibis_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn ibis_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn ibis_compute(units: vector, prices: vector, payments: vector) -> vector {
+    let lines = lineamount_subtotal(units, prices);
+    if len(lines) == 0 {
+        return [];
+    }
+    let settle = cashmatch_apply(at(lines, 0), payments);
+    if len(settle) == 0 {
+        return [];
+    }
+    [at(lines, 0), at(settle, 0), at(settle, 1), at(settle, 2)]
+}
+
+// Reconcile an invoice with split payments in integer minor units.
+// Returns [subtotal, applied payment, open balance, credit]. Use a single currency and already-posted amounts.
+pub fn ibis_reconcile(units: vector, prices: vector, payments: vector) -> vector {
+    if !ibis_counts(units) { return []; }
+    if !ibis_counts(prices) { return []; }
+    if !ibis_counts(payments) { return []; }
+    let result = ibis_compute(units, prices, payments);
+    if !ibis_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let units = [2, 1];
+    let prices = [125, 50];
+    let payments = [200, 125];
+    let result = ibis_reconcile(units, prices, payments);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

@@ -1,0 +1,87 @@
+// PageCursor 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-pagecursor/tree/v0.1.0
+
+fn pagecursor_min2(a: f64, b: f64) -> f64 {
+    if a < b {
+        return a;
+    }
+    b
+}
+
+fn pagecursor_num(value: i64) -> f64 {
+    at([value], 0)
+}
+
+fn pagecursor_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn pagecursor_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn pagecursor_compute(keys: vector, cursor: f64, size: f64) -> vector {
+    let mut i = 1;
+    while i < len(keys) {
+        if at(keys, i) <= at(keys, i - 1) {
+            return [];
+        }
+        i += 1;
+    }
+    let mut low = 0;
+    let mut high = len(keys);
+    while low < high {
+        let mid = low + (high - low) / 2;
+        if at(keys, mid) <= cursor {
+            low = mid + 1;
+        } else {
+            high = mid;
+        }
+    }
+    let end = pagecursor_min2(pagecursor_num(len(keys)), pagecursor_num(low) + size);
+    let mut more = 0;
+    if end < pagecursor_num(len(keys)) {
+        more = 1;
+    }
+    [low, end, more]
+}
+
+// Find a keyset page strictly after a cursor in sorted keys.
+// Returns [first index, exclusive end, has more]. Verifies strict ordering, then uses binary search. An absent cursor is valid.
+pub fn pagecursor_after(keys: vector, cursor: f64, size: f64) -> vector {
+    if !pagecursor_integers(keys) { return []; }
+    if !(cursor >= -9007199254740991.0 && cursor <= 9007199254740991.0 && cursor % 1.0 == 0.0) { return []; }
+    if !(size >= 1.0 && size <= 9007199254740991.0 && size % 1.0 == 0.0) { return []; }
+    let result = pagecursor_compute(keys, cursor, size);
+    if !pagecursor_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let keys = [1, 4, 7, 9];
+    let cursor = 3.0;
+    let size = 2.0;
+    let result = pagecursor_after(keys, cursor, size);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

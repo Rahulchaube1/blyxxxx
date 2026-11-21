@@ -16,7 +16,14 @@ export function GET() {
             release: p.release,
             module: p.module + ".blyx",
             description: p.description,
-            cli: p.cli ? p.slug : null,
+            cli: (p.cli || p.collection?.libraries.length) ? p.slug : null,
+            ...(p.collection && {
+                kind: p.collection.libraries.length ? "framework" : "library",
+                family: p.collection.family,
+                libraries: p.collection.libraries.map((lib) => lib.slug),
+                sourceDownload: p.repository + "/archive/refs/tags/v" + p.version + ".zip",
+                sourceBundle: website + "/downloads/blyx-ecosystem-0.1.0-source.zip",
+            }),
             logo: website + p.logo,
             ...(p.workflow && {
                 project: { title: p.workflow.title, source: p.workflow.source, tutorial: "https://doc.blyx-lang.space/guide/" + p.guide },

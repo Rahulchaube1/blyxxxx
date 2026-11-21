@@ -1,0 +1,93 @@
+// DagOrder 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-dagorder/tree/v0.1.0
+
+fn dagorder_num(value: i64) -> f64 {
+    at([value], 0)
+}
+
+fn dagorder_slot(key: f64, size: i64) -> i64 {
+    let mut lo = 0;
+    let mut hi = size;
+    while lo < hi {
+        let mid = lo + (hi - lo) / 2;
+        if at([mid], 0) < key {
+            lo = mid + 1;
+        } else {
+            hi = mid;
+        }
+    }
+    lo
+}
+
+fn dagorder_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn dagorder_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn dagorder_compute(parents: vector) -> vector {
+    let mut roots = 0;
+    let mut deepest = 0;
+    let mut leaf = -1;
+    let mut i = 0;
+    while i < len(parents) {
+        let parent = at(parents, i);
+        if parent < -1.0 || parent >= dagorder_num(i) {
+            return [];
+        }
+        if parent == -1.0 {
+            roots += 1;
+        }
+        let mut steps = 1;
+        let mut next = parent;
+        while next >= 0.0 {
+            let idx = dagorder_slot(next, i);
+            next = at(parents, idx);
+            steps += 1;
+        }
+        if steps > deepest {
+            deepest = steps;
+            leaf = i;
+        }
+        i += 1;
+    }
+    [roots, deepest, leaf]
+}
+
+// Validate indexed dependencies in an ordered build forest.
+// Each stage names one earlier parent or -1 for a root. Returns [root count, maximum chain length in stages, first stage with that depth]. Empty forests have zero depth.
+pub fn dagorder_forest(parents: vector) -> vector {
+    if !dagorder_integers(parents) { return []; }
+    let result = dagorder_compute(parents);
+    if !dagorder_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let parents = [-1, 0, 0, 2];
+    let result = dagorder_forest(parents);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

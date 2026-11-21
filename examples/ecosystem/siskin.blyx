@@ -1,0 +1,191 @@
+// Siskin 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-siskin/tree/v0.1.0
+
+fn cashladder_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn cashladder_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn cashladder_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn cashladder_compute(opening: f64, flows: vector) -> vector {
+    let mut cash = opening;
+    let mut low = cash;
+    let mut idx = -1;
+    let mut i = 0;
+    while i < len(flows) {
+        cash += at(flows, i);
+        if cashladder_absolute(cash) > 9007199254740991.0 {
+            return [];
+        }
+        if cash < low {
+            low = cash;
+            idx = i;
+        }
+        i += 1;
+    }
+    [cash, low, idx]
+}
+
+// Find closing and lowest balances along an ordered cash-flow schedule.
+// Returns [closing, lowest balance including opening, first low index]. Opening uses index -1. Use a single currency's minor units.
+pub fn cashladder_balance(opening: f64, flows: vector) -> vector {
+    if !(opening >= -9007199254740991.0 && opening <= 9007199254740991.0 && opening % 1.0 == 0.0) { return []; }
+    if !cashladder_integers(flows) { return []; }
+    let result = cashladder_compute(opening, flows);
+    if !cashladder_finite(result) { return []; }
+    result
+}
+
+fn floorbreach_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn floorbreach_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn floorbreach_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn floorbreach_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn floorbreach_compute(opening: f64, flows: vector, reserve: f64) -> vector {
+    let mut cash = opening;
+    let mut first = -1;
+    let mut count = 0;
+    let mut gap = 0.0;
+    let mut i = 0;
+    while i < len(flows) {
+        cash += at(flows, i);
+        if floorbreach_absolute(cash) > 9007199254740991.0 {
+            return [];
+        }
+        if cash < reserve {
+            if first < 0 {
+                first = i;
+            }
+            count += 1;
+            gap = floorbreach_max2(gap, reserve - cash);
+        }
+        i += 1;
+    }
+    [first, count, gap]
+}
+
+// Locate the first reserve breach and count all deficient period ends.
+// Returns [first deficient period, deficient periods, largest shortfall]. The opening balance initializes the trace; only period ends are counted.
+pub fn floorbreach_trace(opening: f64, flows: vector, reserve: f64) -> vector {
+    if !(opening >= -9007199254740991.0 && opening <= 9007199254740991.0 && opening % 1.0 == 0.0) { return []; }
+    if !floorbreach_integers(flows) { return []; }
+    if !(reserve >= -9007199254740991.0 && reserve <= 9007199254740991.0 && reserve % 1.0 == 0.0) { return []; }
+    let result = floorbreach_compute(opening, flows, reserve);
+    if !floorbreach_finite(result) { return []; }
+    result
+}
+
+fn siskin_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn siskin_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn siskin_compute(opening: f64, flows: vector, reserve: f64) -> vector {
+    let ladder = cashladder_balance(opening, flows);
+    let risk = floorbreach_trace(opening, flows, reserve);
+    if len(ladder) == 0 || len(risk) == 0 {
+        return [];
+    }
+    [at(ladder, 0), at(ladder, 1), at(risk, 0), at(risk, 1), at(risk, 2)]
+}
+
+// Inspect a cash-flow schedule for shortfalls that disappear by the closing date.
+// Returns [closing balance, low-water balance, first deficient period, deficient periods, period-end funding gap]. Flows must be in date order.
+pub fn siskin_project(opening: f64, flows: vector, reserve: f64) -> vector {
+    if !(opening >= -9007199254740991.0 && opening <= 9007199254740991.0 && opening % 1.0 == 0.0) { return []; }
+    if !siskin_integers(flows) { return []; }
+    if !(reserve >= -9007199254740991.0 && reserve <= 9007199254740991.0 && reserve % 1.0 == 0.0) { return []; }
+    let result = siskin_compute(opening, flows, reserve);
+    if !siskin_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let opening = 20.0;
+    let flows = [-15, -10, 30];
+    let reserve = 10.0;
+    let result = siskin_project(opening, flows, reserve);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

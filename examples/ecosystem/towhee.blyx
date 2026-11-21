@@ -1,0 +1,201 @@
+// Towhee 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-towhee/tree/v0.1.0
+
+fn indentsteps_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn indentsteps_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn indentsteps_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn indentsteps_compute(indent: vector, step: f64) -> vector {
+    let mut errors = 0;
+    let mut first = -1;
+    let mut deepest = 0.0;
+    let mut prev = 0.0;
+    let mut i = 0;
+    while i < len(indent) {
+        let col = at(indent, i);
+        if (i == 0 && col != 0.0) || col % step != 0.0 || col > prev + step {
+            if first < 0 {
+                first = i;
+            }
+            errors += 1;
+        }
+        deepest = indentsteps_max2(deepest, col);
+        prev = col;
+        i += 1;
+    }
+    [errors, first, deepest]
+}
+
+// Audit fixed-step indentation measured on nonblank source lines.
+// Returns [off-grid or illegal jump count, first offending row, deepest column]. The first nonblank row starts at zero and one line can increase by at most one indent step.
+pub fn indentsteps_audit(indent: vector, step: f64) -> vector {
+    if !indentsteps_counts(indent) { return []; }
+    if !(step >= 1.0 && step <= 9007199254740991.0 && step % 1.0 == 0.0) { return []; }
+    let result = indentsteps_compute(indent, step);
+    if !indentsteps_finite(result) { return []; }
+    result
+}
+
+fn linewidth_max2(a: f64, b: f64) -> f64 {
+    if a > b {
+        return a;
+    }
+    b
+}
+
+fn linewidth_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn linewidth_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn linewidth_compute(widths: vector, limit: f64) -> vector {
+    let mut count = 0;
+    let mut first = -1;
+    let mut excess = 0.0;
+    let mut i = 0;
+    while i < len(widths) {
+        let gap = at(widths, i) - limit;
+        if gap > 0.0 {
+            if first < 0 {
+                first = i;
+            }
+            count += 1;
+            excess = linewidth_max2(excess, gap);
+        }
+        i += 1;
+    }
+    [count, first, excess]
+}
+
+// Find overlong source lines from measured display columns.
+// Returns [overlong rows, first overlong row, largest excess]. The host selects a Unicode display-width convention and supplies widths including indentation.
+pub fn linewidth_audit(widths: vector, limit: f64) -> vector {
+    if !linewidth_counts(widths) { return []; }
+    if !(limit >= 1.0 && limit <= 9007199254740991.0 && limit % 1.0 == 0.0) { return []; }
+    let result = linewidth_compute(widths, limit);
+    if !linewidth_finite(result) { return []; }
+    result
+}
+
+fn towhee_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn towhee_counts(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn towhee_compute(indent: vector, widths: vector, step: f64, limit: f64) -> vector {
+    if len(indent) != len(widths) {
+        return [];
+    }
+    let mut i = 0;
+    while i < len(indent) {
+        if at(indent, i) > at(widths, i) {
+            return [];
+        }
+        i += 1;
+    }
+    let levels = indentsteps_audit(indent, step);
+    let lines = linewidth_audit(widths, limit);
+    if len(levels) == 0 || len(lines) == 0 {
+        return [];
+    }
+    let mut first = at(levels, 1);
+    if first < 0.0 || (at(lines, 1) >= 0.0 && at(lines, 1) < first) {
+        first = at(lines, 1);
+    }
+    let mut clean = 0;
+    if first < 0.0 {
+        clean = 1;
+    }
+    [clean, at(levels, 0), at(lines, 0), first]
+}
+
+// Combine indentation and line-width diagnostics for a measured source file.
+// Returns [clean, indentation violations, overlong rows, first problem row]. Supply aligned nonblank physical lines and their display widths.
+pub fn towhee_lint(indent: vector, widths: vector, step: f64, limit: f64) -> vector {
+    if !towhee_counts(indent) { return []; }
+    if !towhee_counts(widths) { return []; }
+    if !(step >= 1.0 && step <= 9007199254740991.0 && step % 1.0 == 0.0) { return []; }
+    if !(limit >= 1.0 && limit <= 9007199254740991.0 && limit % 1.0 == 0.0) { return []; }
+    let result = towhee_compute(indent, widths, step, limit);
+    if !towhee_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let indent = [0, 4, 12];
+    let widths = [60, 88, 70];
+    let step = 4.0;
+    let limit = 80.0;
+    let result = towhee_lint(indent, widths, step, limit);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

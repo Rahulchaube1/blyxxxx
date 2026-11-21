@@ -1,0 +1,70 @@
+// ClockFold 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-clockfold/tree/v0.1.0
+
+fn clockfold_absolute(value: f64) -> f64 {
+    if value < 0.0 {
+        return - value;
+    }
+    value
+}
+
+fn clockfold_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn clockfold_compute(local: f64, transition: f64, before: f64, after: f64) -> vector {
+    if clockfold_absolute(before) >= 86400.0 || clockfold_absolute(after) >= 86400.0 {
+        return [];
+    }
+    let old = local - before;
+    let next = local - after;
+    if clockfold_absolute(old) > 9007199254740991.0 || clockfold_absolute(next) > 9007199254740991.0 {
+        return [];
+    }
+    let a = old < transition;
+    let b = next >= transition;
+    if a && b {
+        return [2, old, next];
+    }
+    if a {
+        return [1, old, old];
+    }
+    if b {
+        return [1, next, next];
+    }
+    [0, 0, 0]
+}
+
+// Classify a local time around one supplied offset transition.
+// Returns [number of valid UTC candidates, earliest candidate, latest candidate]. A forward gap yields [0,0,0]; a backward fold yields two candidates.
+pub fn clockfold_classify(local: f64, transition: f64, before: f64, after: f64) -> vector {
+    if !(local >= -9007199254740991.0 && local <= 9007199254740991.0 && local % 1.0 == 0.0) { return []; }
+    if !(transition >= -9007199254740991.0 && transition <= 9007199254740991.0 && transition % 1.0 == 0.0) { return []; }
+    if !(before >= -9007199254740991.0 && before <= 9007199254740991.0 && before % 1.0 == 0.0) { return []; }
+    if !(after >= -9007199254740991.0 && after <= 9007199254740991.0 && after % 1.0 == 0.0) { return []; }
+    let result = clockfold_compute(local, transition, before, after);
+    if !clockfold_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let local = 11000.0;
+    let transition = 10000.0;
+    let before = 3600.0;
+    let after = 0.0;
+    let result = clockfold_classify(local, transition, before, after);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

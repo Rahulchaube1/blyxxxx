@@ -1,0 +1,44 @@
+// BetaUpdate 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-betaupdate/tree/v0.1.0
+
+fn betaupdate_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn betaupdate_compute(alpha: f64, beta: f64, positive: f64, negative: f64) -> vector {
+    [alpha + positive, beta + negative]
+}
+
+// Update a Beta prior with Bernoulli counts.
+// Returns [posterior alpha, posterior beta]. Use one count for each independent binary observation.
+pub fn betaupdate_observe(alpha: f64, beta: f64, positive: f64, negative: f64) -> vector {
+    if !(alpha > 0.0 && alpha - alpha == 0.0) { return []; }
+    if !(beta > 0.0 && beta - beta == 0.0) { return []; }
+    if !(positive >= 0.0 && positive <= 9007199254740991.0 && positive % 1.0 == 0.0) { return []; }
+    if !(negative >= 0.0 && negative <= 9007199254740991.0 && negative % 1.0 == 0.0) { return []; }
+    let result = betaupdate_compute(alpha, beta, positive, negative);
+    if !betaupdate_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let alpha = 1.0;
+    let beta = 1.0;
+    let positive = 3.0;
+    let negative = 1.0;
+    let result = betaupdate_observe(alpha, beta, positive, negative);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}

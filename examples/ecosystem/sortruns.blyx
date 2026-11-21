@@ -1,0 +1,74 @@
+// SortRuns 0.1.0 · MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-sortruns/tree/v0.1.0
+
+fn sortruns_finite(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value - value == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn sortruns_integers(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        let value = at(values, i);
+        if !(value >= -9007199254740991.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0) {
+            return false;
+        }
+        i += 1;
+    }
+    true
+}
+
+fn sortruns_compute(values: vector) -> vector {
+    if len(values) == 0 {
+        return [0, 0, 0];
+    }
+    let mut kinds = 0;
+    let mut run = 0;
+    let mut best = 0;
+    let mut key = at(values, 0);
+    let mut i = 0;
+    while i < len(values) {
+        let current = at(values, i);
+        if i > 0 && current < at(values, i - 1) {
+            return [];
+        }
+        if i == 0 || current != at(values, i - 1) {
+            kinds += 1;
+            run = 0;
+        }
+        run += 1;
+        if run > best {
+            best = run;
+            key = current;
+        }
+        i += 1;
+    }
+    [kinds, best, key]
+}
+
+// Summarize equal-value runs in a nondecreasing integer stream.
+// Returns [distinct values, longest run length, first key with that run]. Empty input returns [0,0,0]. Rejects descending keys.
+pub fn sortruns_profile(values: vector) -> vector {
+    if !sortruns_integers(values) { return []; }
+    let result = sortruns_compute(values);
+    if !sortruns_finite(result) { return []; }
+    result
+}
+
+fn main() {
+    let values = [1, 1, 2, 3, 3, 3];
+    let result = sortruns_profile(values);
+    if len(result) == 0 { println!("invalid"); return; }
+    let mut i = 0;
+    while i < len(result) {
+        println!(at(result, i));
+        i += 1;
+    }
+}
