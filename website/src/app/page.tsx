@@ -30,14 +30,16 @@ export default function Home() {
                             <a href="/frameworks">Explore frameworks</a>
                         </div>
                     </div>
-                    <div className="hero-art">
+                    <picture className="hero-art">
+                        <source type="image/webp" srcSet="/blyx-mascot.webp" />
                         <img
-                            src="/penguin_coding.jpg"
-                            alt="Blyx penguin working at a keyboard"
-                            width="330"
-                            height="330"
+                            src="/blyx.png"
+                            alt="The Blyx penguin wearing blue mirrored sunglasses"
+                            width="1536"
+                            height="1024"
+                            fetchPriority="high"
                         />
-                    </div>
+                    </picture>
                 </div>
             </section>
             <div className="wrap">
