@@ -1,0 +1,44 @@
+// Blyx Kestrel 0.1.0, MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-kestrel/tree/v0.1.0
+fn ke_time(ms: f64) -> bool {
+    ms >= 0.0 && ms <= 1000000000.0 && ms % 1.0 == 0.0
+}
+// Return [fixed updates, carried milliseconds, dropped milliseconds, render alpha].
+pub fn ke_clock(carry: f64, elapsed: f64, step: f64, max_steps: i64) -> vector {
+    if !ke_time(step) || step == 0.0 || !ke_time(elapsed) || !ke_time(carry) || carry >= step || max_steps < 1 || max_steps > 1000000 { return []; }
+    let total = carry + elapsed;
+    let next = total % step;
+    let available = (total - next) / step;
+    let mut updates = available;
+    let limit = at([max_steps], 0);
+    if updates > limit { updates = limit; }
+    [updates, next, (available - updates) * step, next / step]
+}
+pub fn ke_lerp(previous: f64, current: f64, alpha: f64) -> f64 {
+    (1.0 - alpha) * previous + alpha * current
+}
+// Advance an object along a bounded one-dimensional track with elastic walls.
+// At an exact wall the stored velocity points inward for the next update.
+pub fn ke_bounce(position: f64, velocity: f64, dt: f64, low: f64, high: f64) -> vector {
+    if !(low < high && position >= low && position <= high && dt >= 0.0) { return []; }
+    let span = high - low;
+    let period = 2.0 * span;
+    let travel = (position - low) + velocity * dt;
+    if period - period != 0.0 || travel - travel != 0.0 { return []; }
+    let mut phase = travel % period;
+    if phase < 0.0 { phase += period; }
+    let mut speed = velocity;
+    if speed < 0.0 { speed = -speed; }
+    if phase == 0.0 { return [low, speed]; }
+    if phase == span { return [high, -speed]; }
+    if phase < span { return [low + phase, velocity]; }
+    [high - (phase - span), -velocity]
+}
+
+fn main() {
+    let frame = ke_clock(5.0, 50.0, 10.0, 3);
+    println!(at(frame, 0));
+    println!(at(frame, 1));
+    println!(at(frame, 2));
+    println!(at(frame, 3));
+}

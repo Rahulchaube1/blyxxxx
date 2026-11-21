@@ -21,7 +21,7 @@ export default function PackageCatalog() {
             <div className="filters">
                 <label>
                     Search packages
-                    <input type="search" value={query} disabled={!ready} onChange={(e) => setQuery(e.target.value)} placeholder="Try ridge, drift, or recall" />
+                    <input type="search" value={query} disabled={!ready} onChange={(e) => setQuery(e.target.value)} placeholder="Try CSV, routing, layout, or training" />
                 </label>
                 <label>
                     Task

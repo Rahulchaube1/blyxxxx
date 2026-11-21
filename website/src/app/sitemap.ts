@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
               "vscode",
               "benchmarks",
               "packages",
+              "frameworks",
               ...catalog.packages.map((p) => "packages/" + p.slug),
               "blog",
               "about",

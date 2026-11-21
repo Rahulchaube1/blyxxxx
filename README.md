@@ -83,6 +83,21 @@ The first line of output is `2`, the fitted slope. The second is `10`, the predi
 | [Threshold classifier](https://www.blyx-lang.space/play?example=threshold) | Vector dot product, bias, and a conditional | `positive` |
 | [Smoothed readings](https://www.blyx-lang.space/play?example=smoothing) | Indexed reads and a rolling calculation | `10`, `12`, `15` |
 
+## Build with Blyx frameworks
+
+[Browse the framework directory](https://www.blyx-lang.space/frameworks) for the project walkthroughs, versioned downloads and input contracts.
+
+| Framework | Example project |
+| --- | --- |
+| <img src="website/public/packages/swiftlet.png" width="32" alt=""> [Swiftlet](https://github.com/Rahulchaube1/blyx-swiftlet) | Route a book catalog request. [Run the example](https://www.blyx-lang.space/play?example=package-swiftlet) |
+| <img src="website/public/packages/shrike.png" width="32" alt=""> [Shrike](https://github.com/Rahulchaube1/blyx-shrike) | Merge two help-center searches. [Run the example](https://www.blyx-lang.space/play?example=package-shrike) |
+| <img src="website/public/packages/bunting.png" width="32" alt=""> [Bunting](https://github.com/Rahulchaube1/blyx-bunting) | Publish a support-queue report. [Run the example](https://www.blyx-lang.space/play?example=package-bunting) |
+| <img src="website/public/packages/wren.png" width="32" alt=""> [Wren](https://github.com/Rahulchaube1/blyx-wren) | Test an invoice and packing calculation. [Run the example](https://www.blyx-lang.space/play?example=package-wren) |
+| <img src="website/public/packages/weaver.png" width="32" alt=""> [Weaver](https://github.com/Rahulchaube1/blyx-weaver) | Render a file chooser as SVG. [Run the example](https://www.blyx-lang.space/play?example=package-weaver) |
+| <img src="website/public/packages/dipper.png" width="32" alt=""> [Dipper](https://github.com/Rahulchaube1/blyx-dipper) | Import a two-column notes file. [Run the example](https://www.blyx-lang.space/play?example=package-dipper) |
+| <img src="website/public/packages/kestrel.png" width="32" alt=""> [Kestrel](https://github.com/Rahulchaube1/blyx-kestrel) | Replay a bouncing ball across a stalled frame. [Run the example](https://www.blyx-lang.space/play?example=package-kestrel) |
+| <img src="website/public/packages/heron.png" width="32" alt=""> [Heron](https://github.com/Rahulchaube1/blyx-heron) | Audit a sensor heartbeat trace. [Run the example](https://www.blyx-lang.space/play?example=package-heron) |
+
 ## Train and evaluate models with Blyx packages
 
 Fit a regression model from a CSV, estimate prediction intervals on held-out examples, and detect persistent errors after deployment. Each package has a tagged source release, executable tests and a browser example. BlyxTorch, LinearFit, ResidualWatch and ModelGate also ship native commands for Windows x64, Linux x64 and Apple Silicon macOS.

@@ -18,6 +18,11 @@ export function GET() {
             description: p.description,
             cli: p.cli ? p.slug : null,
             logo: website + p.logo,
+            ...(p.workflow && {
+                project: { title: p.workflow.title, source: p.workflow.source, tutorial: "https://doc.blyx-lang.space/guide/" + p.guide },
+                downloads: p.workflow.downloads,
+                checksums: p.workflow.checksums,
+            }),
             ...(p.editor && { editor: p.editor }),
             ...(p.projects && { projects: p.projects.map((project) => ({
                 title: project.title, source: project.source, playground: website + "/play?example=" + project.id,

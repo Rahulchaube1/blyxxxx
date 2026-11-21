@@ -27,6 +27,7 @@ export default function Home() {
                             >
                                 Learn Blyx
                             </a>
+                            <a href="/frameworks">Explore frameworks</a>
                         </div>
                     </div>
                     <div className="hero-art">

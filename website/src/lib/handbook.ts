@@ -41,6 +41,10 @@ export const stages = [
         "Build a sensor report, test edge cases and evaluate models with published Blyx libraries.",
     ],
     [
+        "Framework projects",
+        "Build a complete project with a released framework and test its behavior on an edge case.",
+    ],
+    [
         "Local toolchain",
         "Move to a local project, diagnose a failure and build a native executable.",
     ],

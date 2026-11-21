@@ -1,0 +1,40 @@
+// Blyx Heron 0.1.0, MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-heron/tree/v0.1.0
+// [last sequence, receipt ms, accepted, duplicates, out of order, skipped IDs].
+pub fn he_start() -> vector { [-1, -1, 0, 0, 0, 0] }
+fn he_integer(n: f64) -> bool { n >= 0.0 && n <= 9007199254740991.0 && n % 1.0 == 0.0 }
+pub fn he_observe(state: vector, sequence: f64, receipt: f64) -> vector {
+    if len(state) != 6 || !he_integer(sequence) || !he_integer(receipt) { return []; }
+    let last = at(state, 0);
+    let stamp = at(state, 1);
+    let accepted = at(state, 2);
+    let duplicate = at(state, 3);
+    let late = at(state, 4);
+    let gaps = at(state, 5);
+    if sequence < last || receipt < stamp { return [last, stamp, accepted, duplicate, late + 1.0, gaps]; }
+    if sequence == last { return [last, stamp, accepted, duplicate + 1.0, late, gaps]; }
+    let mut missing = 0.0;
+    if last >= 0.0 { missing = sequence - last - 1.0; }
+    [sequence, receipt, accepted + 1.0, duplicate, late, gaps + missing]
+}
+pub fn he_age(state: vector, now: f64) -> f64 {
+    if len(state) != 6 || at(state, 1) < 0.0 || !he_integer(now) || now < at(state, 1) { return -1.0; }
+    now - at(state, 1)
+}
+pub fn he_status(state: vector, now: f64, deadline: f64) -> str {
+    if len(state) != 6 || !he_integer(now) || !he_integer(deadline) { return "invalid"; }
+    if at(state, 0) < 0.0 { return "unseen"; }
+    let age = he_age(state, now);
+    if age < 0.0 { return "invalid"; }
+    if age > deadline { return "late"; }
+    "current"
+}
+
+fn main() {
+    let first = he_observe(he_start(), 10.0, 100.0);
+    let next = he_observe(first, 13.0, 120.0);
+    let repeated = he_observe(next, 13.0, 145.0);
+    println!(at(repeated, 5));
+    println!(at(repeated, 3));
+    println!(he_status(repeated, 151.0, 30.0));
+}

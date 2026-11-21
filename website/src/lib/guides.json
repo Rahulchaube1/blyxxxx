@@ -1029,6 +1029,674 @@
         }
     },
     {
+        "slug": "swiftlet",
+        "title": "Swiftlet · Route a book catalog request",
+        "group": "Framework projects",
+        "summary": "Dispatch a method and request path against a table of literal and parameterized routes. Return a matched template and the methods a client can use.",
+        "example": "package-swiftlet",
+        "sections": [
+            {
+                "heading": "The developer problem",
+                "text": "A method error and a missing route mean different things to an HTTP client. If their responses share one fallback, clients lose the list of methods a resource accepts. RFC 9110 requires an Allow field on a 405 response.",
+                "links": [
+                    {
+                        "text": "HTTP Semantics, §15.5.6",
+                        "href": "https://www.rfc-editor.org/rfc/rfc9110.html#name-405-method-not-allowed"
+                    }
+                ]
+            },
+            {
+                "heading": "Run the project locally",
+                "text": "Pass PATCH and /books/42?preview=yes to the dispatcher. It selects /books/:id and extracts 42. Try the same method on /books/new, an explicitly read-only resource. The CGI example also serves a health check through an existing web server. Install Blyx 0.2.1, Rust and a host linker, then run these commands.",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-swiftlet.git\ncd blyx-swiftlet\nblyxc native-run project.blyx",
+                "links": [
+                    {
+                        "text": "Full project source",
+                        "href": "https://github.com/Rahulchaube1/blyx-swiftlet/blob/v0.1.0/project.blyx"
+                    },
+                    {
+                        "text": "Tagged source and downloads",
+                        "href": "https://github.com/Rahulchaube1/blyx-swiftlet/releases/tag/v0.1.0"
+                    }
+                ]
+            },
+            {
+                "heading": "Use the API",
+                "text": "Register a method and an absolute path template separated by one space. GET, HEAD, POST, PUT, PATCH, DELETE and OPTIONS use explicit registrations. Literal segments outrank parameters by their count. Equally specific templates use registration order. The matcher strips the query, preserves percent encoding and treats a trailing slash as significant. Hosting, URL decoding and authentication belong to the application.",
+                "table": {
+                    "columns": [
+                        "Function",
+                        "Behavior"
+                    ],
+                    "rows": [
+                        [
+                            "sw_dispatch(routes, method, target)",
+                            "Import router. Returns status text, matched template, and the Allow value in a three-element argument list."
+                        ],
+                        [
+                            "sw_param(template, target, name)",
+                            "Extract an encoded path parameter from a matching path. An absent capture returns an empty string."
+                        ],
+                        [
+                            "sw_enable(mask, method), sw_status(found, mask, method)",
+                            "Build a method set and apply the same status decisions as the router. Start at zero."
+                        ],
+                        [
+                            "sw_allow(mask)",
+                            "Generate the comma-separated list of registered HTTP methods."
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Verify a change",
+                "text": "Run the package checks from its release directory. Compare the browser example with its expected output, then change the input in the exercise below.",
+                "command": "blyxc native-run tests.blyx",
+                "links": [
+                    {
+                        "text": "Package and installation instructions",
+                        "href": "https://www.blyx-lang.space/packages/swiftlet"
+                    }
+                ]
+            }
+        ],
+        "exercise": {
+            "prompt": "Change DELETE to POST in the second request. Which status changes?",
+            "hint": "Change only the worked example’s input. The API table describes the output.",
+            "answer": "The route accepts POST, so the second status becomes 200.",
+            "edits": [
+                [
+                    "sw_status(true, methods, \"DELETE\")",
+                    "sw_status(true, methods, \"POST\")"
+                ]
+            ],
+            "expected": "200\n200\n404\n"
+        }
+    },
+    {
+        "slug": "shrike",
+        "title": "Shrike · Merge two help-center searches",
+        "group": "Framework projects",
+        "summary": "Combine lexical and semantic search results by rank, then walk the merged list in a deterministic order.",
+        "example": "package-shrike",
+        "sections": [
+            {
+                "heading": "The developer problem",
+                "text": "A keyword ranker and an embedding ranker return scores on different scales. Reciprocal rank fusion combines each document’s position in the lists. It gives a developer an inspectable baseline before tuning a score calibration or training a reranker.",
+                "links": [
+                    {
+                        "text": "Cormack, Clarke and Buettcher, Reciprocal Rank Fusion",
+                        "href": "https://cormack.uwaterloo.ca/cormacksigir09-rrf.pdf"
+                    }
+                ]
+            },
+            {
+                "heading": "Run the project locally",
+                "text": "A literal-word search and a paraphrase search return different article IDs. The example prints the first three fused results. Article 21 wins because both rankers put it near the top. Install Blyx 0.2.1, Rust and a host linker, then run these commands.",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-shrike.git\ncd blyx-shrike\nblyxc native-run project.blyx",
+                "links": [
+                    {
+                        "text": "Full project source",
+                        "href": "https://github.com/Rahulchaube1/blyx-shrike/blob/v0.1.0/project.blyx"
+                    },
+                    {
+                        "text": "Tagged source and downloads",
+                        "href": "https://github.com/Rahulchaube1/blyx-shrike/releases/tag/v0.1.0"
+                    }
+                ]
+            },
+            {
+                "heading": "Use the API",
+                "text": "Supply two ranked vectors of nonnegative integer IDs up to 2^53−1 and an offset from 0 to 1,000,000. The first occurrence in each list contributes 1/(offset + one-based position). Missing IDs contribute zero. Equal scores use ascending ID. Start the cursor at −1. Each next-result call can take quadratic time in the combined shortlist length; use this version with small candidate sets.",
+                "table": {
+                    "columns": [
+                        "Function",
+                        "Behavior"
+                    ],
+                    "rows": [
+                        [
+                            "sh_valid_inputs(left, right, offset)",
+                            "Validate every ID and the smoothing offset."
+                        ],
+                        [
+                            "sh_score(left, right, id, offset)",
+                            "Get the fused score of one document. Zero means absent and −1 means invalid input."
+                        ],
+                        [
+                            "sh_next(left, right, offset, previous)",
+                            "Get the next ID after a cursor, or −1 for exhaustion or invalid input. Each ID is returned once."
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Verify a change",
+                "text": "Run the package checks from its release directory. Compare the browser example with its expected output, then change the input in the exercise below.",
+                "command": "blyxc native-run tests.blyx",
+                "links": [
+                    {
+                        "text": "Package and installation instructions",
+                        "href": "https://www.blyx-lang.space/packages/shrike"
+                    }
+                ]
+            }
+        ],
+        "exercise": {
+            "prompt": "Move article 41 to first place in both lists. Which two articles lead?",
+            "hint": "Change only the worked example’s input. The API table describes the output.",
+            "answer": "41 wins both lists and 83 retains a contribution from each.",
+            "edits": [
+                [
+                    "let semantic = [17, 83, 99];",
+                    "let semantic = [41, 83, 99];"
+                ]
+            ],
+            "expected": "41\n83\n"
+        }
+    },
+    {
+        "slug": "bunting",
+        "title": "Bunting · Publish a support-queue report",
+        "group": "Framework projects",
+        "summary": "Publish a distribution as a standalone HTML table with interval labels, counts and meters. Reuse the same bin definitions in reports and tests.",
+        "example": "package-bunting",
+        "sections": [
+            {
+                "heading": "The developer problem",
+                "text": "A colored chart alone can hide values from people navigating with assistive technology. W3C’s table guidance pairs data cells with headers. Bunting emits row and column headers and prints the count alongside every meter.",
+                "links": [
+                    {
+                        "text": "W3C WAI, Tables with One Header",
+                        "href": "https://www.w3.org/WAI/tutorials/tables/one-header/"
+                    }
+                ]
+            },
+            {
+                "heading": "Run the project locally",
+                "text": "Group eight first-reply waits at 5, 10 and 20 minutes. The resulting HTML page opens offline and exposes intervals, counts and shares as a table. Every observation contributes to one row. Install Blyx 0.2.1, Rust and a host linker, then run these commands.",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-bunting.git\ncd blyx-bunting\nblyxc native-run project.blyx",
+                "links": [
+                    {
+                        "text": "Full project source",
+                        "href": "https://github.com/Rahulchaube1/blyx-bunting/blob/v0.1.0/project.blyx"
+                    },
+                    {
+                        "text": "Tagged source and downloads",
+                        "href": "https://github.com/Rahulchaube1/blyx-bunting/releases/tag/v0.1.0"
+                    },
+                    {
+                        "text": "Open the generated example",
+                        "href": "https://www.blyx-lang.space/framework-examples/report.html"
+                    }
+                ]
+            },
+            {
+                "heading": "Use the API",
+                "text": "Supply finite strictly increasing boundaries. A value exactly on a boundary belongs to the bucket above it. Bucket −1 counts missing or non-finite values. An empty boundary vector represents all finite values. The table generator validates boundaries before writing any markup. The caller supplies the HTML document around the table.",
+                "table": {
+                    "columns": [
+                        "Function",
+                        "Behavior"
+                    ],
+                    "rows": [
+                        [
+                            "bu_valid(edges), bu_bucket(edges, value)",
+                            "Check boundaries and locate the value by binary search."
+                        ],
+                        [
+                            "bu_count(data, edges, bucket)",
+                            "Count observations in one bucket. An invalid request returns −1."
+                        ],
+                        [
+                            "bu_table(data, edges)",
+                            "Write a captioned HTML table with explicit counts and meter values. Returns false for invalid boundaries."
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Verify a change",
+                "text": "Run the package checks from its release directory. Compare the browser example with its expected output, then change the input in the exercise below.",
+                "command": "blyxc native-run tests.blyx",
+                "links": [
+                    {
+                        "text": "Package and installation instructions",
+                        "href": "https://www.blyx-lang.space/packages/bunting"
+                    }
+                ]
+            }
+        ],
+        "exercise": {
+            "prompt": "Change the cut points to 4 and 12. Where do the exact boundary observations go?",
+            "hint": "Change only the worked example’s input. The API table describes the output.",
+            "answer": "Values 4 and 12 move into the buckets beginning at those cut points.",
+            "edits": [
+                [
+                    "let edges = [5, 10];",
+                    "let edges = [4, 12];"
+                ]
+            ],
+            "expected": "1\n4\n1\n"
+        }
+    },
+    {
+        "slug": "wren",
+        "title": "Wren · Test an invoice and packing calculation",
+        "group": "Framework projects",
+        "summary": "Run named checks and skips, compare floating-point measurements, and report a TAP 13 stream and a process exit status for CI.",
+        "example": "package-wren",
+        "sections": [
+            {
+                "heading": "The developer problem",
+                "text": "A test that only prints an error can leave a build green. TAP defines a machine-readable result for each check and a plan stating how many results to expect. Wren couples that output to the number of failures.",
+                "links": [
+                    {
+                        "text": "Test Anything Protocol, TAP 13 specification",
+                        "href": "https://testanything.org/tap-version-13-specification.html"
+                    }
+                ]
+            },
+            {
+                "heading": "Run the project locally",
+                "text": "The suite checks a decimal invoice total and a whole-box count, then records an offline printer as a skip. Change the expected box count to see the process exit with status 1. Install Blyx 0.2.1, Rust and a host linker, then run these commands.",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-wren.git\ncd blyx-wren\nblyxc native-run project.blyx",
+                "links": [
+                    {
+                        "text": "Full project source",
+                        "href": "https://github.com/Rahulchaube1/blyx-wren/blob/v0.1.0/project.blyx"
+                    },
+                    {
+                        "text": "Tagged source and downloads",
+                        "href": "https://github.com/Rahulchaube1/blyx-wren/releases/tag/v0.1.0"
+                    }
+                ]
+            },
+            {
+                "heading": "Use the API",
+                "text": "Start with wr_begin, pass the returned suite to each check or skip, then call process_exit(wr_end(suite)). The producer emits a trailing TAP plan. Names are truncated at a line break or # to keep the stream unambiguous. Relative tolerance ranges from zero to one. Inputs for measurements and tolerances must be finite.",
+                "table": {
+                    "columns": [
+                        "Function",
+                        "Behavior"
+                    ],
+                    "rows": [
+                        [
+                            "wr_begin(), wr_check(suite, passed, label)",
+                            "Import tap. Start a TAP stream and record numbered checks."
+                        ],
+                        [
+                            "wr_skip(suite, label, detail), wr_end(suite)",
+                            "Declare a skip and finish with a plan. wr_end returns 1 when a check failed."
+                        ],
+                        [
+                            "wr_near(actual, expected, absolute, relative)",
+                            "Compare using the larger of an absolute tolerance and a tolerance scaled by the larger input magnitude."
+                        ],
+                        [
+                            "wr_start(), wr_record(suite, passed, skipped), wr_exit(suite)",
+                            "Track total, failed and skipped cases without writing TAP output."
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Verify a change",
+                "text": "Run the package checks from its release directory. Compare the browser example with its expected output, then change the input in the exercise below.",
+                "command": "blyxc native-run tests.blyx",
+                "links": [
+                    {
+                        "text": "Package and installation instructions",
+                        "href": "https://www.blyx-lang.space/packages/wren"
+                    }
+                ]
+            }
+        ],
+        "exercise": {
+            "prompt": "Correct the failing arithmetic check and predict the exit code.",
+            "hint": "Change only the worked example’s input. The API table describes the output.",
+            "answer": "The suite still contains three cases and one skip, with zero failures and status zero.",
+            "edits": [
+                [
+                    "2 * 2 == 5",
+                    "2 * 2 == 4"
+                ]
+            ],
+            "expected": "3\n0\n1\n0\n"
+        }
+    },
+    {
+        "slug": "weaver",
+        "title": "Weaver · Render a file chooser as SVG",
+        "group": "Framework projects",
+        "summary": "Lay out equal-width tiles on small or large viewports, distribute leftover pixels and map pointer coordinates back to an item.",
+        "example": "package-weaver",
+        "sections": [
+            {
+                "heading": "The developer problem",
+                "text": "A grid can draw a tile in one place and dispatch a click to its neighbor if painting and input code round dimensions differently. CSS Grid describes how tracks and gaps form a layout. Weaver uses one integer track calculation for both drawing and input.",
+                "links": [
+                    {
+                        "text": "W3C, CSS Grid Layout Module Level 1",
+                        "href": "https://www.w3.org/TR/css-grid-1/#grid-tracks"
+                    }
+                ]
+            },
+            {
+                "heading": "Run the project locally",
+                "text": "The example draws five file tiles in three columns. The final row has two items. Use the same geometry for touch or mouse hit testing when embedding the layout in a UI host. Install Blyx 0.2.1, Rust and a host linker, then run these commands.",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-weaver.git\ncd blyx-weaver\nblyxc native-run project.blyx",
+                "links": [
+                    {
+                        "text": "Full project source",
+                        "href": "https://github.com/Rahulchaube1/blyx-weaver/blob/v0.1.0/project.blyx"
+                    },
+                    {
+                        "text": "Tagged source and downloads",
+                        "href": "https://github.com/Rahulchaube1/blyx-weaver/releases/tag/v0.1.0"
+                    },
+                    {
+                        "text": "Open the generated example",
+                        "href": "https://www.blyx-lang.space/framework-examples/chooser.svg"
+                    }
+                ]
+            },
+            {
+                "heading": "Use the API",
+                "text": "Use integer logical pixels. Width, inset, gap, minimum width and row height support values up to 1,000,000. The column limit is 1–10,000, and a grid can address 1,000,000 items. Invalid geometry produces an empty rectangle or a missed hit. Right and bottom edges are exclusive. A narrow positive content area uses one column.",
+                "table": {
+                    "columns": [
+                        "Function",
+                        "Behavior"
+                    ],
+                    "rows": [
+                        [
+                            "we_columns(width, inset, gap, minimum, limit)",
+                            "Choose a responsive column count; zero indicates an empty or invalid content area."
+                        ],
+                        [
+                            "we_rect(width, inset, gap, columns, rowHeight, index)",
+                            "Return [x, y, width, height] in logical pixels."
+                        ],
+                        [
+                            "we_hit(width, inset, gap, columns, rowHeight, count, x, y)",
+                            "Find the item under a pointer. Gutters, empty cells and outside positions return −1."
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Verify a change",
+                "text": "Run the package checks from its release directory. Compare the browser example with its expected output, then change the input in the exercise below.",
+                "command": "blyxc native-run tests.blyx",
+                "links": [
+                    {
+                        "text": "Package and installation instructions",
+                        "href": "https://www.blyx-lang.space/packages/weaver"
+                    }
+                ]
+            }
+        ],
+        "exercise": {
+            "prompt": "Move the pointer four pixels left into the gutter. Which item receives it?",
+            "hint": "Change only the worked example’s input. The API table describes the output.",
+            "answer": "The coordinates fall between tracks, so the result is −1.",
+            "edits": [
+                [
+                    "5, 113, 19",
+                    "5, 109, 19"
+                ]
+            ],
+            "expected": "3\n112\n-1\n"
+        }
+    },
+    {
+        "slug": "dipper",
+        "title": "Dipper · Import a two-column notes file",
+        "group": "Framework projects",
+        "summary": "Parse quoted CSV records, preserve embedded line breaks, and validate a row width before consuming a file.",
+        "example": "package-dipper",
+        "sections": [
+            {
+                "heading": "The developer problem",
+                "text": "Splitting each line on commas changes both field contents and record counts when a field contains a quoted comma or newline. RFC 4180 describes the quoting and doubled-quote rules that the Dipper parser uses.",
+                "links": [
+                    {
+                        "text": "RFC 4180, Common Format and MIME Type for CSV Files",
+                        "href": "https://www.rfc-editor.org/rfc/rfc4180#section-2"
+                    }
+                ]
+            },
+            {
+                "heading": "Run the project locally",
+                "text": "The importer preserves a literal quote in the first note and an embedded newline in the second. Give it a UTF-8 CSV file to check its width before reading the note column. Install Blyx 0.2.1, Rust and a host linker, then run these commands.",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-dipper.git\ncd blyx-dipper\nblyxc native-run project.blyx",
+                "links": [
+                    {
+                        "text": "Full project source",
+                        "href": "https://github.com/Rahulchaube1/blyx-dipper/blob/v0.1.0/project.blyx"
+                    },
+                    {
+                        "text": "Tagged source and downloads",
+                        "href": "https://github.com/Rahulchaube1/blyx-dipper/releases/tag/v0.1.0"
+                    }
+                ]
+            },
+            {
+                "heading": "Use the API",
+                "text": "Parse a UTF-8 string in memory. Delimiters are commas. Records accept CRLF, LF or CR; embedded quoted newlines preserve their original bytes. Spaces are data. A malformed quote discards partial results. Empty input contains zero rows; a blank line holds one empty cell. di_bad_row applies a caller-supplied column count.",
+                "table": {
+                    "columns": [
+                        "Function",
+                        "Behavior"
+                    ],
+                    "rows": [
+                        [
+                            "di_parse(input), di_ok(records)",
+                            "Import csv. Parse into F-prefixed field events and R end-of-row events. A lone E-prefixed event describes a syntax error."
+                        ],
+                        [
+                            "di_cell(records, row, column)",
+                            "Return one string for a present cell, including an empty cell; an absent cell returns an empty list."
+                        ],
+                        [
+                            "di_bad_row(records, width)",
+                            "Return the first zero-based row of the wrong width, −1 for success or −2 for a parse or argument error."
+                        ],
+                        [
+                            "di_transition(state, token), di_shape(tokens)",
+                            "Walk the portable quote state machine. A valid stream yields [rows, fields]."
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Verify a change",
+                "text": "Run the package checks from its release directory. Compare the browser example with its expected output, then change the input in the exercise below.",
+                "command": "blyxc native-run tests.blyx",
+                "links": [
+                    {
+                        "text": "Package and installation instructions",
+                        "href": "https://www.blyx-lang.space/packages/dipper"
+                    }
+                ]
+            }
+        ],
+        "exercise": {
+            "prompt": "Append a third field before the final record break.",
+            "hint": "Change only the worked example’s input. The API table describes the output.",
+            "answer": "The extra delimiter is outside quotes, so the row now has three fields.",
+            "edits": [
+                [
+                    "[2, 0, 1, 0, 2, 1, 0, 3]",
+                    "[2, 0, 1, 0, 2, 1, 0, 1, 0, 3]"
+                ]
+            ],
+            "expected": "1\n3\n0\n"
+        }
+    },
+    {
+        "slug": "kestrel",
+        "title": "Kestrel · Replay a bouncing ball across a stalled frame",
+        "group": "Framework projects",
+        "summary": "Run a bounded number of simulation ticks per rendered frame, carry fractional frame time and interpolate a moving object between updates.",
+        "example": "package-kestrel",
+        "sections": [
+            {
+                "heading": "The developer problem",
+                "text": "Rendering at a changing frame rate can change simulation speed. A long pause can also produce a burst of catch-up work. Godot’s physics interpolation guide explains the separate clocks. Kestrel makes the carry, interpolation fraction and discarded time visible to the application.",
+                "links": [
+                    {
+                        "text": "Godot Engine, Introduction to physics interpolation",
+                        "href": "https://docs.godotengine.org/en/stable/tutorials/physics/interpolation/physics_interpolation_introduction.html"
+                    }
+                ]
+            },
+            {
+                "heading": "Run the project locally",
+                "text": "Feed the same five frame times into a fixed-step ball simulation. One 100 ms stall exceeds the catch-up limit. The replay reports positions and the number of milliseconds discarded. Install Blyx 0.2.1, Rust and a host linker, then run these commands.",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-kestrel.git\ncd blyx-kestrel\nblyxc native-run project.blyx",
+                "links": [
+                    {
+                        "text": "Full project source",
+                        "href": "https://github.com/Rahulchaube1/blyx-kestrel/blob/v0.1.0/project.blyx"
+                    },
+                    {
+                        "text": "Tagged source and downloads",
+                        "href": "https://github.com/Rahulchaube1/blyx-kestrel/releases/tag/v0.1.0"
+                    }
+                ]
+            },
+            {
+                "heading": "Use the API",
+                "text": "Use whole milliseconds from 0 to 1,000,000,000, a positive step and a remainder smaller than that step. max_steps is 1–1,000,000. The clock returns an empty vector for invalid input. A frame cap discards whole ticks only. The simulation takes frame durations from the caller so a replay needs no wall clock.",
+                "table": {
+                    "columns": [
+                        "Function",
+                        "Behavior"
+                    ],
+                    "rows": [
+                        [
+                            "ke_clock(carry, elapsed, step, max_steps)",
+                            "Return [updates, remainder_ms, discarded_ms, interpolation_fraction]. Feed remainder_ms into the next frame."
+                        ],
+                        [
+                            "ke_lerp(previous, current, fraction)",
+                            "Interpolate a render position between the last two simulated positions."
+                        ],
+                        [
+                            "ke_bounce(position, velocity, dt, low, high)",
+                            "Advance one object on a bounded 1D track. The result holds position and velocity, including repeated wall crossings."
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Verify a change",
+                "text": "Run the package checks from its release directory. Compare the browser example with its expected output, then change the input in the exercise below.",
+                "command": "blyxc native-run tests.blyx",
+                "links": [
+                    {
+                        "text": "Package and installation instructions",
+                        "href": "https://www.blyx-lang.space/packages/kestrel"
+                    }
+                ]
+            }
+        ],
+        "exercise": {
+            "prompt": "Increase the catch-up limit from three ticks to five. What happens to the carry?",
+            "hint": "Change only the worked example’s input. The API table describes the output.",
+            "answer": "All five whole ticks run; the remaining five milliseconds still set the render fraction to 0.5.",
+            "edits": [
+                [
+                    "50.0, 10.0, 3",
+                    "50.0, 10.0, 5"
+                ]
+            ],
+            "expected": "5\n5\n0\n0.5\n"
+        }
+    },
+    {
+        "slug": "heron",
+        "title": "Heron · Audit a sensor heartbeat trace",
+        "group": "Framework projects",
+        "summary": "Track one sensor feed’s accepted messages, duplicate sequence numbers, out-of-order arrivals and missed deadlines.",
+        "example": "package-heron",
+        "sections": [
+            {
+                "heading": "The developer problem",
+                "text": "A replayed packet can make an idle sensor appear healthy if every arrival resets its last-seen timer. ROS 2 distinguishes delivery and deadline policies. Heron lets an application choose a freshness deadline and updates that timer only when it accepts a new sample.",
+                "links": [
+                    {
+                        "text": "ROS 2, Quality of service settings",
+                        "href": "https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Quality-of-Service-Settings.html"
+                    }
+                ]
+            },
+            {
+                "heading": "Run the project locally",
+                "text": "Replay sequence and local receipt-time pairs. The bundled trace contains a duplicate, a two-ID gap and one out-of-order delivery. You can feed your own two-column headerless trace into the same program. Install Blyx 0.2.1, Rust and a host linker, then run these commands.",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-heron.git\ncd blyx-heron\nblyxc native-run project.blyx",
+                "links": [
+                    {
+                        "text": "Full project source",
+                        "href": "https://github.com/Rahulchaube1/blyx-heron/blob/v0.1.0/project.blyx"
+                    },
+                    {
+                        "text": "Tagged source and downloads",
+                        "href": "https://github.com/Rahulchaube1/blyx-heron/releases/tag/v0.1.0"
+                    }
+                ]
+            },
+            {
+                "heading": "Use the API",
+                "text": "Maintain one state per sensor. Use a monotonically increasing integer sequence and a monotonic local receipt clock in milliseconds, both at most 2^53−1. Reset the state when the sensor restarts or its sequence wraps. The gap counter records skipped IDs at acceptance time. Late arrivals do not reduce it. This release monitors application data and exposes its state to the host.",
+                "table": {
+                    "columns": [
+                        "Function",
+                        "Behavior"
+                    ],
+                    "rows": [
+                        [
+                            "he_start(), he_observe(state, sequence, receipt_ms)",
+                            "Initialize or update [last sequence, last receipt, accepted, duplicates, out of order, skipped IDs]."
+                        ],
+                        [
+                            "he_age(state, now)",
+                            "Return milliseconds since the latest accepted observation, or −1 when unavailable."
+                        ],
+                        [
+                            "he_status(state, now, deadline)",
+                            "Return unseen, current, late or invalid. A reading remains current exactly at its deadline."
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Verify a change",
+                "text": "Run the package checks from its release directory. Compare the browser example with its expected output, then change the input in the exercise below.",
+                "command": "blyxc native-run tests.blyx",
+                "links": [
+                    {
+                        "text": "Package and installation instructions",
+                        "href": "https://www.blyx-lang.space/packages/heron"
+                    }
+                ]
+            }
+        ],
+        "exercise": {
+            "prompt": "Check the feed exactly 30 ms after its last accepted receipt.",
+            "hint": "Change only the worked example’s input. The API table describes the output.",
+            "answer": "Age equals the deadline, so the feed is current. It becomes late one millisecond later.",
+            "edits": [
+                [
+                    "151.0, 30.0",
+                    "150.0, 30.0"
+                ]
+            ],
+            "expected": "2\n1\ncurrent\n"
+        }
+    },
+    {
         "slug": "installation",
         "title": "Install and verify Blyx",
         "group": "Local toolchain",

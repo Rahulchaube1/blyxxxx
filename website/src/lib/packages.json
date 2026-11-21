@@ -408,6 +408,506 @@
             "output": "4\n25\n30\n5\n",
             "cli": null,
             "guide": "ai-packages"
+        },
+        {
+            "name": "blyx-swiftlet",
+            "slug": "swiftlet",
+            "title": "Swiftlet",
+            "group": "Web and APIs",
+            "kind": "HTTP routing framework",
+            "description": "Dispatch a method and request path against a table of literal and parameterized routes. Return a matched template and the methods a client can use.",
+            "contract": "Register a method and an absolute path template separated by one space. GET, HEAD, POST, PUT, PATCH, DELETE and OPTIONS use explicit registrations. Literal segments outrank parameters by their count. Equally specific templates use registration order. The matcher strips the query, preserves percent encoding and treats a trailing slash as significant. Hosting, URL decoding and authentication belong to the application.",
+            "api": [
+                [
+                    "sw_dispatch(routes, method, target)",
+                    "Import router. Returns status text, matched template, and the Allow value in a three-element argument list."
+                ],
+                [
+                    "sw_param(template, target, name)",
+                    "Extract an encoded path parameter from a matching path. An absent capture returns an empty string."
+                ],
+                [
+                    "sw_enable(mask, method), sw_status(found, mask, method)",
+                    "Build a method set and apply the same status decisions as the router. Start at zero."
+                ],
+                [
+                    "sw_allow(mask)",
+                    "Generate the comma-separated list of registered HTTP methods."
+                ]
+            ],
+            "version": "0.1.0",
+            "commit": "3019450b9aa1174909e3772025c2c2deca127842",
+            "repository": "https://github.com/Rahulchaube1/blyx-swiftlet",
+            "release": "https://github.com/Rahulchaube1/blyx-swiftlet/releases/tag/v0.1.0",
+            "logo": "/packages/swiftlet.png",
+            "module": "swiftlet",
+            "example": "package-swiftlet",
+            "program": "use vendor::swiftlet::swiftlet;\n\nfn main() {\n    let methods = sw_enable(sw_enable(0, \"GET\"), \"POST\");\n    println!(sw_status(true, methods, \"GET\"));\n    println!(sw_status(true, methods, \"DELETE\"));\n    println!(sw_status(false, methods, \"GET\"));\n}",
+            "output": "200\n405\n404\n",
+            "guide": "swiftlet",
+            "workflow": {
+                "title": "Route a book catalog request",
+                "description": "Pass PATCH and /books/42?preview=yes to the dispatcher. It selects /books/:id and extracts 42. Try the same method on /books/new, an explicitly read-only resource. The CGI example also serves a health check through an existing web server.",
+                "browserTitle": "Distinguish 200, 404 and 405",
+                "source": "https://github.com/Rahulchaube1/blyx-swiftlet/blob/v0.1.0/project.blyx",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-swiftlet.git\ncd blyx-swiftlet\nblyxc native-run project.blyx",
+                "problem": "A method error and a missing route mean different things to an HTTP client. If their responses share one fallback, clients lose the list of methods a resource accepts. RFC 9110 requires an Allow field on a 405 response.",
+                "reference": {
+                    "title": "HTTP Semantics, §15.5.6",
+                    "url": "https://www.rfc-editor.org/rfc/rfc9110.html#name-405-method-not-allowed"
+                },
+                "preview": "",
+                "downloads": [
+                    {
+                        "platform": "Windows x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-swiftlet/releases/download/v0.1.0/blyx-swiftlet-0.1.0-windows-x64.zip"
+                    },
+                    {
+                        "platform": "Linux x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-swiftlet/releases/download/v0.1.0/blyx-swiftlet-0.1.0-linux-x64.tar.gz"
+                    },
+                    {
+                        "platform": "macOS Apple Silicon",
+                        "url": "https://github.com/Rahulchaube1/blyx-swiftlet/releases/download/v0.1.0/blyx-swiftlet-0.1.0-macos-arm64.tar.gz"
+                    }
+                ],
+                "checksums": "https://github.com/Rahulchaube1/blyx-swiftlet/releases/download/v0.1.0/SHA256SUMS"
+            }
+        },
+        {
+            "name": "blyx-shrike",
+            "slug": "shrike",
+            "title": "Shrike",
+            "group": "AI and search",
+            "kind": "Rank fusion framework",
+            "description": "Combine lexical and semantic search results by rank, then walk the merged list in a deterministic order.",
+            "contract": "Supply two ranked vectors of nonnegative integer IDs up to 2^53−1 and an offset from 0 to 1,000,000. The first occurrence in each list contributes 1/(offset + one-based position). Missing IDs contribute zero. Equal scores use ascending ID. Start the cursor at −1. Each next-result call can take quadratic time in the combined shortlist length; use this version with small candidate sets.",
+            "api": [
+                [
+                    "sh_valid_inputs(left, right, offset)",
+                    "Validate every ID and the smoothing offset."
+                ],
+                [
+                    "sh_score(left, right, id, offset)",
+                    "Get the fused score of one document. Zero means absent and −1 means invalid input."
+                ],
+                [
+                    "sh_next(left, right, offset, previous)",
+                    "Get the next ID after a cursor, or −1 for exhaustion or invalid input. Each ID is returned once."
+                ]
+            ],
+            "version": "0.1.0",
+            "commit": "facb71a12c9ad3b44e239f8527bcb314e8aa4f25",
+            "repository": "https://github.com/Rahulchaube1/blyx-shrike",
+            "release": "https://github.com/Rahulchaube1/blyx-shrike/releases/tag/v0.1.0",
+            "logo": "/packages/shrike.png",
+            "module": "shrike",
+            "example": "package-shrike",
+            "program": "use vendor::shrike::shrike;\n\nfn main() {\n    let lexical = [41, 17, 83];\n    let semantic = [17, 83, 99];\n    let first = sh_next(lexical, semantic, 60.0, -1.0);\n    let second = sh_next(lexical, semantic, 60.0, first);\n    println!(first);\n    println!(second);\n}",
+            "output": "17\n83\n",
+            "guide": "shrike",
+            "workflow": {
+                "title": "Merge two help-center searches",
+                "description": "A literal-word search and a paraphrase search return different article IDs. The example prints the first three fused results. Article 21 wins because both rankers put it near the top.",
+                "browserTitle": "Fuse two ranked result lists",
+                "source": "https://github.com/Rahulchaube1/blyx-shrike/blob/v0.1.0/project.blyx",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-shrike.git\ncd blyx-shrike\nblyxc native-run project.blyx",
+                "problem": "A keyword ranker and an embedding ranker return scores on different scales. Reciprocal rank fusion combines each document’s position in the lists. It gives a developer an inspectable baseline before tuning a score calibration or training a reranker.",
+                "reference": {
+                    "title": "Cormack, Clarke and Buettcher, Reciprocal Rank Fusion",
+                    "url": "https://cormack.uwaterloo.ca/cormacksigir09-rrf.pdf"
+                },
+                "preview": "",
+                "downloads": [
+                    {
+                        "platform": "Windows x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-shrike/releases/download/v0.1.0/blyx-shrike-0.1.0-windows-x64.zip"
+                    },
+                    {
+                        "platform": "Linux x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-shrike/releases/download/v0.1.0/blyx-shrike-0.1.0-linux-x64.tar.gz"
+                    },
+                    {
+                        "platform": "macOS Apple Silicon",
+                        "url": "https://github.com/Rahulchaube1/blyx-shrike/releases/download/v0.1.0/blyx-shrike-0.1.0-macos-arm64.tar.gz"
+                    }
+                ],
+                "checksums": "https://github.com/Rahulchaube1/blyx-shrike/releases/download/v0.1.0/SHA256SUMS"
+            }
+        },
+        {
+            "name": "blyx-bunting",
+            "slug": "bunting",
+            "title": "Bunting",
+            "group": "Data apps and reporting",
+            "kind": "Accessible HTML reporting framework",
+            "description": "Publish a distribution as a standalone HTML table with interval labels, counts and meters. Reuse the same bin definitions in reports and tests.",
+            "contract": "Supply finite strictly increasing boundaries. A value exactly on a boundary belongs to the bucket above it. Bucket −1 counts missing or non-finite values. An empty boundary vector represents all finite values. The table generator validates boundaries before writing any markup. The caller supplies the HTML document around the table.",
+            "api": [
+                [
+                    "bu_valid(edges), bu_bucket(edges, value)",
+                    "Check boundaries and locate the value by binary search."
+                ],
+                [
+                    "bu_count(data, edges, bucket)",
+                    "Count observations in one bucket. An invalid request returns −1."
+                ],
+                [
+                    "bu_table(data, edges)",
+                    "Write a captioned HTML table with explicit counts and meter values. Returns false for invalid boundaries."
+                ]
+            ],
+            "version": "0.1.0",
+            "commit": "381a5fbefcf92e3520abe924c20da41d0dffc7fb",
+            "repository": "https://github.com/Rahulchaube1/blyx-bunting",
+            "release": "https://github.com/Rahulchaube1/blyx-bunting/releases/tag/v0.1.0",
+            "logo": "/packages/bunting.png",
+            "module": "bunting",
+            "example": "package-bunting",
+            "program": "use vendor::bunting::bunting;\n\nfn main() {\n    let waits = [0, 4, 5, 8, 10, 12];\n    let edges = [5, 10];\n    println!(bu_count(waits, edges, 0));\n    println!(bu_count(waits, edges, 1));\n    println!(bu_count(waits, edges, 2));\n}",
+            "output": "2\n2\n2\n",
+            "guide": "bunting",
+            "workflow": {
+                "title": "Publish a support-queue report",
+                "description": "Group eight first-reply waits at 5, 10 and 20 minutes. The resulting HTML page opens offline and exposes intervals, counts and shares as a table. Every observation contributes to one row.",
+                "browserTitle": "Count requests by waiting time",
+                "source": "https://github.com/Rahulchaube1/blyx-bunting/blob/v0.1.0/project.blyx",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-bunting.git\ncd blyx-bunting\nblyxc native-run project.blyx",
+                "problem": "A colored chart alone can hide values from people navigating with assistive technology. W3C’s table guidance pairs data cells with headers. Bunting emits row and column headers and prints the count alongside every meter.",
+                "reference": {
+                    "title": "W3C WAI, Tables with One Header",
+                    "url": "https://www.w3.org/WAI/tutorials/tables/one-header/"
+                },
+                "preview": "/framework-examples/report.html",
+                "downloads": [
+                    {
+                        "platform": "Windows x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-bunting/releases/download/v0.1.0/blyx-bunting-0.1.0-windows-x64.zip"
+                    },
+                    {
+                        "platform": "Linux x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-bunting/releases/download/v0.1.0/blyx-bunting-0.1.0-linux-x64.tar.gz"
+                    },
+                    {
+                        "platform": "macOS Apple Silicon",
+                        "url": "https://github.com/Rahulchaube1/blyx-bunting/releases/download/v0.1.0/blyx-bunting-0.1.0-macos-arm64.tar.gz"
+                    }
+                ],
+                "checksums": "https://github.com/Rahulchaube1/blyx-bunting/releases/download/v0.1.0/SHA256SUMS"
+            }
+        },
+        {
+            "name": "blyx-wren",
+            "slug": "wren",
+            "title": "Wren",
+            "group": "Testing and automation",
+            "kind": "Test reporting framework",
+            "description": "Run named checks and skips, compare floating-point measurements, and report a TAP 13 stream and a process exit status for CI.",
+            "contract": "Start with wr_begin, pass the returned suite to each check or skip, then call process_exit(wr_end(suite)). The producer emits a trailing TAP plan. Names are truncated at a line break or # to keep the stream unambiguous. Relative tolerance ranges from zero to one. Inputs for measurements and tolerances must be finite.",
+            "api": [
+                [
+                    "wr_begin(), wr_check(suite, passed, label)",
+                    "Import tap. Start a TAP stream and record numbered checks."
+                ],
+                [
+                    "wr_skip(suite, label, detail), wr_end(suite)",
+                    "Declare a skip and finish with a plan. wr_end returns 1 when a check failed."
+                ],
+                [
+                    "wr_near(actual, expected, absolute, relative)",
+                    "Compare using the larger of an absolute tolerance and a tolerance scaled by the larger input magnitude."
+                ],
+                [
+                    "wr_start(), wr_record(suite, passed, skipped), wr_exit(suite)",
+                    "Track total, failed and skipped cases without writing TAP output."
+                ]
+            ],
+            "version": "0.1.0",
+            "commit": "54face061805e7bf749c500aa31b3341eee91b4b",
+            "repository": "https://github.com/Rahulchaube1/blyx-wren",
+            "release": "https://github.com/Rahulchaube1/blyx-wren/releases/tag/v0.1.0",
+            "logo": "/packages/wren.png",
+            "module": "wren",
+            "example": "package-wren",
+            "program": "use vendor::wren::wren;\n\nfn main() {\n    let first = wr_record(wr_start(), wr_near(0.1 + 0.2, 0.3, 0.000001, 0.0), false);\n    let second = wr_record(first, false, true);\n    let result = wr_record(second, 2 * 2 == 5, false);\n    println!(at(result, 0));\n    println!(at(result, 1));\n    println!(at(result, 2));\n    println!(wr_exit(result));\n}",
+            "output": "3\n1\n1\n1\n",
+            "guide": "wren",
+            "workflow": {
+                "title": "Test an invoice and packing calculation",
+                "description": "The suite checks a decimal invoice total and a whole-box count, then records an offline printer as a skip. Change the expected box count to see the process exit with status 1.",
+                "browserTitle": "Count passes, failures and skips",
+                "source": "https://github.com/Rahulchaube1/blyx-wren/blob/v0.1.0/project.blyx",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-wren.git\ncd blyx-wren\nblyxc native-run project.blyx",
+                "problem": "A test that only prints an error can leave a build green. TAP defines a machine-readable result for each check and a plan stating how many results to expect. Wren couples that output to the number of failures.",
+                "reference": {
+                    "title": "Test Anything Protocol, TAP 13 specification",
+                    "url": "https://testanything.org/tap-version-13-specification.html"
+                },
+                "preview": "",
+                "downloads": [
+                    {
+                        "platform": "Windows x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-wren/releases/download/v0.1.0/blyx-wren-0.1.0-windows-x64.zip"
+                    },
+                    {
+                        "platform": "Linux x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-wren/releases/download/v0.1.0/blyx-wren-0.1.0-linux-x64.tar.gz"
+                    },
+                    {
+                        "platform": "macOS Apple Silicon",
+                        "url": "https://github.com/Rahulchaube1/blyx-wren/releases/download/v0.1.0/blyx-wren-0.1.0-macos-arm64.tar.gz"
+                    }
+                ],
+                "checksums": "https://github.com/Rahulchaube1/blyx-wren/releases/download/v0.1.0/SHA256SUMS"
+            }
+        },
+        {
+            "name": "blyx-weaver",
+            "slug": "weaver",
+            "title": "Weaver",
+            "group": "Desktop and mobile UI",
+            "kind": "Responsive layout and hit-testing framework",
+            "description": "Lay out equal-width tiles on small or large viewports, distribute leftover pixels and map pointer coordinates back to an item.",
+            "contract": "Use integer logical pixels. Width, inset, gap, minimum width and row height support values up to 1,000,000. The column limit is 1–10,000, and a grid can address 1,000,000 items. Invalid geometry produces an empty rectangle or a missed hit. Right and bottom edges are exclusive. A narrow positive content area uses one column.",
+            "api": [
+                [
+                    "we_columns(width, inset, gap, minimum, limit)",
+                    "Choose a responsive column count; zero indicates an empty or invalid content area."
+                ],
+                [
+                    "we_rect(width, inset, gap, columns, rowHeight, index)",
+                    "Return [x, y, width, height] in logical pixels."
+                ],
+                [
+                    "we_hit(width, inset, gap, columns, rowHeight, count, x, y)",
+                    "Find the item under a pointer. Gutters, empty cells and outside positions return −1."
+                ]
+            ],
+            "version": "0.1.0",
+            "commit": "660e7fe3dbf52f721675812af5d7b4730c3044c4",
+            "repository": "https://github.com/Rahulchaube1/blyx-weaver",
+            "release": "https://github.com/Rahulchaube1/blyx-weaver/releases/tag/v0.1.0",
+            "logo": "/packages/weaver.png",
+            "module": "weaver",
+            "example": "package-weaver",
+            "program": "use vendor::weaver::weaver;\n\nfn main() {\n    let columns = we_columns(320, 8, 8, 80, 6);\n    let second = we_rect(320, 8, 8, columns, 48, 1);\n    println!(columns);\n    println!(at(second, 0));\n    println!(we_hit(320, 8, 8, columns, 48, 5, 113, 19));\n}",
+            "output": "3\n112\n1\n",
+            "guide": "weaver",
+            "workflow": {
+                "title": "Render a file chooser as SVG",
+                "description": "The example draws five file tiles in three columns. The final row has two items. Use the same geometry for touch or mouse hit testing when embedding the layout in a UI host.",
+                "browserTitle": "Lay out and hit-test five tiles",
+                "source": "https://github.com/Rahulchaube1/blyx-weaver/blob/v0.1.0/project.blyx",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-weaver.git\ncd blyx-weaver\nblyxc native-run project.blyx",
+                "problem": "A grid can draw a tile in one place and dispatch a click to its neighbor if painting and input code round dimensions differently. CSS Grid describes how tracks and gaps form a layout. Weaver uses one integer track calculation for both drawing and input.",
+                "reference": {
+                    "title": "W3C, CSS Grid Layout Module Level 1",
+                    "url": "https://www.w3.org/TR/css-grid-1/#grid-tracks"
+                },
+                "preview": "/framework-examples/chooser.svg",
+                "downloads": [
+                    {
+                        "platform": "Windows x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-weaver/releases/download/v0.1.0/blyx-weaver-0.1.0-windows-x64.zip"
+                    },
+                    {
+                        "platform": "Linux x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-weaver/releases/download/v0.1.0/blyx-weaver-0.1.0-linux-x64.tar.gz"
+                    },
+                    {
+                        "platform": "macOS Apple Silicon",
+                        "url": "https://github.com/Rahulchaube1/blyx-weaver/releases/download/v0.1.0/blyx-weaver-0.1.0-macos-arm64.tar.gz"
+                    }
+                ],
+                "checksums": "https://github.com/Rahulchaube1/blyx-weaver/releases/download/v0.1.0/SHA256SUMS"
+            }
+        },
+        {
+            "name": "blyx-dipper",
+            "slug": "dipper",
+            "title": "Dipper",
+            "group": "Data engineering",
+            "kind": "CSV ingestion framework",
+            "description": "Parse quoted CSV records, preserve embedded line breaks, and validate a row width before consuming a file.",
+            "contract": "Parse a UTF-8 string in memory. Delimiters are commas. Records accept CRLF, LF or CR; embedded quoted newlines preserve their original bytes. Spaces are data. A malformed quote discards partial results. Empty input contains zero rows; a blank line holds one empty cell. di_bad_row applies a caller-supplied column count.",
+            "api": [
+                [
+                    "di_parse(input), di_ok(records)",
+                    "Import csv. Parse into F-prefixed field events and R end-of-row events. A lone E-prefixed event describes a syntax error."
+                ],
+                [
+                    "di_cell(records, row, column)",
+                    "Return one string for a present cell, including an empty cell; an absent cell returns an empty list."
+                ],
+                [
+                    "di_bad_row(records, width)",
+                    "Return the first zero-based row of the wrong width, −1 for success or −2 for a parse or argument error."
+                ],
+                [
+                    "di_transition(state, token), di_shape(tokens)",
+                    "Walk the portable quote state machine. A valid stream yields [rows, fields]."
+                ]
+            ],
+            "version": "0.1.0",
+            "commit": "bd945ed8a3151e302073a37ac3b3c64aa1c1b8f5",
+            "repository": "https://github.com/Rahulchaube1/blyx-dipper",
+            "release": "https://github.com/Rahulchaube1/blyx-dipper/releases/tag/v0.1.0",
+            "logo": "/packages/dipper.png",
+            "module": "dipper",
+            "example": "package-dipper",
+            "program": "use vendor::dipper::dipper;\n\nfn main() {\n    // Tokens for a quoted field containing a comma followed by a second field.\n    let shape = di_shape([2, 0, 1, 0, 2, 1, 0, 3]);\n    println!(at(shape, 0));\n    println!(at(shape, 1));\n    println!(len(di_shape([2, 0])));\n}",
+            "output": "1\n2\n0\n",
+            "guide": "dipper",
+            "workflow": {
+                "title": "Import a two-column notes file",
+                "description": "The importer preserves a literal quote in the first note and an embedded newline in the second. Give it a UTF-8 CSV file to check its width before reading the note column.",
+                "browserTitle": "Trace the CSV parser through quoted fields",
+                "source": "https://github.com/Rahulchaube1/blyx-dipper/blob/v0.1.0/project.blyx",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-dipper.git\ncd blyx-dipper\nblyxc native-run project.blyx",
+                "problem": "Splitting each line on commas changes both field contents and record counts when a field contains a quoted comma or newline. RFC 4180 describes the quoting and doubled-quote rules that the Dipper parser uses.",
+                "reference": {
+                    "title": "RFC 4180, Common Format and MIME Type for CSV Files",
+                    "url": "https://www.rfc-editor.org/rfc/rfc4180#section-2"
+                },
+                "preview": "",
+                "downloads": [
+                    {
+                        "platform": "Windows x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-dipper/releases/download/v0.1.0/blyx-dipper-0.1.0-windows-x64.zip"
+                    },
+                    {
+                        "platform": "Linux x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-dipper/releases/download/v0.1.0/blyx-dipper-0.1.0-linux-x64.tar.gz"
+                    },
+                    {
+                        "platform": "macOS Apple Silicon",
+                        "url": "https://github.com/Rahulchaube1/blyx-dipper/releases/download/v0.1.0/blyx-dipper-0.1.0-macos-arm64.tar.gz"
+                    }
+                ],
+                "checksums": "https://github.com/Rahulchaube1/blyx-dipper/releases/download/v0.1.0/SHA256SUMS"
+            }
+        },
+        {
+            "name": "blyx-kestrel",
+            "slug": "kestrel",
+            "title": "Kestrel",
+            "group": "Games and graphics",
+            "kind": "Fixed-step simulation framework",
+            "description": "Run a bounded number of simulation ticks per rendered frame, carry fractional frame time and interpolate a moving object between updates.",
+            "contract": "Use whole milliseconds from 0 to 1,000,000,000, a positive step and a remainder smaller than that step. max_steps is 1–1,000,000. The clock returns an empty vector for invalid input. A frame cap discards whole ticks only. The simulation takes frame durations from the caller so a replay needs no wall clock.",
+            "api": [
+                [
+                    "ke_clock(carry, elapsed, step, max_steps)",
+                    "Return [updates, remainder_ms, discarded_ms, interpolation_fraction]. Feed remainder_ms into the next frame."
+                ],
+                [
+                    "ke_lerp(previous, current, fraction)",
+                    "Interpolate a render position between the last two simulated positions."
+                ],
+                [
+                    "ke_bounce(position, velocity, dt, low, high)",
+                    "Advance one object on a bounded 1D track. The result holds position and velocity, including repeated wall crossings."
+                ]
+            ],
+            "version": "0.1.0",
+            "commit": "10469a81c17a5cf4f0b9d02cc1dcd071e1e45648",
+            "repository": "https://github.com/Rahulchaube1/blyx-kestrel",
+            "release": "https://github.com/Rahulchaube1/blyx-kestrel/releases/tag/v0.1.0",
+            "logo": "/packages/kestrel.png",
+            "module": "kestrel",
+            "example": "package-kestrel",
+            "program": "use vendor::kestrel::kestrel;\n\nfn main() {\n    let frame = ke_clock(5.0, 50.0, 10.0, 3);\n    println!(at(frame, 0));\n    println!(at(frame, 1));\n    println!(at(frame, 2));\n    println!(at(frame, 3));\n}",
+            "output": "3\n5\n20\n0.5\n",
+            "guide": "kestrel",
+            "workflow": {
+                "title": "Replay a bouncing ball across a stalled frame",
+                "description": "Feed the same five frame times into a fixed-step ball simulation. One 100 ms stall exceeds the catch-up limit. The replay reports positions and the number of milliseconds discarded.",
+                "browserTitle": "Inspect a stalled game frame",
+                "source": "https://github.com/Rahulchaube1/blyx-kestrel/blob/v0.1.0/project.blyx",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-kestrel.git\ncd blyx-kestrel\nblyxc native-run project.blyx",
+                "problem": "Rendering at a changing frame rate can change simulation speed. A long pause can also produce a burst of catch-up work. Godot’s physics interpolation guide explains the separate clocks. Kestrel makes the carry, interpolation fraction and discarded time visible to the application.",
+                "reference": {
+                    "title": "Godot Engine, Introduction to physics interpolation",
+                    "url": "https://docs.godotengine.org/en/stable/tutorials/physics/interpolation/physics_interpolation_introduction.html"
+                },
+                "preview": "",
+                "downloads": [
+                    {
+                        "platform": "Windows x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-kestrel/releases/download/v0.1.0/blyx-kestrel-0.1.0-windows-x64.zip"
+                    },
+                    {
+                        "platform": "Linux x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-kestrel/releases/download/v0.1.0/blyx-kestrel-0.1.0-linux-x64.tar.gz"
+                    },
+                    {
+                        "platform": "macOS Apple Silicon",
+                        "url": "https://github.com/Rahulchaube1/blyx-kestrel/releases/download/v0.1.0/blyx-kestrel-0.1.0-macos-arm64.tar.gz"
+                    }
+                ],
+                "checksums": "https://github.com/Rahulchaube1/blyx-kestrel/releases/download/v0.1.0/SHA256SUMS"
+            }
+        },
+        {
+            "name": "blyx-heron",
+            "slug": "heron",
+            "title": "Heron",
+            "group": "Robotics and networking",
+            "kind": "Telemetry monitoring framework",
+            "description": "Track one sensor feed’s accepted messages, duplicate sequence numbers, out-of-order arrivals and missed deadlines.",
+            "contract": "Maintain one state per sensor. Use a monotonically increasing integer sequence and a monotonic local receipt clock in milliseconds, both at most 2^53−1. Reset the state when the sensor restarts or its sequence wraps. The gap counter records skipped IDs at acceptance time. Late arrivals do not reduce it. This release monitors application data and exposes its state to the host.",
+            "api": [
+                [
+                    "he_start(), he_observe(state, sequence, receipt_ms)",
+                    "Initialize or update [last sequence, last receipt, accepted, duplicates, out of order, skipped IDs]."
+                ],
+                [
+                    "he_age(state, now)",
+                    "Return milliseconds since the latest accepted observation, or −1 when unavailable."
+                ],
+                [
+                    "he_status(state, now, deadline)",
+                    "Return unseen, current, late or invalid. A reading remains current exactly at its deadline."
+                ]
+            ],
+            "version": "0.1.0",
+            "commit": "945ce68dbeb541d760351f359a71252694b2db06",
+            "repository": "https://github.com/Rahulchaube1/blyx-heron",
+            "release": "https://github.com/Rahulchaube1/blyx-heron/releases/tag/v0.1.0",
+            "logo": "/packages/heron.png",
+            "module": "heron",
+            "example": "package-heron",
+            "program": "use vendor::heron::heron;\n\nfn main() {\n    let first = he_observe(he_start(), 10.0, 100.0);\n    let next = he_observe(first, 13.0, 120.0);\n    let repeated = he_observe(next, 13.0, 145.0);\n    println!(at(repeated, 5));\n    println!(at(repeated, 3));\n    println!(he_status(repeated, 151.0, 30.0));\n}",
+            "output": "2\n1\nlate\n",
+            "guide": "heron",
+            "workflow": {
+                "title": "Audit a sensor heartbeat trace",
+                "description": "Replay sequence and local receipt-time pairs. The bundled trace contains a duplicate, a two-ID gap and one out-of-order delivery. You can feed your own two-column headerless trace into the same program.",
+                "browserTitle": "Detect an expired feed after a duplicate",
+                "source": "https://github.com/Rahulchaube1/blyx-heron/blob/v0.1.0/project.blyx",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-heron.git\ncd blyx-heron\nblyxc native-run project.blyx",
+                "problem": "A replayed packet can make an idle sensor appear healthy if every arrival resets its last-seen timer. ROS 2 distinguishes delivery and deadline policies. Heron lets an application choose a freshness deadline and updates that timer only when it accepts a new sample.",
+                "reference": {
+                    "title": "ROS 2, Quality of service settings",
+                    "url": "https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Quality-of-Service-Settings.html"
+                },
+                "preview": "",
+                "downloads": [
+                    {
+                        "platform": "Windows x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-heron/releases/download/v0.1.0/blyx-heron-0.1.0-windows-x64.zip"
+                    },
+                    {
+                        "platform": "Linux x64",
+                        "url": "https://github.com/Rahulchaube1/blyx-heron/releases/download/v0.1.0/blyx-heron-0.1.0-linux-x64.tar.gz"
+                    },
+                    {
+                        "platform": "macOS Apple Silicon",
+                        "url": "https://github.com/Rahulchaube1/blyx-heron/releases/download/v0.1.0/blyx-heron-0.1.0-macos-arm64.tar.gz"
+                    }
+                ],
+                "checksums": "https://github.com/Rahulchaube1/blyx-heron/releases/download/v0.1.0/SHA256SUMS"
+            }
         }
     ]
 }

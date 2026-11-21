@@ -1,0 +1,54 @@
+// Blyx Weaver 0.1.0, MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-weaver/tree/v0.1.0
+// Integer logical pixels. Layout and hit testing use the same track formula.
+fn we_dimension(v: i64) -> bool { v >= 0 && v <= 1000000 }
+pub fn we_columns(width: i64, inset: i64, gap: i64, minimum: i64, limit: i64) -> i64 {
+    if !we_dimension(width) || !we_dimension(inset) || !we_dimension(gap) || !we_dimension(minimum) || minimum < 1 || limit < 1 || limit > 10000 { return 0; }
+    let space = width - 2 * inset;
+    if space < 1 { return 0; }
+    let fit = (space + gap) / (minimum + gap);
+    if fit < 1 { return 1; }
+    if fit > limit { return limit; }
+    fit
+}
+fn we_valid(width: i64, inset: i64, gap: i64, cols: i64, row_height: i64) -> bool {
+    we_dimension(width) && we_dimension(inset) && we_dimension(gap) && we_dimension(row_height) && row_height > 0 && cols >= 1 && cols <= 10000 && width - 2 * inset - (cols - 1) * gap >= cols
+}
+fn we_left(space: i64, cols: i64, gap: i64, inset: i64, col: i64) -> i64 {
+    let mut extra = col;
+    if extra > space % cols { extra = space % cols; }
+    inset + col * (space / cols + gap) + extra
+}
+pub fn we_rect(width: i64, inset: i64, gap: i64, cols: i64, row_height: i64, index: i64) -> vector {
+    if !we_valid(width, inset, gap, cols, row_height) || index < 0 || index >= 1000000 { return []; }
+    let col = index % cols;
+    let space = width - 2 * inset - (cols - 1) * gap;
+    let left = we_left(space, cols, gap, inset, col);
+    let mut cell = space / cols;
+    if col < space % cols { cell += 1; }
+    [left, inset + (index / cols) * (row_height + gap), cell, row_height]
+}
+pub fn we_hit(width: i64, inset: i64, gap: i64, cols: i64, row_height: i64, count: i64, x: i64, y: i64) -> i64 {
+    if !we_valid(width, inset, gap, cols, row_height) || count < 0 || count > 1000000 { return -1; }
+    if x < inset || x >= width - inset || y < inset { return -1; }
+    let row = (y - inset) / (row_height + gap);
+    if row >= count || (y - inset) % (row_height + gap) >= row_height { return -1; }
+    let space = width - 2 * inset - (cols - 1) * gap;
+    let mut low = 0;
+    let mut high = cols;
+    while low + 1 < high {
+        let mid = low + (high - low) / 2;
+        if we_left(space, cols, gap, inset, mid) <= x { low = mid; } else { high = mid; }
+    }
+    let id = row * cols + low;
+    if id >= count || x >= we_left(space, cols, gap, inset, low + 1) - gap { return -1; }
+    id
+}
+
+fn main() {
+    let columns = we_columns(320, 8, 8, 80, 6);
+    let second = we_rect(320, 8, 8, columns, 48, 1);
+    println!(columns);
+    println!(at(second, 0));
+    println!(we_hit(320, 8, 8, columns, 48, 5, 113, 19));
+}

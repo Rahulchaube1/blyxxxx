@@ -1,0 +1,59 @@
+// Blyx Shrike 0.1.0, MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-shrike/tree/v0.1.0
+// Document IDs fit exactly in a numeric vector. -1 is the iteration sentinel.
+fn sh_id(id: f64) -> bool {
+    id >= 0.0 && id <= 9007199254740991.0 && id % 1.0 == 0.0
+}
+fn sh_valid(list: vector) -> bool {
+    let mut i = 0;
+    while i < len(list) {
+        if !sh_id(at(list, i)) { return false; }
+        i += 1;
+    }
+    true
+}
+fn sh_vote(list: vector, id: f64, offset: f64) -> f64 {
+    let mut i = 0;
+    while i < len(list) {
+        if at(list, i) == id { return 1.0 / (offset + at([i], 0) + 1.0); }
+        i += 1;
+    }
+    0.0
+}
+pub fn sh_valid_inputs(left: vector, right: vector, offset: f64) -> bool {
+    offset >= 0.0 && offset <= 1000000.0 && sh_valid(left) && sh_valid(right)
+}
+pub fn sh_score(left: vector, right: vector, id: f64, offset: f64) -> f64 {
+    if !sh_id(id) || !sh_valid_inputs(left, right, offset) { return -1.0; }
+    sh_vote(left, id, offset) + sh_vote(right, id, offset)
+}
+// Iterate by score descending and ID ascending. Return -1 at the end.
+pub fn sh_next(left: vector, right: vector, offset: f64, previous: f64) -> f64 {
+    if !sh_valid_inputs(left, right, offset) { return -1.0; }
+    let prev_score = sh_vote(left, previous, offset) + sh_vote(right, previous, offset);
+    if previous != -1.0 && (!sh_id(previous) || prev_score == 0.0) { return -1.0; }
+    let mut best_id = -1.0;
+    let mut best_score = 0.0;
+    let mut i = 0;
+    while i < len(left) + len(right) {
+        let mut doc = 0.0;
+        if i < len(left) { doc = at(left, i); } else { doc = at(right, i - len(left)); }
+        let score = sh_vote(left, doc, offset) + sh_vote(right, doc, offset);
+        let eligible = previous == -1.0 || score < prev_score || (score == prev_score && doc > previous);
+        if eligible && (score > best_score || (score == best_score && doc < best_id)) {
+            best_id = doc;
+            best_score = score;
+        }
+        i += 1;
+    }
+    best_id
+}
+
+fn main() {
+    let lexical = [41, 17, 83];
+    let semantic = [17, 83, 99];
+    let first = sh_next(lexical, semantic, 60.0, -1.0);
+    let second = sh_next(lexical, semantic, 60.0, first);
+    println!(first);
+    println!(second);
+}

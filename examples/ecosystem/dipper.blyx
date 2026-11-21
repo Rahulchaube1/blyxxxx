@@ -1,0 +1,52 @@
+// Blyx Dipper 0.1.0, MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-dipper/tree/v0.1.0
+// States: field start (0), bare (1), quoted (2), after closing quote (3).
+// Tokens: nonempty text (0), comma (1), quote (2), record break (3).
+pub fn di_transition(state: i64, token: i64) -> i64 {
+    if state < 0 || state > 3 || token < 0 || token > 3 { return -1; }
+    if state == 2 {
+        if token == 2 { return 3; }
+        return 2;
+    }
+    if token == 1 || token == 3 { return 0; }
+    if token == 2 {
+        if state == 0 || state == 3 { return 2; }
+        return -1;
+    }
+    if state == 3 { return -1; }
+    1
+}
+pub fn di_complete(state: i64) -> bool { state == 0 || state == 1 || state == 3 }
+// For a token stream, report [rows, fields], or [] on malformed input.
+pub fn di_shape(tokens: vector) -> vector {
+    let mut state = 0;
+    let mut rows = 0;
+    let mut fields = 0;
+    let mut pending = false;
+    let mut i = 0;
+    while i < len(tokens) {
+        let value = at(tokens, i);
+        let mut kind = 0;
+        while kind < 4 && at([kind], 0) != value { kind += 1; }
+        let next = di_transition(state, kind);
+        if next < 0 { return []; }
+        pending = true;
+        if state != 2 {
+            if kind == 1 { fields += 1; }
+            if kind == 3 { fields += 1; rows += 1; pending = false; }
+        }
+        state = next;
+        i += 1;
+    }
+    if !di_complete(state) { return []; }
+    if pending { fields += 1; rows += 1; }
+    [rows, fields]
+}
+
+fn main() {
+    // Tokens for a quoted field containing a comma followed by a second field.
+    let shape = di_shape([2, 0, 1, 0, 2, 1, 0, 3]);
+    println!(at(shape, 0));
+    println!(at(shape, 1));
+    println!(len(di_shape([2, 0])));
+}

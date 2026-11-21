@@ -1,0 +1,47 @@
+// Blyx Wren 0.1.0, MIT OR Apache-2.0
+// https://github.com/Rahulchaube1/blyx-wren/tree/v0.1.0
+// Compare finite measurements using the larger of an absolute and relative tolerance.
+pub fn wr_near(actual: f64, expected: f64, absolute: f64, relative: f64) -> bool {
+    if actual - actual != 0.0 || expected - expected != 0.0 { return false; }
+    if absolute - absolute != 0.0 || relative - relative != 0.0 || absolute < 0.0 || relative < 0.0 || relative > 1.0 { return false; }
+    if actual == expected { return true; }
+    let mut a = actual;
+    let mut b = expected;
+    if a < 0.0 { a = -a; }
+    if b < 0.0 { b = -b; }
+    let mut scale = a;
+    if b > scale { scale = b; }
+    let mut diff = actual - expected;
+    if diff < 0.0 { diff = -diff; }
+    if diff <= absolute { return true; }
+    if relative == 0.0 { return false; }
+    // Scaling first is only necessary when subtraction overflows.
+    if diff - diff == 0.0 { return diff / scale <= relative; }
+    let mut norm = actual / scale - expected / scale;
+    if norm < 0.0 { norm = -norm; }
+    norm <= relative
+}
+pub fn wr_start() -> vector { [0, 0, 0] }
+pub fn wr_record(state: vector, passed: bool, skipped: bool) -> vector {
+    if len(state) != 3 { return []; }
+    let total = at(state, 0) + 1.0;
+    let failed = at(state, 1);
+    let skip = at(state, 2);
+    if skipped { return [total, failed, skip + 1.0]; }
+    if passed { return [total, failed, skip]; }
+    [total, failed + 1.0, skip]
+}
+pub fn wr_exit(state: vector) -> i64 {
+    if len(state) != 3 || at(state, 1) != 0.0 { return 1; }
+    0
+}
+
+fn main() {
+    let first = wr_record(wr_start(), wr_near(0.1 + 0.2, 0.3, 0.000001, 0.0), false);
+    let second = wr_record(first, false, true);
+    let result = wr_record(second, 2 * 2 == 5, false);
+    println!(at(result, 0));
+    println!(at(result, 1));
+    println!(at(result, 2));
+    println!(wr_exit(result));
+}

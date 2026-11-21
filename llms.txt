@@ -56,6 +56,24 @@ The release supports synchronous functions, recursion, control flow and numeric 
 
 - [Train a neural network with BlyxTorch](https://doc.blyx-lang.space/guide/blyxtorch) — Train an XOR classifier, inspect a real gradient, then compile a dense network for your own labels and deploy it as a standalone CPU executable.
 
+## Framework projects
+
+- [Swiftlet · Route a book catalog request](https://doc.blyx-lang.space/guide/swiftlet) — Dispatch a method and request path against a table of literal and parameterized routes. Return a matched template and the methods a client can use.
+
+- [Shrike · Merge two help-center searches](https://doc.blyx-lang.space/guide/shrike) — Combine lexical and semantic search results by rank, then walk the merged list in a deterministic order.
+
+- [Bunting · Publish a support-queue report](https://doc.blyx-lang.space/guide/bunting) — Publish a distribution as a standalone HTML table with interval labels, counts and meters. Reuse the same bin definitions in reports and tests.
+
+- [Wren · Test an invoice and packing calculation](https://doc.blyx-lang.space/guide/wren) — Run named checks and skips, compare floating-point measurements, and report a TAP 13 stream and a process exit status for CI.
+
+- [Weaver · Render a file chooser as SVG](https://doc.blyx-lang.space/guide/weaver) — Lay out equal-width tiles on small or large viewports, distribute leftover pixels and map pointer coordinates back to an item.
+
+- [Dipper · Import a two-column notes file](https://doc.blyx-lang.space/guide/dipper) — Parse quoted CSV records, preserve embedded line breaks, and validate a row width before consuming a file.
+
+- [Kestrel · Replay a bouncing ball across a stalled frame](https://doc.blyx-lang.space/guide/kestrel) — Run a bounded number of simulation ticks per rendered frame, carry fractional frame time and interpolate a moving object between updates.
+
+- [Heron · Audit a sensor heartbeat trace](https://doc.blyx-lang.space/guide/heron) — Track one sensor feed’s accepted messages, duplicate sequence numbers, out-of-order arrivals and missed deadlines.
+
 ## Local toolchain
 
 - [Install and verify Blyx](https://doc.blyx-lang.space/guide/installation) — Choose a binary or package manager, locate the executable, and verify the exact compiler version.

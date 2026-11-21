@@ -14,6 +14,7 @@ export default function Packages() {
                 <h1>Blyx ecosystem</h1>
                 <p>Find a package for the job, try its Blyx code in your browser, or install a pinned release in your project.</p>
                 <div className="actions">
+                    <a href="/frameworks">Browse frameworks by project</a>
                     <a className="button" href={guideLink("training-and-monitoring")}>Train and monitor a model →</a>
                     <a href="/examples/forecast-monitor.zip" download>Download the Blyx starter project</a>
                     <a href="/packages/blyxtorch">Train a neural network with BlyxTorch</a>

@@ -15,12 +15,12 @@ export async function generateMetadata({ params }: Props) {
         title: "Blyx " + p.title,
         description: p.description,
         alternates: { canonical: website + "/packages/" + slug },
-        ...(slug === "blyxtorch" && {
+        ...((slug === "blyxtorch" || p.workflow) && {
             icons: { icon: p.logo },
             openGraph: {
                 title: p.title,
                 description: p.description,
-                images: [{ url: website + p.logo, alt: "BlyxTorch bird logo" }],
+                images: [{ url: website + p.logo, alt: p.title + " bird logo" }],
             },
         }),
     };
@@ -44,11 +44,33 @@ export default async function Package({ params }: Props) {
                     {p.editor && <a className="button" href="#editor">Install in your editor</a>}
                     {p.projects && <a href="#projects">Try the projects</a>}
                     {p.trainedExample && <a href={playLink(p.trainedExample)}>Run the trained XOR network →</a>}
-                    <a className={p.trainedExample ? undefined : "button"} href={playLink(p.example)}>{p.trainedExample ? "Differentiate a loss" : "Run the Blyx example →"}</a>
+                    <a className={p.trainedExample ? undefined : "button"} href={playLink(p.example)}>{p.workflow?.browserTitle ?? (p.trainedExample ? "Differentiate a loss" : "Run the Blyx example →")}</a>
                     <a href={p.release}>Release on GitHub</a>
                 </div>
             </header>
             <article className="prose">
+                {p.workflow && (
+                    <section id="project">
+                        <h2>{p.workflow.title}</h2>
+                        <p>{p.workflow.description}</p>
+                        <h3>Download the standalone example</h3>
+                        <p>Extract the archive and run <code>{p.slug + "-demo.exe"}</code> on Windows or <code>{"./" + p.slug + "-demo"}</code> on Linux and macOS. Each archive includes the Blyx source and tests.</p>
+                        <div className="actions">
+                            {p.workflow.downloads.map((download) => <a href={download.url} key={download.platform}>{download.platform}</a>)}
+                            <a href={p.workflow.checksums}>SHA-256 checksums</a>
+                        </div>
+                        <h3>Build from source</h3>
+                        <p>With Blyx {catalog.compiler}, Rust and a host linker installed, run these commands to edit and rebuild the example.</p>
+                        <pre>{p.workflow.command}</pre>
+                        <div className="actions">
+                            <a href={p.workflow.source}>Read the project source</a>
+                            {p.workflow.preview && <a href={p.workflow.preview}>Open the generated {p.slug === "bunting" ? "HTML report" : "SVG layout"}</a>}
+                            <a href={guideLink(p.guide)}>Work through the handbook exercise</a>
+                        </div>
+                        <h3>Why this framework exists</h3>
+                        <p>{p.workflow.problem} <a href={p.workflow.reference.url}>{p.workflow.reference.title}</a></p>
+                    </section>
+                )}
                 {p.editor && (
                     <section id="editor">
                         <h2>Install BlyxTorch in your editor</h2>
