@@ -72,7 +72,7 @@ export default async function Package({ params }: Props) {
                         <a href={p.repository + "/actions"}>Build and test runs</a>
                         <a href={p.repository + "/issues"}>Package issues</a>
                         <a href={guideLink(p.guide)}>Handbook tutorial →</a>
-                        {(slug === "linearfit" || slug === "modelgate") && <a href={"/benchmarks#" + slug}>Measured performance</a>}
+                        {(slug === "linearfit" || slug === "modelgate" || slug === "blyxtorch") && <a href={"/benchmarks#" + slug}>Measured performance</a>}
                     </div>
                 </section>
             </article>

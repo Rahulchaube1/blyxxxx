@@ -835,8 +835,14 @@
                 "text": "The starter includes LinearFit, Conformal, ResidualWatch and their Blyx dependencies. With the native toolchain installed, extract the ZIP and run the command below in the project folder. The model predicts 21 with an interval from 19 to 23. The first incoming error gives a signal of 0. A second underprediction raises the signal to 1.",
                 "command": "blyxc native-run main.blyx",
                 "links": [
-                    { "text": "Download the starter project", "href": "https://www.blyx-lang.space/examples/forecast-monitor.zip" },
-                    { "text": "Read the source on GitHub", "href": "https://github.com/Rahulchaube1/blyxxxx/tree/blyx-main/examples/ml/forecast-monitor" }
+                    {
+                        "text": "Download the starter project",
+                        "href": "https://www.blyx-lang.space/examples/forecast-monitor.zip"
+                    },
+                    {
+                        "text": "Read the source on GitHub",
+                        "href": "https://github.com/Rahulchaube1/blyxxxx/tree/blyx-main/examples/ml/forecast-monitor"
+                    }
                 ]
             }
         ],
@@ -851,6 +857,140 @@
                 ]
             ],
             "expected": "1\n8.5\n"
+        }
+    },
+    {
+        "slug": "blyxtorch",
+        "title": "Train a neural network with BlyxTorch",
+        "group": "Practical projects",
+        "summary": "Train an XOR classifier, inspect a real gradient, then compile a dense network for your own labels and deploy it as a standalone CPU executable.",
+        "example": "package-blyxtorch",
+        "sections": [
+            {
+                "heading": "Learn a nonlinear decision",
+                "text": "XOR labels the input pair (0,1) or (1,0) as positive. A single straight-line decision boundary cannot separate both positive points from the two negative points. The default BlyxTorch model uses two inputs, four tanh hidden units and one output logit. Its 17 parameters include all weights and biases."
+            },
+            {
+                "heading": "Train the released classifier",
+                "text": "Download and extract the matching archive. From its folder, run the three commands below. Training takes 250 epochs with Adam, a learning rate of 0.03, batches of four and seed 7. The output is a two-line text checkpoint. The prebuilt trainer runs directly. On Windows PowerShell, start commands with .\\blyxtorch.exe and save the checkpoint with | Out-File -Encoding ascii xor.bt.",
+                "command": "./blyxtorch train fixtures/xor.csv 250 0.03 4 adam 7 > xor.bt\n./blyxtorch predict xor.bt fixtures/xor-features.csv\n./blyxtorch score xor.bt fixtures/xor.csv",
+                "links": [
+                    {
+                        "text": "Download the native release",
+                        "href": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.1.0"
+                    },
+                    {
+                        "text": "Read the framework source",
+                        "href": "https://github.com/Rahulchaube1/blyxtorch"
+                    }
+                ]
+            },
+            {
+                "heading": "Read the predictions",
+                "text": "The mean training loss is about 0.00630 on the four rows. The probabilities below are rounded. To evaluate performance on a real dataset, keep separate labelled observations out of training and run score on those rows.",
+                "table": {
+                    "columns": [
+                        "x0",
+                        "x1",
+                        "Target",
+                        "Probability"
+                    ],
+                    "rows": [
+                        [
+                            "0",
+                            "0",
+                            "0",
+                            "0.00365"
+                        ],
+                        [
+                            "0",
+                            "1",
+                            "1",
+                            "0.99391"
+                        ],
+                        [
+                            "1",
+                            "0",
+                            "1",
+                            "0.99308"
+                        ],
+                        [
+                            "1",
+                            "1",
+                            "0",
+                            "0.00846"
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Trace a derivative",
+                "text": "The browser program uses a dual number with a value and a tangent. For a trainable weight use tangent 1; for a constant use tangent 0. At w = 1, the loss (2w − 5)² is 9. Its derivative is −12, so a gradient step with learning rate 0.125 moves the weight to 2.5 and the loss becomes zero."
+            },
+            {
+                "heading": "Compile a different network",
+                "text": "Widths include input and output. This example uses eight and four hidden units for a three-class classifier. Compile the emitted Blyx source with Blyx 0.2.1, Rust 1.85 or later and a host linker. The resulting executable can train and predict on a different machine of the same target platform. For Windows PowerShell, send the emitted source through Out-File -Encoding ascii classifier.blyx and compile to classifier.exe.",
+                "command": "./blyxtorch emit 2,8,4,3 softmax relu > classifier.blyx\nblyxc build classifier.blyx -o classifier\n./classifier --help"
+            },
+            {
+                "heading": "Choose a loss and a header",
+                "text": "Use mse for continuous targets, binary for one probability, or softmax for a single class index per observation. The input is an unquoted numerical UTF-8 CSV. Training and gradient commands use labelled rows. Prediction takes the feature columns alone.",
+                "table": {
+                    "columns": [
+                        "Task",
+                        "Example header",
+                        "Model output"
+                    ],
+                    "rows": [
+                        [
+                            "Two regression targets",
+                            "x0,x1,y0,y1",
+                            "Two real numbers"
+                        ],
+                        [
+                            "Binary classification",
+                            "x0,x1,y0",
+                            "One probability"
+                        ],
+                        [
+                            "Three-class classification",
+                            "x0,x1,class",
+                            "Three probabilities summing to one"
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Inspect gradients and checkpoints",
+                "text": "The gradient command returns a per-row loss followed by one derivative per trainable weight or bias. The compiled backward pass uses the chain rule to traverse the layers in reverse order. Within each layer the output-by-input weight matrix comes first in row-major order, then its bias vector. Loading checks the model's identity and parameter count. The optimizer uses the actual size of the final mini-batch.",
+                "command": "./blyxtorch gradient xor.bt fixtures/xor.csv"
+            },
+            {
+                "heading": "Choose an appropriate workload",
+                "text": "BlyxTorch 0.1.0 runs fixed-shape float64 networks on CPU. It supports up to eight affine layers and 1,024 parameters. The published comparison covers five small networks, CPU PyTorch, and a separate CSV-scoring benchmark. GPU execution, convolution, transformer training and arbitrary-rank tensors are outside this release.",
+                "links": [
+                    {
+                        "text": "Compare the timings and measurement boundaries",
+                        "href": "https://www.blyx-lang.space/benchmarks#blyxtorch"
+                    },
+                    {
+                        "text": "Inspect the PyTorch numerical comparisons",
+                        "href": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.1.0/verification/parity.json"
+                    }
+                ]
+            }
+        ],
+        "exercise": {
+            "prompt": "In the worked program, change the learning rate from 0.125 to 0.25. Where does the update put the weight, and what loss do you get?",
+            "hint": "The derivative before the update is −12. Compute 1 − 0.25 × (−12), then square the new prediction error.",
+            "answer": "The weight becomes 4. Its prediction is 8, so the new loss is (8 − 5)² = 9. The larger step crosses the minimum.",
+            "edits": [
+                [
+                    "0.125 * at(loss, 1)",
+                    "0.25 * at(loss, 1)"
+                ]
+            ],
+            "expected": "9\n-12\n9\n"
         }
     },
     {

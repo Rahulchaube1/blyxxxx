@@ -16,6 +16,7 @@ export default function Packages() {
                 <div className="actions">
                     <a className="button" href={guideLink("training-and-monitoring")}>Train and monitor a model →</a>
                     <a href="/examples/forecast-monitor.zip" download>Download the Blyx starter project</a>
+                    <a href="/packages/blyxtorch">Train a neural network with BlyxTorch</a>
                     <a href={guideLink("ai-packages")}>Evaluate a model release</a>
                 </div>
             </header>
@@ -26,7 +27,7 @@ export default function Packages() {
                 <div className="actions">
                     <a href={repository + "/blob/blyx-main/docs/ecosystem-packages.md"}>Package contributor guide →</a>
                     <a href="/packages.json">Catalog JSON</a>
-                    <a href="/blyx-package-logos.zip" download>Download all ten logos</a>
+                    <a href="/blyx-package-logos.zip" download>Download all package logos</a>
                     <a href="/community">Discuss an idea</a>
                 </div>
             </section>

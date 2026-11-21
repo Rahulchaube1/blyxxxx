@@ -54,6 +54,8 @@ The release supports synchronous functions, recursion, control flow and numeric 
 
 - [Train, calibrate and monitor a regression model](https://doc.blyx-lang.space/guide/training-and-monitoring) — Fit a regression, attach intervals using held-out errors, and catch persistent underprediction in a later stream. Run each stage in native Blyx or the browser.
 
+- [Train a neural network with BlyxTorch](https://doc.blyx-lang.space/guide/blyxtorch) — Train an XOR classifier, inspect a real gradient, then compile a dense network for your own labels and deploy it as a standalone CPU executable.
+
 ## Local toolchain
 
 - [Install and verify Blyx](https://doc.blyx-lang.space/guide/installation) — Choose a binary or package manager, locate the executable, and verify the exact compiler version.

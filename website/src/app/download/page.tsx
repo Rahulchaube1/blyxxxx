@@ -34,6 +34,7 @@ export default function Download() {
                     <h2>Download Blyx AI tools</h2>
                     <p>Use the published executables with your own CSV files. Each release includes sample data and checksums.</p>
                     <div className="actions">
+                        <a href="/packages/blyxtorch">Train a neural network with BlyxTorch</a>
                         <a href="/packages/linearfit">Fit a regression with LinearFit</a>
                         <a href="/packages/residualwatch">Monitor errors with ResidualWatch</a>
                         <a href="/packages/modelgate">Compare classifiers with ModelGate</a>
@@ -43,8 +44,8 @@ export default function Download() {
                     <h2>Install on Windows with Scoop</h2>
                     <p>On Windows x64, add the Blyx bucket once in PowerShell, then install the compiler or individual AI tools by name.</p>
                     <pre>{"scoop bucket add blyx https://github.com/Rahulchaube1/scoop-blyx\nscoop install blyx/blyx"}</pre>
-                    <p>To train from CSV, monitor prediction errors and compare classifiers, install the three command-line tools.</p>
-                    <pre>scoop install blyx/linearfit blyx/residualwatch blyx/modelgate</pre>
+                    <p>To train from CSV, monitor prediction errors and compare classifiers, install the command-line tools you need.</p>
+                    <pre>scoop install blyx/blyxtorch blyx/linearfit blyx/residualwatch blyx/modelgate</pre>
                     <a href="https://github.com/Rahulchaube1/scoop-blyx">Windows manifests and a sample prediction</a>
                 </section>
                 <section>

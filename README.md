@@ -33,7 +33,7 @@ scoop bucket add blyx https://github.com/Rahulchaube1/scoop-blyx
 scoop install blyx/blyx
 ```
 
-The same bucket distributes LinearFit, ResidualWatch and ModelGate. [Windows commands and example](https://github.com/Rahulchaube1/scoop-blyx)
+The same bucket distributes BlyxTorch, LinearFit, ResidualWatch and ModelGate. [Windows commands and example](https://github.com/Rahulchaube1/scoop-blyx)
 
 On Apple Silicon macOS and x86-64 Linux, install the compiler with Homebrew.
 
@@ -85,10 +85,11 @@ The first line of output is `2`, the fitted slope. The second is `10`, the predi
 
 ## Train and evaluate models with Blyx packages
 
-Fit a regression model from a CSV, estimate prediction intervals on held-out examples, and detect persistent errors after deployment. Each package has a tagged source release, executable tests and a browser example. LinearFit, ResidualWatch and ModelGate also ship native commands for Windows x64, Linux x64 and Apple Silicon macOS.
+Fit a regression model from a CSV, estimate prediction intervals on held-out examples, and detect persistent errors after deployment. Each package has a tagged source release, executable tests and a browser example. BlyxTorch, LinearFit, ResidualWatch and ModelGate also ship native commands for Windows x64, Linux x64 and Apple Silicon macOS.
 
 | Package | What it does |
 | --- | --- |
+| <img src="website/public/packages/blyxtorch.png" width="32" height="32" alt=""> [BlyxTorch 0.1.0](https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.1.0) | Train dense CPU networks with automatic differentiation, mini-batch SGD and Adam, then deploy a standalone native model. [Tutorial](https://doc.blyx-lang.space/guide/blyxtorch) |
 | <img src="website/public/packages/linearfit.png" width="32" height="32" alt=""> [LinearFit 0.1.1](https://github.com/Rahulchaube1/blyx-linearfit/releases/tag/v0.1.1) | Train, merge and deploy a single-feature least-squares or ridge regression with an unpenalized intercept. |
 | <img src="website/public/packages/conformal.png" width="32" height="32" alt=""> [Conformal 0.1.0](https://github.com/Rahulchaube1/blyx-conformal/releases/tag/v0.1.0) | Calibrate a regression interval from held-out errors and measure coverage on a separate test set. |
 | <img src="website/public/packages/moments.png" width="32" height="32" alt=""> [Moments 0.1.0](https://github.com/Rahulchaube1/blyx-moments/releases/tag/v0.1.0) | Summarize paired observations as they arrive and merge statistics from independent batches. |

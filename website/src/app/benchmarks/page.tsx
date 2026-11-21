@@ -1,6 +1,7 @@
 import data from "../../../public/data/benchmarks.json";
 import modelgate from "../../../public/data/modelgate-benchmark.json";
 import linearfit from "../../../public/data/linearfit-benchmark.json";
+import blyxtorch from "../../../public/data/blyxtorch-benchmark.json";
 import { repository } from "@/lib/site";
 export const metadata = { title: "Performance measurements" };
 export default function Benchmarks() {
@@ -12,6 +13,25 @@ export default function Benchmarks() {
                     Timings, inputs and reproduction instructions for Blyx training, evaluation and numerical workloads.
                 </p>
             </header>
+            <section id="blyxtorch" className="prose">
+                <h2>Score a small neural network on {blyxtorch.rows.toLocaleString("en-US")} rows</h2>
+                <p>BlyxTorch and CPU PyTorch loaded the same 17 weights, read a numerical CSV and returned the mean binary cross-entropy for a two-input, four-hidden-unit classifier. The harness checked every result. All implementations used one CPU thread on the same Windows x64 machine.</p>
+                <div className="card table-box"><table>
+                    <caption>Milliseconds across {blyxtorch.measured_runs} measured runs after {blyxtorch.warmups} warm-ups</caption>
+                    <thead><tr><th scope="col">Implementation and timing boundary</th><th scope="col">Median</th><th scope="col">Range</th></tr></thead>
+                    <tbody>{blyxtorch.timings.map((r) => (
+                        <tr key={r.name}><th scope="row">{r.name}</th><td>{r.median_ms}</td><td>{Math.min(...r.samples_ms)}–{Math.max(...r.samples_ms)}</td></tr>
+                    ))}</tbody>
+                </table></div>
+                <p>Fresh runs include process startup and, for Python, library imports. The warm PyTorch run uses an existing interpreter and a vectorized batch. All three include reading the checkpoint and CSV. Training, GPU execution and larger networks need separate measurements.</p>
+                <p>{blyxtorch.framework} · CPU PyTorch {blyxtorch.torch} · CPython {blyxtorch.python} · NumPy {blyxtorch.numpy}</p>
+                <div className="actions">
+                    <a href="/packages/blyxtorch">Get BlyxTorch</a>
+                    <a href="https://github.com/Rahulchaube1/blyxtorch/blob/v0.1.0/verification/bench_score.py">Benchmark source</a>
+                    <a href="/data/blyxtorch-benchmark.json">Raw measurements and input hash</a>
+                    <a href="https://github.com/Rahulchaube1/blyxtorch/blob/v0.1.0/verification/parity.json">PyTorch gradient checks</a>
+                </div>
+            </section>
             <section id="linearfit" className="prose">
                 <h2>Fit a one-feature regression on {linearfit.rows.toLocaleString("en-US")} rows</h2>
                 <p>Each implementation fits the same ridge model and predicts at x = 7.5. The harness checks every reported value against an exact rational calculation. It runs on one Windows x64 host and rotates the order of the implementations.</p>

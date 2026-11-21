@@ -1,0 +1,59 @@
+{
+  "framework": "BlyxTorch 0.1.0",
+  "torch": "2.12.1+cpu",
+  "numpy": "2.2.6",
+  "python": "3.10.6",
+  "platform": "Windows-10-10.0.26300-SP0",
+  "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+  "rows": 4096,
+  "warmups": 2,
+  "measured_runs": 7,
+  "threads": 1,
+  "csv_sha256": "4e86c27d49c5aa97d07ef4e088c223656d9076e67873ca4e225271e222409749",
+  "result": {
+    "rows": 4096,
+    "mean_loss": 0.8165996875510098
+  },
+  "executable_size_bytes": 437760,
+  "timings": [
+    {
+      "name": "BlyxTorch CLI, fresh process",
+      "median_ms": 59.335,
+      "samples_ms": [
+        28.677,
+        32.082,
+        78.802,
+        59.335,
+        27.897,
+        93.122,
+        86.811
+      ]
+    },
+    {
+      "name": "PyTorch CPU, fresh Python process",
+      "median_ms": 3517.626,
+      "samples_ms": [
+        3509.031,
+        3529.21,
+        3333.104,
+        3346.322,
+        3680.02,
+        3517.626,
+        3704.401
+      ]
+    },
+    {
+      "name": "PyTorch CPU, warm Python process",
+      "median_ms": 6.752,
+      "samples_ms": [
+        4.642,
+        4.11,
+        4.665,
+        12.589,
+        21.151,
+        6.752,
+        17.074
+      ]
+    }
+  ]
+}

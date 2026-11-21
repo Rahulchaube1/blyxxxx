@@ -70,6 +70,7 @@ export default function Home() {
                     <p>Fit a regression from a CSV, add a prediction interval, and detect when a deployed model repeatedly underpredicts. The same Blyx packages run in native programs and in the browser examples.</p>
                     <div className="actions">
                         <a className="button secondary" href="/packages">Explore the Blyx ecosystem →</a>
+                        <a href="/packages/blyxtorch">Train a neural network with BlyxTorch</a>
                         <a href={guideLink("training-and-monitoring")}>Work through the tutorial</a>
                     </div>
                 </section>

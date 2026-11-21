@@ -1742,6 +1742,262 @@ Output after the change
 8.5
 ```
 
+### [Train a neural network with BlyxTorch](https://doc.blyx-lang.space/guide/blyxtorch)
+
+Train an XOR classifier, inspect a real gradient, then compile a dense network for your own labels and deploy it as a standalone CPU executable.
+
+#### Learn a nonlinear decision
+
+XOR labels the input pair (0,1) or (1,0) as positive. A single straight-line decision boundary cannot separate both positive points from the two negative points. The default BlyxTorch model uses two inputs, four tanh hidden units and one output logit. Its 17 parameters include all weights and biases.
+
+#### Train the released classifier
+
+Download and extract the matching archive. From its folder, run the three commands below. Training takes 250 epochs with Adam, a learning rate of 0.03, batches of four and seed 7. The output is a two-line text checkpoint. The prebuilt trainer runs directly. On Windows PowerShell, start commands with .\blyxtorch.exe and save the checkpoint with | Out-File -Encoding ascii xor.bt.
+
+```
+./blyxtorch train fixtures/xor.csv 250 0.03 4 adam 7 > xor.bt
+./blyxtorch predict xor.bt fixtures/xor-features.csv
+./blyxtorch score xor.bt fixtures/xor.csv
+```
+
+[Download the native release](https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.1.0) · [Read the framework source](https://github.com/Rahulchaube1/blyxtorch)
+
+#### Read the predictions
+
+The mean training loss is about 0.00630 on the four rows. The probabilities below are rounded. To evaluate performance on a real dataset, keep separate labelled observations out of training and run score on those rows.
+
+| x0 | x1 | Target | Probability |
+| --- | --- | --- | --- |
+| 0 | 0 | 0 | 0.00365 |
+| 0 | 1 | 1 | 0.99391 |
+| 1 | 0 | 1 | 0.99308 |
+| 1 | 1 | 0 | 0.00846 |
+
+#### Trace a derivative
+
+The browser program uses a dual number with a value and a tangent. For a trainable weight use tangent 1; for a constant use tangent 0. At w = 1, the loss (2w − 5)² is 9. Its derivative is −12, so a gradient step with learning rate 0.125 moves the weight to 2.5 and the loss becomes zero.
+
+#### Compile a different network
+
+Widths include input and output. This example uses eight and four hidden units for a three-class classifier. Compile the emitted Blyx source with Blyx 0.2.1, Rust 1.85 or later and a host linker. The resulting executable can train and predict on a different machine of the same target platform. For Windows PowerShell, send the emitted source through Out-File -Encoding ascii classifier.blyx and compile to classifier.exe.
+
+```
+./blyxtorch emit 2,8,4,3 softmax relu > classifier.blyx
+blyxc build classifier.blyx -o classifier
+./classifier --help
+```
+
+#### Choose a loss and a header
+
+Use mse for continuous targets, binary for one probability, or softmax for a single class index per observation. The input is an unquoted numerical UTF-8 CSV. Training and gradient commands use labelled rows. Prediction takes the feature columns alone.
+
+| Task | Example header | Model output |
+| --- | --- | --- |
+| Two regression targets | x0,x1,y0,y1 | Two real numbers |
+| Binary classification | x0,x1,y0 | One probability |
+| Three-class classification | x0,x1,class | Three probabilities summing to one |
+
+#### Inspect gradients and checkpoints
+
+The gradient command returns a per-row loss followed by one derivative per trainable weight or bias. The compiled backward pass uses the chain rule to traverse the layers in reverse order. Within each layer the output-by-input weight matrix comes first in row-major order, then its bias vector. Loading checks the model's identity and parameter count. The optimizer uses the actual size of the final mini-batch.
+
+```
+./blyxtorch gradient xor.bt fixtures/xor.csv
+```
+
+#### Choose an appropriate workload
+
+BlyxTorch 0.1.0 runs fixed-shape float64 networks on CPU. It supports up to eight affine layers and 1,024 parameters. The published comparison covers five small networks, CPU PyTorch, and a separate CSV-scoring benchmark. GPU execution, convolution, transformer training and arbitrary-rank tensors are outside this release.
+
+[Compare the timings and measurement boundaries](https://www.blyx-lang.space/benchmarks#blyxtorch) · [Inspect the PyTorch numerical comparisons](https://github.com/Rahulchaube1/blyxtorch/blob/v0.1.0/verification/parity.json)
+
+#### Worked program
+
+```blyx
+// BlyxTorch 0.1.0, MIT OR Apache-2.0.
+// https://github.com/Rahulchaube1/blyxtorch
+// Portable f64 primitives and forward-mode automatic differentiation.
+pub fn btx_finite(x: f64) -> bool { x - x == 0.0 }
+pub fn btx_valid(v: vector, width: i64) -> bool {
+    if len(v) != width { return false; }
+    let mut i = 0;
+    while i < width {
+        if !btx_finite(at(v, i)) { return false; }
+        i += 1;
+    }
+    true
+}
+
+// exp(-x) for finite x >= 0. Range reduction bounds the Taylor remainder.
+fn exp_decay(x: f64) -> f64 {
+    if x >= 746.0 { return 0.0; }
+    let mut r = -x;
+    let mut levels = 0;
+    while r < -0.35 { r *= 0.5; levels += 1; }
+    let mut term = 1.0;
+    let mut total = 1.0;
+    let mut k = 1.0;
+    while k <= 15.0 { term *= r / k; total += term; k += 1.0; }
+    while levels > 0 { total *= total; levels -= 1; }
+    total
+}
+pub fn btx_exp_shift(x: f64) -> f64 {
+    if x > 0.0 { return 0.0 / 0.0; }
+    exp_decay(-x)
+}
+
+// log(1+x), 0 <= x <= 1. The transformed series also retains very small x.
+fn log1p_unit(x: f64) -> f64 {
+    let z = x / (2.0 + x);
+    let zz = z * z;
+    let mut term = z;
+    let mut accum = z;
+    let mut k = 3.0;
+    while k <= 35.0 { term *= zz; accum += term / k; k += 2.0; }
+    2.0 * accum
+}
+// The softmax denominator is always finite and at least one.
+pub fn btx_log_sum(x: f64) -> f64 {
+    if x < 1.0 || !btx_finite(x) { return 0.0 / 0.0; }
+    let mut n = x;
+    let mut offset = 0.0;
+    while n >= 2.0 { n *= 0.5; offset += 0.6931471805599453; }
+    offset + log1p_unit(n - 1.0)
+}
+pub fn btx_sqrt(x: f64) -> f64 {
+    if x == 0.0 { return 0.0; }
+    if x < 0.0 || !btx_finite(x) { return 0.0 / 0.0; }
+    let mut z = x;
+    let mut scale = 1.0;
+    while z < 1.0 { z *= 4.0; scale *= 0.5; }
+    while z > 4.0 { z *= 0.25; scale *= 2.0; }
+    let mut r = 1.5;
+    let mut i = 0;
+    while i < 6 { r = 0.5 * (r + z / r); i += 1; }
+    r * scale
+}
+pub fn btx_logistic(x: f64) -> f64 {
+    if x >= 0.0 { return 1.0 / (1.0 + exp_decay(x)); }
+    let q = exp_decay(-x);
+    q / (1.0 + q)
+}
+pub fn btx_tanh_value(x: f64) -> f64 {
+    if x < 0.0 { return -btx_tanh_value(-x); }
+    if x < 0.00001 { return x * (1.0 - x*x/3.0); }
+    let q = exp_decay(2.0*x);
+    (1.0-q)/(1.0+q)
+}
+pub fn btx_relu_value(x: f64) -> f64 { if x > 0.0 { return x; } 0.0 }
+pub fn btx_softplus_value(x: f64) -> f64 {
+    if x >= 0.0 { return x + log1p_unit(exp_decay(x)); }
+    log1p_unit(exp_decay(-x))
+}
+pub fn btx_bce_value(logit: f64, label: f64) -> f64 {
+    if logit >= 0.0 { return (1.0-label)*logit + log1p_unit(exp_decay(logit)); }
+    return -label*logit + log1p_unit(exp_decay(-logit));
+}
+pub fn btx_bce_slope(logit: f64, label: f64) -> f64 {
+    if logit >= 0.0 { return (1.0-label) - btx_logistic(-logit); }
+    btx_logistic(logit) - label
+}
+pub fn bt_dual(value: f64, tangent: f64) -> vector {
+    if !btx_finite(value) || !btx_finite(tangent) { return []; }
+    [value, tangent]
+}
+pub fn bt_add(a: vector, b: vector) -> vector {
+    if len(a) != 2 || len(b) != 2 { return []; }
+    bt_dual(at(a,0)+at(b,0), at(a,1)+at(b,1))
+}
+pub fn bt_sub(a: vector, b: vector) -> vector {
+    if len(a) != 2 || len(b) != 2 { return []; }
+    bt_dual(at(a,0)-at(b,0), at(a,1)-at(b,1))
+}
+pub fn bt_mul(a: vector, b: vector) -> vector {
+    if len(a) != 2 || len(b) != 2 { return []; }
+    bt_dual(at(a,0)*at(b,0), at(a,1)*at(b,0) + at(a,0)*at(b,1))
+}
+pub fn bt_div(a: vector, b: vector) -> vector {
+    if len(a) != 2 || len(b) != 2 || at(b,0) == 0.0 { return []; }
+    let v = at(a,0)/at(b,0);
+    bt_dual(v, (at(a,1)-v*at(b,1))/at(b,0))
+}
+pub fn bt_square(a: vector) -> vector { bt_mul(a, a) }
+pub fn bt_relu(a: vector) -> vector {
+    if !btx_valid(a,2) { return []; }
+    if at(a,0) > 0.0 { return a; }
+    [0,0]
+}
+pub fn bt_tanh(a: vector) -> vector {
+    if !btx_valid(a,2) { return []; }
+    let v = btx_tanh_value(at(a,0));
+    bt_dual(v, (1.0-v)*(1.0+v)*at(a,1))
+}
+pub fn bt_sigmoid(a: vector) -> vector {
+    if !btx_valid(a,2) { return []; }
+    let x = at(a,0);
+    bt_dual(btx_logistic(x), btx_logistic(x)*btx_logistic(-x)*at(a,1))
+}
+pub fn bt_softplus(a: vector) -> vector {
+    if !btx_valid(a,2) { return []; }
+    bt_dual(btx_softplus_value(at(a,0)), btx_logistic(at(a,0))*at(a,1))
+}
+pub fn bt_bce_logits(a: vector, label: f64) -> vector {
+    if !btx_valid(a,2) || !btx_finite(label) || label < 0.0 || label > 1.0 { return []; }
+    bt_dual(btx_bce_value(at(a,0),label), btx_bce_slope(at(a,0),label)*at(a,1))
+}
+
+fn main() {
+    let weight = bt_dual(1.0, 1.0);
+    let x = bt_dual(2.0, 0.0);
+    let target = bt_dual(5.0, 0.0);
+    let loss = bt_square(bt_sub(bt_mul(weight, x), target));
+    println!(at(loss, 0));
+    println!(at(loss, 1));
+    let updated = bt_dual(at(weight, 0) - 0.125 * at(loss, 1), 0.0);
+    println!(at(bt_square(bt_sub(bt_mul(updated, x), target)), 0));
+}
+```
+
+Expected output
+
+```
+9
+-12
+0
+```
+
+#### Practice
+
+In the worked program, change the learning rate from 0.125 to 0.25. Where does the update put the weight, and what loss do you get?
+
+Hint
+
+The derivative before the update is −12. Compute 1 − 0.25 × (−12), then square the new prediction error.
+
+Solution
+
+The weight becomes 4. Its prediction is 8, so the new loss is (8 − 5)² = 9. The larger step crosses the minimum.
+
+Find
+
+```blyx
+0.125 * at(loss, 1)
+```
+
+Replace with
+
+```blyx
+0.25 * at(loss, 1)
+```
+
+Output after the change
+
+```
+9
+-12
+9
+```
+
 ## Local toolchain
 
 ### [Install and verify Blyx](https://doc.blyx-lang.space/guide/installation)

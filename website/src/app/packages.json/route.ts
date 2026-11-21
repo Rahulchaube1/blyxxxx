@@ -9,7 +9,7 @@ export function GET() {
         compiler: catalog.compiler,
         license: catalog.license,
         packages: catalog.packages.map((p) => ({
-            name: "blyx-" + p.slug,
+            name: p.name ?? "blyx-" + p.slug,
             version: p.version,
             commit: p.commit,
             repository: p.repository,
