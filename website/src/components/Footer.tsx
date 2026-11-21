@@ -16,7 +16,7 @@ export default function Footer() {
                 ["Download", mainLink("/download")],
                 ["Compiler", mainLink("/compiler")],
                 ["VS Code", mainLink("/vscode")],
-                ["Packages", mainLink("/packages")],
+                ["Ecosystem", mainLink("/packages")],
                 ["Benchmarks", mainLink("/benchmarks")],
             ],
         ],

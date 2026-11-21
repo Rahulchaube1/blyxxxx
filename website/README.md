@@ -27,6 +27,7 @@ The edition is selected at startup and build time. To switch back in PowerShell,
 | --- | --- |
 | An example program | Its `.blyx` file in [examples](../examples/) and its catalog entry in [samples.json](src/lib/samples.json). The entry includes the source path, runnable code, and expected output. |
 | A documentation chapter | [guides.json](src/lib/guides.json). Each chapter has sections, practice, a hint and a worked solution. Reference a catalog example by ID to embed an editor. Supply the exercise edits and expected output so CI can execute the solution. |
+| An ecosystem release | Update its version, source and example in the [package catalog](src/app/packages/page.tsx). Copy the tagged library and example into a single file for the browser, then run the WebAssembly checks. |
 | A page or editor control | [App routes](src/app/) and [shared components](src/components/). |
 | A redirect from the old book | [Legacy route map](legacy-book.json) and [redirect configuration](next.config.mjs). |
 

@@ -1,0 +1,48 @@
+// Single-file example from https://github.com/Rahulchaube1/blyx-retrieval/tree/v0.1.0
+fn document_id(value: f64) -> bool {
+    value >= 0.0 && value <= 9007199254740991.0 && value % 1.0 == 0.0
+}
+fn occurs_before(items: vector, end: i64, item: f64) -> bool {
+    let mut i = 0;
+    while i < end {
+        if at(items, i) == item { return true; }
+        i += 1;
+    }
+    false
+}
+// Binary judgments for one query. Duplicate retrieved IDs consume their rank without scoring twice.
+pub fn retrieval_at_k(ranked: vector, relevant: vector, k: i64) -> vector {
+    if k <= 0 || len(relevant) == 0 { return []; }
+    let mut judged = 0.0;
+    let mut j = 0;
+    while j < len(relevant) {
+        let id = at(relevant, j);
+        if !document_id(id) { return []; }
+        if !occurs_before(relevant, j, id) { judged += 1.0; }
+        j += 1;
+    }
+    let mut hits = 0.0;
+    let mut reciprocal = 0.0;
+    let mut sum_precision = 0.0;
+    let mut i = 0;
+    while i < k && i < len(ranked) {
+        let id = at(ranked, i);
+        if !document_id(id) { return []; }
+        if occurs_before(relevant, len(relevant), id) && !occurs_before(ranked, i, id) {
+            hits += 1.0;
+            let rank = at([i + 1], 0);
+            if hits == 1.0 { reciprocal = 1.0 / rank; }
+            sum_precision += hits / rank;
+        }
+        i += 1;
+    }
+    let cutoff = at([k], 0);
+    let divisor = if judged < cutoff { judged } else { cutoff };
+    [hits / cutoff, hits / judged, reciprocal, sum_precision / divisor]
+}
+
+fn main() {
+    let result = retrieval_at_k([7, 7, 9, 12], [7, 9], 3);
+    println!(at(result, 1));
+    println!(at(result, 2));
+}

@@ -46,7 +46,7 @@ export default function Home() {
                         <a href="/examples">All examples →</a>
                     </div>
                     <div className="grid">
-                        {["linear-fit", "smoothing", "gcd"].map((id) => {
+                        {["linear-fit", "package-retrieval", "gcd"].map((id) => {
                             const s = samples.find((x) => x.id === id)!;
                             return (
                                 <a
@@ -65,6 +65,11 @@ export default function Home() {
                         })}
                     </div>
                 </section>
+                <section className="prose block">
+                    <h2>Evaluate a model before you ship it</h2>
+                    <p>Two classifiers can have the same accuracy and make very different mistakes. Compare them on a CSV of paired predictions, or use Blyx libraries to measure calibration and search quality.</p>
+                    <a className="button secondary" href="/packages">Explore the Blyx ecosystem →</a>
+                </section>
                 <section className="block">
                     <div className="section-head">
                         <h2>From editor to executable</h2>
@@ -73,7 +78,7 @@ export default function Home() {
                         {[
                             [
                                 "Install Blyx",
-                                "Download the 0.2.0 compiler for your platform.",
+                                "Download the 0.2.1 compiler for your platform.",
                                 "/download",
                             ],
                             [

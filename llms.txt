@@ -1,12 +1,12 @@
 # The Blyx handbook
 
-Blyx 0.2.0 · Released language and toolchain
+Blyx 0.2.1 · Released language and toolchain
 
 Start with a complete fn main(). Run your program in the playground or use blyxc check FILE followed by blyxc run FILE. For a native executable, use blyxc build FILE with Rust and a host linker installed.
 
 [Learn Blyx](https://www.blyx-lang.space/learn) · [Playground](https://www.blyx-lang.space/play) · [Executable subset](https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/executable-subset.md) · [Full handbook](https://doc.blyx-lang.space/llms-full.txt)
 
-The release supports synchronous functions, recursion, control flow and numeric vectors. GPU kernels, async tasks, a tensor runtime and external package installation are under development.
+The release supports synchronous functions, recursion, control flow and numeric vectors. Native projects can import Git-pinned Blyx packages and read files or command-line arguments. See the [ecosystem](https://www.blyx-lang.space/packages) for published libraries. GPU kernels, async tasks and a general tensor runtime are under development.
 
 ## First steps
 
@@ -50,6 +50,8 @@ The release supports synchronous functions, recursion, control flow and numeric 
 
 - [Capstone project — build a sensor report](https://doc.blyx-lang.space/guide/sensor-report) — Build a complete report from a blank file, handle empty input, and verify a boundary condition.
 
+- [Evaluate models with Blyx packages](https://doc.blyx-lang.space/guide/ai-packages) — Compare the cost of two classifiers, check their probability forecasts, and score a ranked retrieval result. Run the comparison in CI or import the same Blyx functions into your application.
+
 ## Local toolchain
 
 - [Install and verify Blyx](https://doc.blyx-lang.space/guide/installation) — Choose a binary or package manager, locate the executable, and verify the exact compiler version.
@@ -64,10 +66,10 @@ The release supports synchronous functions, recursion, control flow and numeric 
 
 ## Language reference
 
-- [Syntax, types and operators](https://doc.blyx-lang.space/guide/language-reference) — Look up the executable forms, operator order and value types used in Blyx 0.2.0.
+- [Syntax, types and operators](https://doc.blyx-lang.space/guide/language-reference) — Look up the executable forms, operator order and value types used in Blyx 0.2.1.
 
 - [Built-in functions and output](https://doc.blyx-lang.space/guide/builtin-reference) — Look up every vector built-in and both output macros, including their inputs, results and boundary cases.
 
 - [Command-line reference](https://doc.blyx-lang.space/guide/cli-reference) — Look up CLI forms, output files, execution budgets and exit codes.
 
-- [What Blyx 0.2.0 can run](https://doc.blyx-lang.space/guide/compatibility) — Choose an execution mode and identify features that are still being developed.
+- [What Blyx 0.2.1 can run](https://doc.blyx-lang.space/guide/compatibility) — Choose an execution mode and identify features that are still being developed.

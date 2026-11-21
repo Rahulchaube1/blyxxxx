@@ -37,7 +37,7 @@ export const stages = [
     ],
     [
         "Practical projects",
-        "Test a rule at its boundaries and put your skills together in a sensor report.",
+        "Build a sensor report, test edge cases and evaluate models with published Blyx libraries.",
     ],
     [
         "Local toolchain",

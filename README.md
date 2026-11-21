@@ -35,10 +35,10 @@ brew install rahulchaube1/blyx/blyx
 With Rust and a host linker installed, build the released compiler from crates.io:
 
 ```sh
-cargo install --locked --version 0.2.0 blyxc
+cargo install --locked --version 0.2.1 blyxc
 ```
 
-Download the **Blyx 0.2.0** archive for Windows x86-64, Linux x86-64, or macOS on Apple Silicon. Verify it against the release’s `SHA256SUMS`, extract the archive, and put the directory containing `blyxc` on your `PATH`. [Release archives and checksums](https://github.com/Rahulchaube1/blyxxxx/releases/tag/v0.2.0)
+Download the **Blyx 0.2.1** archive for Windows x86-64, Linux x86-64, or macOS on Apple Silicon. Verify it against the release’s `SHA256SUMS`, extract the archive, and put the directory containing `blyxc` on your `PATH`. [Release archives and checksums](https://github.com/Rahulchaube1/blyxxxx/releases/tag/v0.2.1)
 
 ```sh
 blyxc --version
@@ -74,7 +74,25 @@ The first line of output is `2`, the fitted slope. The second is `10`, the predi
 | [Threshold classifier](https://www.blyx-lang.space/play?example=threshold) | Vector dot product, bias, and a conditional | `positive` |
 | [Smoothed readings](https://www.blyx-lang.space/play?example=smoothing) | Indexed reads and a rolling calculation | `10`, `12`, `15` |
 
-## What ships in 0.2.0
+## Evaluate models with Blyx packages
+
+Two classifiers can both be 75% accurate and have very different costs. In the ModelGate fixture, one false alarm costs 1 and one missed positive costs 5. Replacing the false alarm with a missed positive raises cost per row from 0.25 to 1.25. ModelGate reads paired binary predictions, writes a JSON comparison and exits with code 1 on a regression. Download its platform archive, extract it and run the included fixture. On Windows use `.\modelgate.exe`.
+
+```sh
+./modelgate fixtures/regression.csv --fn-cost 5
+```
+
+| Published project | Use it for |
+| --- | --- |
+| [ModelGate 0.1.1](https://github.com/Rahulchaube1/blyx-modelgate/releases/tag/v0.1.1) | Gate a classifier release on mistake costs and probability quality. |
+| [Classification 0.1.0](https://github.com/Rahulchaube1/blyx-classification/tree/v0.1.0) | Calculate confusion counts, precision, recall, F1 and weighted costs. |
+| [Calibration 0.1.0](https://github.com/Rahulchaube1/blyx-calibration/tree/v0.1.0) | Calculate binary Brier score, reliability bins and expected calibration error. |
+| [Retrieval 0.1.0](https://github.com/Rahulchaube1/blyx-retrieval/tree/v0.1.0) | Score ranked document IDs with duplicate-aware precision, recall, reciprocal rank and average precision. |
+| [Backtest 0.1.0](https://github.com/Rahulchaube1/blyx-backtest/tree/v0.1.0) | Plan chronological folds with a gap and compare forecasts with rolling or expanding training baselines. |
+
+Each library has its own Blyx source, tests, examples and tagged release. Import a pinned checkout into a native Blyx project using `use`. [Package catalog and browser demos](https://www.blyx-lang.space/packages) · [Evaluation tutorial](https://doc.blyx-lang.space/guide/ai-packages)
+
+## What ships in 0.2.1
 
 | Component | What you can use today |
 | --- | --- |
@@ -82,7 +100,7 @@ The first line of output is `2`, the fitted slope. The second is `10`, the predi
 | CLI | Create a project with `blyxc new hello`, check syntax, run source, and compile supported typed programs. The native backend lowers Blyx to Rust and invokes `rustc`. |
 | Browser and editor | The playground and desktop extension run the Blyx interpreter compiled to WebAssembly. The editor can run an unsaved buffer and show parser errors while you type. |
 
-Blyx has its own lexer, parser, and interpreter. GPU execution, a general-purpose tensor runtime, actor scheduling, and external package installation remain development work. The executable subset is the reference for supported behavior. [Executable subset](docs/executable-subset.md) · [Release capabilities](https://doc.blyx-lang.space/guide/compatibility) · [Roadmap](ROADMAP_PUBLIC.md)
+Blyx has its own lexer, parser, and interpreter. GPU execution, a general-purpose tensor runtime, actor scheduling, and a public dependency registry remain development work. The executable subset is the reference for supported behavior. [Executable subset](docs/executable-subset.md) · [Release capabilities](https://doc.blyx-lang.space/guide/compatibility) · [Roadmap](ROADMAP_PUBLIC.md)
 
 ## Reproduce the results
 

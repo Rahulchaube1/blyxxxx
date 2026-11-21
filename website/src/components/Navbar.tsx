@@ -11,6 +11,7 @@ export default function Navbar() {
         ["Learn", mainLink("/learn")],
         ["Documentation", guideLink()],
         ["Examples", mainLink("/examples")],
+        ["Ecosystem", mainLink("/packages")],
         ["Playground", mainLink("/play")],
         ["Download", mainLink("/download")],
         ["Community", mainLink("/community")],

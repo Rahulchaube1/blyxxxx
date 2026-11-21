@@ -32,6 +32,7 @@ const config = {
         rules.push(
             redirect("/stable/book/:chapter.html", docs + "/:chapter.html"),
             redirect("/index.html", "/"),
+            redirect("/ecosystem", book ? "https://www.blyx-lang.space/packages" : "/packages"),
             redirect(
                 "/playground",
                 book ? "https://www.blyx-lang.space/play" : "/play",

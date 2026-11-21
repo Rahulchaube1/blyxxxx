@@ -1,0 +1,108 @@
+// Single-file example from https://github.com/Rahulchaube1/blyx-backtest/tree/v0.1.0
+// All fold positions are zero-based, with exclusive end positions.
+pub fn bt_fold_count(n: i64, initial: i64, horizon: i64, gap: i64) -> i64 {
+    if n < 0 || initial < 1 || horizon < 1 || gap < 0 { return -1; }
+    if initial >= n || gap >= n - initial { return 0; }
+    (n - initial - gap) / horizon
+}
+
+fn train_start(end: i64, window: i64) -> i64 {
+    if window > 0 && window < end { return end - window; }
+    0
+}
+
+pub fn bt_fold(n: i64, initial: i64, horizon: i64, gap: i64, window: i64, fold: i64) -> vector {
+    let folds = bt_fold_count(n, initial, horizon, gap);
+    if window < 0 || fold < 0 || fold >= folds { return []; }
+    let end = initial + fold * horizon;
+    let first_test = end + gap;
+    [train_start(end, window), end, first_test, first_test + horizon]
+}
+
+fn finite(x: f64) -> bool { x - x == 0.0 }
+fn absolute(x: f64) -> f64 { if x < 0.0 { return -x; } x }
+fn valid_series(values: vector) -> bool {
+    let mut i = 0;
+    while i < len(values) {
+        if !finite(at(values, i)) { return false; }
+        i += 1;
+    }
+    true
+}
+
+// Return [scored rows, last-value MAE, training-mean MAE].
+pub fn bt_baselines(series: vector, initial: i64, horizon: i64, gap: i64, window: i64) -> vector {
+    let folds = bt_fold_count(len(series), initial, horizon, gap);
+    if folds <= 0 || window < 0 || !valid_series(series) { return []; }
+    let rows = at([folds * horizon], 0);
+    let mut last_mae = 0.0;
+    let mut mean_mae = 0.0;
+    let mut previous_start = 0;
+    let mut previous_end = 0;
+    let mut training_sum = 0.0;
+    let mut fold = 0;
+    while fold < folds {
+        let end = initial + fold * horizon;
+        let start = train_start(end, window);
+        if start >= previous_end {
+            training_sum = 0.0;
+            previous_end = start;
+        } else {
+            let mut drop = previous_start;
+            while drop < start {
+                training_sum -= at(series, drop);
+                drop += 1;
+            }
+        }
+        while previous_end < end {
+            training_sum += at(series, previous_end);
+            previous_end += 1;
+        }
+        if !finite(training_sum) { return []; }
+        previous_start = start;
+        let mean = training_sum / at([end - start], 0);
+        let last = at(series, end - 1);
+        let mut t = end + gap;
+        let test_end = t + horizon;
+        while t < test_end {
+            let actual = at(series, t);
+            last_mae += absolute(last - actual) / rows;
+            mean_mae += absolute(mean - actual) / rows;
+            t += 1;
+        }
+        fold += 1;
+    }
+    if !finite(last_mae) || !finite(mean_mae) { return []; }
+    [rows, last_mae, mean_mae]
+}
+
+// Supply one forecast per scored observation, in fold order.
+pub fn bt_score(series: vector, forecasts: vector, initial: i64, horizon: i64, gap: i64) -> vector {
+    let folds = bt_fold_count(len(series), initial, horizon, gap);
+    if folds <= 0 { return []; }
+    let count = folds * horizon;
+    if len(forecasts) != count || !valid_series(series) || !valid_series(forecasts) { return []; }
+    let first = initial + gap;
+    let rows = at([count], 0);
+    let mut mae = 0.0;
+    let mut bias = 0.0;
+    let mut i = 0;
+    while i < count {
+        let error = at(forecasts, i) - at(series, first + i);
+        mae += absolute(error) / rows;
+        bias += error / rows;
+        i += 1;
+    }
+    if !finite(mae) || !finite(bias) { return []; }
+    [rows, mae, bias]
+}
+
+fn main() {
+    let demand = [10, 20, 30, 40, 50, 60, 70, 80];
+    let baselines = bt_baselines(demand, 3, 2, 1, 2);
+    println!(at(baselines, 0));
+    println!(at(baselines, 1));
+    println!(at(baselines, 2));
+    let model = bt_score(demand, [45, 55, 65, 75], 3, 2, 1);
+    println!(at(model, 1));
+}

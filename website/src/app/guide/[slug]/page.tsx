@@ -71,6 +71,11 @@ export default async function Chapter({ params }: Props) {
                             Choose a download
                         </a>
                     )}
+                    {slug === "ai-packages" && (
+                        <a className="button" href={mainLink("/packages")}>
+                            Get the packages and ModelGate
+                        </a>
+                    )}
                     {slug === "compatibility" && (
                         <a href={mainLink("/benchmarks")}>
                             Browse performance measurements

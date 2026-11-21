@@ -11,7 +11,7 @@ export default function Download() {
             <header className="page-head">
                 <h1>Download Blyx</h1>
                 <p>
-                    Choose a Blyx 0.2.0 compiler for your machine. Each archive
+                    Choose a Blyx 0.2.1 compiler for your machine. Each archive
                     contains the standalone blyxc CLI.
                 </p>
             </header>
@@ -22,7 +22,7 @@ export default function Download() {
                         <p>{arch}</p>
                         <a
                             className="button"
-                            href={assets + "blyx-v0.2.0-" + suffix}
+                            href={assets + "blyx-v0.2.1-" + suffix}
                         >
                             Download for {os}
                         </a>
@@ -58,9 +58,9 @@ export default function Download() {
                         With Rust and a host linker installed, Cargo can build
                         the compiler from its published source package.
                     </p>
-                    <pre>cargo install --locked --version 0.2.0 blyxc</pre>
+                    <pre>cargo install --locked --version 0.2.1 blyxc</pre>
                     <div className="actions">
-                        <a href="https://crates.io/crates/blyxc/0.2.0">Compiler on crates.io</a>
+                        <a href="https://crates.io/crates/blyxc/0.2.1">Compiler on crates.io</a>
                         <a href={guideLink("installation")}>Installation guide →</a>
                     </div>
                 </section>

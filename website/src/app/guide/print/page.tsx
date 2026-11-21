@@ -6,7 +6,7 @@ export default function Print() {
         <main className="wrap prose">
             <header className="page-head">
                 <h1>The Blyx handbook</h1>
-                <p>Blyx 0.2.0 · Print edition</p>
+                <p>Blyx 0.2.1 · Print edition</p>
             </header>
             <nav aria-label="Contents">
                 <ol>

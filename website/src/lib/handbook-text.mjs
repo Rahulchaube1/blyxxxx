@@ -8,7 +8,7 @@ function block(body, language = "") {
 export function handbookText(guides, samples, full) {
     const parts = [
         "# The Blyx handbook",
-        "Blyx 0.2.0 · Released language and toolchain",
+        "Blyx 0.2.1 · Released language and toolchain",
         "Start with a complete fn main(). Run your program in the playground or use blyxc check FILE followed by blyxc run FILE. For a native executable, use blyxc build FILE with Rust and a host linker installed.",
         "[Learn Blyx](" +
             site +
@@ -17,7 +17,7 @@ export function handbookText(guides, samples, full) {
             "/play) · [Executable subset](https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/docs/executable-subset.md) · [Full handbook](" +
             docs +
             "/llms-full.txt)",
-        "The release supports synchronous functions, recursion, control flow and numeric vectors. GPU kernels, async tasks, a tensor runtime and external package installation are under development.",
+        "The release supports synchronous functions, recursion, control flow and numeric vectors. Native projects can import Git-pinned Blyx packages and read files or command-line arguments. See the [ecosystem](https://www.blyx-lang.space/packages) for published libraries. GPU kernels, async tasks and a general tensor runtime are under development.",
     ];
     let group = "";
     for (const guide of guides) {

@@ -32,7 +32,7 @@ export default function GuideIndex({ course = false }: { course?: boolean }) {
     return (
         <main className="wrap">
             <header className="page-head">
-                <div className="crumb">Blyx 0.2.0</div>
+                <div className="crumb">Blyx 0.2.1</div>
                 <h1>{course ? "Learn Blyx" : "Blyx documentation"}</h1>
                 <p>
                     New to programming? Start with a greeting you can edit in

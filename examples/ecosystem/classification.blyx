@@ -1,0 +1,53 @@
+// Single-file example from https://github.com/Rahulchaube1/blyx-classification/tree/v0.1.0
+// Rows in a confusion vector are [true positives, false positives, true negatives, false negatives].
+pub fn class_probability(score: f64) -> bool {
+    score >= 0.0 && score <= 1.0
+}
+
+pub fn class_label(value: f64) -> bool {
+    value == 0.0 || value == 1.0
+}
+
+pub fn class_positive(score: f64, threshold: f64) -> bool {
+    score >= threshold
+}
+
+pub fn class_confusion(labels: vector, scores: vector, threshold: f64) -> vector {
+    if len(labels) == 0 || len(labels) != len(scores) || !class_probability(threshold) { return []; }
+    let mut tp = 0.0;
+    let mut fp = 0.0;
+    let mut tn = 0.0;
+    let mut missed = 0.0;
+    let mut i = 0;
+    while i < len(labels) {
+        let label = at(labels, i);
+        let score = at(scores, i);
+        if !class_label(label) || !class_probability(score) { return []; }
+        if class_positive(score, threshold) {
+            if label == 1.0 { tp += 1.0; } else { fp += 1.0; }
+        } else {
+            if label == 1.0 { missed += 1.0; } else { tn += 1.0; }
+        }
+        i += 1;
+    }
+    [tp, fp, tn, missed]
+}
+
+fn ratio(numerator: f64, denominator: f64) -> f64 {
+    if denominator == 0.0 { return 0.0; }
+    numerator / denominator
+}
+
+pub fn class_precision(tp: f64, fp: f64) -> f64 { ratio(tp, tp + fp) }
+pub fn class_recall(tp: f64, missed: f64) -> f64 { ratio(tp, tp + missed) }
+pub fn class_f1(tp: f64, fp: f64, missed: f64) -> f64 { ratio(2.0 * tp, 2.0 * tp + fp + missed) }
+pub fn class_cost(fp: f64, missed: f64, fp_cost: f64, fn_cost: f64) -> f64 {
+    fp * fp_cost + missed * fn_cost
+}
+
+fn main() {
+    let table = class_confusion([1, 0, 1, 0], [0.9, 0.6, 0.4, 0.1], 0.5);
+    println!(class_precision(at(table, 0), at(table, 1)));
+    println!(class_recall(at(table, 0), at(table, 3)));
+    println!(class_cost(at(table, 1), at(table, 3), 1.0, 5.0));
+}

@@ -693,6 +693,96 @@
         }
     },
     {
+        "slug": "ai-packages",
+        "title": "Evaluate models with Blyx packages",
+        "group": "Practical projects",
+        "summary": "Compare the cost of two classifiers, check their probability forecasts, and score a ranked retrieval result. Run the comparison in CI or import the same Blyx functions into your application.",
+        "example": "package-classification",
+        "sections": [
+            {
+                "heading": "Start with a release decision",
+                "text": "You have predictions from two versions of a classifier on the same held-out observations. The current model raises one false alarm. Its replacement misses one positive. Both get three out of four right. Decide what a false alarm and a miss cost before you look at which model wins."
+            },
+            {
+                "heading": "Prepare a paired CSV",
+                "text": "Save the four rows below as predictions.csv in UTF-8. Each row must refer to the same observation for both models. The label is 0 or 1. Each prediction is an unquoted number between 0 and 1. Keep the header and column order shown. Rows can use LF or CRLF line endings.",
+                "command": "label,baseline,candidate\n1,0.9,0.4\n1,0.8,0.9\n0,0.6,0.2\n0,0.1,0.1"
+            },
+            {
+                "heading": "Run ModelGate",
+                "text": "ModelGate 0.1.1 ships as a native executable. On Apple Silicon macOS or x86-64 Linux use the Homebrew command below. On x64 Windows, extract the release ZIP from the ecosystem catalog and run .\\modelgate.exe predictions.csv --fn-cost 5 in PowerShell. A release archive also contains fixtures/improved.csv and fixtures/regression.csv.",
+                "command": "brew install rahulchaube1/blyx/modelgate\nmodelgate predictions.csv --fn-cost 5"
+            },
+            {
+                "heading": "Read the decision",
+                "text": "At the default threshold of 0.5, a score equal to the threshold counts as positive. The baseline’s one false alarm costs 1. The candidate’s missed positive costs 5. Divide by four observations to get costs per row of 0.25 and 1.25. The JSON pass field is false. You can retain the report as a CI artifact using shell output redirection.",
+                "table": {
+                    "columns": [
+                        "Exit code",
+                        "Meaning"
+                    ],
+                    "rows": [
+                        [
+                            "0",
+                            "Candidate meets the cost and Brier criteria."
+                        ],
+                        [
+                            "1",
+                            "The candidate exceeds at least one permitted limit."
+                        ],
+                        [
+                            "2",
+                            "The CSV, a value or a command option is invalid. Check the diagnostic."
+                        ],
+                        [
+                            "4",
+                            "The native host could not complete an I/O operation."
+                        ]
+                    ]
+                }
+            },
+            {
+                "heading": "Measure probability quality",
+                "text": "Brier score averages the squared difference between each probability and its binary label. Two models with identical class decisions can have different Brier scores. ModelGate accepts --brier-tolerance for the largest allowed increase in this mean. The calibration library also provides cal_bin for counts, forecast totals and outcome totals, and cal_ece for a count-weighted summary of the gaps. Compare ECE on the same data using the same bin count."
+            },
+            {
+                "heading": "Import a versioned library",
+                "text": "Install Blyx 0.2.1, Rust 1.85 or later and a platform linker for a source build. In an empty project directory, run the clone command below. It puts the release beside the entry file. For a shared project, record the commit in version control, for example as a Git submodule.",
+                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-classification.git vendor/classification"
+            },
+            {
+                "heading": "Use the library in a native program",
+                "text": "Save this code as main.blyx beside vendor and run blyxc native-run main.blyx. It prints 6, the total cost of one false alarm and one miss. To keep the executable use blyxc build main.blyx -o evaluate, or -o evaluate.exe on Windows. The editable browser program below contains the same library in one file.",
+                "command": "use vendor::classification::classification;\n\nfn main() {\n    println!(class_cost(1.0, 1.0, 1.0, 5.0));\n}"
+            },
+            {
+                "heading": "Evaluate a retriever",
+                "text": "Use the retrieval package to score an ordered list of numeric document IDs for one judged query. With results [7, 7, 9], judgments [7, 9] and k of 3, unique hits occur at ranks 1 and 3. Precision is 2/3, recall is 1, reciprocal rank is 1, and average precision is (1 + 2/3) / 2. A repeated document still uses a rank. Record which queries have judgments and average the per-query metrics over that set."
+            },
+            {
+                "heading": "Keep future data out of a time-series backtest",
+                "text": "Blyx Backtest measures forecasts in chronological folds. For demand [10, 20, 30, 40, 50, 60, 70, 80], set initial history to 3, forecast horizon to 2, gap to 1 and training window to 2. The first fold trains on 20 and 30, skips 40 and scores against 50 and 60. The next trains on 40 and 50, skips 60 and scores against 70 and 80. Across those four observations the last-value baseline has mean absolute error of 25, the training-mean baseline 30, and custom forecasts [45, 55, 65, 75] score 5. Use the same fold bounds when fitting preprocessing and model parameters.",
+                "command": "let scores = bt_baselines([10, 20, 30, 40, 50, 60, 70, 80], 3, 2, 1, 2);"
+            },
+            {
+                "heading": "Choose what to test",
+                "text": "Use held-out paired data and keep the error costs, threshold and tolerance fixed when comparing runs. Inspect the individual errors and the number of observations. The four-row fixture illustrates the decision rule. Statistical uncertainty, subgroup performance and business impact require evidence from your own evaluation."
+            }
+        ],
+        "exercise": {
+            "prompt": "In the worked program, raise the cost of a missed positive from 5 to 10. Predict the three lines of output and then run it.",
+            "hint": "Only the total cost uses that argument. The confusion counts stay the same.",
+            "answer": "Precision and recall both remain 0.5. One false alarm costs 1 and one missed positive now costs 10, so the final line is 11.",
+            "edits": [
+                [
+                    "at(table, 3), 1.0, 5.0",
+                    "at(table, 3), 1.0, 10.0"
+                ]
+            ],
+            "expected": "0.5\n0.5\n11\n"
+        }
+    },
+    {
         "slug": "installation",
         "title": "Install and verify Blyx",
         "group": "Local toolchain",
@@ -715,11 +805,11 @@
             {
                 "heading": "Install with Cargo",
                 "text": "With Rust, Cargo and a host linker installed, build the compiler from crates.io. The version flag selects the same release as this course. Cargo normally places the result in the bin directory under your Cargo home.",
-                "command": "cargo install --locked --version 0.2.0 blyxc"
+                "command": "cargo install --locked --version 0.2.1 blyxc"
             },
             {
                 "heading": "Check your installation",
-                "text": "Open a fresh terminal after a PATH change. The version command should print blyxc 0.2.0. If the shell cannot find it, check the directory from which the executable runs directly and make sure that directory appears on PATH.",
+                "text": "Open a fresh terminal after a PATH change. The version command should print blyxc 0.2.1. If the shell cannot find it, check the directory from which the executable runs directly and make sure that directory appears on PATH.",
                 "command": "blyxc --version"
             }
         ],
@@ -752,8 +842,12 @@
             },
             {
                 "heading": "Keep paths consistent",
-                "text": "If you change directory into hello, write src/main.blyx in subsequent commands. A file-not-found message is often a working-directory issue. The formatter rewrites the named file with normalized line endings. Dependency resolution and external Blyx packages are still under development.",
+                "text": "If you change directory into hello, write src/main.blyx in subsequent commands. A file-not-found message is often a working-directory issue. The formatter rewrites the named file with normalized line endings.",
                 "command": "blyxc fmt hello/src/main.blyx"
+            },
+            {
+                "heading": "Add a package to a native project",
+                "text": "Clone a tagged Blyx library beside your entry file and import its public functions with use. The native runner and native build follow these local paths. The “Evaluate models with Blyx packages” chapter builds a working example. A Git submodule or a recorded commit keeps the dependency reproducible."
             }
         ],
         "exercise": {
@@ -888,6 +982,11 @@
             {
                 "heading": "Compare the two paths",
                 "text": "Give numeric operands matching types and add explicit return types to functions that return values. The interpreter can promote mixed integer/float operations that a native build rejects. Check the executable's output using the same ordinary and boundary inputs you used for the interpreted run."
+            },
+            {
+                "heading": "Build a program with imports",
+                "text": "Native builds resolve local use paths and built-in host modules. The native runner builds the program and runs it in one step. Put program arguments after --. Use a normal build to keep an executable for repeated runs.",
+                "command": "blyxc native-run src/main.blyx"
             }
         ],
         "exercise": {
@@ -900,7 +999,7 @@
         "slug": "language-reference",
         "title": "Syntax, types and operators",
         "group": "Language reference",
-        "summary": "Look up the executable forms, operator order and value types used in Blyx 0.2.0.",
+        "summary": "Look up the executable forms, operator order and value types used in Blyx 0.2.1.",
         "example": "literal-forms",
         "sections": [
             {
@@ -1105,7 +1204,7 @@
         "sections": [
             {
                 "heading": "Command forms",
-                "text": "Pass a path to a single source file to check, run, build or fmt. Paths with spaces need the usual quoting rules of your shell.",
+                "text": "Pass the entry file to each command. Native builds and native-run also load its local imports. Quote any path containing spaces as required by your shell.",
                 "table": {
                     "columns": [
                         "Command",
@@ -1135,6 +1234,10 @@
                         [
                             "blyxc build FILE [-o PATH]",
                             "Build a native executable, optionally at PATH."
+                        ],
+                        [
+                            "blyxc native-run FILE [-- ARGS...]",
+                            "Build the native project, run it and forward the program arguments."
                         ],
                         [
                             "blyxc fmt FILE",
@@ -1188,7 +1291,7 @@
     },
     {
         "slug": "compatibility",
-        "title": "What Blyx 0.2.0 can run",
+        "title": "What Blyx 0.2.1 can run",
         "group": "Language reference",
         "summary": "Choose an execution mode and identify features that are still being developed.",
         "example": null,
@@ -1223,11 +1326,11 @@
             },
             {
                 "heading": "Supported execution",
-                "text": "The teaching examples use synchronous functions, scoped bindings, mutation, scalar arithmetic, comparisons, branching, loops, recursion, numeric vectors, and print macros. The language has its own lexer, parser and interpreter. The native backend lowers the supported subset to Rust before compiling."
+                "text": "The teaching examples use functions, local bindings, scalar arithmetic, loops, recursion, numeric vectors and print macros. Native programs can import local .blyx modules and read command-line arguments or UTF-8 files through the host library. Use native-run or build for multi-file applications."
             },
             {
                 "heading": "Features under development",
-                "text": "The released execution paths do not currently implement general module imports, external Blyx package installation, a general-purpose tensor runtime, async tasks, GPU kernels, actor scheduling or model serving. Some repository examples and design documents explore these areas. Use the tested course examples when learning the release. The current interpreter also lacks for/range loops, general collections, file input, structs and ownership checking. blyxc check validates syntax. The interpreter checks value kinds as it executes. Native builds also validate the translated types during compilation."
+                "text": "The package registry and its dependency resolver are prototypes. The published source libraries use versioned Git checkouts. The browser and CLI interpreter execute a single source buffer. GPU kernels, a general tensor runtime, asynchronous tasks and actor scheduling remain development work."
             },
             {
                 "heading": "Interpret a benchmark",

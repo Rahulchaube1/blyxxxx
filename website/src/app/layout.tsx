@@ -12,7 +12,7 @@ export const metadata: Metadata = {
         template: "%s · Blyx",
     },
     description:
-        "Write, run and build Blyx programs. Explore language guides and runnable numerical examples for Blyx 0.2.0.",
+        "Write, run and build Blyx programs. Explore language guides and runnable numerical examples for Blyx 0.2.1.",
     icons: { icon: "/blyxlogo.png" },
 };
 export default function Layout({ children }: { children: React.ReactNode }) {

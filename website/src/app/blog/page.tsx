@@ -54,7 +54,7 @@ export default async function Blog() {
                 </div>
             ) : (
                 <div className="card">
-                    <h2>Blyx 0.2.0</h2>
+                    <h2>Blyx 0.2.1</h2>
                     <p>
                         The release feed is currently unavailable. The
                         documented release remains available on GitHub.

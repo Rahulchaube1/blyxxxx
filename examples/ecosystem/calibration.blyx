@@ -1,0 +1,72 @@
+// Single-file example from https://github.com/Rahulchaube1/blyx-calibration/tree/v0.1.0
+pub fn cal_squared_error(label: f64, score: f64) -> f64 {
+    let diff = score - label;
+    diff * diff
+}
+
+fn valid(labels: vector, scores: vector) -> bool {
+    if len(labels) == 0 || len(labels) != len(scores) { return false; }
+    let mut i = 0;
+    while i < len(labels) {
+        let y = at(labels, i);
+        let p = at(scores, i);
+        if !(y == 0.0 || y == 1.0) || !(p >= 0.0 && p <= 1.0) { return false; }
+        i += 1;
+    }
+    true
+}
+
+pub fn cal_brier(labels: vector, scores: vector) -> f64 {
+    if !valid(labels, scores) { return -1.0; }
+    let mut total = 0.0;
+    let mut i = 0;
+    while i < len(labels) {
+        total += cal_squared_error(at(labels, i), at(scores, i));
+        i += 1;
+    }
+    total / at([len(labels)], 0)
+}
+
+// Return [count, sum of scores, sum of outcomes] so empty bins remain distinguishable.
+fn bin_totals(labels: vector, scores: vector, index: i64, bins: i64) -> vector {
+    let width = at([bins], 0);
+    let lo = at([index], 0) / width;
+    let hi = at([index + 1], 0) / width;
+    let mut count = 0.0;
+    let mut forecast = 0.0;
+    let mut observed = 0.0;
+    let mut i = 0;
+    while i < len(labels) {
+        let p = at(scores, i);
+        if p >= lo && (p < hi || index == bins - 1) {
+            count += 1.0; forecast += p; observed += at(labels, i);
+        }
+        i += 1;
+    }
+    [count, forecast, observed]
+}
+
+pub fn cal_bin(labels: vector, scores: vector, index: i64, bins: i64) -> vector {
+    if !valid(labels, scores) || bins < 1 || bins > 100 || index < 0 || index >= bins { return []; }
+    bin_totals(labels, scores, index, bins)
+}
+
+pub fn cal_ece(labels: vector, scores: vector, bins: i64) -> f64 {
+    if !valid(labels, scores) || bins < 1 || bins > 100 { return -1.0; }
+    let mut error = 0.0;
+    let mut i = 0;
+    while i < bins {
+        let bin = bin_totals(labels, scores, i, bins);
+        let gap = at(bin, 1) - at(bin, 2);
+        if gap < 0.0 { error -= gap; } else { error += gap; }
+        i += 1;
+    }
+    error / at([len(labels)], 0)
+}
+
+fn main() {
+    let labels = [0, 0, 1, 1];
+    let scores = [0.25, 0.25, 0.75, 0.75];
+    println!(cal_brier(labels, scores));
+    println!(cal_ece(labels, scores, 2));
+}
