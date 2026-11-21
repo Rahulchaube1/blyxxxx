@@ -570,7 +570,7 @@ button.primary {
 	gap: 14px;
 	margin-top: 14px;
 }
-@media (max-width: 900px) {
+@media (max-width: 960px) {
 	.mast-inner {
 		flex-wrap: wrap;
 		gap: 10px;
