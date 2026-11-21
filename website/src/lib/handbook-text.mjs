@@ -40,6 +40,8 @@ export function handbookText(guides, samples, full) {
         for (const section of guide.sections) {
             parts.push("#### " + section.heading, section.text);
             if (section.command) parts.push(block(section.command));
+            if (section.links)
+                parts.push(section.links.map(({ text, href }) => "[" + text + "](" + href + ")").join(" · "));
             if (section.table) {
                 const { columns, rows } = section.table;
                 const line = (cells) =>

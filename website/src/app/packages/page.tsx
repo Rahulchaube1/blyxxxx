@@ -15,6 +15,7 @@ export default function Packages() {
                 <p>Find a package for the job, try its Blyx code in your browser, or install a pinned release in your project.</p>
                 <div className="actions">
                     <a className="button" href={guideLink("training-and-monitoring")}>Train and monitor a model →</a>
+                    <a href="/examples/forecast-monitor.zip" download>Download the Blyx starter project</a>
                     <a href={guideLink("ai-packages")}>Evaluate a model release</a>
                 </div>
             </header>

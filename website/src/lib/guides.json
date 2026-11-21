@@ -829,6 +829,15 @@
                 "heading": "Add a package to a native project",
                 "text": "With Blyx 0.2.1, Rust and a host linker installed, clone the tagged release next to your entry file. The training and monitoring packages include their pinned Blyx dependencies. Save the imported program as main.blyx and run blyxc native-run main.blyx. The package catalog has the exact import, function reference, runnable example and source for every package.",
                 "command": "git clone --depth 1 --branch v0.1.1 https://github.com/Rahulchaube1/blyx-linearfit.git vendor/linearfit\n\n# First line of main.blyx\nuse vendor::linearfit::linearfit;"
+            },
+            {
+                "heading": "Run all three stages in one project",
+                "text": "The starter includes LinearFit, Conformal, ResidualWatch and their Blyx dependencies. With the native toolchain installed, extract the ZIP and run the command below in the project folder. The model predicts 21 with an interval from 19 to 23. The first incoming error gives a signal of 0. A second underprediction raises the signal to 1.",
+                "command": "blyxc native-run main.blyx",
+                "links": [
+                    { "text": "Download the starter project", "href": "https://www.blyx-lang.space/examples/forecast-monitor.zip" },
+                    { "text": "Read the source on GitHub", "href": "https://github.com/Rahulchaube1/blyxxxx/tree/blyx-main/examples/ml/forecast-monitor" }
+                ]
             }
         ],
         "exercise": {

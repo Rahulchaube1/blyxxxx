@@ -4,6 +4,7 @@ export type GuideSection = {
     heading: string;
     text: string;
     command?: string;
+    links?: { text: string; href: string }[];
     table?: { columns: string[]; rows: string[][] };
 };
 export type Guide = {

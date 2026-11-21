@@ -2,7 +2,9 @@
 
 This native Blyx program fits a line with LinearFit, calibrates an 80% prediction interval with Conformal, and uses ResidualWatch to detect sustained underprediction as outcomes arrive. The training, calibration and monitoring rows are disjoint.
 
-Install Blyx 0.2.1, Rust 1.85 or later and a host linker. From this directory, fetch the three tagged modules and run the program.
+Install Blyx 0.2.1, Rust 1.85 or later and a host linker. The [starter ZIP](https://www.blyx-lang.space/examples/forecast-monitor.zip) includes the pinned Blyx source dependencies. Extract it and run `blyxc native-run main.blyx` from the project folder.
+
+If you are using this Git checkout, fetch the three tagged modules from this directory before running the program.
 
 ```sh
 git clone --depth 1 --branch v0.1.1 https://github.com/Rahulchaube1/blyx-linearfit.git vendor/linearfit

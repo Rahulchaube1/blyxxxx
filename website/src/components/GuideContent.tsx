@@ -50,6 +50,13 @@ export default function GuideContent({
                             <code>{section.command}</code>
                         </pre>
                     )}
+                    {section.links && (
+                        <div className="actions">
+                            {section.links.map(({ text, href }) => (
+                                <a key={href} href={href}>{text}</a>
+                            ))}
+                        </div>
+                    )}
                     {section.table && (
                         <div className="table-box">
                             <table aria-label={section.heading}>
