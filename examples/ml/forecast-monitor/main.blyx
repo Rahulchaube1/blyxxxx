@@ -1,0 +1,28 @@
+use vendor::linearfit::linearfit;
+use vendor::conformal::conformal;
+use vendor::residualwatch::residualwatch;
+
+fn main() {
+    let model = lf_fit([1, 2, 3, 4], [3, 5, 7, 9], 0.0);
+
+    // These observations were held out of the fit.
+    let observed = [10, 13, 16, 15, 21];
+    let predicted = [
+        lf_predict(model, 5.0), lf_predict(model, 6.0),
+        lf_predict(model, 7.0), lf_predict(model, 8.0), lf_predict(model, 9.0)
+    ];
+    let calibrated = cf_calibrate(observed, predicted, 4, 5);
+    let reference = rw_fit(observed, predicted, 0.0);
+
+    let next = lf_predict(model, 10.0);
+    let interval = cf_interval(next, at(calibrated, 0));
+    println!(next);
+    println!(at(interval, 0));
+    println!(at(interval, 1));
+
+    // The next two outcomes both land five units above the prediction.
+    let first = rw_step(rw_monitor(), reference, 26.0, next, 0.5, 4.0);
+    let second = rw_step(first, reference, 28.0, lf_predict(model, 11.0), 0.5, 4.0);
+    println!(at(first, 2));
+    println!(at(second, 2));
+}

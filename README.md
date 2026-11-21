@@ -107,6 +107,8 @@ The LinearFit fixture learns a slope of 2 and predicts 11 at x = 5. In the Resid
 ./residualwatch fixtures/shift.csv --reference 3 --limit 3
 ```
 
+The [forecast monitoring example](examples/ml/forecast-monitor) imports LinearFit, Conformal and ResidualWatch in one Blyx application. It trains a model, reports a prediction interval and detects two consecutive forecasts that fall below the actual values.
+
 [Package catalog](https://www.blyx-lang.space/packages) · [Training and monitoring tutorial](https://doc.blyx-lang.space/guide/training-and-monitoring) · [Evaluation tutorial](https://doc.blyx-lang.space/guide/ai-packages) · [Machine-readable catalog](https://www.blyx-lang.space/packages.json) · [Contribute a package](docs/ecosystem-packages.md)
 
 ## What ships in 0.2.1
