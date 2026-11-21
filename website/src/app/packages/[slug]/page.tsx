@@ -4,7 +4,7 @@ import StructuredData from "@/components/StructuredData";
 import { notFound } from "next/navigation";
 import catalog from "@/lib/packages.json";
 import { directoryFor } from "@/lib/package-categories";
-import { guideLink, playLink, website } from "@/lib/site";
+import { guideLink, nestRegistry, playLink, website } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 export const dynamicParams = false;
@@ -56,7 +56,7 @@ export default async function Package({ params }: Props) {
                 </div>
                 <p>{p.description}</p>
                 <div className="actions">
-                    {packaged && <a href={"/nest/packages/" + slug + ".html"}>Install from Blyx Nest</a>}
+                    {packaged && <a href={nestRegistry + "/packages/" + slug + ".html"}>Install from Blyx Nest</a>}
                     {packaged && <a href="#conda">Install with Conda</a>}
                     {p.editor && <a className="button" href="#editor">Install in your editor</a>}
                     {p.projects && <a href="#projects">Try the projects</a>}

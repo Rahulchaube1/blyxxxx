@@ -2,7 +2,7 @@
 import { useHydrated } from "@/lib/useHydrated";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { bookEdition, mainLink, guideLink } from "@/lib/site";
+import { bookEdition, mainLink, guideLink, nestRegistry } from "@/lib/site";
 export default function Navbar() {
     const ready = useHydrated();
     const [open, setOpen] = useState(false);
@@ -13,7 +13,7 @@ export default function Navbar() {
         ["Examples", mainLink("/examples")],
         ["Frameworks", mainLink("/frameworks")],
         ["Libraries", mainLink("/libraries")],
-        ["Registry", mainLink("/nest")],
+        ["Registry", nestRegistry + "/"],
         ["Playground", mainLink("/play")],
         ["Download", mainLink("/download")],
         ["Community", mainLink("/community")],

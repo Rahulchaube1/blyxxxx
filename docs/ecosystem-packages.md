@@ -4,6 +4,8 @@ The [framework directory](https://www.blyx-lang.space/frameworks) lists packages
 
 ## Install source packages
 
+Use [Blyx Nest](https://nest.blyx-lang.space/) to install a native Blyx framework or library. After [installing the Nest CLI](https://nest.blyx-lang.space/install.html), run `nest add moments@0.1.0` in your project. Commit the generated `nest.lock/` directory so another developer can restore the same versions and checksums with `nest install`. Authors can submit a new release through the [registry publishing guide](https://nest.blyx-lang.space/publish.html).
+
 The [Blyx Conda channel](https://rahulchaube1.github.io/blyx-packages/) distributes each framework and library as a versioned source package. For example, run the commands below in a new project directory with Conda, Blyx 0.2.1, Rust and a host linker installed.
 
 ```sh

@@ -3,7 +3,7 @@ import { pageMetadata } from "@/lib/metadata";
 import PackageCatalog from "@/components/PackageCatalog";
 import { packageDirectories } from "@/lib/package-categories";
 import { packageDirectory } from "@/lib/package-directory";
-import { guideLink, repository, website } from "@/lib/site";
+import { guideLink, nestRegistry, repository, website } from "@/lib/site";
 
 export const metadata = pageMetadata(
     "Blyx package catalog",
@@ -18,7 +18,7 @@ export default function Packages() {
             <header className="page-head">
                 <h1>Blyx package catalog</h1>
                 <p>Choose a framework for a complete workflow or a library for functions you can use in your own code.</p>
-                <div className="actions"><a className="button" href="/nest">Browse the Blyx Nest registry</a><a href="/nest/publish.html">Publish a Blyx package</a></div>
+                <div className="actions"><a className="button" href={nestRegistry + "/"}>Browse the Blyx Nest registry</a><a href={nestRegistry + "/publish.html"}>Publish a Blyx package</a></div>
                 <a href="#install">Install packages with Conda, Homebrew or Scoop</a>
             </header>
             <nav className="grid directory-choices" aria-label="Package directories">
