@@ -180,7 +180,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-conformal",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-conformal-starter-0.1.0.zip",
                 "examplePrefix": "blyx-conformal-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-conformal",
                 "source": "https://github.com/Rahulchaube1/blyx-conformal/tree/21df5b80b1174402f042b9e526b86557139b401c/editor",
                 "sha256": "0164b500f520d1f4c0977ca7b69c251bca93ae1204cec931f2de34df8ec59a97"
             }
@@ -711,7 +711,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-bunting",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bunting-starter-0.1.0.zip",
                 "examplePrefix": "blyx-bunting-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-bunting",
                 "source": "https://github.com/Rahulchaube1/blyx-bunting/tree/438eee1d29db34edf236cab8e38fb3f387a20392/editor",
                 "sha256": "136828d76cc19bdd790295254d8980e6c89f32e52a60f92f1796a3b28355fbba"
             }
@@ -6129,7 +6129,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-cormorant",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-cormorant-starter-0.1.0.zip",
                 "examplePrefix": "blyx-cormorant-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-cormorant",
                 "source": "https://github.com/Rahulchaube1/blyx-cormorant/tree/16365b30efba463237da277032777fe2f2a76499/editor",
                 "sha256": "afffcd6172512627e2059fce61174122a60115704d37806423679a0aa0fd01d8"
             }
@@ -6273,7 +6273,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-bulbul",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bulbul-starter-0.1.0.zip",
                 "examplePrefix": "blyx-bulbul-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-bulbul",
                 "source": "https://github.com/Rahulchaube1/blyx-bulbul/tree/62cc819fd40bbf41c5694dd186ae28cf9d16f316/editor",
                 "sha256": "bf51c4a32020ea66ed3400c34ef8a66f2c30806c3eaf94e7fb42d3bd598075e3"
             }
@@ -7857,7 +7857,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-bowerbird",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-bowerbird-starter-0.1.0.zip",
                 "examplePrefix": "blyx-bowerbird-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-bowerbird",
                 "source": "https://github.com/Rahulchaube1/blyx-bowerbird/tree/9c995e3fa06b083c697ab7c337e22c55622c716c/editor",
                 "sha256": "64d21dbcb05acfe0045b86ee54a1d8189697a12eaa8b9725c22c92daaf5c4cee"
             }
@@ -8145,7 +8145,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-chaffinch",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-chaffinch-starter-0.1.0.zip",
                 "examplePrefix": "blyx-chaffinch-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-chaffinch",
                 "source": "https://github.com/Rahulchaube1/blyx-chaffinch/tree/607014e9304866f5aa827f8d64404637508863d7/editor",
                 "sha256": "340b8c6bd9aff0af70ae5146e31d53d1d195fed3a2d6091a61adae15c856b664"
             }
