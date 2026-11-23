@@ -2,6 +2,10 @@
 
 All notable changes to the **Blyx Language** extension are documented here.
 
+## 1.2.4
+
+- Show the Blyx logo beside `.blyx` files in light and dark themes that support language icons.
+
 ## 1.2.3
 
 - Expand the extension guide with a runnable example, expected output, troubleshooting, and links to the project and maintainer.

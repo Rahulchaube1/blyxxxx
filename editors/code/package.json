@@ -2,7 +2,7 @@
   "name": "blyx-language",
   "displayName": "Blyx Language",
   "description": "Run Blyx programs and see syntax diagnostics as you edit, with a bundled WebAssembly runtime.",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "publisher": "RahulChaube",
   "license": "MIT",
   "icon": "blyx.png",
@@ -43,7 +43,11 @@
         "extensions": [
           ".blyx"
         ],
-        "configuration": "./language-configuration.json"
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./blyx.png",
+          "dark": "./blyx.png"
+        }
       }
     ],
     "grammars": [
