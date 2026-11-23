@@ -28,6 +28,7 @@ export default function Footer() {
             [
                 ["About", mainLink("/about")],
                 ["Community", mainLink("/community")],
+                ["Engineering articles", mainLink("/articles")],
                 ["Release notes", mainLink("/blog")],
                 ["Roadmap", mainLink("/roadmap")],
                 ["Security", mainLink("/security")],

@@ -98,7 +98,7 @@ export default async function Package({ params }: Props) {
                         <h2>Install {p.title} in your editor</h2>
                         <p>Extension <strong>{p.editor.id}</strong> · {p.editor.version}</p>
                         {slug === "blyxtorch"
-                            ? <p>The extension includes the native CPU trainer for Windows x64, Linux x64 and Apple Silicon macOS, plus two editable training projects.</p>
+                            ? <p>The extension includes native trainers for Windows x64, Linux x64 and Apple Silicon macOS, plus two editable projects. CPU training runs offline. The optional device host can train feature models on a compatible Vulkan GPU.</p>
                             : <p>The extension includes a runnable Blyx example, function completions and the framework source. For the modular project, extract the starter, open its folder and run <code>blyxc native-run main.blyx</code> with the native toolchain installed.</p>}
                         <div className="actions">
                             {p.editor.marketplace && <a className="button" href={p.editor.marketplace}>Visual Studio Marketplace</a>}
@@ -125,7 +125,7 @@ export default async function Package({ params }: Props) {
                 {p.projects && p.editor && (
                     <section id="projects">
                         <h2>Build a project with BlyxTorch</h2>
-                        <p>Train a filter and a transformer with <code>blyxtorch layer-demo</code> in the 0.3.0 native release. The sensor sequence project trains a causal block and checks its predictions on separate streams. <a href="https://github.com/Rahulchaube1/blyxtorch/blob/v0.3.0/sequence_example.blyx">Read the sequence project</a> · <a href="https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.3.0/blyxtorch-0.3.0.vsix">Download the 0.3.0 framework VSIX</a></p>
+                        <p>Train a filter and a transformer with <code>blyxtorch layer-demo</code>. The sensor project checks a causal block on separate streams. A second tutorial fits a classifier on your own features and moves the checkpoint between CPU and GPU. <a href={p.repository + "/blob/v" + p.version + "/sequence_example.blyx"}>Read the sequence project</a> · <a href={p.repository + "/blob/v" + p.version + "/PORTABLE.md"}>Train a portable feature model</a> · <a href={p.editor.vsix}>Download the {p.editor.version} framework VSIX</a></p>
                         {p.projects.map((project) => (
                             <div key={project.id}>
                                 <h3>{project.title}</h3>
@@ -188,6 +188,7 @@ export default async function Package({ params }: Props) {
                     <p>Open the tagged source to read the implementation and examples. Include the smallest reproducible Blyx program, compiler version and expected result when reporting an issue.</p>
                     <div className="actions">
                         <a href={p.repository + "/tree/" + p.commit}>Tagged source</a>
+                        {slug === "blyxtorch" && <a href="/articles/blyxtorch-portable-training">CPU and GPU training study →</a>}
                         <a href={p.repository + "/actions"}>Build and test runs</a>
                         <a href={p.repository + "/issues"}>Package issues</a>
                         <a href={guideLink(p.guide)}>Handbook tutorial →</a>

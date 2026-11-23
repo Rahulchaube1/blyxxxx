@@ -15,7 +15,7 @@ const sections = [
     },
     {
         heading: "Train a model with BlyxTorch",
-        body: "Install BlyxTorch alongside Blyx Language to fit a sensor model or train a classifier. The extension includes native trainers, two Blyx projects and a starter workspace.",
+        body: "BlyxTorch 0.4.0 includes offline CPU training, two editable Blyx projects and an optional device host for Vulkan GPUs. Fit a classifier on your own features or train a sensor model from the starter workspace.",
         label: "BlyxTorch editor downloads and projects",
         href: "/packages/blyxtorch#editor",
     },

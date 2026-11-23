@@ -42,6 +42,7 @@ export default async function Blog() {
                     repository.
                 </p>
             </header>
+            <p className="block"><a href="/articles">Read the Blyx engineering articles →</a></p>
             {releases?.length ? (
                 <div className="grid">
                     {releases.map((r) => (

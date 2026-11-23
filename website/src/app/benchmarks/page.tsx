@@ -34,6 +34,7 @@ export default function Benchmarks() {
                 <div className="actions"><a href={repository + "/blob/blyx-main/tools/bench-ecosystem.py"}>Reproduce both workloads</a><a href="/data/workflow-benchmarks.json">All timings and environment</a></div>
             </section>
             <section id="blyxtorch" className="prose">
+                <p><a href="/articles/blyxtorch-portable-training">BlyxTorch 0.4 training and checkpoint benchmarks, including CPU and Intel GPU measurements →</a></p>
                 <h2>Score a small neural network on {blyxtorch.rows.toLocaleString("en-US")} rows</h2>
                 <p>BlyxTorch and CPU PyTorch loaded the same 17 weights, read a numerical CSV and returned the mean binary cross-entropy for a two-input, four-hidden-unit classifier. The harness checked every result. All implementations used one CPU thread on the same Windows x64 machine.</p>
                 <div className="card table-box"><table>

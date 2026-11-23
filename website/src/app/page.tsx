@@ -125,6 +125,11 @@ export default function Home() {
                         When it is ready, follow the <a href={guideLink("native-builds")}>native build guide</a> to
                         compile an executable for your machine.</p>
                 </section>
+                <section className="prose block">
+                    <h2>Engineering articles</h2>
+                    <p>What happens when the same classifier trains on a laptop CPU and GPU? See the digit images, timing data and PyTorch comparison from BlyxTorch 0.4.</p>
+                    <div className="actions"><a href="/articles/blyxtorch-portable-training">Read One checkpoint, two processors →</a><a href="/articles">All articles</a></div>
+                </section>
                 <section className="sponsor-section block" id="sponsor" aria-labelledby="sponsor-heading">
                     <div>
                         <h2 id="sponsor-heading">Support Blyx development</h2>

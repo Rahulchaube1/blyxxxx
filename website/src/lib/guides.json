@@ -863,7 +863,7 @@
         "slug": "blyxtorch",
         "title": "Train a neural network with BlyxTorch",
         "group": "Practical projects",
-        "summary": "Train an XOR classifier, inspect a real gradient, then compile a dense network for your own labels and deploy it as a standalone CPU executable.",
+        "summary": "Train a network in Blyx, fit a feature classifier on CPU or Vulkan GPU, and use a saved checkpoint from a local or hosted AI application.",
         "example": "package-blyxtorch",
         "sections": [
             {
@@ -880,7 +880,7 @@
                     },
                     {
                         "text": "Download the editable starter workspace",
-                        "href": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.2.0/blyxtorch-projects-0.2.0.zip"
+                        "href": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.4.0/blyxtorch-projects-0.4.0.zip"
                     }
                 ]
             },
@@ -891,7 +891,7 @@
                 "links": [
                     {
                         "text": "Download the native release",
-                        "href": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.3.0"
+                        "href": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.4.0"
                     },
                     {
                         "text": "Read the framework source",
@@ -1027,6 +1027,39 @@
                     {
                         "text": "Inspect the PyTorch numerical comparisons",
                         "href": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.3.0/verification/layer-parity.json"
+                    }
+                ]
+            },
+            {
+                "heading": "Train on your own features",
+                "text": "A feature head maps a fixed-width numeric row to a class or a set of continuous values. The native CPU trainer needs only the released executable. Try the six-row routing dataset and then evaluate on a separate labelled file. Use features named x0,x1,... followed by class. For multiple continuous targets, initialize with the regression option and name the target columns y0,y1,... .",
+                "command": "blyxtorch probe-init 2 3 > initial.bt\nblyxtorch probe-fit initial.bt fixtures/probe-routing.csv 40 0.2 4 > routing.bt\nblyxtorch probe-predict routing.bt 1,0",
+                "links": [
+                    {
+                        "text": "Windows PowerShell commands and CSV format",
+                        "href": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.4.0/PORTABLE.md"
+                    }
+                ]
+            },
+            {
+                "heading": "Move a checkpoint between CPU and GPU",
+                "text": "The optional IREE runtime keeps weights on a Vulkan device between SGD updates. The same checkpoint can resume on native CPU. Set BLYXTORCH_PYTHON to your optional runtime’s Python executable. An Intel UHD graphics adapter completed the published classification and two-target regression experiments. The single-TPU selector still requires verification on physical TPU hardware.",
+                "command": "python -m pip install numpy iree-base-compiler==3.14.0 iree-base-runtime==3.14.0\nblyxtorch probe-device-fit vulkan initial.bt fixtures/probe-routing.csv 40 0.2 4 > gpu.bt\nblyxtorch probe-predict gpu.bt 1,0",
+                "links": [
+                    {
+                        "text": "Read the results and reproduce the measurements",
+                        "href": "https://www.blyx-lang.space/articles/blyxtorch-portable-training"
+                    }
+                ]
+            },
+            {
+                "heading": "Call a trained classifier from a hosted AI application",
+                "text": "The Responses API and Claude client-tool definitions call a checkpoint selected by your application. Save the feature row from your own encoder, preserving its model version and normalization. The Node example runs the local classifier and returns probabilities to your application. These calls use your locally trained weights.",
+                "command": "blyxtorch probe-tool openai\nblyxtorch probe-tool claude\nblyxtorch probe-predict-file routing.bt feature-row.csv",
+                "links": [
+                    {
+                        "text": "Runnable Node tool bridge",
+                        "href": "https://github.com/Rahulchaube1/blyxtorch-verification/blob/4a4ab37aa6f966d3c8b85440d5620637bf9d88df/provider-tools.mjs"
                     }
                 ]
             }

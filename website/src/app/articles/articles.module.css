@@ -1,0 +1,32 @@
+.feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(20px, 4vw, 56px);
+    padding: clamp(20px, 4vw, 48px);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    background: var(--card);
+}
+.feature h2 { margin: 10px 0 14px; }
+.feature p + a { display: inline-block; margin-top: 20px; }
+.feature img, .figure img { display: block; width: 100%; height: auto; }
+.body { max-width: 52rem; margin: 0 auto; padding: 44px 0 72px; }
+.body header { margin: 28px 0; }
+.body h1 { max-width: 15ch; margin: 10px 0 18px; }
+.body h2 { margin: 42px 0 14px; font-size: clamp(26px, 4vw, 36px); }
+.body p { margin: 13px 0; }
+.dek { font-size: clamp(19px, 2.4vw, 24px); color: var(--muted); max-width: 58ch; }
+.byline, .body figcaption { color: var(--muted); font-size: 0.94rem; }
+.figure { margin: 26px 0; padding: clamp(12px, 2vw, 22px); border: 1px solid var(--rule); border-radius: 12px; background: #fff; }
+.figure figcaption { margin: 12px 0 0; }
+.body table { width: 100%; border-collapse: collapse; }
+.body th, .body td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--rule); }
+.body pre { overflow: auto; padding: 16px; }
+.data { overflow-x: auto; }
+.contents { display: flex; flex-wrap: wrap; gap: 8px 20px; padding: 16px 0; border-block: 1px solid var(--rule); }
+@media (max-width: 700px) {
+    .feature { grid-template-columns: 1fr; }
+    .body { padding-top: 22px; }
+    .body th, .body td { padding: 7px; }
+}

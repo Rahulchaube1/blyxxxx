@@ -9,10 +9,26 @@
             "category": "framework",
             "title": "BlyxTorch",
             "group": "Neural networks",
-            "kind": "CPU neural-network framework and CLI",
-            "description": "Train shared convolution filters, causal or bidirectional transformer blocks, sparse embeddings and dense classifiers on the CPU.",
-            "contract": "BlyxTorch 0.3.0 uses native f64 CPU layers. The convolution and transformer APIs accept runtime shapes. The specialized dense emitter supports eight affine layers and 1,024 parameters. The native layer tests train a 41,728-parameter block. Sparse embeddings allocate rows on demand. Building the new layers from source requires the Blyx compiler revision linked in the handbook.",
+            "kind": "Neural-network framework and CLI",
+            "description": "Train classifiers and multi-output regressors on CPU or Vulkan GPU. Export convolution and attention gradients and call local checkpoints from AI applications.",
+            "contract": "BlyxTorch 0.4.0 fits feature models in native f64 or exports f32 StableHLO training and inference. Intel Vulkan GPU, IREE CPU and OpenXLA CPU have been tested. The native CPU layer suite trains a 41,728-parameter transformer block. Physical TPU and distributed model training remain unverified.",
             "api": [
+                [
+                    "probe-init, probe-fit, probe-score",
+                    "Fit a classifier or multi-output regression from numeric CSV and evaluate held-out labels."
+                ],
+                [
+                    "probe-device-fit, probe-graph",
+                    "Train on a selected device or export a fixed-shape training or prediction graph."
+                ],
+                [
+                    "layer-graph conv2d-backward, layer-graph attention-backward",
+                    "Export gradients for rectangular convolution and causal or full attention."
+                ],
+                [
+                    "probe-predict-file, probe-tool",
+                    "Read a feature row from a file or expose the local classifier as an OpenAI or Anthropic client tool."
+                ],
                 [
                     "bt_conv1d, bt_conv2d",
                     "Apply shared filters to signals or images with stride and zero padding. Each backward function returns input, kernel and bias gradients."
@@ -54,10 +70,10 @@
                     "Train once and write a probability for each new feature row."
                 ]
             ],
-            "version": "0.3.0",
-            "commit": "f4759797115781dba577f74c4a7048ede11c2adb",
+            "version": "0.4.0",
+            "commit": "74e9f09e390078a95f560bff3c173f1d35cbbde3",
             "repository": "https://github.com/Rahulchaube1/blyxtorch",
-            "release": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.3.0",
+            "release": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.4.0",
             "logo": "/packages/blyxtorch.png?v=7d79e17c3d38",
             "module": "blyxtorch",
             "example": "package-blyxtorch",
@@ -72,27 +88,27 @@
             "trainedExample": "package-blyxtorch-xor",
             "editor": {
                 "id": "RahulChaube.blyxtorch",
-                "version": "0.2.1",
-                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyxtorch-0.2.1.vsix",
+                "version": "0.4.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.4.0/blyxtorch-0.4.0.vsix",
                 "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyxtorch",
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyxtorch",
-                "starter": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.2.0/blyxtorch-projects-0.2.0.zip",
+                "starter": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.4.0/blyxtorch-projects-0.4.0.zip",
                 "examplePrefix": "bt-sensor",
-                "source": "https://github.com/Rahulchaube1/blyxtorch/tree/16c7eb4f5be34147c33e7c166dbb1d48a31a4279/editor",
-                "sha256": "ae1ffee10e8898c405026df7cd22bcaa5c80c07d885b9757c8b789ed4d5ddeb8"
+                "source": "https://github.com/Rahulchaube1/blyxtorch/tree/74e9f09e390078a95f560bff3c173f1d35cbbde3/editor",
+                "sha256": "6d24b027d41784728fe4eaf9a0deb5ab8fc564fe0321b46303858686d9c4e745"
             },
             "projects": [
                 {
                     "id": "blyxtorch-sensor",
                     "title": "Calibrate a desk sensor",
                     "description": "Fit a gain and an offset from five synthetic reference readings using BlyxTorch automatic differentiation. The model predicts 18.625 and 22.375 degrees for two readings held out of training.",
-                    "source": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.2.0/projects/sensor-calibration.blyx"
+                    "source": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.4.0/projects/sensor-calibration.blyx"
                 },
                 {
                     "id": "blyxtorch-queue",
                     "title": "Predict print-queue waits",
                     "description": "Classify four new print jobs using a trained two-input network. The starter includes 16 synthetic training rows and six separate evaluation rows. With seed 7, the mean evaluation loss is about 0.00234.",
-                    "source": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.2.0/projects/queue-classifier.blyx"
+                    "source": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.4.0/projects/queue-classifier.blyx"
                 }
             ],
             "logoAlt": "A blue-crested bird with half-lidded eyes and a bright orange bill."

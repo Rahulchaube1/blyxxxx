@@ -1744,7 +1744,7 @@ Output after the change
 
 ### [Train a neural network with BlyxTorch](https://doc.blyx-lang.space/guide/blyxtorch)
 
-Train an XOR classifier, inspect a real gradient, then compile a dense network for your own labels and deploy it as a standalone CPU executable.
+Train a network in Blyx, fit a feature classifier on CPU or Vulkan GPU, and use a saved checkpoint from a local or hosted AI application.
 
 #### Learn a nonlinear decision
 
@@ -1754,7 +1754,7 @@ XOR labels the input pair (0,1) or (1,0) as positive. A single straight-line dec
 
 Install the BlyxTorch extension from your editor’s registry. It installs Blyx Language alongside the trainer. Create a file named sensor.blyx, type bt-sensor, accept the completion, and choose Blyx: Run File. Change the final sensor reading and run it again. An offline install uses the two VSIX files linked from the package page.
 
-[Editor installation and offline downloads](https://www.blyx-lang.space/packages/blyxtorch#editor) · [Download the editable starter workspace](https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.2.0/blyxtorch-projects-0.2.0.zip)
+[Editor installation and offline downloads](https://www.blyx-lang.space/packages/blyxtorch#editor) · [Download the editable starter workspace](https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.4.0/blyxtorch-projects-0.4.0.zip)
 
 #### Train the released classifier
 
@@ -1766,7 +1766,7 @@ Download and extract the matching archive. From its folder, run the three comman
 ./blyxtorch score xor.bt fixtures/xor.csv
 ```
 
-[Download the native release](https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.3.0) · [Read the framework source](https://github.com/Rahulchaube1/blyxtorch)
+[Download the native release](https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.4.0) · [Read the framework source](https://github.com/Rahulchaube1/blyxtorch)
 
 #### Read the predictions
 
@@ -1843,6 +1843,42 @@ blyxtorch transformer-plan 128 32768 128 131072 128000
 ```
 
 [Compare the timings and measurement boundaries](https://www.blyx-lang.space/benchmarks#blyxtorch) · [Inspect the PyTorch numerical comparisons](https://github.com/Rahulchaube1/blyxtorch/blob/v0.3.0/verification/layer-parity.json)
+
+#### Train on your own features
+
+A feature head maps a fixed-width numeric row to a class or a set of continuous values. The native CPU trainer needs only the released executable. Try the six-row routing dataset and then evaluate on a separate labelled file. Use features named x0,x1,... followed by class. For multiple continuous targets, initialize with the regression option and name the target columns y0,y1,... .
+
+```
+blyxtorch probe-init 2 3 > initial.bt
+blyxtorch probe-fit initial.bt fixtures/probe-routing.csv 40 0.2 4 > routing.bt
+blyxtorch probe-predict routing.bt 1,0
+```
+
+[Windows PowerShell commands and CSV format](https://github.com/Rahulchaube1/blyxtorch/blob/v0.4.0/PORTABLE.md)
+
+#### Move a checkpoint between CPU and GPU
+
+The optional IREE runtime keeps weights on a Vulkan device between SGD updates. The same checkpoint can resume on native CPU. Set BLYXTORCH_PYTHON to your optional runtime’s Python executable. An Intel UHD graphics adapter completed the published classification and two-target regression experiments. The single-TPU selector still requires verification on physical TPU hardware.
+
+```
+python -m pip install numpy iree-base-compiler==3.14.0 iree-base-runtime==3.14.0
+blyxtorch probe-device-fit vulkan initial.bt fixtures/probe-routing.csv 40 0.2 4 > gpu.bt
+blyxtorch probe-predict gpu.bt 1,0
+```
+
+[Read the results and reproduce the measurements](https://www.blyx-lang.space/articles/blyxtorch-portable-training)
+
+#### Call a trained classifier from a hosted AI application
+
+The Responses API and Claude client-tool definitions call a checkpoint selected by your application. Save the feature row from your own encoder, preserving its model version and normalization. The Node example runs the local classifier and returns probabilities to your application. These calls use your locally trained weights.
+
+```
+blyxtorch probe-tool openai
+blyxtorch probe-tool claude
+blyxtorch probe-predict-file routing.bt feature-row.csv
+```
+
+[Runnable Node tool bridge](https://github.com/Rahulchaube1/blyxtorch-verification/blob/4a4ab37aa6f966d3c8b85440d5620637bf9d88df/provider-tools.mjs)
 
 #### Worked program
 
