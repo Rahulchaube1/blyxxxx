@@ -20,10 +20,10 @@ const sections = [
         href: "/packages/blyxtorch#editor",
     },
     {
-        heading: "Install the 1.2.3 extension",
-        body: "Download the versioned VSIX from the Blyx release. Choose Extensions → Install from VSIX in desktop VS Code and select the downloaded file.",
-        label: "Download Blyx Language 1.2.3",
-        href: repository + "/releases/download/editor-v1.2.3/blyx-language-1.2.3.vsix",
+        heading: "Install the Blyx Language extension",
+        body: "Choose Extensions → Install from VSIX in desktop VS Code. Version 1.2.4 adds the Blyx bird beside .blyx files in light and dark themes that show language icons.",
+        label: "Download Blyx Language 1.2.4",
+        href: repository + "/releases/download/editor-v1.2.4/blyx-language-1.2.4.vsix",
     },
     {
         heading: "Run a file",
@@ -33,7 +33,7 @@ const sections = [
     },
     {
         heading: "Extension registries",
-        body: "Each registry displays its currently published version. Use the release download above to install 1.2.3 directly.",
+        body: "Each registry displays its currently published version. The release download above installs version 1.2.4 directly.",
         label: "Visual Studio Marketplace",
         href: "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-language",
     },

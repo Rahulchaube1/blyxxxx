@@ -125,6 +125,7 @@ export default async function Package({ params }: Props) {
                 {p.projects && p.editor && (
                     <section id="projects">
                         <h2>Build a project with BlyxTorch</h2>
+                        <p>Train a filter and a transformer with <code>blyxtorch layer-demo</code> in the 0.3.0 native release. The sensor sequence project trains a causal block and checks its predictions on separate streams. <a href="https://github.com/Rahulchaube1/blyxtorch/blob/v0.3.0/sequence_example.blyx">Read the sequence project</a> · <a href="https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.3.0/blyxtorch-0.3.0.vsix">Download the 0.3.0 framework VSIX</a></p>
                         {p.projects.map((project) => (
                             <div key={project.id}>
                                 <h3>{project.title}</h3>

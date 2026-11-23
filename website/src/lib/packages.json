@@ -10,9 +10,21 @@
             "title": "BlyxTorch",
             "group": "Neural networks",
             "kind": "CPU neural-network framework and CLI",
-            "description": "Train dense networks with SGD or Adam, inspect parameter gradients, and generate standalone Blyx models for regression or classification.",
-            "contract": "BlyxTorch 0.2.0 uses fixed-shape float64 networks on CPU. Each layer width is 1–64. A model supports up to eight affine layers and 1,024 trainable parameters. The prebuilt 2–4–1 classifier runs immediately. Generating a new executable requires Blyx 0.2.1, Rust and a host linker on the build machine.",
+            "description": "Train shared convolution filters, causal or bidirectional transformer blocks, sparse embeddings and dense classifiers on the CPU.",
+            "contract": "BlyxTorch 0.3.0 uses native f64 CPU layers. The convolution and transformer APIs accept runtime shapes. The specialized dense emitter supports eight affine layers and 1,024 parameters. The native layer tests train a 41,728-parameter block. Sparse embeddings allocate rows on demand. Building the new layers from source requires the Blyx compiler revision linked in the handbook.",
             "api": [
+                [
+                    "bt_conv1d, bt_conv2d",
+                    "Apply shared filters to signals or images with stride and zero padding. Each backward function returns input, kernel and bias gradients."
+                ],
+                [
+                    "bt_transformer, bt_transformer_backward",
+                    "Train a multi-head block with layer normalization, feed-forward layers and optional causal masking."
+                ],
+                [
+                    "embedding-init, embedding-step, embedding-get",
+                    "Initialize a sparse embedding table, update one row by exact integer ID and reload it from a checkpoint."
+                ],
                 [
                     "bt_dual(value, tangent), bt_square(v)",
                     "Differentiate a scalar expression in the portable library. The result holds its value and directional derivative."
@@ -42,10 +54,10 @@
                     "Train once and write a probability for each new feature row."
                 ]
             ],
-            "version": "0.2.0",
-            "commit": "6b67ab026a5dae70f0894dc327dfe0364e18c135",
+            "version": "0.3.0",
+            "commit": "f4759797115781dba577f74c4a7048ede11c2adb",
             "repository": "https://github.com/Rahulchaube1/blyxtorch",
-            "release": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.2.0",
+            "release": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.3.0",
             "logo": "/packages/blyxtorch.png?v=7d79e17c3d38",
             "module": "blyxtorch",
             "example": "package-blyxtorch",

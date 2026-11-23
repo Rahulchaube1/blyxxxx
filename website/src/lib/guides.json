@@ -891,7 +891,7 @@
                 "links": [
                     {
                         "text": "Download the native release",
-                        "href": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.2.0"
+                        "href": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.3.0"
                     },
                     {
                         "text": "Read the framework source",
@@ -1001,8 +1001,24 @@
                 ]
             },
             {
-                "heading": "Choose an appropriate workload",
-                "text": "BlyxTorch 0.2.0 runs fixed-shape float64 networks on CPU. It supports up to eight affine layers and 1,024 parameters. The published comparison covers five small networks, CPU PyTorch, and a separate CSV-scoring benchmark. GPU execution, convolution, transformer training and arbitrary-rank tensors are outside this release.",
+                "heading": "Train a convolution or a transformer",
+                "text": "A convolution shares a filter across input positions. A causal transformer combines information from the current token and earlier ones. Run the native layer demo to train both. In the sensor example, a two-head block learns the running mean from 64 synthetic streams. Its mean squared error on 16 separate streams falls from 0.907813 to 0.005154. The CPU reference tests compare both convolution layouts and both attention masks with PyTorch.",
+                "command": "blyxtorch layer-demo",
+                "links": [
+                    {
+                        "text": "Read the layer API and compiler installation instructions",
+                        "href": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.3.0/LAYERS.md"
+                    },
+                    {
+                        "text": "Read and run the causal sensor example",
+                        "href": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.3.0/sequence_example.blyx"
+                    }
+                ]
+            },
+            {
+                "heading": "Choose a model size",
+                "text": "Native layer tests train a 41,728-parameter dense CPU block. Dense tensors must fit in memory. Sparse embeddings store only the rows that receive updates. A checkpoint test addresses over 36 quadrillion possible weights and stores eight learned values. The transformer-plan command estimates dense weight storage for a chosen depth, width, head count, feed-forward width and vocabulary. Training also needs gradients, activations and optimizer state.",
+                "command": "blyxtorch transformer-plan 128 32768 128 131072 128000",
                 "links": [
                     {
                         "text": "Compare the timings and measurement boundaries",
@@ -1010,7 +1026,7 @@
                     },
                     {
                         "text": "Inspect the PyTorch numerical comparisons",
-                        "href": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.1.0/verification/parity.json"
+                        "href": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.3.0/verification/layer-parity.json"
                     }
                 ]
             }
