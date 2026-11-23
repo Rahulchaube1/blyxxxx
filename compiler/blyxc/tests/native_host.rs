@@ -3,6 +3,38 @@ use std::{fs, path::Path, process::Command};
 const DRIVER: &str = env!("CARGO_BIN_EXE_blyxc");
 
 #[test]
+fn numeric_buffers_preserve_aliases_and_validate_indices() {
+    let dir = tempfile::tempdir().unwrap();
+    let path = source(
+        dir.path(),
+        "buffer.blyx",
+        r#"
+        use std::buffer;
+        use std::cli;
+        fn main() {
+            let mut x = buffer_fill(4, 2.0);
+            let before = x;
+            x = buffer_set(x, 2, at(x,0) + 3.0);
+            let independent = buffer_set(before, 1, 8.0);
+            println!(sum(x)); println!(sum(before)); println!(sum(independent));
+            if args_len(cli_args()) > 0 { x = buffer_set(x,4,0.0); }
+        }"#,
+    );
+    let exe = dir.path().join(format!("buffer{}", std::env::consts::EXE_SUFFIX));
+    let out = Command::new(DRIVER).arg("build").arg(path).arg("-o").arg(&exe).output().unwrap();
+    assert!(out.status.success(), "{}", String::from_utf8_lossy(&out.stderr));
+    let run = Command::new(&exe).output().unwrap();
+    assert!(run.status.success());
+    assert_eq!(
+        String::from_utf8(run.stdout).unwrap().lines().collect::<Vec<_>>(),
+        ["11", "8", "14"]
+    );
+    let bad = Command::new(exe).arg("bounds").output().unwrap();
+    assert_eq!(bad.status.code(), Some(4));
+    assert!(String::from_utf8_lossy(&bad.stderr).contains("buffer index out of bounds"));
+}
+
+#[test]
 fn native_text_reads_numeric_rows_without_losing_empty_fields() {
     let dir = tempfile::tempdir().unwrap();
     let path = source(

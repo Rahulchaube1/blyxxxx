@@ -49,6 +49,17 @@ struct Lowerer<'a> {
     imports: HashSet<&'a str>,
 }
 
+// A call can read a caller's variables, but cannot rebind them. Blocks can.
+fn reads_only(e: &Expr) -> bool {
+    match e {
+        Expr::Ident(..) | Expr::Literal(..) => true,
+        Expr::ArrayLit(xs, _) | Expr::Call(_, xs, _) => xs.iter().all(reads_only),
+        Expr::Neg(x, _) | Expr::Unary(_, x, _) => reads_only(x),
+        Expr::Binary(_, x, y, _) => reads_only(x) && reads_only(y),
+        _ => false,
+    }
+}
+
 impl Lowerer<'_> {
     fn block(&self, block: &Block) -> Lowered {
         let mut code = String::from("{\n");
@@ -117,6 +128,24 @@ impl Lowerer<'_> {
                 let Expr::Ident(n, _) = target.as_ref() else {
                     return Err("assignment requires a variable".into());
                 };
+                // Keep the current allocation for v = buffer_set(v,i,value).
+                // Evaluate i and value before taking the mutable borrow of v.
+                if let (Expr::Assign { .. }, Expr::Call(callee, args, _)) = (e, value.as_ref()) {
+                    if matches!(callee.as_ref(), Expr::Ident(f, _) if f == "buffer_set")
+                        && !self.functions.contains_key("buffer_set")
+                        && self.imports.contains("std::buffer")
+                    {
+                        if let [Expr::Ident(source, _), i, v] = args.as_slice() {
+                            if source == n && reads_only(i) && reads_only(v) {
+                                return Ok(format!(
+                                    "{{let i={}; let value={}; buffer_write(&mut v_{n},i,value);}}",
+                                    self.expr(i)?,
+                                    self.expr(v)?
+                                ));
+                            }
+                        }
+                    }
+                }
                 let value = self.expr(value)?;
                 match e {
                     Expr::AssignOp { op, .. } => format!(
@@ -181,6 +210,7 @@ fn host_module(name: &str) -> Option<&'static str> {
         | "text_lines" | "text_split" | "text_trim" | "text_is_number" | "text_number"
         | "int_text" => "std::text",
         "path_join" | "is_file" | "read_text" => "std::fs",
+        "buffer_fill" | "buffer_set" => "std::buffer",
         _ => return None,
     })
 }
@@ -227,7 +257,12 @@ impl ModuleGraph {
                     }
                     functions.push(f);
                 }
-                Item::Use(u) if matches!(u.path.as_str(), "std::cli" | "std::fs" | "std::text") => {
+                Item::Use(u)
+                    if matches!(
+                        u.path.as_str(),
+                        "std::cli" | "std::fs" | "std::text" | "std::buffer"
+                    ) =>
+                {
                     self.uses_host = true;
                     imports.insert(u.path.as_str());
                 }

@@ -5,6 +5,22 @@ use std::process::Command;
 use std::rc::Rc;
 
 type ArgList = Rc<Vec<OsString>>;
+fn buffer_fill(n: i64, value: f64) -> Vector {
+    let n = usize::try_from(n).unwrap_or_else(|_| fail("invalid buffer length"));
+    let mut data = Vec::new();
+    data.try_reserve_exact(n).unwrap_or_else(|_| fail("buffer allocation failed"));
+    data.resize(n, value);
+    data.into()
+}
+fn buffer_write(data: &mut Vector, i: i64, value: f64) {
+    let i = usize::try_from(i).ok().filter(|&i| i < data.len())
+        .unwrap_or_else(|| fail("buffer index out of bounds"));
+    Rc::make_mut(data)[i] = value;
+}
+fn buffer_set(mut data: Vector, i: i64, value: f64) -> Vector {
+    buffer_write(&mut data, i, value);
+    data
+}
 fn cli_args() -> ArgList {
     Rc::new(std::env::args_os().skip(1).collect())
 }

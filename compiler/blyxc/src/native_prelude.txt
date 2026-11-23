@@ -1,5 +1,5 @@
 // Runtime operations linked into a generated Blyx executable.
-type Vector = std::rc::Rc<[f64]>;
+type Vector = std::rc::Rc<Vec<f64>>;
 trait Number { fn numeric(self) -> f64; }
 impl Number for i64 { fn numeric(self) -> f64 { self as f64 } }
 impl Number for f64 { fn numeric(self) -> f64 { self } }
