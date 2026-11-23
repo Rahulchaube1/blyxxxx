@@ -1117,7 +1117,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-heron",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-heron-starter-0.1.0.zip",
                 "examplePrefix": "blyx-heron-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-heron",
                 "source": "https://github.com/Rahulchaube1/blyx-heron/tree/89736c2d2a8e21d42abb6a84de4a09dbd471cd85/editor",
                 "sha256": "0453a8d4dac1561ae6442182280f2736343f55f9bfca50538ea3eaf981f1f18b"
             }
@@ -1549,7 +1549,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-ibis",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-ibis-starter-0.1.0.zip",
                 "examplePrefix": "blyx-ibis-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-ibis",
                 "source": "https://github.com/Rahulchaube1/blyx-ibis/tree/6a2fb72dce50cf6312b7b93df0e48d0ed022bc1d/editor",
                 "sha256": "ad7d40f36899922752a13ea550319d25d1e29a999e8f920060a56016444e2063"
             }
@@ -3709,7 +3709,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-fulmar",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-fulmar-starter-0.1.0.zip",
                 "examplePrefix": "blyx-fulmar-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-fulmar",
                 "source": "https://github.com/Rahulchaube1/blyx-fulmar/tree/ecf9ce10fb8c6141ea1507e7b0242cd4244ce63f/editor",
                 "sha256": "2ef75b54f3fa452e3e69de66cd7e5bc0d6c75acaaa226e8f9c23e637a6692d4a"
             }
@@ -4429,7 +4429,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-harrier",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-harrier-starter-0.1.0.zip",
                 "examplePrefix": "blyx-harrier-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-harrier",
                 "source": "https://github.com/Rahulchaube1/blyx-harrier/tree/d4cf6e8d128e9626c39bd4c413dcada6e28070b2/editor",
                 "sha256": "1a37bd21026182f8436727253c4f1217be6d4039a1f5e26e5fa0ed058c4694ad"
             }
@@ -5725,7 +5725,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-grebe",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-grebe-starter-0.1.0.zip",
                 "examplePrefix": "blyx-grebe-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-grebe",
                 "source": "https://github.com/Rahulchaube1/blyx-grebe/tree/91ea243ad5ee0f8092107f3e3f78289e75005f00/editor",
                 "sha256": "a01bfd2ebd69b1cd1b9fbaac641ab0849cf00096244bb63f7faf971d73892fa0"
             }
@@ -6877,7 +6877,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-hoopoe",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-hoopoe-starter-0.1.0.zip",
                 "examplePrefix": "blyx-hoopoe-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-hoopoe",
                 "source": "https://github.com/Rahulchaube1/blyx-hoopoe/tree/2c260c53ca339394b24e4f6a187ec6f39b7bf818/editor",
                 "sha256": "b774e767b8ea0880afdde3c24aec12c37d10b853a7a1c4dbf658f2f867bb2d99"
             }
