@@ -1,4 +1,4 @@
-"""Redraw the article figures from measurements.json with Matplotlib."""
+"""Redraw the article figures from measurements.json and worker-measurements.json."""
 import json
 from pathlib import Path
 import matplotlib
@@ -60,3 +60,25 @@ ax.set_xticks(xs,list(states));ax.set_xlabel("Worker count");ax.set_ylabel("Mode
 ax.set_ylim(0,300);ax.grid(axis="y",color=grid,linewidth=.8);ax.set_axisbelow(True)
 ax.set_title("A capacity estimate for 2⁴¹ parameters",pad=13)
 finish(fig,"worker-memory")
+
+study = json.loads((base / "worker-measurements.json").read_bytes())
+fig, ax = plt.subplots(figsize=(8.4, 4.3), layout="constrained")
+epochs = [0, study["restart_after_epoch"], study["epochs"]]
+errors = [study["training_mse_before"], study["training_mse_at_checkpoint"], study["training_mse_after"]]
+ax.set_yscale("log")
+ax.plot(epochs, errors, color=teal, marker="o", lw=2.5, ms=7)
+ax.axvline(epochs[1], color=copper, ls="--", lw=1.5, zorder=0)
+for epoch, error, label in zip(epochs, errors, ["Zero weights", "Weights saved to disk", "Restored and trained"]):
+    align = "right" if epoch == 8 else "left"
+    offset = (-8, -8) if epoch == 8 else (8, 9)
+    ax.annotate(label, (epoch, error), xytext=offset, textcoords="offset points",
+                ha=align, va="top" if epoch == 8 else "bottom", fontsize=10, color=ink)
+ax.set_xticks(epochs)
+ax.set_xlim(-.3, 8.3)
+ax.set_ylim(1.5e-6, 1.7)
+ax.set_xlabel("Training epochs")
+ax.set_ylabel("Training mean squared error (log scale)")
+ax.grid(axis="y", color=grid, linewidth=.8)
+ax.set_axisbelow(True)
+ax.set_title("A checkpoint halfway through a million-weight run", pad=13)
+finish(fig, "worker-restart")

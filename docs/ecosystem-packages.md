@@ -15,7 +15,9 @@ blyxc native-run ./blyx-env/share/blyx/moments/main.blyx
 
 Moments prints 3, 12 and 2 on separate lines. The [full collection release](https://github.com/Rahulchaube1/blyx-packages/releases) includes the source projects and SHA-256 checksums. Its [installation guide](https://github.com/Rahulchaube1/blyx-packages#install-the-collection) covers Homebrew on macOS and Linux, and Scoop on Windows. The JSON catalog includes the verified Conda channel, package name, version and build for matching source revisions.
 
-## Use the workflow collection
+For a package with a matching release in the full collection, the JSON catalog's `sourceCollection` field gives the current ZIP and that project's directory. Extract the project, run its `main.blyx`, or copy its `vendor` directory into your application.
+
+## Use the original 0.1.0 workflow collection
 
 The [collection release](https://github.com/Rahulchaube1/blyxxxx/releases/tag/ecosystem-v0.1.0) includes 51 ready-to-run commands for Windows x64, Linux x64 and Apple Silicon macOS. Download the ZIP for your operating system, verify it against the release’s `SHA256SUMS` and extract it. In PowerShell, run `.\bin\warbler.exe --help`. On Linux or macOS, run `./bin/warbler --help`. Running any command without arguments prints its example result.
 

@@ -1,4 +1,4 @@
-import { condaChannel, distributionRepository, sourceCollection } from "@/lib/source-channel";
+import { condaChannel, distributionRepository, sourceCollection, sourceCollectionArchive } from "@/lib/source-channel";
 import { pageMetadata } from "@/lib/metadata";
 import PackageCatalog from "@/components/PackageCatalog";
 import { packageDirectories } from "@/lib/package-categories";
@@ -41,14 +41,15 @@ export default function Packages() {
                 <p>For the full source collection, use <code>brew install rahulchaube1/blyx/blyx-packages</code> on macOS or Linux. On Windows, add the Blyx bucket with <code>scoop bucket add blyx https://github.com/Rahulchaube1/scoop-blyx</code> and run <code>scoop install blyx/blyx-packages</code>.</p>
                 <div className="actions">
                     <a href={condaChannel + "/"}>Conda channel</a>
-                    <a href={sourceCollection}>Download the full source ZIP and checksums</a>
+                    <a href={sourceCollectionArchive}>Download all {items.length} source projects</a>
+                    <a href={sourceCollection}>Collection release and checksums</a>
                     <a href={distributionRepository + "#install-the-collection"}>Homebrew and Scoop examples</a>
                 </div>
             </section>
             <section className="prose block">
                 <h2>Downloads and tutorials</h2>
                 <div className="actions">
-                    <a href="/downloads/blyx-ecosystem-source.zip" download>Download 51 frameworks and 102 libraries</a>
+                    <a href="/articles/training-in-factors">Train and restore a sharded model</a>
                     <a className="button" href={guideLink("training-and-monitoring")}>Train and monitor a model →</a>
                     <a href="/examples/forecast-monitor.zip" download>Download the Blyx starter project</a>
                     <a href="/packages/blyxtorch">Train a neural network with BlyxTorch</a>

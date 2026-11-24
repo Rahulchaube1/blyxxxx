@@ -1,0 +1,20 @@
+{
+  "addressable_parameters": 2199023255552,
+  "individually_updated_weights": 1048576,
+  "coordinates_per_shard": 524288,
+  "first_coordinate_of_shards": [
+    0,
+    2199022731264
+  ],
+  "cpu_processes_per_phase": 2,
+  "worker_launches": 6,
+  "epochs": 8,
+  "restart_after_epoch": 4,
+  "checkpoint_payload": "one round-trip decimal per FP64 weight",
+  "restart_byte_identical": true,
+  "max_absolute_weight_error": 0.0,
+  "training_mse_before": 0.33356267982769816,
+  "training_mse_at_checkpoint": 0.001302979218076946,
+  "training_mse_after": 5.08976257061307e-06,
+  "numpy_version": "2.2.6"
+}

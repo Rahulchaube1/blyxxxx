@@ -1,4 +1,4 @@
-import { condaSource } from "@/lib/source-channel";
+import { condaSource, sourceCollection } from "@/lib/source-channel";
 import { pageMetadata } from "@/lib/metadata";
 import StructuredData from "@/components/StructuredData";
 import { notFound } from "next/navigation";
@@ -132,7 +132,7 @@ export default async function Package({ params }: Props) {
                             {p.collection.libraries.length
                                 ? p.collection.libraries.map((lib) => <a key={lib.slug} href={"/packages/" + lib.slug}>{lib.title}</a>)
                                 : <a href={"/packages/" + p.collection.family}>{p.collection.familyTitle}</a>}
-                            <a href="https://github.com/Rahulchaube1/blyx-packages/releases/latest">Download the source collection</a>
+                            <a href={sourceCollection}>Download the source collection</a>
                         </div>
                     </section>
                 )}

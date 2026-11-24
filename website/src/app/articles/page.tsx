@@ -14,7 +14,7 @@ export default function Articles() {
             <div>
                 <p className={styles.byline}><time dateTime="2026-11-24">24 November 2026</time> · LinearFit and BlyxTorch</p>
                 <h2><a href="/articles/training-in-factors">A matrix with 2.2 trillion coefficients</a></h2>
-                <p>Fit four feature pairs on a CPU, inspect the implied matrix and time two ways to differentiate a quantum circuit. Includes the code, raw data and three infrastructure checks.</p>
+                <p>Fit a matrix from four feature pairs, restart a million-weight training run in two CPU processes, and compare two ways to differentiate the same quantum circuit.</p>
                 <a href="/articles/training-in-factors">Read the experiment →</a>
             </div>
             <img src="/articles/training-in-factors/factor-storage.png" alt="Storage used by four pairs of input vectors compared with a full matrix" />

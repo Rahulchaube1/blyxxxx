@@ -2,6 +2,7 @@ import PackageCatalog from "./PackageCatalog";
 import { directoryFor, packageDirectories, type PackageCategory } from "@/lib/package-categories";
 import { packageDirectory } from "@/lib/package-directory";
 import { repository } from "@/lib/site";
+import { sourceCollectionArchive } from "@/lib/source-channel";
 
 export default function PackageDirectory({ category }: { category: PackageCategory }) {
     const directory = directoryFor(category);
@@ -13,11 +14,11 @@ export default function PackageDirectory({ category }: { category: PackageCatego
                 <p>{directory.description}</p>
                 <div className="actions">
                     {category === "framework"
-                        ? <a href={repository + "/releases/tag/ecosystem-v0.1.0"}>Download 51 native workflow CLIs</a>
+                        ? <a href={repository + "/releases/tag/ecosystem-v0.1.0"}>Original 51 workflow CLIs (v0.1.0)</a>
                         : <a href="/packages/framesignal#import">See how to import a library</a>}
                     <a href="/packages#install">Package manager installation</a>
                     <a href={directory.href + "/logos"}>Browse {category} logos</a>
-                    <a href="/downloads/blyx-ecosystem-source.zip" download>Download the workflow collection source</a>
+                    <a href={sourceCollectionArchive}>Download the current framework and library sources</a>
                 </div>
             </header>
             <nav className="directory-switch" aria-label="Package directories">

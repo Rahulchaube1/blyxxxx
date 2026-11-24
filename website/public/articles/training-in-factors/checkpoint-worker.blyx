@@ -1,0 +1,52 @@
+use std::cli;
+use std::fs;
+use std::text;
+use std::buffer;
+use vendor::blyxtorch::tensor_ops;
+use vendor::kinglet::checkpoint_ranges;
+
+fn column(path: str) -> vector {
+    let lines = text_lines(read_text(path));
+    let mut values = buffer_fill(args_len(lines),0.0);
+    let mut i = 0;
+    while i < args_len(lines) {
+        values = buffer_set(values,i,text_number(args_at(lines,i)));
+        i += 1;
+    }
+    values
+}
+
+fn main() {
+    let args = cli_args();
+    bt_require(args_len(args) == 4,"Usage: worker low|high targets.txt initial.txt|- 4|8");
+    let side = args_at(args,0);
+    bt_require(side == "low" || side == "high","Unknown shard");
+    let targets = column(args_at(args,1));
+    let count = len(targets);
+    let total = 2199023255552;
+    bt_require(count > 0 && count <= total/2 && total%count == 0,"Invalid shard width");
+    let mut first = 0;
+    if side == "high" { first = total-count; }
+    bt_require(kinglet_checkpoint_range(total,8,count,first,count,0,1) == first/count,"Invalid shard index");
+    bt_require(kinglet_checkpoint_range(total,8,count,first,count,0,3) == 8*count,"Invalid shard size");
+    let mut weights = buffer_fill(count,0.0);
+    if args_at(args,2) != "-" { weights = column(args_at(args,2)); }
+    bt_require(len(weights) == count,"Checkpoint width differs from targets");
+    let steps = args_at(args,3);
+    bt_require(steps == "4" || steps == "8","Expected four or eight updates");
+    let mut epochs = 4;
+    if steps == "8" { epochs = 8; }
+    let mut e = 0;
+    while e < epochs {
+        let mut gradient = buffer_fill(count,0.0);
+        let mut i = 0;
+        while i < count {
+            gradient = buffer_set(gradient,i,at(weights,i)-at(targets,i));
+            i += 1;
+        }
+        weights = bt_sgd_step(weights,gradient,0.5);
+        e += 1;
+    }
+    let mut i = 0;
+    while i < count { println!(at(weights,i)); i += 1; }
+}
