@@ -162,7 +162,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-linearfit",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-linearfit-starter-0.1.0.zip",
                 "examplePrefix": "blyx-linearfit-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-linearfit",
                 "source": "https://github.com/Rahulchaube1/blyx-linearfit/tree/8c3a70e2004e71b94bc0a8a2a86967e0bd6cc1c7/editor",
                 "sha256": "c7ca2bdcdef01877a311e9c03ef939f5d16e49bb005186399d6c6decd89252af"
             }
@@ -1043,7 +1043,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-kestrel",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-kestrel-starter-0.1.0.zip",
                 "examplePrefix": "blyx-kestrel-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-kestrel",
                 "source": "https://github.com/Rahulchaube1/blyx-kestrel/tree/d72fd9dd2dc65dfecd813c5cd135580fb7d1478d/editor",
                 "sha256": "6ade650f3cf7ed7f7797a66a07d4325ef5feadfca5761cd81d48bdffcfcddd29"
             }
@@ -2413,7 +2413,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-linnet",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-linnet-starter-0.1.0.zip",
                 "examplePrefix": "blyx-linnet-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-linnet",
                 "source": "https://github.com/Rahulchaube1/blyx-linnet/tree/5ecffbc810989ef3b389717a0ad4b2be9a848360/editor",
                 "sha256": "94cdd92a658cc6ef1ede0df74d506e44c009fd62137ba436532105cb2daaeaca"
             }
@@ -4141,7 +4141,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-kinglet",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-kinglet-starter-0.1.0.zip",
                 "examplePrefix": "blyx-kinglet-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-kinglet",
                 "source": "https://github.com/Rahulchaube1/blyx-kinglet/tree/f81c1371f5e083ec3937ed35e8e4e5b7530700eb/editor",
                 "sha256": "cb064ccc04bf61a302cf54dd2322a9d30d26deaeff9fcbe4ccdfc5e44a68a55c"
             }
@@ -4717,7 +4717,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-jacana",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-jacana-starter-0.1.0.zip",
                 "examplePrefix": "blyx-jacana-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-jacana",
                 "source": "https://github.com/Rahulchaube1/blyx-jacana/tree/a15755d19ba1336efdc28edead2484c8709a3873/editor",
                 "sha256": "0c7f4b6e2131935547303a770292a0fdbb67fe2e8faea3f84bff71399c7e52a5"
             }
@@ -6733,7 +6733,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-lapwing",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-lapwing-starter-0.1.0.zip",
                 "examplePrefix": "blyx-lapwing-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-lapwing",
                 "source": "https://github.com/Rahulchaube1/blyx-lapwing/tree/7a83559e8306e1ca991eaad0f506de311648199b/editor",
                 "sha256": "4eb9194b06ea8220deb8f322bfffbc3674d23bf8545df49b9a008cae6ef7508d"
             }
