@@ -1,5 +1,5 @@
 {
-  "release": "2026.11.22",
+  "release": "2026.11.24",
   "packages": {
     "ackprefix": {
       "name": "blyx-ackprefix",
@@ -21,9 +21,9 @@
     },
     "albatross": {
       "name": "blyx-albatross",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "build": "0",
-      "commit": "b2387f24eed18a45ba049ce68f27b62aaa34b491"
+      "commit": "c3f9f57832a089744ffa5cce383b5876232f4385"
     },
     "allowfields": {
       "name": "blyx-allowfields",
@@ -117,9 +117,9 @@
     },
     "blyxtorch": {
       "name": "blyxtorch",
-      "version": "0.2.0",
+      "version": "0.5.0",
       "build": "0",
-      "commit": "6b67ab026a5dae70f0894dc327dfe0364e18c135"
+      "commit": "04c2e047c14315e52573ff054770fe5adaa7c1ba"
     },
     "bowerbird": {
       "name": "blyx-bowerbird",
@@ -183,9 +183,9 @@
     },
     "chaffinch": {
       "name": "blyx-chaffinch",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "build": "0",
-      "commit": "76d2d9cdad9812cedce6e5ef474a097c5d31dc71"
+      "commit": "fb83b7dbd6be1c180d4a335c3c1d319cf9162103"
     },
     "chunkspan": {
       "name": "blyx-chunkspan",
@@ -489,9 +489,9 @@
     },
     "kinglet": {
       "name": "blyx-kinglet",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "build": "0",
-      "commit": "3425d588518e80673bab51e21bc1adee6d2a0962"
+      "commit": "01bcffbec33c84119f9664eb2d40351bda5e31e9"
     },
     "lapwing": {
       "name": "blyx-lapwing",
@@ -513,9 +513,9 @@
     },
     "linearfit": {
       "name": "blyx-linearfit",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "build": "0",
-      "commit": "6a937457b27d8adf5601025e6244474a1be273e5"
+      "commit": "bf37a21028dc738b7953d82a7e9d32a3bebb6f84"
     },
     "linefit": {
       "name": "blyx-linefit",
