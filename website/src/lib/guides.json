@@ -844,6 +844,25 @@
                         "href": "https://github.com/Rahulchaube1/blyxxxx/tree/blyx-main/examples/ml/forecast-monitor"
                     }
                 ]
+            },
+            {
+                "heading": "Bilinear regression on paired features",
+                "text": "One training row holds a target and two dense feature vectors. A prediction is xᵀWz. Starting at zero, each gradient update adds a scalar multiple of that row’s outer product to W. LinearFit stores the left and right features, their product Gram matrix and one coefficient per row. It performs the same ordered squared-error SGD in that basis. Individual weights and held-out predictions are available without materializing W. Training uses O(n²) Gram storage for n examples and O(n(d+e)) feature storage for widths d and e. The fitted matrix has rank at most n. To resume, keep the factors and row order identical. Coefficient files contain one comma-separated line of doubles. This method applies to separable feature pairs and a linear prediction rule.",
+                "command": "linearfit pair-fit fixtures/pairs.txt 12 0.1 > coefficients.csv\nlinearfit pair-weight fixtures/pairs.txt coefficients.csv 0 1\nlinearfit pair-predict fixtures/pairs.txt coefficients.csv 1,0 0,1\npair-study factors 21",
+                "links": [
+                    {
+                        "text": "LinearFit native downloads",
+                        "href": "https://github.com/Rahulchaube1/blyx-linearfit/releases/tag/v0.2.0"
+                    },
+                    {
+                        "text": "Input formats, compiler revision and API example",
+                        "href": "https://github.com/Rahulchaube1/blyx-linearfit/blob/v0.2.0/SCALE.md"
+                    },
+                    {
+                        "text": "Read the experiment and download measurements",
+                        "href": "https://www.blyx-lang.space/articles/training-in-factors"
+                    }
+                ]
             }
         ],
         "exercise": {
@@ -1060,6 +1079,25 @@
                     {
                         "text": "Runnable Node tool bridge",
                         "href": "https://github.com/Rahulchaube1/blyxtorch-verification/blob/4a4ab37aa6f966d3c8b85440d5620637bf9d88df/provider-tools.mjs"
+                    }
+                ]
+            },
+            {
+                "heading": "Classical simulation of trainable circuits",
+                "text": "Each layer rotates every qubit about Y, then applies an ascending chain of nearest-neighbour CNOT gates. Angles are in radians and qubit zero is the least significant bit. The readout is the expectation of Pauli Z on one selected qubit. An adjoint sweep recovers intermediate states by reversing the gates and computes one derivative per angle. Training minimizes half the squared difference between the readout and a target in [−1, 1]. The CPU simulator accepts 1 through 16 qubits, positive depth and finite angles up to one million radians in magnitude. Each state vector contains 2^q real doubles. OpenQASM 3 export emits gates and a final measurement for an external backend. Physical hardware, noise models and arbitrary gate sets fall outside this implementation.",
+                "command": "blyxtorch q-expect 2 1 0.3,-0.7,0.2,0.6\nblyxtorch q-grad 2 1 0.3,-0.7,0.2,0.6\nblyxtorch q-fit 2 1 0.3,-0.7,0.2,0.6 -0.25 0.2 40\nblyxtorch q-qasm 2 1 0.3,-0.7,0.2,0.6 > circuit.qasm\nquantum-study adjoint 10 3 4",
+                "links": [
+                    {
+                        "text": "BlyxTorch native downloads",
+                        "href": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.5.0"
+                    },
+                    {
+                        "text": "Input formats, compiler revision and API example",
+                        "href": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.5.0/SCALE.md"
+                    },
+                    {
+                        "text": "Read the experiment and download measurements",
+                        "href": "https://www.blyx-lang.space/articles/training-in-factors"
                     }
                 ]
             }
@@ -3777,6 +3815,25 @@
                         "href": "https://www.blyx-lang.space/packages/kinglet"
                     }
                 ]
+            },
+            {
+                "heading": "Checkpoint slices across shard boundaries",
+                "text": "Pass the tensor length in elements, element width in bytes, maximum elements per file, first requested element, element count and zero-based part number. The CLI prints the number of affected shards, the shard index and the local first byte, byte length and inclusive last byte. Query each part and concatenate its bytes in that order. Shards are consecutive, headerless, fixed-width payloads with a possibly shorter last file. Add your format’s payload offset before reading a containerized file. The command calculates intervals and leaves storage I/O and integrity checks to the caller. File-relative byte counts must fit signed 64-bit integers.",
+                "command": "kinglet range 2199023255552 2 1073741824 1099511627774 5 0\nkinglet range 2199023255552 2 1073741824 1099511627774 5 1",
+                "links": [
+                    {
+                        "text": "Kinglet native downloads",
+                        "href": "https://github.com/Rahulchaube1/blyx-kinglet/releases/tag/v0.2.0"
+                    },
+                    {
+                        "text": "Input formats, compiler revision and API example",
+                        "href": "https://github.com/Rahulchaube1/blyx-kinglet/blob/v0.2.0/SCALE.md"
+                    },
+                    {
+                        "text": "Read the experiment and download measurements",
+                        "href": "https://www.blyx-lang.space/articles/training-in-factors"
+                    }
+                ]
             }
         ],
         "example": "package-kinglet",
@@ -6401,6 +6458,25 @@
                         "href": "https://www.blyx-lang.space/packages/albatross"
                     }
                 ]
+            },
+            {
+                "heading": "Per-worker model-state memory",
+                "text": "Specify the number of parameters, worker count, zero-based rank, ZeRO stage, and bytes per parameter for weights, gradients and optimizer state. Stage 1 partitions optimizer state, stage 2 also partitions gradients, and stage 3 also partitions weights. Remainders go to the lowest ranks. The minimum-rank search budgets the largest rank. Results are signed 64-bit byte counts under balanced partitioning. The reserve is supplied by the caller. Measure activations, communication buffers, fragmentation and runtime overhead for your own model. A fit in this arithmetic model does not establish throughput or a successful distributed training run.",
+                "command": "albatross state 2199023255552 512 0 3 2 2 12\nalbatross min-ranks 2199023255552 3 2 2 12 85899345920 17179869184 4096",
+                "links": [
+                    {
+                        "text": "Albatross native downloads",
+                        "href": "https://github.com/Rahulchaube1/blyx-albatross/releases/tag/v0.2.0"
+                    },
+                    {
+                        "text": "Input formats, compiler revision and API example",
+                        "href": "https://github.com/Rahulchaube1/blyx-albatross/blob/v0.2.0/SCALE.md"
+                    },
+                    {
+                        "text": "Read the experiment and download measurements",
+                        "href": "https://www.blyx-lang.space/articles/training-in-factors"
+                    }
+                ]
             }
         ],
         "example": "package-albatross",
@@ -6491,6 +6567,25 @@
                     {
                         "text": "Framework installation",
                         "href": "https://www.blyx-lang.space/packages/chaffinch"
+                    }
+                ]
+            },
+            {
+                "heading": "Reduce sparse worker gradients",
+                "text": "Each worker writes numeric pairs, one coordinate and one summed gradient per CSV row, in ascending coordinate order. Duplicates are allowed. Merge two runs in linear time, compensate for floating-point cancellation, then divide by the number of training examples across the two workers. Missing coordinates contribute zero. The denominator is the global example count, including examples with a zero gradient. The CLI accepts finite gradients and exact integer coordinates from 0 to 9,007,199,254,740,991. Input and output are in memory. A merge processes two worker files and does not provide a network collective.",
+                "command": "chaffinch reduce 4 fixtures/worker-a.csv fixtures/worker-b.csv",
+                "links": [
+                    {
+                        "text": "Chaffinch native downloads",
+                        "href": "https://github.com/Rahulchaube1/blyx-chaffinch/releases/tag/v0.2.0"
+                    },
+                    {
+                        "text": "Input formats, compiler revision and API example",
+                        "href": "https://github.com/Rahulchaube1/blyx-chaffinch/blob/v0.2.0/SCALE.md"
+                    },
+                    {
+                        "text": "Read the experiment and download measurements",
+                        "href": "https://www.blyx-lang.space/articles/training-in-factors"
                     }
                 ]
             }

@@ -10,7 +10,7 @@
             "title": "BlyxTorch",
             "group": "Neural networks",
             "kind": "Neural-network framework and CLI",
-            "description": "Train classifiers and multi-output regressors on CPU or Vulkan GPU. Export convolution and attention gradients and call local checkpoints from AI applications.",
+            "description": "Train neural networks on CPU or Vulkan GPU, differentiate Ry/CNOT circuits on CPU and export OpenQASM 3.",
             "contract": "BlyxTorch 0.4.0 fits feature models in native f64 or exports f32 StableHLO training and inference. Intel Vulkan GPU, IREE CPU and OpenXLA CPU have been tested. The native CPU layer suite trains a 41,728-parameter transformer block. Physical TPU and distributed model training remain unverified.",
             "api": [
                 [
@@ -68,12 +68,24 @@
                 [
                     "train-predict TRAIN.csv FEATURES.csv",
                     "Train once and write a probability for each new feature row."
+                ],
+                [
+                    "bt_q_state(angles, qubits)",
+                    "Return the real state vector after the Ry/CNOT layers."
+                ],
+                [
+                    "bt_q_gradient(angles, qubits, readout)",
+                    "Compute all rotation-angle derivatives of the measured Z expectation."
+                ],
+                [
+                    "bt_q_step(angles, qubits, readout, target, rate)",
+                    "Update circuit angles for half squared error."
                 ]
             ],
-            "version": "0.4.0",
-            "commit": "74e9f09e390078a95f560bff3c173f1d35cbbde3",
+            "version": "0.5.0",
+            "commit": "04c2e047c14315e52573ff054770fe5adaa7c1ba",
             "repository": "https://github.com/Rahulchaube1/blyxtorch",
-            "release": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.4.0",
+            "release": "https://github.com/Rahulchaube1/blyxtorch/releases/tag/v0.5.0",
             "logo": "/packages/blyxtorch.png?v=7d79e17c3d38",
             "module": "blyxtorch",
             "example": "package-blyxtorch",
@@ -88,30 +100,36 @@
             "trainedExample": "package-blyxtorch-xor",
             "editor": {
                 "id": "RahulChaube.blyxtorch",
-                "version": "0.4.0",
-                "vsix": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.4.0/blyxtorch-0.4.0.vsix",
+                "version": "0.5.0",
+                "vsix": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.5.0/blyxtorch-0.5.0.vsix",
                 "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyxtorch",
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyxtorch",
-                "starter": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.4.0/blyxtorch-projects-0.4.0.zip",
+                "starter": "https://github.com/Rahulchaube1/blyxtorch/releases/download/v0.5.0/blyxtorch-projects-0.5.0.zip",
                 "examplePrefix": "bt-sensor",
-                "source": "https://github.com/Rahulchaube1/blyxtorch/tree/74e9f09e390078a95f560bff3c173f1d35cbbde3/editor",
-                "sha256": "6d24b027d41784728fe4eaf9a0deb5ab8fc564fe0321b46303858686d9c4e745"
+                "source": "https://github.com/Rahulchaube1/blyxtorch/tree/04c2e047c14315e52573ff054770fe5adaa7c1ba/editor",
+                "sha256": "bd3143152e691c920cd3af1ed1635955119b2dd605e7dc9336ce4e8da786abdd"
             },
             "projects": [
                 {
                     "id": "blyxtorch-sensor",
                     "title": "Calibrate a desk sensor",
                     "description": "Fit a gain and an offset from five synthetic reference readings using BlyxTorch automatic differentiation. The model predicts 18.625 and 22.375 degrees for two readings held out of training.",
-                    "source": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.4.0/projects/sensor-calibration.blyx"
+                    "source": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.5.0/projects/sensor-calibration.blyx"
                 },
                 {
                     "id": "blyxtorch-queue",
                     "title": "Predict print-queue waits",
                     "description": "Classify four new print jobs using a trained two-input network. The starter includes 16 synthetic training rows and six separate evaluation rows. With seed 7, the mean evaluation loss is about 0.00234.",
-                    "source": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.4.0/projects/queue-classifier.blyx"
+                    "source": "https://github.com/Rahulchaube1/blyxtorch/blob/v0.5.0/projects/queue-classifier.blyx"
                 }
             ],
-            "logoAlt": "A blue-crested bird with half-lidded eyes and a bright orange bill."
+            "logoAlt": "A blue-crested bird with half-lidded eyes and a bright orange bill.",
+            "releaseStudy": {
+                "title": "Classical simulation of trainable circuits",
+                "description": "Each layer rotates every qubit about Y, then applies an ascending chain of nearest-neighbour CNOT gates. Angles are in radians and qubit zero is the least significant bit. The readout is the expectation of Pauli Z on one selected qubit. An adjoint sweep recovers intermediate states by reversing the gates and computes one derivative per angle. Training minimizes half the squared difference between the readout and a target in [−1, 1].",
+                "command": "blyxtorch q-expect 2 1 0.3,-0.7,0.2,0.6\nblyxtorch q-grad 2 1 0.3,-0.7,0.2,0.6\nblyxtorch q-fit 2 1 0.3,-0.7,0.2,0.6 -0.25 0.2 40\nblyxtorch q-qasm 2 1 0.3,-0.7,0.2,0.6 > circuit.qasm\nquantum-study adjoint 10 3 4",
+                "evidence": "An independent dense-matrix and parameter-shift reference checked 18 expectations and 116 partial derivatives on circuits of one through five qubits. The maximum absolute gradient discrepancy was 1.34 × 10⁻¹⁵ or less. The two-qubit training example approached −0.24999977 after 40 steps."
+            }
         },
         {
             "slug": "linearfit",
@@ -119,7 +137,7 @@
             "title": "LinearFit",
             "group": "Training and uncertainty",
             "kind": "Training framework and CLI",
-            "description": "Train, merge and deploy a single-feature least-squares or ridge regression with an unpenalized intercept.",
+            "description": "Fit single-feature or ridge regression, train a bilinear model on paired features and inspect individual matrix coefficients.",
             "contract": "Provide aligned finite x and y values. At least two rows are required. Set ridge to zero for ordinary least squares, or choose a positive penalty for shrinkage. The centered model keeps predictions stable for features with large offsets.",
             "api": [
                 [
@@ -137,12 +155,28 @@
                 [
                     "lf_csv_summary(path)",
                     "Import the native csvfit module to read a CSV into a summary that lf_merge or lf_finish can use."
+                ],
+                [
+                    "lf_pair_gram(left, right, rows)",
+                    "Build the product Gram matrix for factor pairs."
+                ],
+                [
+                    "lf_pair_fit(gram, targets, initial, epochs, rate)",
+                    "Perform ordered SGD starting from the supplied expansion coefficients."
+                ],
+                [
+                    "lf_pair_predict(left, right, alpha, x, z)",
+                    "Predict on a new pair."
+                ],
+                [
+                    "lf_pair_weight(left, right, alpha, i, j)",
+                    "Read one fitted matrix coefficient."
                 ]
             ],
-            "version": "0.1.1",
-            "commit": "6a937457b27d8adf5601025e6244474a1be273e5",
+            "version": "0.2.0",
+            "commit": "bf37a21028dc738b7953d82a7e9d32a3bebb6f84",
             "repository": "https://github.com/Rahulchaube1/blyx-linearfit",
-            "release": "https://github.com/Rahulchaube1/blyx-linearfit/releases/tag/v0.1.1",
+            "release": "https://github.com/Rahulchaube1/blyx-linearfit/releases/tag/v0.2.0",
             "logo": "/packages/linearfit.png?v=2a295972d39c",
             "module": "linearfit",
             "example": "package-linearfit",
@@ -157,14 +191,20 @@
             "logoAlt": "An ivory gannet dives along the line of its long blue-grey bill.",
             "editor": {
                 "id": "RahulChaube.blyx-linearfit",
-                "version": "0.1.0",
-                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-linearfit-0.1.0.vsix",
+                "version": "0.2.0",
+                "vsix": "https://github.com/Rahulchaube1/blyx-linearfit/releases/download/v0.2.0/blyx-linearfit-0.2.0.vsix",
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-linearfit",
-                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-linearfit-starter-0.1.0.zip",
+                "starter": "https://github.com/Rahulchaube1/blyx-linearfit/releases/download/v0.2.0/blyx-linearfit-starter-0.2.0.zip",
                 "examplePrefix": "blyx-linearfit-demo",
                 "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-linearfit",
-                "source": "https://github.com/Rahulchaube1/blyx-linearfit/tree/8c3a70e2004e71b94bc0a8a2a86967e0bd6cc1c7/editor",
-                "sha256": "c7ca2bdcdef01877a311e9c03ef939f5d16e49bb005186399d6c6decd89252af"
+                "source": "https://github.com/Rahulchaube1/blyx-linearfit/tree/bf37a21028dc738b7953d82a7e9d32a3bebb6f84/editor",
+                "sha256": "c5e73250d7c8c92906821a19bbf71183049247afe5c365fb20d7dcda91f92e23"
+            },
+            "releaseStudy": {
+                "title": "Bilinear regression on paired features",
+                "description": "One training row holds a target and two dense feature vectors. A prediction is xᵀWz. Starting at zero, each gradient update adds a scalar multiple of that row’s outer product to W. LinearFit stores the left and right features, their product Gram matrix and one coefficient per row. It performs the same ordered squared-error SGD in that basis. Individual weights and held-out predictions are available without materializing W.",
+                "command": "linearfit pair-fit fixtures/pairs.txt 12 0.1 > coefficients.csv\nlinearfit pair-weight fixtures/pairs.txt coefficients.csv 0 1\nlinearfit pair-predict fixtures/pairs.txt coefficients.csv 1,0 0,1\npair-study factors 21",
+                "evidence": "The largest fixture contained four dense feature pairs and represented a 2,097,152 × 1,048,576 matrix. The 48 SGD updates reduced half mean squared error from 0.234375 to 1.40 × 10⁻⁸. Across all 35 coordinates of a separate random matrix the largest discrepancy against an explicitly updated matrix was 2.78 × 10⁻¹⁷."
             }
         },
         {
@@ -4073,18 +4113,22 @@
             "title": "Kinglet",
             "group": "GraphQL, RPC and HTTP",
             "kind": "Workflow framework",
-            "description": "Plan a full or single-range HTTP response against a known representation size.",
+            "description": "Plan HTTP byte ranges and map checkpoint tensor slices across fixed-width shards.",
             "contract": "Returns [status, body offset, body length, full length]. Mode 0 sends the full body, 1 uses first/last, 2 uses first as a suffix count. Header parsing and multipart ranges belong to the host. Invalid arguments and nonfinite results return an empty vector.",
             "api": [
                 [
                     "kinglet_respond(size, mode, first, last)",
                     "Returns [status, body offset, body length, full length]. Mode 0 sends the full body, 1 uses first/last, 2 uses first as a suffix count. Header parsing and multipart ranges belong to the host."
+                ],
+                [
+                    "kinglet_checkpoint_range(elements, element_bytes, shard_elements, first, count, part, field)",
+                    "Query the part count, shard index, first byte or length of a tensor slice."
                 ]
             ],
-            "version": "0.1.0",
-            "commit": "3425d588518e80673bab51e21bc1adee6d2a0962",
+            "version": "0.2.0",
+            "commit": "01bcffbec33c84119f9664eb2d40351bda5e31e9",
             "repository": "https://github.com/Rahulchaube1/blyx-kinglet",
-            "release": "https://github.com/Rahulchaube1/blyx-kinglet/releases/tag/v0.1.0",
+            "release": "https://github.com/Rahulchaube1/blyx-kinglet/releases/tag/v0.2.0",
             "logo": "/packages/kinglet.png?v=5e04d56cbfd3",
             "logoAlt": "A small olive kinglet looks up beneath a brilliant gold crown.",
             "module": "kinglet",
@@ -4110,8 +4154,8 @@
                 "title": "Serve a byte range at end of file",
                 "description": "A request for bytes 90 through 200 of a 100-byte resource returns ten bytes beginning at 90.",
                 "browserTitle": "Run the Kinglet example",
-                "source": "https://github.com/Rahulchaube1/blyx-kinglet/blob/v0.1.0/project.blyx",
-                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-kinglet.git\ncd blyx-kinglet\nblyxc native-run project.blyx -- 100 1 90 200",
+                "source": "https://github.com/Rahulchaube1/blyx-kinglet/blob/v0.2.0/project.blyx",
+                "command": "cargo install --locked --git https://github.com/Rahulchaube1/blyxxxx --rev 120d6b6ec6df09ff018d7c18752fb3297b5e629d blyxc\ngit clone --depth 1 --branch v0.2.0 https://github.com/Rahulchaube1/blyx-kinglet.git\ncd blyx-kinglet\nblyxc native-run project.blyx -- 100 1 90 200",
                 "problem": "An inclusive last byte becomes a read length with a plus one. Handle suffixes, empty resources and unsatisfied offsets explicitly.",
                 "reference": {
                     "title": "IETF RFC 9110, byte ranges",
@@ -4121,29 +4165,35 @@
                 "downloads": [
                     {
                         "platform": "Windows x64",
-                        "url": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/blyx-ecosystem-0.1.0-windows-x64.zip"
+                        "url": "https://github.com/Rahulchaube1/blyx-kinglet/releases/download/v0.2.0/kinglet-windows-x64.zip"
                     },
                     {
                         "platform": "Linux x64",
-                        "url": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/blyx-ecosystem-0.1.0-linux-x64.zip"
+                        "url": "https://github.com/Rahulchaube1/blyx-kinglet/releases/download/v0.2.0/kinglet-linux-x64.tar.gz"
                     },
                     {
                         "platform": "macOS Apple Silicon",
-                        "url": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/blyx-ecosystem-0.1.0-macos-arm64.zip"
+                        "url": "https://github.com/Rahulchaube1/blyx-kinglet/releases/download/v0.2.0/kinglet-macos-arm64.tar.gz"
                     }
                 ],
-                "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+                "checksums": "https://github.com/Rahulchaube1/blyx-kinglet/releases/download/v0.2.0/SHA256SUMS"
             },
             "editor": {
                 "id": "RahulChaube.blyx-kinglet",
-                "version": "0.1.0",
-                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-kinglet-0.1.0.vsix",
+                "version": "0.2.0",
+                "vsix": "https://github.com/Rahulchaube1/blyx-kinglet/releases/download/v0.2.0/blyx-kinglet-0.2.0.vsix",
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-kinglet",
-                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-kinglet-starter-0.1.0.zip",
+                "starter": "https://github.com/Rahulchaube1/blyx-kinglet/releases/download/v0.2.0/blyx-kinglet-starter-0.2.0.zip",
                 "examplePrefix": "blyx-kinglet-demo",
                 "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-kinglet",
-                "source": "https://github.com/Rahulchaube1/blyx-kinglet/tree/f81c1371f5e083ec3937ed35e8e4e5b7530700eb/editor",
-                "sha256": "cb064ccc04bf61a302cf54dd2322a9d30d26deaeff9fcbe4ccdfc5e44a68a55c"
+                "source": "https://github.com/Rahulchaube1/blyx-kinglet/tree/01bcffbec33c84119f9664eb2d40351bda5e31e9/editor",
+                "sha256": "71ae2c7bc00dc1f43492569d6944fd08b80e8ed44e91b626a60e233ba5f97c29"
+            },
+            "releaseStudy": {
+                "title": "Checkpoint slices across shard boundaries",
+                "description": "Pass the tensor length in elements, element width in bytes, maximum elements per file, first requested element, element count and zero-based part number. The CLI prints the number of affected shards, the shard index and the local first byte, byte length and inclusive last byte. Query each part and concatenate its bytes in that order.",
+                "command": "kinglet range 2199023255552 2 1073741824 1099511627774 5 0\nkinglet range 2199023255552 2 1073741824 1099511627774 5 1",
+                "evidence": "The ten requested bytes occupy bytes 2,147,483,644 through 2,147,483,647 in shard 1023 and bytes 0 through 5 in shard 1024. The reference test reassembled 32 slices from actual local files and compared the bytes with the unsharded fixture."
             }
         },
         {
@@ -7961,18 +8011,26 @@
             "title": "Albatross",
             "group": "Packaging and code quality",
             "kind": "Workflow framework",
-            "description": "Estimate a build forest's scheduling lower bound from dependencies and worker capacity.",
+            "description": "Estimate a build’s scheduling lower bound and budget each worker’s memory for sharded model training.",
             "contract": "Returns [critical path, total work, lower bound with given workers, deepest stage count]. The capacity bound assumes divisible worker time; actual nonpreemptive schedules can take longer. Invalid arguments and nonfinite results return an empty vector.",
             "api": [
                 [
                     "albatross_schedule(parents, durations, workers)",
                     "Returns [critical path, total work, lower bound with given workers, deepest stage count]. The capacity bound assumes divisible worker time; actual nonpreemptive schedules can take longer."
+                ],
+                [
+                    "albatross_state_bytes(parameters, ranks, rank, stage, weight_bytes, grad_bytes, optimizer_bytes)",
+                    "Calculate the selected worker’s model-state payload."
+                ],
+                [
+                    "albatross_min_ranks(parameters, stage, weight_bytes, grad_bytes, optimizer_bytes, device_bytes, reserved_bytes, max_ranks)",
+                    "Find the smallest balanced worker count within the specified budget."
                 ]
             ],
-            "version": "0.1.0",
-            "commit": "b2387f24eed18a45ba049ce68f27b62aaa34b491",
+            "version": "0.2.0",
+            "commit": "c3f9f57832a089744ffa5cce383b5876232f4385",
             "repository": "https://github.com/Rahulchaube1/blyx-albatross",
-            "release": "https://github.com/Rahulchaube1/blyx-albatross/releases/tag/v0.1.0",
+            "release": "https://github.com/Rahulchaube1/blyx-albatross/releases/tag/v0.2.0",
             "logo": "/packages/albatross.png?v=b53b6729133f",
             "logoAlt": "An ivory albatross glides diagonally on long black-tipped wings.",
             "module": "albatross",
@@ -7998,8 +8056,8 @@
                 "title": "Estimate a build's critical-path lower bound",
                 "description": "The four stages take eleven units of serial work. A dependency chain takes eight, so two workers cannot finish sooner than eight.",
                 "browserTitle": "Run the Albatross example",
-                "source": "https://github.com/Rahulchaube1/blyx-albatross/blob/v0.1.0/project.blyx",
-                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-albatross.git\ncd blyx-albatross\nblyxc native-run project.blyx -- \"-1,0,0,2\" \"1,3,2,5\" 2",
+                "source": "https://github.com/Rahulchaube1/blyx-albatross/blob/v0.2.0/project.blyx",
+                "command": "cargo install --locked --git https://github.com/Rahulchaube1/blyxxxx --rev 120d6b6ec6df09ff018d7c18752fb3297b5e629d blyxc\ngit clone --depth 1 --branch v0.2.0 https://github.com/Rahulchaube1/blyx-albatross.git\ncd blyx-albatross\nblyxc native-run project.blyx -- \"-1,0,0,2\" \"1,3,2,5\" 2",
                 "problem": "Adding workers cannot shorten a serial dependency chain. Compare total work with the longest dependency path before sizing a build pool.",
                 "reference": {
                     "title": "Python, topological sorting",
@@ -8009,29 +8067,35 @@
                 "downloads": [
                     {
                         "platform": "Windows x64",
-                        "url": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/blyx-ecosystem-0.1.0-windows-x64.zip"
+                        "url": "https://github.com/Rahulchaube1/blyx-albatross/releases/download/v0.2.0/albatross-windows-x64.zip"
                     },
                     {
                         "platform": "Linux x64",
-                        "url": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/blyx-ecosystem-0.1.0-linux-x64.zip"
+                        "url": "https://github.com/Rahulchaube1/blyx-albatross/releases/download/v0.2.0/albatross-linux-x64.tar.gz"
                     },
                     {
                         "platform": "macOS Apple Silicon",
-                        "url": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/blyx-ecosystem-0.1.0-macos-arm64.zip"
+                        "url": "https://github.com/Rahulchaube1/blyx-albatross/releases/download/v0.2.0/albatross-macos-arm64.tar.gz"
                     }
                 ],
-                "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+                "checksums": "https://github.com/Rahulchaube1/blyx-albatross/releases/download/v0.2.0/SHA256SUMS"
             },
             "editor": {
                 "id": "RahulChaube.blyx-albatross",
-                "version": "0.1.0",
-                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-albatross-0.1.0.vsix",
+                "version": "0.2.0",
+                "vsix": "https://github.com/Rahulchaube1/blyx-albatross/releases/download/v0.2.0/blyx-albatross-0.2.0.vsix",
                 "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-albatross",
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-albatross",
-                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-albatross-starter-0.1.0.zip",
+                "starter": "https://github.com/Rahulchaube1/blyx-albatross/releases/download/v0.2.0/blyx-albatross-starter-0.2.0.zip",
                 "examplePrefix": "blyx-albatross-demo",
-                "source": "https://github.com/Rahulchaube1/blyx-albatross/tree/9f78cb5f11a43e4a4e3c859559b73d6b9acb9fff/editor",
-                "sha256": "7640542c202d82a0c496da24e9a9467f11363ba3f7ffab68aa51ee85ad12aa1f"
+                "source": "https://github.com/Rahulchaube1/blyx-albatross/tree/c3f9f57832a089744ffa5cce383b5876232f4385/editor",
+                "sha256": "6c5cf7d553ce2c753068f94d398df6b9200cc7436ddba1bb68a9ab7d5e621565"
+            },
+            "releaseStudy": {
+                "title": "Per-worker model-state memory",
+                "description": "Specify the number of parameters, worker count, zero-based rank, ZeRO stage, and bytes per parameter for weights, gradients and optimizer state. Stage 1 partitions optimizer state, stage 2 also partitions gradients, and stage 3 also partitions weights. Remainders go to the lowest ranks. The minimum-rank search budgets the largest rank.",
+                "command": "albatross state 2199023255552 512 0 3 2 2 12\nalbatross min-ranks 2199023255552 3 2 2 12 85899345920 17179869184 4096",
+                "evidence": "At 512 ranks the model-state share is 68,719,476,736 bytes (64 GiB). An 80 GiB device with a 16 GiB reserve admits this share. The example returns 512 as the smallest number of ranks within the specified bound."
             }
         },
         {
@@ -8105,18 +8169,22 @@
             "title": "Chaffinch",
             "group": "Collections and storage",
             "kind": "Workflow framework",
-            "description": "Reconcile sorted collection snapshots without materializing their union.",
+            "description": "Merge counts and reconcile sparse gradient sums from training workers.",
             "contract": "Returns [added unique keys, removed unique keys, retained keys, duplicate occurrences in the new snapshot]. Inputs are sorted, allowing forward-only scans. Invalid arguments and nonfinite results return an empty vector.",
             "api": [
                 [
                     "chaffinch_reconcile(old, fresh)",
                     "Returns [added unique keys, removed unique keys, retained keys, duplicate occurrences in the new snapshot]. Inputs are sorted, allowing forward-only scans."
+                ],
+                [
+                    "chaffinch_gradient_mean(a, b, examples)",
+                    "Merge sorted worker sums as coordinate and global mean pairs."
                 ]
             ],
-            "version": "0.1.0",
-            "commit": "76d2d9cdad9812cedce6e5ef474a097c5d31dc71",
+            "version": "0.2.0",
+            "commit": "fb83b7dbd6be1c180d4a335c3c1d319cf9162103",
             "repository": "https://github.com/Rahulchaube1/blyx-chaffinch",
-            "release": "https://github.com/Rahulchaube1/blyx-chaffinch/releases/tag/v0.1.0",
+            "release": "https://github.com/Rahulchaube1/blyx-chaffinch/releases/tag/v0.2.0",
             "logo": "/packages/chaffinch.png?v=cf46668fc0b5",
             "logoAlt": "A rose-breasted chaffinch shows a blue-grey crown and double white wing bars.",
             "module": "chaffinch",
@@ -8142,8 +8210,8 @@
                 "title": "Reconcile two sorted snapshots with repeated keys",
                 "description": "The new snapshot adds key 3, removes key 1 and retains 2 and 4. The repeated 2 contributes one duplicate occurrence.",
                 "browserTitle": "Run the Chaffinch example",
-                "source": "https://github.com/Rahulchaube1/blyx-chaffinch/blob/v0.1.0/project.blyx",
-                "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-chaffinch.git\ncd blyx-chaffinch\nblyxc native-run project.blyx -- \"1,1,2,4\" \"2,2,3,4\"",
+                "source": "https://github.com/Rahulchaube1/blyx-chaffinch/blob/v0.2.0/project.blyx",
+                "command": "cargo install --locked --git https://github.com/Rahulchaube1/blyxxxx --rev 120d6b6ec6df09ff018d7c18752fb3297b5e629d blyxc\ngit clone --depth 1 --branch v0.2.0 https://github.com/Rahulchaube1/blyx-chaffinch.git\ncd blyx-chaffinch\nblyxc native-run project.blyx -- \"1,1,2,4\" \"2,2,3,4\"",
                 "problem": "A duplicate row should not look like a newly added key. Compare distinct sets and report repeated occurrences separately.",
                 "reference": {
                     "title": "Python, grouping consecutive keys",
@@ -8153,29 +8221,35 @@
                 "downloads": [
                     {
                         "platform": "Windows x64",
-                        "url": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/blyx-ecosystem-0.1.0-windows-x64.zip"
+                        "url": "https://github.com/Rahulchaube1/blyx-chaffinch/releases/download/v0.2.0/chaffinch-windows-x64.zip"
                     },
                     {
                         "platform": "Linux x64",
-                        "url": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/blyx-ecosystem-0.1.0-linux-x64.zip"
+                        "url": "https://github.com/Rahulchaube1/blyx-chaffinch/releases/download/v0.2.0/chaffinch-linux-x64.tar.gz"
                     },
                     {
                         "platform": "macOS Apple Silicon",
-                        "url": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/blyx-ecosystem-0.1.0-macos-arm64.zip"
+                        "url": "https://github.com/Rahulchaube1/blyx-chaffinch/releases/download/v0.2.0/chaffinch-macos-arm64.tar.gz"
                     }
                 ],
-                "checksums": "https://github.com/Rahulchaube1/blyxxxx/releases/download/ecosystem-v0.1.0/SHA256SUMS"
+                "checksums": "https://github.com/Rahulchaube1/blyx-chaffinch/releases/download/v0.2.0/SHA256SUMS"
             },
             "editor": {
                 "id": "RahulChaube.blyx-chaffinch",
-                "version": "0.1.0",
-                "vsix": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-chaffinch-0.1.0.vsix",
+                "version": "0.2.0",
+                "vsix": "https://github.com/Rahulchaube1/blyx-chaffinch/releases/download/v0.2.0/blyx-chaffinch-0.2.0.vsix",
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-chaffinch",
-                "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-chaffinch-starter-0.1.0.zip",
+                "starter": "https://github.com/Rahulchaube1/blyx-chaffinch/releases/download/v0.2.0/blyx-chaffinch-starter-0.2.0.zip",
                 "examplePrefix": "blyx-chaffinch-demo",
                 "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-chaffinch",
-                "source": "https://github.com/Rahulchaube1/blyx-chaffinch/tree/607014e9304866f5aa827f8d64404637508863d7/editor",
-                "sha256": "340b8c6bd9aff0af70ae5146e31d53d1d195fed3a2d6091a61adae15c856b664"
+                "source": "https://github.com/Rahulchaube1/blyx-chaffinch/tree/fb83b7dbd6be1c180d4a335c3c1d319cf9162103/editor",
+                "sha256": "3088f67a689d89cf5816bec69fa4de3504a355acbb8b8d82d9997ddfa7304eac"
+            },
+            "releaseStudy": {
+                "title": "Reduce sparse worker gradients",
+                "description": "Each worker writes numeric pairs, one coordinate and one summed gradient per CSV row, in ascending coordinate order. Duplicates are allowed. Merge two runs in linear time, compensate for floating-point cancellation, then divide by the number of training examples across the two workers. Missing coordinates contribute zero.",
+                "command": "chaffinch reduce 4 fixtures/worker-a.csv fixtures/worker-b.csv",
+                "evidence": "In the shipped fixture, one worker contributes 10¹⁶ and 1 at coordinate 7, and another contributes −10¹⁶. The mean over four examples is 0.25. Across 52 additional rows the implementation matched the independently accumulated reference on all four checked coordinates."
             }
         },
         {

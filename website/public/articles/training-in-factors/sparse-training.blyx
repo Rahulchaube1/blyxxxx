@@ -1,0 +1,94 @@
+use std::buffer;
+use vendor::blyxtorch::embedding;
+use vendor::chaffinch::gradients;
+use std::cli;
+
+fn row_id(k: i64) -> i64 {
+    8589934592*k+12345
+}
+fn label(k: i64, column: i64) -> f64 {
+    at([1+((17*k+7*column)%31)],0)/31.0
+}
+fn heldout_error(table: vector, rows: i64, seen: i64) -> f64 {
+    let x = [0.5,-0.5,0.25,1.0];
+    let mut error = 0.0;
+    let mut k = 0;
+    while k < seen {
+        let w = bt_embedding_lookup(table,rows,4,row_id(k));
+        let mut y = 0.0;
+        let mut c = 0;
+        while c < 4 { y += at(x,c)*label(k,c); c += 1; }
+        let diff = dot(x,w)-y;
+        error += diff*diff;
+        k += 1;
+    }
+    error/at([seen],0)
+}
+fn main() {
+    let rows = 549755813888;
+    let seen = 64;
+    let count = 4*seen;
+    let mut table = [];
+    let before = heldout_error(table,rows,seen);
+    let mut epoch = 0;
+    while epoch < 12 {
+        let mut a = buffer_fill(4*seen,0.0);
+        let mut b = buffer_fill(4*seen,0.0);
+        let mut k = 0;
+        while k < seen {
+            let id = row_id(k);
+            let w = bt_embedding_lookup(table,rows,4,id);
+            let mut c = 0;
+            while c < 4 {
+                // Each observation selects one column; alternate workers.
+                let key = at([4*id+c],0);
+                let grad = at(w,c)-label(k,c);
+                let dest = 4*k+2*(c/2);
+                if c%2 == 0 {
+                    a = buffer_set(a,dest,key);
+                    a = buffer_set(a,dest+1,grad);
+                } else {
+                    b = buffer_set(b,dest,key);
+                    b = buffer_set(b,dest+1,grad);
+                }
+                c += 1;
+            }
+            k += 1;
+        }
+        let means = chaffinch_gradient_mean(a,b,count);
+        if len(means) != 2*count { stderr_line("Gradient reduction failed"); process_exit(1); }
+        k = 0;
+        while k < seen {
+            let start = 8*k;
+            let g = [at(means,start+1),at(means,start+3),at(means,start+5),at(means,start+7)];
+            // On this full batch a rate of 128 halves each coordinate error.
+            table = bt_embedding_sgd(table,rows,4,row_id(k),g,128.0);
+            k += 1;
+        }
+        epoch += 1;
+    }
+    let after = heldout_error(table,rows,seen);
+    let zero = bt_embedding_lookup(table,rows,4,rows-1);
+    let mut changed = 0;
+    let mut row = 0;
+    while row < seen {
+        let weights = bt_embedding_lookup(table,rows,4,row_id(row));
+        let mut col = 0;
+        while col < 4 {
+            let w = at(weights,col);
+            if w != 0.0 { changed += 1; }
+            let diff = w - (1.0-1.0/4096.0)*label(row,col);
+            if !(diff >= -1.0e-14 && diff <= 1.0e-14) { stderr_line("Independent update check failed"); process_exit(1); }
+            col += 1;
+        }
+        row += 1;
+    }
+    if zero != [0,0,0,0] || !(after < before*0.000001) { stderr_line("Sparse training check failed"); process_exit(1); }
+    print!("{\"addressable_parameters\":"); print!(bt_embedding_count(rows,4));
+    print!(",\"trained_rows\":"); print!(seen);
+    print!(",\"changed_weights\":"); print!(changed);
+    print!(",\"epochs\":"); print!(epoch);
+    print!(",\"heldout_mse_before\":"); print!(before);
+    print!(",\"heldout_mse_after\":"); print!(after);
+    println!(",\"unseen_row_zero\":true}");
+}

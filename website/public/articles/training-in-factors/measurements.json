@@ -1,0 +1,341 @@
+{
+  "machine": "Windows-10-10.0.26300-SP0",
+  "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+  "numpy": "2.2.6",
+  "python": "3.10.6",
+  "method": "One warm-up then seven fresh CPU processes. Wall time includes startup and output. Quantum timings include four gradient evaluations per process.",
+  "pair_reference": {
+    "samples": 9,
+    "completed_updates": 36,
+    "checked_weights": 35,
+    "unseen_pair_queries": 12,
+    "max_weight_error": 2.7755575615628914e-17,
+    "max_prediction_error": 1.5265566588595902e-16,
+    "restart_identical": true
+  },
+  "quantum_reference": {
+    "gradients": 116,
+    "expectations": 18,
+    "max_gradient_error": 1.3322676295501878e-15,
+    "max_expectation_error": 7.771561172376096e-16,
+    "training_curve": [
+      {
+        "updates": 0,
+        "z": 0.9923983159979869,
+        "half_squared_error": 0.771776787797317
+      },
+      {
+        "updates": 1,
+        "z": 0.9832344616387978,
+        "half_squared_error": 0.7604336186867677
+      },
+      {
+        "updates": 2,
+        "z": 0.963382527173329,
+        "half_squared_error": 0.7361485786247672
+      },
+      {
+        "updates": 5,
+        "z": 0.6931670765463327,
+        "half_squared_error": 0.4447820671404779
+      },
+      {
+        "updates": 10,
+        "z": -0.12463352972681581,
+        "half_squared_error": 0.00785837593437859
+      },
+      {
+        "updates": 20,
+        "z": -0.24854840525812763,
+        "half_squared_error": 1.0535636473157556e-06
+      },
+      {
+        "updates": 40,
+        "z": -0.24999977264262827,
+        "half_squared_error": 2.584568724108909e-14
+      }
+    ]
+  },
+  "operations": {
+    "state_bytes_by_ranks": {
+      "128": 274877906944,
+      "256": 137438953472,
+      "512": 68719476736,
+      "1024": 34359738368,
+      "2048": 17179869184
+    },
+    "min_ranks": 512,
+    "matched_slices": 32,
+    "large_slice": [
+      {
+        "parts": 2,
+        "shard": 1023,
+        "first_byte": 2147483644,
+        "length": 4,
+        "last_byte": 2147483647
+      },
+      {
+        "parts": 2,
+        "shard": 1024,
+        "first_byte": 0,
+        "length": 6,
+        "last_byte": 5
+      }
+    ],
+    "sparse_coordinates": [
+      7,
+      31,
+      2199023255551,
+      9007199254740991
+    ],
+    "gradient_sum_rows": 52,
+    "max_reduction_error": 0.0
+  },
+  "pairs": [
+    {
+      "coefficients": 32768,
+      "left_width": 256,
+      "right_width": 128,
+      "updates": 48,
+      "stored_factor_values": 1536,
+      "half_mse": 1.3969838619232178e-08,
+      "corner_weight": 0.011715888977050781,
+      "samples_ms": [
+        10.0499,
+        9.8762,
+        9.5886,
+        9.5044,
+        10.1344,
+        9.3734,
+        8.8179
+      ],
+      "median_ms": 9.5886
+    },
+    {
+      "coefficients": 8388608,
+      "left_width": 4096,
+      "right_width": 2048,
+      "updates": 48,
+      "stored_factor_values": 24576,
+      "half_mse": 1.3969838619232178e-08,
+      "corner_weight": 0.0007322430610656738,
+      "samples_ms": [
+        10.025,
+        9.8209,
+        10.0107,
+        9.1513,
+        9.6259,
+        10.4326,
+        9.3602
+      ],
+      "median_ms": 9.8209
+    },
+    {
+      "coefficients": 2147483648,
+      "left_width": 65536,
+      "right_width": 32768,
+      "updates": 48,
+      "stored_factor_values": 393216,
+      "half_mse": 1.3969838619232178e-08,
+      "corner_weight": 4.5765191316604614e-05,
+      "samples_ms": [
+        17.6696,
+        14.1118,
+        14.5123,
+        14.0965,
+        14.3196,
+        13.8858,
+        13.6753
+      ],
+      "median_ms": 14.1118
+    },
+    {
+      "coefficients": 137438953472,
+      "left_width": 524288,
+      "right_width": 262144,
+      "updates": 48,
+      "stored_factor_values": 3145728,
+      "half_mse": 1.3969838619232178e-08,
+      "corner_weight": 5.720648914575577e-06,
+      "samples_ms": [
+        48.5668,
+        45.7914,
+        52.9049,
+        43.9493,
+        42.9237,
+        42.7282,
+        42.7639
+      ],
+      "median_ms": 43.9493
+    },
+    {
+      "coefficients": 2199023255552,
+      "left_width": 2097152,
+      "right_width": 1048576,
+      "updates": 48,
+      "stored_factor_values": 12582912,
+      "half_mse": 1.3969838619232178e-08,
+      "corner_weight": 1.4301622286438942e-06,
+      "samples_ms": [
+        157.2128,
+        158.2014,
+        161.1445,
+        155.8381,
+        137.1533,
+        138.425,
+        133.4773
+      ],
+      "median_ms": 155.8381
+    }
+  ],
+  "dense_parity": [
+    {
+      "coefficients": 128,
+      "left_width": 16,
+      "right_width": 8,
+      "updates": 48,
+      "stored_factor_values": 96,
+      "half_mse": 1.3969838619232178e-08,
+      "corner_weight": 0.1874542236328125,
+      "max_dense_error": 0
+    },
+    {
+      "coefficients": 2048,
+      "left_width": 64,
+      "right_width": 32,
+      "updates": 48,
+      "stored_factor_values": 384,
+      "half_mse": 1.3969838619232178e-08,
+      "corner_weight": 0.046863555908203125,
+      "max_dense_error": 0
+    },
+    {
+      "coefficients": 32768,
+      "left_width": 256,
+      "right_width": 128,
+      "updates": 48,
+      "stored_factor_values": 1536,
+      "half_mse": 1.3969838619232178e-08,
+      "corner_weight": 0.011715888977050781,
+      "max_dense_error": 0
+    }
+  ],
+  "quantum_timings": [
+    {
+      "qubits": 4,
+      "angles": 12,
+      "adjoint": {
+        "samples_ms": [
+          9.6383,
+          9.5254,
+          10.0937,
+          11.5199,
+          10.6385,
+          9.6082,
+          11.137
+        ],
+        "median_ms": 10.0937
+      },
+      "shift": {
+        "samples_ms": [
+          14.7485,
+          14.7262,
+          17.0659,
+          12.4434,
+          14.1906,
+          13.6289,
+          13.7901
+        ],
+        "median_ms": 14.1906
+      },
+      "max_error": 9.992007221626409e-16
+    },
+    {
+      "qubits": 6,
+      "angles": 18,
+      "adjoint": {
+        "samples_ms": [
+          10.2963,
+          10.1662,
+          10.2112,
+          10.0296,
+          9.3303,
+          9.1208,
+          9.2618
+        ],
+        "median_ms": 10.0296
+      },
+      "shift": {
+        "samples_ms": [
+          17.2995,
+          19.5535,
+          15.4861,
+          16.9473,
+          17.4453,
+          17.5032,
+          17.9112
+        ],
+        "median_ms": 17.4453
+      },
+      "max_error": 7.216449660063518e-16
+    },
+    {
+      "qubits": 8,
+      "angles": 24,
+      "adjoint": {
+        "samples_ms": [
+          11.2506,
+          12.8074,
+          11.6097,
+          9.4088,
+          9.0902,
+          9.3846,
+          9.9268
+        ],
+        "median_ms": 9.9268
+      },
+      "shift": {
+        "samples_ms": [
+          33.4501,
+          30.0021,
+          30.7745,
+          30.4017,
+          31.4534,
+          29.8282,
+          29.1628
+        ],
+        "median_ms": 30.4017
+      },
+      "max_error": 1.2212453270876722e-15
+    },
+    {
+      "qubits": 10,
+      "angles": 30,
+      "adjoint": {
+        "samples_ms": [
+          16.326,
+          13.264,
+          13.5446,
+          14.9205,
+          14.1371,
+          14.033,
+          14.1165
+        ],
+        "median_ms": 14.1165
+      },
+      "shift": {
+        "samples_ms": [
+          92.2973,
+          94.6039,
+          88.6867,
+          92.285,
+          95.6766,
+          87.0505,
+          90.3078
+        ],
+        "median_ms": 92.285
+      },
+      "max_error": 9.08995101411847e-16
+    }
+  ]
+}

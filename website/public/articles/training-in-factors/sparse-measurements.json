@@ -1,0 +1,9 @@
+{
+  "addressable_parameters": 2199023255552,
+  "trained_rows": 64,
+  "changed_weights": 256,
+  "epochs": 12,
+  "heldout_mse_before": 0.5429423289542142,
+  "heldout_mse_after": 3.23618846508232e-08,
+  "unseen_row_zero": true
+}

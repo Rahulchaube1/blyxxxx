@@ -67,12 +67,26 @@ export default async function Package({ params }: Props) {
                 </div>
             </header>
             <article className="prose">
+                {p.releaseStudy && (
+                    <section id="release-study">
+                        <h2>{p.releaseStudy.title}</h2>
+                        <p>{p.releaseStudy.description}</p>
+                        <pre>{p.releaseStudy.command}</pre>
+                        <p>{p.releaseStudy.evidence}</p>
+                        <div className="actions">
+                            <a href={p.repository + "/blob/v" + p.version + "/SCALE.md"}>Native installation and input formats</a>
+                            <a href="/articles/training-in-factors">Read the study and download the data</a>
+                        </div>
+                    </section>
+                )}
                 {p.workflow && (
                     <section id="project">
                         <h2>{p.workflow.title}</h2>
                         <p>{p.workflow.description}</p>
                         <h3>{p.collection ? "Run the native CLI" : "Download the standalone example"}</h3>
-                        {p.collection ? (
+                        {p.releaseStudy ? (
+                            <p>Extract the native archive and run <code>{"./" + slug + " --help"}</code> from its directory. On Windows run <code>{".\\" + slug + ".exe --help"}</code>.</p>
+                        ) : p.collection ? (
                             <p>Extract the workflow collection for your platform. Run <code>{".\\bin\\" + slug + ".exe --help"}</code> in PowerShell or <code>{"./bin/" + slug + " --help"}</code> on Linux and macOS. Running the command with no arguments prints the worked example.</p>
                         ) : (
                             <p>Extract the archive and run <code>{p.slug + "-demo.exe"}</code> on Windows or <code>{"./" + p.slug + "-demo"}</code> on Linux and macOS. Each archive includes the Blyx source and tests.</p>
@@ -82,7 +96,7 @@ export default async function Package({ params }: Props) {
                             <a href={p.workflow.checksums}>SHA-256 checksums</a>
                         </div>
                         <h3>Build from source</h3>
-                        <p>With Blyx {catalog.compiler}, Rust and a host linker installed, run these commands to edit and rebuild the example.</p>
+                        <p>{p.releaseStudy ? "Install the pinned compiler with a Rust toolchain and a host linker, then rebuild the example." : "With Blyx " + catalog.compiler + ", Rust and a host linker installed, run these commands to edit and rebuild the example."}</p>
                         <pre>{p.workflow.command}</pre>
                         <div className="actions">
                             <a href={p.workflow.source}>Read the project source</a>
@@ -98,7 +112,7 @@ export default async function Package({ params }: Props) {
                         <h2>Install {p.title} in your editor</h2>
                         <p>Extension <strong>{p.editor.id}</strong> · {p.editor.version}</p>
                         {slug === "blyxtorch"
-                            ? <p>The extension includes native trainers for Windows x64, Linux x64 and Apple Silicon macOS, plus two editable projects. CPU training runs offline. The optional device host can train feature models on a compatible Vulkan GPU.</p>
+                            ? <p>The extension includes native trainers for Windows x64, Linux x64 and Apple Silicon macOS, plus editable classical and quantum projects. CPU training runs offline. The optional device host can train feature models on a compatible Vulkan GPU.</p>
                             : <p>The extension includes a runnable Blyx example, function completions and the framework source. For the modular project, extract the starter, open its folder and run <code>blyxc native-run main.blyx</code> with the native toolchain installed.</p>}
                         <div className="actions">
                             {p.editor.marketplace && <a className="button" href={p.editor.marketplace}>Visual Studio Marketplace</a>}
@@ -108,7 +122,7 @@ export default async function Package({ params }: Props) {
                         </div>
                         <p>Create an empty <code>.blyx</code> file, type <code>{p.editor.examplePrefix}</code> and accept the completion. Choose <strong>Blyx: Run File</strong> to run the example.</p>
                         <p>For an offline installation, choose <strong>Extensions: Install from VSIX</strong> for Blyx Language first, then for {p.title}.</p>
-                        <a href="https://github.com/Rahulchaube1/blyxxxx/releases/download/editor-v1.2.3/blyx-language-1.2.3.vsix">Download the companion Blyx Language VSIX</a>
+                        <a href="https://github.com/Rahulchaube1/blyxxxx/releases/download/editor-v1.2.4/blyx-language-1.2.4.vsix">Download the companion Blyx Language VSIX</a>
                     </section>
                 )}
                 {p.collection && (
@@ -118,7 +132,7 @@ export default async function Package({ params }: Props) {
                             {p.collection.libraries.length
                                 ? p.collection.libraries.map((lib) => <a key={lib.slug} href={"/packages/" + lib.slug}>{lib.title}</a>)
                                 : <a href={"/packages/" + p.collection.family}>{p.collection.familyTitle}</a>}
-                            <a href="/downloads/blyx-ecosystem-source.zip" download>Download the source collection</a>
+                            <a href="https://github.com/Rahulchaube1/blyx-packages/releases/latest">Download the source collection</a>
                         </div>
                     </section>
                 )}
@@ -136,8 +150,8 @@ export default async function Package({ params }: Props) {
                                 </div>
                             </div>
                         ))}
-                        <p>The starter includes the editable programs, CSV data, saved weights and three editor tasks. Extract it, open <code>BlyxTorch.code-workspace</code>, then choose <strong>Terminal → Run Task → BlyxTorch: Evaluate print queue</strong>.</p>
-                        <a className="button" href={p.editor.starter}>Download both projects</a>
+                        <p>The starter includes the editable programs, CSV data, saved weights and four editor tasks. Extract it, open <code>BlyxTorch.code-workspace</code>, then choose <strong>Terminal → Run Task → BlyxTorch: Evaluate print queue</strong>.</p>
+                        <a className="button" href={p.editor.starter}>Download the projects</a>
                     </section>
                 )}
                 {p.cli && (

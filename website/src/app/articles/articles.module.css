@@ -30,3 +30,5 @@
     .body { padding-top: 22px; }
     .body th, .body td { padding: 7px; }
 }
+
+.feature + .feature { margin-top: 1.5rem; }

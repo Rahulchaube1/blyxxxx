@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
               ...catalog.packages.map((p) => "packages/" + p.slug),
               "articles",
               "articles/blyxtorch-portable-training",
+              "articles/training-in-factors",
               "blog",
               "about",
               "security",

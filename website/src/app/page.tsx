@@ -127,8 +127,8 @@ export default function Home() {
                 </section>
                 <section className="prose block">
                     <h2>Engineering articles</h2>
-                    <p>What happens when the same classifier trains on a laptop CPU and GPU? See the digit images, timing data and PyTorch comparison from BlyxTorch 0.4.</p>
-                    <div className="actions"><a href="/articles/blyxtorch-portable-training">Read One checkpoint, two processors →</a><a href="/articles">All articles</a></div>
+                    <p>How can four examples train a matrix with 2.2 trillion entries? Explore the storage, the learned values and a separate CPU experiment on quantum circuit gradients.</p>
+                    <div className="actions"><a href="/articles/training-in-factors">Read the matrix and circuit study →</a><a href="/articles/blyxtorch-portable-training">One checkpoint, two processors</a><a href="/articles">All articles</a></div>
                 </section>
                 <section className="sponsor-section block" id="sponsor" aria-labelledby="sponsor-heading">
                     <div>
