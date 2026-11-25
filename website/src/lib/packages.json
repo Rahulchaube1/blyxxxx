@@ -410,7 +410,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-modelgate",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-modelgate-starter-0.1.0.zip",
                 "examplePrefix": "blyx-modelgate-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-modelgate",
                 "source": "https://github.com/Rahulchaube1/blyx-modelgate/tree/c6fbc8a5b7b2ff31922d33d345d0f1392c944709/editor",
                 "sha256": "48efb0fe51664af785da2049489da2ed3e4987303aa77af5c4ccbfb181578a12"
             }
@@ -1877,7 +1877,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-nuthatch",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-nuthatch-starter-0.1.0.zip",
                 "examplePrefix": "blyx-nuthatch-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-nuthatch",
                 "source": "https://github.com/Rahulchaube1/blyx-nuthatch/tree/a602b4774cc2f2a432d2d7f598197aa57075d833/editor",
                 "sha256": "8e34d3440c1643ea16bb98cfb83672950122cdcb4ffe638da5f4b9abe89b1508"
             }
@@ -3029,7 +3029,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-merganser",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-merganser-starter-0.1.0.zip",
                 "examplePrefix": "blyx-merganser-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-merganser",
                 "source": "https://github.com/Rahulchaube1/blyx-merganser/tree/dd74ded274e8862c6c14b76e32ff0cb994be212a/editor",
                 "sha256": "8eec38f0b2260951b616825b46b3144ef7021891299026eec587e9504346b515"
             }
@@ -4037,7 +4037,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-martin",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-martin-starter-0.1.0.zip",
                 "examplePrefix": "blyx-martin-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-martin",
                 "source": "https://github.com/Rahulchaube1/blyx-martin/tree/420d8a438a5564448525427b746186f9502ed105/editor",
                 "sha256": "0f9d93726020850ce90c70cf00799d6b671b96bfb498a4683232b3827d43c59a"
             }
@@ -5343,7 +5343,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-magpie",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-magpie-starter-0.1.0.zip",
                 "examplePrefix": "blyx-magpie-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-magpie",
                 "source": "https://github.com/Rahulchaube1/blyx-magpie/tree/869234f4887d5a7b9d3b4b4e56bb9c456bc00448/editor",
                 "sha256": "d81b25b022bb77f89f4bde242542f18e28258b7bb6bf4d8f3ec4b947532bc5e9"
             }
@@ -8535,7 +8535,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-nightingale",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-nightingale-starter-0.1.0.zip",
                 "examplePrefix": "blyx-nightingale-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-nightingale",
                 "source": "https://github.com/Rahulchaube1/blyx-nightingale/tree/d2f94daa92b2f84af69a777972126cc53a2825c9/editor",
                 "sha256": "a2ffb81354b533fa4a825086e691bd9ec6ed50106493b5fefb5c23ba8bd3fd3c"
             }
