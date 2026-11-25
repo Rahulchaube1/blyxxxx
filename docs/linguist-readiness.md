@@ -1,6 +1,6 @@
 # Blyx — GitHub Linguist admission readiness
 
-**Status (2026-11-20): Not yet qualified by verified evidence.**
+**Status on November 25, 2026.** The [standalone MIT grammar v0.1.0](https://github.com/Rahulchaube1/language-blyx-grammar/tree/v0.1.0) is public. Independent adoption remains the outstanding eligibility requirement.
 This is a preparation checklist, **not** a GitHub Linguist registration submission.
 
 ## Official upstream requirements
@@ -11,6 +11,10 @@ For a conventional source file extension such as `.blyx`, the current threshold 
 The policy is maintained by Linguist; check it again before filing a PR. Do not create thousands of artificial files, copies, forks, or generated examples to reach the threshold.
 
 ## Preliminary discovery (not an official adoption count)
+
+On November 25 the authenticated GitHub REST code search reported 3,168 matches for `extension:blyx` and two for `extension:blyx -user:Rahulchaube1`. Both responses reported complete results. These totals describe that API query and do not establish the preceding-year count used by Linguist. The two outside-owner files were [an extension catalog placeholder](https://github.com/GregTrevellick/FilesForEveryExtension/blob/1f489433431c3cd877fa7943ea10101f8669740f/ByLetter/B/GitIgnore.BLYX) and [an archive sample with different syntax](https://github.com/sonusario/The-Sterling-Python-Archive/blob/3ae43974f534ec79f6c773f9355c68bf1b924929/The-Archive/SLUG/BLYX/example.blyx). Neither demonstrates an independently maintained project written in this language.
+
+For a future submission, the [Kinglet checkpoint range implementation](https://github.com/Rahulchaube1/blyx-kinglet/blob/v0.2.0/checkpoint_ranges.blyx) is a non-tutorial sample with an [MIT license option](https://github.com/Rahulchaube1/blyx-kinglet/blob/v0.2.0/LICENSE-MIT). Editor file-tree support is tracked separately in [Pierre Icons PR 17](https://github.com/pierrecomputer/vscode-icons/pull/17).
 
 At the time of this audit, searches of public GitHub code for `.blyx` primarily returned examples from `Rahulchaube1/blyxxxx`. Two repositories with similar names under different accounts (`oyyPoodles/blyxxxx`, `ydvGautam/blyxxxx`) were also located, but **their independent status has not been established**. They must not be presented as separate adoption without verifying origin, fork status and actual development. A filename such as `FilesForEveryExtension/.../GitIgnore.BLYX` is an extension collection, not evidence that someone built a Blyx project.
 
@@ -49,7 +53,7 @@ Only independent software projects should be described as community adoption. A 
 ## Upstream submission gates
 
 1. GitHub Linguist's in-the-wild adoption policy must be demonstrably satisfied using public search evidence, excluding forks and owner concentration.
-2. Publish a maintained, standalone **TextMate grammar repository**, under a supported license, with a `source.blyx` grammar aligned to the current lexer. The existing VS Code grammar is at `editors/code/syntaxes/blyx.tmLanguage.json`; the extension's license is MIT.
+2. Use the [published standalone grammar](https://github.com/Rahulchaube1/language-blyx-grammar). Its tagged grammar matches the VS Code grammar at `editors/code/syntaxes/blyx.tmLanguage.json`.
 3. Choose **real-world, nontrivial** Blyx samples with verified licenses. Linguist explicitly does not accept Hello World or tutorial-style samples.
 4. In an upstream `github-linguist/linguist` checkout, follow [Adding a language](https://github.com/github-linguist/linguist/blob/main/CONTRIBUTING.md#adding-a-language): add an entry in `lib/linguist/languages.yml` (without `language_id` initially), run `script/add-grammar` against the standalone grammar repository, add samples, and run `script/update-ids`.
 5. Run Linguist's tests and use its pull-request template; link direct source licenses and public search evidence.

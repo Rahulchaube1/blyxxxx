@@ -28,8 +28,8 @@ To prepare a future upstream contribution:
 
 1. Maintain representative, freely licensed `.blyx` source files and the
    language specification; keep grammar rules consistent with the lexer.
-2. Publish a versioned standalone TextMate grammar under a clearly identified
-   compatible license, usable independently of the VS Code extension.
+2. Use the [standalone MIT grammar v0.1.0](https://github.com/Rahulchaube1/language-blyx-grammar/tree/v0.1.0).
+   The [recognition checklist](linguist-readiness.md) records the latest adoption audit and a licensed code sample.
 3. Check whether public GitHub adoption meets Linguist's current eligibility
    criteria. Their guidelines require **at least 2,000 indexed files in the
    preceding year** for a repeatedly used extension such as `.blyx`,

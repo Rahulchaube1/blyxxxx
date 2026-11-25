@@ -7,8 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Rahulchaube1/blyxxxx.git",
-    "directory": "linguist-grammar"
+    "url": "https://github.com/Rahulchaube1/language-blyx-grammar.git"
   },
   "contributes": {
     "languages": [
