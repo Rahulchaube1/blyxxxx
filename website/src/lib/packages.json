@@ -1301,7 +1301,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-oriole",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-oriole-starter-0.1.0.zip",
                 "examplePrefix": "blyx-oriole-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-oriole",
                 "source": "https://github.com/Rahulchaube1/blyx-oriole/tree/15f41f28ed18b584dd91d647a152dd60cc781ac2/editor",
                 "sha256": "49634f92a1e45b72431eb6f6959bdffb6494d393ec51384e2694b023eaadffad"
             }
@@ -1733,7 +1733,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-pipit",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pipit-starter-0.1.0.zip",
                 "examplePrefix": "blyx-pipit-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-pipit",
                 "source": "https://github.com/Rahulchaube1/blyx-pipit/tree/1fd49be56d980db45ec51cf7b3c53266456cc19e/editor",
                 "sha256": "c8f106b6c745d5be57ee219c59f8bd683d9849549b139e2d7f08d85fb9a5a6a3"
             }
@@ -2165,7 +2165,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-osprey",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-osprey-starter-0.1.0.zip",
                 "examplePrefix": "blyx-osprey-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-osprey",
                 "source": "https://github.com/Rahulchaube1/blyx-osprey/tree/fc6e8a1789ff0eef117a0532baef30b4dbfd6ee8/editor",
                 "sha256": "af59cd6fc19b14958ca9e866651b23fd641aad183c8ab451eb5b675cc1241646"
             }
@@ -3173,7 +3173,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-pintail",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pintail-starter-0.1.0.zip",
                 "examplePrefix": "blyx-pintail-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-pintail",
                 "source": "https://github.com/Rahulchaube1/blyx-pintail/tree/b76f69ca4af5bb820ae43302f0899692f98ca5e9/editor",
                 "sha256": "f3b8e340691fa3b9e637f313e0846ac94a363af8299f22f445bde47dc0e580e2"
             }
@@ -3605,7 +3605,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-petrel",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-petrel-starter-0.1.0.zip",
                 "examplePrefix": "blyx-petrel-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-petrel",
                 "source": "https://github.com/Rahulchaube1/blyx-petrel/tree/b4a7fd237d54b7ad26589f47d2d377c1095e176e/editor",
                 "sha256": "5c5b0dfc55a60b98f2346a6fcd9a66df9ccfceac85bfb2f2f3b380571b56537e"
             }
@@ -8391,7 +8391,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-pelican",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-pelican-starter-0.1.0.zip",
                 "examplePrefix": "blyx-pelican-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-pelican",
                 "source": "https://github.com/Rahulchaube1/blyx-pelican/tree/165de7ae8f72c5eb8e5dc6aede859facdc37a417/editor",
                 "sha256": "bfd02a82dbac7a11e6331b32176fbf7bef4bb96f48978a0225cddd59899c22c9"
             }
