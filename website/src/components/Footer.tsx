@@ -7,6 +7,7 @@ export default function Footer() {
                 ["Documentation", bookEdition ? guideLink() : "/docs"],
                 ["Blyx for beginners", mainLink("/learn")],
                 ["Examples", mainLink("/examples")],
+                ["Project demos", mainLink("/demos")],
                 ["Playground", mainLink("/play")],
             ],
         ],

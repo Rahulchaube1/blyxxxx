@@ -11,6 +11,13 @@ export default function Articles() {
             <p>Experiments from the people building Blyx, with the code and data behind each result.</p>
         </header>
         <article className={styles.feature}>
+            <div><p className={styles.byline}><time dateTime="2026-11-26">26 November 2026</time> · Interactive audio timing</p>
+                <h2><a href="/articles/tap-tempo">What happens when you miss a beat?</a></h2>
+                <p>Build a tap-tempo instrument in Blyx and follow six taps from timestamps to a 120 BPM reading.</p>
+            </div>
+            <div className="actions"><a className="button" href="/demos/tap-tempo">Try the instrument</a><a href="/articles/tap-tempo">Read the walkthrough</a></div>
+        </article>
+        <article className={styles.feature}>
             <div>
                 <p className={styles.byline}><time dateTime="2026-11-26">26 November 2026</time> · Blyx Direct 0.1.0</p>
                 <h2><a href="/articles/blyx-direct">How Blyx learned to compile itself</a></h2>

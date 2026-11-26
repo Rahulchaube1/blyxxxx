@@ -1,0 +1,58 @@
+// Tap times are milliseconds on a single clock, in arrival order.
+// Output: interval count, median ms, beats per minute, then each interval.
+fn gap(taps: vector, i: i64) -> f64 {
+    at(taps, i + 1) - at(taps, i)
+}
+
+fn middle(taps: vector, start: i64, end: i64, rank: i64) -> f64 {
+    let mut i = start;
+    while i < end {
+        let value = gap(taps, i);
+        let mut below = 0;
+        let mut equal = 0;
+        let mut j = start;
+        while j < end {
+            let other = gap(taps, j);
+            if other < value { below += 1; }
+            if other == value { equal += 1; }
+            j += 1;
+        }
+        if below <= rank && rank < below + equal { return value; }
+        i += 1;
+    }
+    return 0.0;
+}
+
+fn report(taps: vector) {
+    let end = len(taps) - 1;
+    let mut start = end - 5;
+    if start < 0 { start = 0; }
+    let mut i = start;
+    while i < end {
+        let ms = gap(taps, i);
+        if ms <= 0.0 || ms > 2000.0 { start = i + 1; }
+        i += 1;
+    }
+    let mut count = end - start;
+    if count < 0 { count = 0; }
+    println!(count);
+    if count == 0 {
+        println!(0);
+        println!(0);
+        return;
+    }
+    let low = middle(taps, start, end, (count - 1) / 2);
+    let high = middle(taps, start, end, count / 2);
+    let period = (low + high) / 2.0;
+    println!(period);
+    println!(60000.0 / period);
+    i = start;
+    while i < end {
+        println!(gap(taps, i));
+        i += 1;
+    }
+}
+
+fn main() {
+    report([0, 500, 990, 1500, 2500, 3000]);
+}

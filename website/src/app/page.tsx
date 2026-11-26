@@ -16,6 +16,7 @@ export const metadata = pageMetadata(
 
 const destinations = [
     ["Downloads", "/download", "Install the compiler for Windows, macOS or Linux and verify your download."],
+    ["Project demos", "/demos", "Tap along to music in a live tempo instrument or run a forecasting project locally."],
     ["Blyx for beginners", "/learn", "Run your first program, change what it prints, and work through the first lessons."],
     ["Documentation", "/docs", "Look up language syntax, built-in functions and compiler commands."],
     ["Frameworks", "/frameworks", "Choose a workflow for a project, from training a network to processing audio."],

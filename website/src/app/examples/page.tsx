@@ -14,7 +14,7 @@ export default function Examples() {
                 <h1>Blyx code examples</h1>
                 <p>
                     Explore Blyx programs you can edit in the playground or
-                    build locally.
+                    build locally. For complete projects, visit the <a href="/demos">Blyx demos</a>.
                 </p>
             </header>
             <Catalog samples={samples.map(({ id, title, category, description, file }) => ({ id, title, category, description, file }))} />
