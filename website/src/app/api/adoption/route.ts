@@ -1,4 +1,5 @@
 import { unstable_cache } from "next/cache";
+import { cliVersion } from "@/lib/site";
 import { usageSummary, utcDay } from "@/app/adoption/usage";
 
 export const dynamic = "force-dynamic";
@@ -22,7 +23,19 @@ const registries = unstable_cache(async () => {
     return { marketplace, openVsx, cargo, observed: new Date().toISOString() };
 }, ["blyx-public-install-counters-v1"], { revalidate: 60 });
 
+const releaseDownloads = unstable_cache(async () => {
+    const release = await json("https://api.github.com/repos/Rahulchaube1/blyxxxx/releases/tags/v" + cliVersion, {
+        headers: { "User-Agent": "Blyx-adoption-dashboard", Accept: "application/vnd.github+json" },
+    });
+    function count(suffix: string) {
+        const asset = release.assets.find((a: { name: string }) => a.name === "blyx-v" + cliVersion + "-" + suffix);
+        return Number.isSafeInteger(asset?.download_count) ? Number(asset.download_count) : null;
+    }
+    return { windows: count("x86_64-pc-windows-msvc.zip"), linux: count("x86_64-unknown-linux-gnu.tar.gz"),
+        mac: count("aarch64-apple-darwin.tar.gz"), observed: new Date().toISOString() };
+}, ["blyx-cli-archive-counters", cliVersion], { revalidate: 300 });
+
 export async function GET() {
-    const [registry, playground] = await Promise.all([registries(), usageSummary(utcDay()).catch(() => null)]);
-    return Response.json({ registry, playground }, { headers: { "Cache-Control": "public, s-maxage=30, stale-while-revalidate=30" } });
+    const [registry, playground, archives] = await Promise.all([registries(), usageSummary(utcDay()).catch(() => null), releaseDownloads().catch(() => null)]);
+    return Response.json({ registry, playground, archives }, { headers: { "Cache-Control": "public, s-maxage=30, stale-while-revalidate=30" } });
 }

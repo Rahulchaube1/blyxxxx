@@ -1,6 +1,7 @@
 export const repository = "https://github.com/Rahulchaube1/blyxxxx";
-export const release = repository + "/releases/tag/v0.2.2";
-export const assets = repository + "/releases/download/v0.2.2/";
+export const cliVersion = "0.2.2";
+export const release = repository + "/releases/tag/v" + cliVersion;
+export const assets = repository + "/releases/download/v" + cliVersion + "/";
 export const docs = "https://doc.blyx-lang.space";
 export const website = "https://www.blyx-lang.space";
 export const nestRegistry = "https://nest.blyx-lang.space";

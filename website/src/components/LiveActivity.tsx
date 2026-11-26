@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
+import { cliVersion } from "@/lib/site";
 import styles from "../app/adoption/metrics.module.css";
 type Live = {
+    archives: { windows: number | null; linux: number | null; mac: number | null; observed: string } | null;
     registry: { marketplace: number | null; openVsx: number | null; cargo: number | null; observed: string };
     playground: { active: number; runs: number; browsers: number; observed: string; examples: Record<string, number>;
         countries: [string, number][]; linkedin: number | null } | null;
@@ -39,6 +41,11 @@ export function LiveActivity({compact = false}: {compact?: boolean}) {
     return <div><dl className={styles.metrics}>{metrics.map(([label, v]) =>
         <div key={label}><dt>{label}</dt><dd>{typeof v === "number" ? v.toLocaleString("en-US") : data || failed ? "Unavailable" : "…"}</dd></div>)}</dl>
         <p className="subtle">{failed ? "Refresh failed. " : ""}{reg ? "Registries checked " + date(reg.observed) + ". " : ""}{play ? "Playground sampled " + date(play.observed) + ". " : ""}Refreshes every minute. Playground figures include opted-in browsers.</p>
+        {!compact && <section className="block"><h2>Blyx CLI {cliVersion} downloads by platform</h2>
+            <dl className={styles.metrics}>{([["Windows x64","windows"],["Linux x64","linux"],["macOS Apple Silicon","mac"]] as const).map(([label,key]) =>
+                <div key={key}><dt>{label}</dt><dd>{data?.archives?.[key]?.toLocaleString("en-US") ?? (data || failed ? "Unavailable" : "…")}</dd></div>)}</dl>
+            <p className="subtle">GitHub archive downloads, refreshed about every five minutes. {data?.archives && "Checked " + date(data.archives.observed) + "."}</p>
+        </section>}
         {!compact && play && <div className="block"><h2>What people ran</h2>
             <p>Across the last seven UTC dates, browsers reported <strong>{(play.examples.example || 0).toLocaleString("en-US")}</strong> successful runs of the selected example and <strong>{(play.examples.edited || 0).toLocaleString("en-US")}</strong> with edited code.</p>
             {play.countries.length ? <p>Activity by country (browser-days): {play.countries.map(([c,n]) => c + " · " + n).join(", ")}.</p> : <p>Country totals appear once a country reaches five participating browser-days.</p>}
