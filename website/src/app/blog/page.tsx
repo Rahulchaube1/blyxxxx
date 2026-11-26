@@ -52,6 +52,7 @@ export default async function Blog() {
                                     {r.published_at.slice(0, 10)}
                                 </time>
                             </div>
+                            <img alt="Blyx" src="/favicon-192.png" width="42" height="42" />
                             <h2>{r.name || r.tag_name}</h2>
                             <p>{r.tag_name}</p>
                             <a href={r.html_url}>Read release notes →</a>
@@ -60,7 +61,7 @@ export default async function Blog() {
                 </div>
             ) : (
                 <div className="card">
-                    <h2>Blyx 0.2.1</h2>
+                    <h2>Blyx 0.2.2</h2>
                     <p>
                         The release feed is currently unavailable. The
                         documented release remains available on GitHub.

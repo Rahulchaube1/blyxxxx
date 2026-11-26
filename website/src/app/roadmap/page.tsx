@@ -8,10 +8,10 @@ export const metadata = pageMetadata(
 );
 const sections = [
     {
-        heading: "Available in 0.2.1",
+        heading: "Available in 0.2.2",
         body: "Run source on the CLI, in the browser and through the VS Code extension. Build native projects with local module imports, command-line arguments, file access and CPU vector operations.",
         label: "Read the release",
-        href: repository + "/releases/tag/v0.2.1",
+        href: repository + "/releases/tag/v0.2.2",
     },
     {
         heading: "Compiler development",

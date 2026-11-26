@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
               "articles/training-in-factors",
               "blog",
               "about",
+              "adoption",
               "security",
               "compiler",
               "roadmap",

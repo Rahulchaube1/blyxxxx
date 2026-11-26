@@ -80,6 +80,7 @@ const config = {
                     "libraries/logos",
                     "roadmap",
                     "about",
+                    "adoption",
                     "vscode",
                 ].map((p) =>
                     redirect("/" + p, "https://www.blyx-lang.space/" + p),

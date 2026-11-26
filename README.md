@@ -8,7 +8,7 @@ Blyx is an experimental, open-source language for writing small numerical progra
 
 ## Self-hosted compiler
 
-**Self-hosted native compiler.** Blyx Direct 0.1.0 compiles its own Blyx source and integer/control-flow programs directly to Windows x64 or Linux x64 executables. The archive includes the source so you can reproduce the compiler with the executable you download. The separate 0.2.1 toolchain supports vectors, floating-point workloads and imported packages. [Download Blyx Direct](https://github.com/Rahulchaube1/blyxxxx/releases/tag/direct-v0.1.0) · [Build and verify it](compiler/blyxc/bootstrap/README.md) · [How Blyx learned to compile itself](https://www.blyx-lang.space/articles/blyx-direct)
+**Self-hosted native compiler.** Blyx Direct 0.1.0 compiles its own Blyx source and integer/control-flow programs directly to Windows x64 or Linux x64 executables. The archive includes the source so you can reproduce the compiler with the executable you download. The separate 0.2.2 toolchain supports vectors, floating-point workloads and imported packages. [Download Blyx Direct](https://github.com/Rahulchaube1/blyxxxx/releases/tag/direct-v0.1.0) · [Build and verify it](compiler/blyxc/bootstrap/README.md) · [How Blyx learned to compile itself](https://www.blyx-lang.space/articles/blyx-direct)
 
 ## Learn Blyx
 
@@ -48,10 +48,10 @@ brew install rahulchaube1/blyx/blyx
 With Rust and a host linker installed, build the released compiler from crates.io:
 
 ```sh
-cargo install --locked --version 0.2.1 blyxc
+cargo install --locked --version 0.2.2 blyxc
 ```
 
-Download the **Blyx 0.2.1** archive for Windows x86-64, Linux x86-64, or macOS on Apple Silicon. Verify it against the release’s `SHA256SUMS`, extract the archive, and put the directory containing `blyxc` on your `PATH`. [Release archives and checksums](https://github.com/Rahulchaube1/blyxxxx/releases/tag/v0.2.1)
+Download the **Blyx 0.2.2** archive for Windows x86-64, Linux x86-64, or macOS on Apple Silicon. Verify it against the release’s `SHA256SUMS`, extract the archive, and put the directory containing `blyxc` on your `PATH`. [Release archives and checksums](https://github.com/Rahulchaube1/blyxxxx/releases/tag/v0.2.2)
 
 ```sh
 blyxc --version
@@ -145,12 +145,12 @@ The [forecast monitoring example](examples/ml/forecast-monitor) imports LinearFi
 
 [Package catalog](https://www.blyx-lang.space/packages) · [Training and monitoring tutorial](https://doc.blyx-lang.space/guide/training-and-monitoring) · [Evaluation tutorial](https://doc.blyx-lang.space/guide/ai-packages) · [Machine-readable catalog](https://www.blyx-lang.space/packages.json) · [Contribute a package](docs/ecosystem-packages.md)
 
-## What ships in 0.2.1
+## What ships in 0.2.2
 
 | Component | What you can use today |
 | --- | --- |
 | Language | Functions and recursion, block scope, mutable bindings, conditionals, loops, checked `i64` arithmetic, `f64`, and numeric vectors with `len`, `at`, `sum`, and `dot`. |
-| 0.2.1 CLI | Create a project with `blyxc new hello`, check syntax, run source and compile numerical or multi-file programs through the Rust backend. |
+| 0.2.2 CLI | Create a project with `blyxc new hello`, check syntax, run source and compile numerical or multi-file programs through the Rust backend. |
 | Blyx Direct | Compile a supported single-file program or the compiler itself directly to a Windows x64 or Linux x64 executable. |
 | Browser and editor | The playground and desktop extension run the Blyx interpreter compiled to WebAssembly. The editor can run an unsaved buffer and show parser errors while you type. |
 

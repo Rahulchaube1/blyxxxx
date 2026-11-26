@@ -29,7 +29,7 @@ export default async function Playground({
                 <h2>{active.title}</h2>
                 <p className="subtle">{active.description}</p>
             </div>
-            <Runner key={active.id} code={active.code} filename={active.file} />
+            <Runner playground key={active.id} code={active.code} filename={active.file} />
         </main>
     );
 }

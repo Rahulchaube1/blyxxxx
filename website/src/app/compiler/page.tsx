@@ -28,8 +28,8 @@ const sections = [
         href: mainLink("/play"),
     },
     {
-        heading: "Build numerical programs with 0.2.1",
-        body: "The 0.2.1 driver builds a wider subset, including floating-point arithmetic, vectors and imported modules. Its native build command generates Rust and uses rustc and the host linker.",
+        heading: "Build numerical programs with 0.2.2",
+        body: "The 0.2.2 driver builds a wider subset, including floating-point arithmetic, vectors and imported modules. Its native build command generates Rust and uses rustc and the host linker.",
         label: "Native build guide",
         href: guideLink("native-builds"),
     },

@@ -1,6 +1,6 @@
 # The Blyx handbook
 
-Blyx 0.2.1 · Released language and toolchain
+Blyx 0.2.2 · Released language and toolchain
 
 Start with a complete fn main(). Run your program in the playground or use blyxc check FILE followed by blyxc run FILE. For a native executable, use blyxc build FILE with Rust and a host linker installed.
 
@@ -188,14 +188,14 @@ The release supports synchronous functions, recursion, control flow and numeric 
 
 - [Debug and recover from errors](https://doc.blyx-lang.space/guide/diagnostics) — Locate a syntax error, diagnose a runtime failure, and guard an operation using short-circuit evaluation.
 
-- [Build a native executable](https://doc.blyx-lang.space/guide/native-builds) — Build an x86-64 program with Blyx Direct, reproduce the self-hosted compiler, or use the 0.2.1 toolchain for numerical workloads.
+- [Build a native executable](https://doc.blyx-lang.space/guide/native-builds) — Build an x86-64 program with Blyx Direct, reproduce the self-hosted compiler, or use the 0.2.2 toolchain for numerical workloads.
 
 ## Language reference
 
-- [Syntax, types and operators](https://doc.blyx-lang.space/guide/language-reference) — Look up the executable forms, operator order and value types used in Blyx 0.2.1.
+- [Syntax, types and operators](https://doc.blyx-lang.space/guide/language-reference) — Look up the executable forms, operator order and value types used in Blyx 0.2.2.
 
 - [Built-in functions and output](https://doc.blyx-lang.space/guide/builtin-reference) — Look up every vector built-in and both output macros, including their inputs, results and boundary cases.
 
 - [Command-line reference](https://doc.blyx-lang.space/guide/cli-reference) — Look up CLI forms, output files, execution budgets and exit codes.
 
-- [What Blyx 0.2.1 can run](https://doc.blyx-lang.space/guide/compatibility) — Choose an execution mode and identify features that are still being developed.
+- [What Blyx 0.2.2 can run](https://doc.blyx-lang.space/guide/compatibility) — Choose an execution mode and identify features that are still being developed.

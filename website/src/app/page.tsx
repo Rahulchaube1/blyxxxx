@@ -1,5 +1,6 @@
 import { handbookSiteName, languageSiteName, pageMetadata } from "@/lib/metadata";
 import StructuredData from "@/components/StructuredData";
+import { LiveActivity } from "@/components/LiveActivity";
 import GuideIndex from "@/components/GuideIndex";
 import { bookEdition, buyMeACoffee, docs, githubSponsors, guideLink, playLink, repository, website } from "@/lib/site";
 import samples from "@/lib/samples.json";
@@ -130,6 +131,7 @@ export default function Home() {
                     <p>How can four examples train a matrix with 2.2 trillion entries? Explore the storage, the learned values and a separate CPU experiment on quantum circuit gradients.</p>
                     <div className="actions"><a href="/articles/training-in-factors">Read the matrix and circuit study →</a><a href="/articles/blyxtorch-portable-training">One checkpoint, two processors</a><a href="/articles">All articles</a></div>
                 </section>
+                <section className="block"><div className="section-head"><h2>Blyx activity</h2><a href="/adoption">All usage statistics →</a></div><LiveActivity compact /></section>
                 <section className="sponsor-section block" id="sponsor" aria-labelledby="sponsor-heading">
                     <div>
                         <h2 id="sponsor-heading">Support Blyx development</h2>

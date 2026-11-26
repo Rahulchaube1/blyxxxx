@@ -1,0 +1,9 @@
+.metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,185px),1fr)); gap:14px; margin:22px 0 12px; }
+.metrics div { display:flex; flex-direction:column-reverse; justify-content:flex-end; gap:6px; padding:20px; border:1px solid var(--rule); border-radius:10px; background:var(--card); }
+.metrics dt { color:var(--muted); line-height:1.45; }
+.metrics dd { margin:0; font-weight:650; font-size:clamp(22px,3vw,32px); font-variant-numeric:tabular-nums; }
+.table { overflow-x:auto; margin:1rem 0 2rem; }
+.table table { width:100%; border-collapse:collapse; font-variant-numeric:tabular-nums; }
+.table td,.table th { padding:10px 12px; text-align:right; border-bottom:1px solid var(--rule); }
+.table tr > :first-child { text-align:left; }
+.table thead { color:var(--muted); }

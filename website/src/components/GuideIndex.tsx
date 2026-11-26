@@ -39,7 +39,7 @@ export default function GuideIndex({ course = false, children }: { course?: bool
     return (
         <main className="wrap">
             <header className="page-head">
-                <div className="crumb">Blyx 0.2.1</div>
+                <div className="crumb">Blyx 0.2.2</div>
                 <h1>{course ? "Blyx for beginners" : "Blyx documentation"}</h1>
                 <p>
                     {course

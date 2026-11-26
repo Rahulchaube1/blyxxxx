@@ -8,7 +8,7 @@ function block(body, language = "") {
 export function handbookText(guides, samples, full) {
     const parts = [
         "# The Blyx handbook",
-        "Blyx 0.2.1 · Released language and toolchain",
+        "Blyx 0.2.2 · Released language and toolchain",
         "Start with a complete fn main(). Run your program in the playground or use blyxc check FILE followed by blyxc run FILE. For a native executable, use blyxc build FILE with Rust and a host linker installed.",
         "[Learn Blyx](" +
             site +

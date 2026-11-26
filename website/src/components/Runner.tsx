@@ -1,5 +1,6 @@
 "use client";
 import { useHydrated } from "@/lib/useHydrated";
+import { PlaygroundUsage, reportPlaygroundRun } from "./PlaygroundUsage";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import "../app/play/play.css";
 type Result = {
@@ -12,11 +13,13 @@ export default function Runner({
     filename,
     practiceOutput,
     checkOnly = false,
+    playground = false,
 }: {
     code: string;
     filename: string;
     practiceOutput?: string;
     checkOnly?: boolean;
+    playground?: boolean;
 }) {
     const ready = useHydrated();
     const id = useId();
@@ -33,7 +36,7 @@ export default function Runner({
         worker.current?.terminate();
         worker.current = null;
     }, []);
-    const run = useCallback(() => {
+    const run = useCallback((manual = false) => {
         cancel();
         setState("Running");
         setOutput("");
@@ -53,6 +56,8 @@ export default function Runner({
             setOutput(text);
         }
         job.onmessage = ({ data }: MessageEvent<Result>) => {
+            if (worker.current !== job) return;
+            if (playground && manual && !checkOnly && data.status === 0) void reportPlaygroundRun(source === code ? "example" : "edited");
             const issues = data.diagnostics.map(
                 (d) =>
                     (d.line ? d.line + ":" + d.column + "  " : "") + d.message,
@@ -74,7 +79,7 @@ export default function Runner({
             8000,
         );
         job.postMessage({ source, run: !checkOnly });
-    }, [source, cancel, checkOnly]);
+    }, [source, code, cancel, checkOnly, playground]);
     useEffect(() => {
         if (live) debounce.current = setTimeout(run, 300);
         return cancel;
@@ -118,7 +123,7 @@ export default function Runner({
                         Stop
                     </button>
                 ) : (
-                    <button className="primary" onClick={run} disabled={!ready}>
+                    <button className="primary" onClick={() => run(true)} disabled={!ready}>
                         {checkOnly ? "Check syntax" : "Run program"}
                     </button>
                 )}
@@ -149,6 +154,7 @@ export default function Runner({
                     <pre aria-label="Program output">{output}</pre>
                 </div>
             </div>
+            {playground && <PlaygroundUsage />}
             {practiceOutput !== undefined && state === "Finished" && (
                 <details className="lesson-disclosure">
                     <summary>Check my practice output</summary>
