@@ -106,15 +106,14 @@ jobs:
         with:
           path: source
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Package editor extension
-        working-directory: source/editors/code
+      - name: Include the published editor package
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          version=$(node -p "require('./package.json').version")
-          npx --yes @vscode/vsce@3.9.2 package --no-dependencies --out "$GITHUB_WORKSPACE/dist/blyx-language-$version.vsix"
+          version=$(jq -r .version source/editors/code/package.json)
+          gh release download "editor-v$version" --repo "$GITHUB_REPOSITORY" -p "blyx-language-$version.vsix" -p SHA256SUMS -D editor
+          (cd editor && sha256sum --check --strict SHA256SUMS)
+          cp "editor/blyx-language-$version.vsix" dist/
 
       - name: Generate release checksums
         working-directory: dist

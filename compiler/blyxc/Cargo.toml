@@ -1,6 +1,6 @@
 [package]
 name = "blyxc"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2024"
 description = "Official Compiler Driver for the Blyx Programming Language"
 license.workspace = true
