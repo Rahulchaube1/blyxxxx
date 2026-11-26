@@ -16,7 +16,10 @@ async function read(day: string, shard: number): Promise<Loaded> {
     try {
         const result = await get(path(day, shard), { access: "private", useCache: false });
         if (result && result.statusCode === 200) {
-            return { value: await new Response(result.stream).json(), etag: result.blob.etag };
+            // Compressed private GET responses prefix the stored version tag with W/.
+            // Blob's conditional PUT expects the underlying quoted object tag.
+            const etag = result.blob.etag.replace(/^W\//, "");
+            return { value: await new Response(result.stream).json(), etag };
         }
     } catch (error) {
         if (!(error instanceof BlobNotFoundError)) throw error;
