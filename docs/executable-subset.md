@@ -1,5 +1,7 @@
 # Executable alpha subset
 
+For the separate Blyx Direct 0.1.0 compiler, see its [supported syntax and self-hosting test](../compiler/blyxc/bootstrap/README.md). The interpreter and native build described below belong to the 0.2.1 toolchain.
+
 The interpreter executes the parsed AST. It is not a native backend, a sandbox, or a hard real-time runtime. No timing or memory-safety guarantees are claimed.
 
 ## Try it

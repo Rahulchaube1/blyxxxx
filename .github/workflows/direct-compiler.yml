@@ -1,0 +1,72 @@
+name: Self-hosted Blyx compiler
+on:
+  pull_request:
+    paths:
+      - 'compiler/**'
+      - 'tools/test-self-host.py'
+      - '.github/workflows/direct-compiler.yml'
+  push:
+    tags: ['direct-v0.1.0']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bootstrap:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            platform: linux-x86_64
+          - os: windows-latest
+            platform: windows-x86_64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Bootstrap once and verify two generations with an empty PATH
+        shell: bash
+        run: |
+          cargo build --locked --release -p blyxc --bin blyxc
+          suffix=""
+          if [[ "$RUNNER_OS" == "Windows" ]]; then suffix=".exe"; fi
+          "target/release/blyxc$suffix" build compiler/blyxc/bootstrap/compiler.blyx -o "target/seed$suffix"
+          python tools/test-self-host.py "target/seed$suffix" --package-dir target/direct-package
+      - name: Package the verified executable
+        shell: bash
+        env:
+          PLATFORM: ${{ matrix.platform }}
+        run: |
+          cp compiler/blyxc/bootstrap/{README.md,compiler.blyx} LICENSE-MIT LICENSE-APACHE target/direct-package/
+          mkdir dist
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            (cd target/direct-package && 7z a "../../dist/blyxc-direct-$PLATFORM.zip" blyxc.exe compiler.blyx README.md LICENSE-MIT LICENSE-APACHE)
+          else
+            tar -czf "dist/blyxc-direct-$PLATFORM.tar.gz" -C target/direct-package blyxc compiler.blyx README.md LICENSE-MIT LICENSE-APACHE
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blyxc-direct-${{ matrix.platform }}
+          path: dist/*
+          if-no-files-found: error
+
+  publish:
+    if: github.ref == 'refs/tags/direct-v0.1.0'
+    needs: bootstrap
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Publish the independent compiler preview
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd dist
+          sha256sum *.zip *.tar.gz > SHA256SUMS
+          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --verify-tag --prerelease --title "Blyx Direct 0.1.0" --notes "Self-hosted x86-64 compiler for Windows and Linux. Each archive contains the tested second-generation compiler, its Blyx source and the build guide. Supports integer, Boolean, string literal and control-flow programs. Numerical vector programs and applications with package imports still use the 0.2.1 toolchain." *.zip *.tar.gz SHA256SUMS

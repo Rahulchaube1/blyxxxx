@@ -6,6 +6,10 @@ Blyx is an experimental, open-source language for writing small numerical progra
 
 [Try the playground](https://www.blyx-lang.space/play) · [Read the language guide](https://doc.blyx-lang.space/) · [Download Blyx](https://www.blyx-lang.space/download) · [Project website](https://www.blyx-lang.space/)
 
+## Self-hosted compiler
+
+**Self-hosted native compiler.** Blyx Direct 0.1.0 compiles its own Blyx source and integer/control-flow programs directly to Windows x64 or Linux x64 executables. The archive includes the source so you can reproduce the compiler with the executable you download. The separate 0.2.1 toolchain supports vectors, floating-point workloads and imported packages. [Download Blyx Direct](https://github.com/Rahulchaube1/blyxxxx/releases/tag/direct-v0.1.0) · [Build and verify it](compiler/blyxc/bootstrap/README.md)
+
 ## Learn Blyx
 
 Start with a greeting you can run in your browser. The handbook takes you through decisions, functions, vectors, numerical models, tests, and a sensor-report project. Each chapter includes practice and a worked answer. [Begin the course](https://www.blyx-lang.space/learn) · [Build the sensor report](https://doc.blyx-lang.space/guide/sensor-report) · [Language reference](https://doc.blyx-lang.space/guide/language-reference) · [Plain-text handbook](https://doc.blyx-lang.space/llms-full.txt)
@@ -146,7 +150,8 @@ The [forecast monitoring example](examples/ml/forecast-monitor) imports LinearFi
 | Component | What you can use today |
 | --- | --- |
 | Language | Functions and recursion, block scope, mutable bindings, conditionals, loops, checked `i64` arithmetic, `f64`, and numeric vectors with `len`, `at`, `sum`, and `dot`. |
-| CLI | Create a project with `blyxc new hello`, check syntax, run source, and compile supported typed programs. The native backend lowers Blyx to Rust and invokes `rustc`. |
+| 0.2.1 CLI | Create a project with `blyxc new hello`, check syntax, run source and compile numerical or multi-file programs through the Rust backend. |
+| Blyx Direct | Compile a supported single-file program or the compiler itself directly to a Windows x64 or Linux x64 executable. |
 | Browser and editor | The playground and desktop extension run the Blyx interpreter compiled to WebAssembly. The editor can run an unsaved buffer and show parser errors while you type. |
 
 Blyx has its own lexer, parser, and interpreter. GPU execution, a general-purpose tensor runtime, actor scheduling, and a public dependency registry remain development work. The executable subset is the reference for supported behavior. [Executable subset](docs/executable-subset.md) · [Release capabilities](https://doc.blyx-lang.space/guide/compatibility) · [Roadmap](ROADMAP_PUBLIC.md)

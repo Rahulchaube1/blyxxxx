@@ -1,5 +1,7 @@
 # Blyx compiler
 
+This Cargo package is the Rust-based Blyx driver. The [Blyx Direct compiler](bootstrap/README.md) in this repository is written in Blyx and builds its own source on Windows x64 and Linux x64.
+
 `blyxc` checks, interprets, and compiles programs written in Blyx. Save this program as `main.blyx`.
 
 ```blyx

@@ -10,6 +10,12 @@ https://www.blyx-lang.space/play
 
 ## Install a release
 
+### Self-hosted compiler for Windows x64 and Linux x64
+
+Download the [Blyx Direct archive](https://github.com/Rahulchaube1/blyxxxx/releases/tag/direct-v0.1.0) for your OS and extract it into its own directory. Its version command prints `blyxc direct 0.1.0`. Follow the [build and self-compilation guide](compiler/blyxc/bootstrap/README.md).
+
+### Blyx 0.2.1 toolchain
+
 On Apple Silicon macOS and x86-64 Linux, Homebrew installs the official release binary:
 
 ```sh
@@ -20,7 +26,7 @@ blyxc --version
 With Rust and a host linker installed, Cargo can also build the compiler from crates.io:
 
 ```sh
-cargo install --locked --version 0.2.0 blyxc
+cargo install --locked --version 0.2.1 blyxc
 ```
 
 Published binaries and installation instructions are maintained at:
@@ -35,7 +41,7 @@ https://blyx-lang.space/download
 - Rust toolchain with Cargo
 - A C/C++ linker/toolchain appropriate for your platform
 
-Blyx currently uses Rust for its compiler implementation and workspace tooling. You do **not** need to build the Rust compiler itself.
+The 0.2.1 workspace and the initial bootstrap seed use Rust. A released Blyx Direct executable can build the Direct compiler from its Blyx source.
 
 ### Clone the repository
 

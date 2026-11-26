@@ -10,6 +10,12 @@ export const metadata = pageMetadata(
 );
 const sections = [
     {
+        heading: "Compile directly with Blyx",
+        body: "Blyx Direct 0.1.0 is written in Blyx. It reads a .blyx file and writes an x86-64 executable for Windows or Linux. The download can rebuild its own source with no external compiler or linker. Use it for integer, Boolean and control-flow programs.",
+        label: "Build and verify a program",
+        href: guideLink("native-builds"),
+    },
+    {
         heading: "Parse a source file",
         body: "blyxc check tokenizes the source and parses the Blyx syntax tree. Parser diagnostics point to a line and column. Checking syntax does not evaluate the file.",
         label: "CLI commands",
@@ -22,14 +28,14 @@ const sections = [
         href: mainLink("/play"),
     },
     {
-        heading: "Build for the host",
-        body: "blyxc build lowers the synchronous typed subset to Rust, then invokes rustc and the platform linker. The output is a standalone executable.",
+        heading: "Build numerical programs with 0.2.1",
+        body: "The 0.2.1 driver builds a wider subset, including floating-point arithmetic, vectors and imported modules. Its native build command generates Rust and uses rustc and the host linker.",
         label: "Native build guide",
         href: guideLink("native-builds"),
     },
     {
         heading: "Explore compiler research",
-        body: "The repository also contains experimental semantic analysis and BIR/SSA work. The released native build path uses the Rust lowering backend.",
+        body: "Read the self-hosted compiler, including its lexer, type checks, x86-64 emitter and executable headers. The repository also contains the earlier Rust-based frontend and experimental BIR/SSA work.",
         label: "Browse compiler source",
         href: repository + "/tree/blyx-main/compiler",
     },
@@ -38,7 +44,7 @@ export default function Page() {
     return (
         <ResourcePage
             title="Compiler and runtime"
-            intro="The Blyx frontend feeds two execution paths. Choose the interpreter for quick feedback or compile a typed program for native execution."
+            intro="Try a program in the interpreter, build an executable, or rebuild the compiler itself. Choose the toolchain that supports your source and platform."
             sections={sections}
         >
             <section>

@@ -1,0 +1,664 @@
+// Blyx bootstrap compiler. Source arrives on stdin; the executable leaves on stdout.
+// Scratch cells 0..31 hold cursors. All tables have explicitly checked capacities.
+// Source bytes start at 1024, code bytes at 270000, function records at 1400000,
+// call fixups at 1430000, local bindings at 1550000. Addresses are cell indices.
+use std::bootstrap;
+
+fn message(s: String) {
+    let mut i = 0;
+    while i < boot_len(s) { boot_err(boot_char(s, i)); i = i + 1; }
+}
+fn digits_err(n: i64) {
+    if n >= 10 { digits_err(n / 10); }
+    boot_err(48 + n % 10);
+}
+fn reject(s: String) {
+    message("blyxc: "); message(s); message(" at source byte ");
+    digits_err(boot_get(2)); boot_err(10); boot_exit(1);
+}
+fn source(i: i64) -> i64 {
+    if i >= boot_get(0) { return -1; }
+    return boot_get(1024 + i);
+}
+// The build driver can prefix this comment to select a cross target.
+fn starts_source(s: String) -> bool {
+    let mut i=0;
+    while i<boot_len(s) {
+        if source(i)!=boot_char(s,i) { return false; }
+        i=i+1;
+    }
+    return true;
+}
+fn windows_target() -> bool { return boot_get(15) == 1; }
+fn letter(c: i64) -> bool {
+    return c == 95 || (c >= 65 && c <= 90) || (c >= 97 && c <= 122);
+}
+fn digit(c: i64) -> bool { return c >= 48 && c <= 57; }
+fn is_pair(a: i64, b: i64) -> bool {
+    return ((a == 60 || a == 62 || a == 33 || a == 61 || a == 43 || a == 45 || a == 42 || a == 47 || a == 37) && b == 61)
+        || (a == 45 && b == 62) || (a == 38 && b == 38) || (a == 124 && b == 124) || (a == 58 && b == 58);
+}
+fn advance() {
+    let mut i = boot_get(1);
+    let mut c = source(i);
+    while c == 32 || c == 10 || c == 13 || c == 9 || (c == 47 && source(i + 1) == 47) {
+        if c == 47 { while source(i) >= 0 && source(i) != 10 { i = i + 1; } }
+        else { i = i + 1; }
+        c = source(i);
+    }
+    boot_set(2, i);
+    if c < 0 { boot_set(1, i); return; }
+    i = i + 1;
+    if letter(c) {
+        while letter(source(i)) || digit(source(i)) { i = i + 1; }
+    } else {
+        if digit(c) { while digit(source(i)) { i = i + 1; } }
+        else {
+            if c == 34 {
+                while source(i) != 34 {
+                    if source(i) < 0 || source(i) == 10 { reject("unterminated string"); }
+                    if source(i) == 92 { i = i + 1; }
+                    i = i + 1;
+                }
+                i = i + 1;
+            } else { if is_pair(c, source(i)) { i = i + 1; } }
+        }
+    }
+    boot_set(1, i);
+}
+fn token(s: String) -> bool {
+    let p = boot_get(2);
+    let n = boot_get(1) - p;
+    if n != boot_len(s) { return false; }
+    let mut i = 0;
+    while i < n {
+        if source(p + i) != boot_char(s, i) { return false; }
+        i = i + 1;
+    }
+    return true;
+}
+fn take(s: String) -> bool { if token(s) { advance(); return true; } return false; }
+fn expect(s: String) { if !take(s) { message("expected "); reject(s); } }
+fn ident() -> i64 {
+    let p = boot_get(2);
+    if !letter(source(p)) { reject("expected identifier"); }
+    advance(); return p;
+}
+fn same(a: i64, b: i64) -> bool {
+    let mut i = 0;
+    while letter(source(a+i)) || digit(source(a+i)) {
+        if source(a+i) != source(b+i) { return false; }
+        i = i + 1;
+    }
+    return !letter(source(b+i)) && !digit(source(b+i));
+}
+fn pos() -> i64 { return boot_get(3); }
+fn emit(n: i64) {
+    if pos() >= 1048576 { reject("machine code size limit"); }
+    if n < 0 || n > 255 { reject("invalid instruction byte"); }
+    boot_set(270000 + pos(), n); boot_set(3, pos() + 1);
+}
+fn nibble(c: i64) -> i64 {
+    if digit(c) { return c - 48; }
+    if c >= 97 && c <= 102 { return c - 87; }
+    reject("bad hex digit in emitter"); return 0;
+}
+// Hex pairs below are x86-64 instructions. Spaces separate instructions or operands.
+fn hex(s: String) {
+    let mut i = 0;
+    while i < boot_len(s) {
+        if boot_char(s,i) == 32 { i = i + 1; }
+        else { emit(nibble(boot_char(s,i))*16 + nibble(boot_char(s,i+1))); i = i + 2; }
+    }
+}
+fn low(n: i64) -> i64 { return (n % 256 + 256) % 256; }
+fn next_byte(n: i64) -> i64 {
+    let q = n / 256;
+    if n % 256 < 0 { return q - 1; }
+    return q;
+}
+fn little(n: i64, count: i64) {
+    let mut x = n; let mut i = 0;
+    while i < count { emit(low(x)); x = next_byte(x); i = i + 1; }
+}
+fn patch(p: i64, n: i64) {
+    let mut x = n; let mut i = 0;
+    while i < 4 { boot_set(270000+p+i,low(x)); x = next_byte(x); i = i + 1; }
+}
+fn branch(op: String) -> i64 { hex(op); let p = pos(); little(0,4); return p; }
+fn resolve(p: i64, dest: i64) { patch(p,dest-p-4); }
+fn literal(n: i64) { hex("48b8"); little(n,8); }
+fn typename() -> i64 {
+    if take("i64") { return 1; } if take("bool") { return 2; }
+    if take("String") { return 3; }
+    reject("type outside the direct compiler"); return 0;
+}
+fn require_type(actual: i64, expected: i64) { if actual != expected && actual != 4 { reject("type mismatch"); } }
+// Function record: name, code position, result type, arity, then up to eight parameter types.
+fn record(i: i64) -> i64 { return 1400000+i*12; }
+fn find_function(name: i64) -> i64 {
+    let mut i = 0; while i < boot_get(4) {
+        if same(name,boot_get(record(i))) { return i; } i = i + 1;
+    }
+    return -1;
+}
+fn call_fixup(i: i64) {
+    let n = boot_get(5);
+    if n >= 32768 { reject("call fixup limit"); }
+    boot_set(1430000+n*2,branch("e8")); boot_set(1430001+n*2,i); boot_set(5,n+1);
+}
+// A local record holds the name, signed frame offset, type and mutability.
+fn local(name: i64, displacement: i64, ty: i64, mutable: i64) {
+    let n = boot_get(6);
+    if n >= 1024 { reject("local binding limit"); }
+    let p = 1550000+n*4;
+    boot_set(p,name); boot_set(p+1,displacement); boot_set(p+2,ty); boot_set(p+3,mutable);
+    boot_set(6,n+1);
+}
+fn binding(name: i64) -> i64 {
+    let mut i = boot_get(6);
+    while i > 0 { i = i-1; let p = 1550000+i*4; if same(name,boot_get(p)) { return p; } }
+    reject("unknown binding"); return 0;
+}
+fn typed_params(i: i64, bind: bool) {
+    let f = record(i); let mut n = 0;
+    expect("(");
+    if !take(")") {
+        loop {
+            if n >= 8 { reject("at most eight parameters"); }
+            let name = ident(); expect(":"); let ty = typename();
+            if bind { local(name,16+8*(boot_get(f+3)-n-1),ty,0); }
+            boot_set(f+4+n,ty); n = n+1;
+            if take(")") { break; } expect(",");
+        }
+    }
+    boot_set(f+3,n); let mut result = 0;
+    if take("->") { result = typename(); } boot_set(f+2,result);
+}
+fn skip_body() {
+    expect("{"); let mut depth = 1;
+    while depth > 0 {
+        if token("") { reject("unclosed function"); }
+        if token("{") { depth = depth+1; }
+        if token("}") { depth = depth-1; }
+        advance();
+    }
+}
+fn string_value() {
+    let begin = boot_get(2)+1; let end = boot_get(1)-1; advance();
+    let over = branch("e9"); let data = pos(); little(0,8); let mut i = begin;
+    while i < end {
+        let mut c = source(i); i = i+1;
+        if c == 92 {
+            c = source(i); i = i+1;
+            if c == 110 { c = 10; } else { if c == 114 { c = 13; } else {
+                if c == 116 { c = 9; } else { if c != 92 && c != 34 { reject("unsupported escape"); } }
+            } }
+        }
+        emit(c);
+    }
+    patch(data,pos()-data-8); resolve(over,pos());
+    resolve(branch("488d05"),data);
+}
+
+// Builtin ids also index their generated runtime entry points, at cells 40..53.
+fn builtin() -> i64 {
+    if token("boot_argc") { return 13; } if token("boot_flag") { return 14; }
+    if token("boot_input") { return 15; } if token("boot_output") { return 16; }
+    if token("boot_get") { return 1; } if token("boot_set") { return 2; }
+    if token("boot_len") { return 3; } if token("boot_char") { return 4; }
+    if token("boot_read") { return 5; } if token("boot_write") { return 6; }
+    if token("boot_err") { return 7; } if token("boot_exit") { return 8; }
+    if token("boot_windows") { return 9; } return 0;
+}
+fn invoke_builtin(id: i64) { resolve(branch("e8"),boot_get(40+id)); }
+fn intrinsic(id: i64) -> i64 {
+    if boot_get(13) == 0 { reject("missing use std::bootstrap"); }
+    advance(); expect("(");
+    if id != 5 && id != 9 && id != 13 {
+        let needed = if id == 3 || id == 4 { 3 } else { 1 };
+        require_type(expr(1),needed); emit(80);
+        if id == 2 || id == 4 { expect(","); require_type(expr(1),1); emit(80); }
+        if id == 14 { expect(","); require_type(expr(1),3); emit(80); }
+    }
+    expect(")"); invoke_builtin(id);
+    if id != 5 && id != 9 && id != 13 { hex("4883c408"); }
+    if id == 2 || id == 4 || id == 14 { hex("4883c408"); }
+    if id == 8 { return 4; } if id == 9 || id >= 14 { return 2; }
+    if id == 2 || id == 6 || id == 7 { return 0; } return 1;
+}
+fn print_value(newline: bool) -> i64 {
+    expect("!"); expect("(");
+    if !token(")") {
+        let t = expr(1); emit(80);
+        if t == 1 { invoke_builtin(10); } else {
+            if t == 3 { invoke_builtin(11); } else {
+                if t == 2 { invoke_builtin(12); } else { reject("unprintable value"); }
+            }
+        }
+        hex("4883c408");
+    }
+    expect(")");
+    if newline { hex("6a0a"); invoke_builtin(6); hex("4883c408"); }
+    return 0;
+}
+fn primary() -> i64 {
+    if take("(") { if take(")") { return 0; } let t = expr(1); expect(")"); return t; }
+    if take("-") {
+        if take("9223372036854775808") { literal(-9223372036854775807-1); return 1; }
+        require_type(primary(),1); hex("48f7d8"); trap_if("0f80"); return 1;
+    }
+    if token("loop") { return compile_loop(); }
+    if token("{") { return block(); }
+    if take("!") { require_type(primary(),2); hex("4883f001"); return 2; }
+    if take("true") { literal(1); return 2; }
+    if take("false") { literal(0); return 2; }
+    if take("if") {
+        require_type(expr(1),2); hex("4885c0"); let alt = branch("0f84");
+        let yes = block(); let done = branch("e9"); resolve(alt,pos());
+        let mut no = 0;
+        if take("else") { if token("if") { no = primary(); } else { no = block(); } }
+        resolve(done,pos());
+        if yes == 4 { return no; } if no == 4 { return yes; }
+        require_type(yes,no); return yes;
+    }
+    let start = boot_get(2); let c = source(start);
+    if c == 34 { string_value(); return 3; }
+    if digit(c) {
+        let mut i = start; let mut n = 0;
+        while i < boot_get(1) {
+            let d = source(i)-48;
+            if n > (9223372036854775807-d)/10 { reject("integer literal exceeds i64"); }
+            n = n*10+d; i = i+1;
+        }
+        advance(); literal(n); return 1;
+    }
+    if take("println") { return print_value(true); }
+    if take("print") { return print_value(false); }
+    let id = builtin(); if id != 0 { return intrinsic(id); }
+    let name = ident();
+    if take("(") {
+        let f = find_function(name); if f < 0 { reject("unknown function"); }
+        let p = record(f); let mut n = 0;
+        if !take(")") {
+            loop {
+                if n >= boot_get(p+3) { reject("too many arguments"); }
+                require_type(expr(1),boot_get(p+4+n)); emit(80); n = n+1;
+                if take(")") { break; } expect(",");
+            }
+        }
+        if n != boot_get(p+3) { reject("too few arguments"); }
+        call_fixup(f); if n > 0 { hex("4883c4"); emit(n*8); }
+        return boot_get(p+2);
+    }
+    let p = binding(name);
+    hex("488b85"); little(boot_get(p+1),4); return boot_get(p+2);
+}
+fn precedence() -> i64 {
+    if token("||") { return 1; } if token("&&") { return 2; }
+    if token("==") || token("!=") { return 3; }
+    if token("<") || token(">") || token("<=") || token(">=") { return 4; }
+    if token("+") || token("-") { return 5; }
+    if token("*") || token("/") || token("%") { return 6; } return 0;
+}
+fn trap_if(op: String) { resolve(branch(op),boot_get(40)); }
+fn arithmetic(a:i64) {
+    if a == 43 { hex("4801c8"); trap_if("0f80"); }
+    if a == 45 { hex("4829c8"); trap_if("0f80"); }
+    if a == 42 { hex("480fafc1"); trap_if("0f80"); }
+    if a == 47 || a == 37 {
+        hex("4885c9"); trap_if("0f84");
+        hex("4883f9ff"); let ok = branch("0f85");
+        hex("4889c2 48f7da"); trap_if("0f80"); resolve(ok,pos());
+        hex("4899 48f7f9"); if a == 37 { hex("4889d0"); }
+    }
+}
+fn expr(level: i64) -> i64 {
+    let mut ty = primary(); let mut p = precedence();
+    while p >= level {
+        let a = source(boot_get(2)); let pair = boot_get(1)-boot_get(2) == 2;
+        advance();
+        if p <= 2 {
+            require_type(ty,2); hex("4885c0");
+            let skip = if p == 1 { branch("0f85") } else { branch("0f84") };
+            require_type(expr(p+1),2); resolve(skip,pos()); ty = 2;
+        } else {
+            emit(80); let rhs = expr(p+1);
+            require_type(rhs,ty); hex("4889c1 58");
+            if p >= 5 {
+                require_type(ty,1);
+                arithmetic(a);
+            } else {
+                if p == 3 { if ty != 1 && ty != 2 { reject("unsupported equality operands"); } }
+                else { require_type(ty,1); }
+                hex("4839c8 0f");
+                if a == 61 { emit(148); } if a == 33 { emit(149); }
+                if a == 60 { emit(if pair { 158 } else { 156 }); }
+                if a == 62 { emit(if pair { 157 } else { 159 }); }
+                hex("c0 480fb6c0"); ty = 2;
+            }
+        }
+        p = precedence();
+    }
+    return ty;
+}
+fn block() -> i64 {
+    expect("{"); let mark = boot_get(6); let mut ty = 0; let mut falls = true;
+    while !take("}") {
+        if token("") { reject("unclosed block"); }
+        ty = statement();
+        if ty == 4 { falls = false; }
+    }
+    boot_set(6,mark);
+    if !falls { return 4; } return ty;
+}
+fn statement() -> i64 {
+    if take("let") {
+        let mutable = if take("mut") { 1 } else { 0 }; let name = ident();
+        let mut annotation = -1; if take(":") { annotation = typename(); }
+        expect("="); let t = expr(1); if annotation >= 0 { require_type(t,annotation); }
+        expect(";"); let slot = boot_get(8)+1; boot_set(8,slot);
+        local(name,-slot*8,t,mutable); hex("488985"); little(-slot*8,4); return 0;
+    }
+    if take("return") {
+        let mut t = 0; if !token(";") { t = expr(1); } require_type(t,boot_get(9));
+        expect(";"); hex("c9c3"); return 4;
+    }
+    if token("loop") || token("while") { let t=compile_loop(); if take(";") { return 0; } return t; }
+    if take("break") {
+        if boot_get(10) < 0 { reject("break outside loop"); }
+        let mut t=0; if !token(";") { t=expr(1); }
+        if boot_get(21)<0 { boot_set(21,t); } else { require_type(t,boot_get(21)); }
+        expect(";"); hex("488ba5"); little(boot_get(22),4); let b = branch("e9");
+        if b >= 490000 { reject("break fixup limit"); }
+        boot_set(1600000+b,boot_get(11)); boot_set(11,b); return 4;
+    }
+    if take("continue") {
+        if boot_get(10) < 0 { reject("continue outside loop"); }
+        expect(";"); hex("488ba5"); little(boot_get(22),4); resolve(branch("e9"),boot_get(10)); return 4;
+    }
+    let was_if = token("if"); let start = boot_get(2); let end = boot_get(1);
+    if letter(source(start)) && !was_if {
+        advance();
+        if token("=") || token("+=") || token("-=") || token("*=") || token("/=") || token("%=") {
+            let p = binding(start); if boot_get(p+3) == 0 { reject("immutable binding"); }
+            let op = source(boot_get(2)); advance();
+            if op != 61 { hex("ffb5"); little(boot_get(p+1),4); }
+            require_type(expr(1),boot_get(p+2)); expect(";");
+            if op != 61 {
+                require_type(boot_get(p+2),1); hex("4889c1 58");
+                arithmetic(op);
+            }
+            hex("488985"); little(boot_get(p+1),4); return 0;
+        }
+        boot_set(2,start); boot_set(1,end);
+    }
+    let t = expr(1); if take(";") { if t == 4 { return 4; } return 0; }
+    if !was_if && !token("}") { reject("expected semicolon"); }
+    return t;
+}
+fn compile_loop() -> i64 {
+    let forever=token("loop"); advance();
+    let saved_stack=boot_get(22); let slot=boot_get(8)+1; boot_set(8,slot);
+    let displacement=-slot*8; hex("4889a5"); little(displacement,4);
+    let start=pos(); let mut done=-1;
+    if !forever { require_type(expr(1),2); hex("4885c0"); done=branch("0f84"); }
+    let outer=boot_get(10); let saved=boot_get(11); let saved_type=boot_get(21);
+    boot_set(10,start); boot_set(11,-1); boot_set(21,if forever {-1} else {0}); boot_set(22,displacement);
+    block(); resolve(branch("e9"),start); if done>=0 { resolve(done,pos()); }
+    let mut br=boot_get(11); while br>=0 {
+        let prev=boot_get(1600000+br); resolve(br,pos()); br=prev;
+    }
+    let ty=boot_get(21); boot_set(10,outer); boot_set(11,saved); boot_set(21,saved_type); boot_set(22,saved_stack);
+    if ty<0 { return 4; } return ty;
+}
+fn functions(bind: bool) {
+    boot_set(1,0); advance(); boot_set(13,0);
+    if take("use") { expect("std"); expect("::"); expect("bootstrap"); expect(";"); boot_set(13,1); }
+    let mut i = 0;
+    while !token("") {
+        take("pub"); expect("fn"); let main_fn = token("main"); let name = ident();
+        if !bind {
+            if i >= 1024 { reject("function limit"); }
+            if find_function(name) >= 0 { reject("duplicate function"); }
+            boot_set(record(i),name); boot_set(4,i+1);
+            if main_fn { boot_set(12,i); }
+        }
+        boot_set(6,0); boot_set(8,0); typed_params(i,bind);
+        if main_fn && (boot_get(record(i)+3) != 0 || boot_get(record(i)+2) != 0) { reject("expected fn main()"); }
+        if bind {
+            boot_set(record(i)+1,pos()); boot_set(9,boot_get(record(i)+2)); boot_set(10,-1);
+            hex("55 4889e5 4881ec"); let frame = pos(); little(0,4);
+            let result = block(); require_type(result,boot_get(9)); hex("c9c3"); patch(frame,boot_get(8)*8);
+        } else { skip_body(); }
+        i = i+1;
+    }
+}
+
+// PE imports live in a dedicated .idata section. Each thunk is eight bytes.
+fn win_api(i: i64) {
+    let entry=boot_get(16);
+    if entry>=64 { reject("import fixup limit"); }
+    hex("ff15"); boot_set(1570000+2*entry,pos()); boot_set(1570001+2*entry,i);
+    little(0,4); boot_set(16,entry+1);
+}
+// Loader metadata precedes the Blyx workspace, outside its accessible indices.
+fn metadata_ptr() {
+    let i=boot_get(20); if i>=32 { reject("loader fixup limit"); }
+    hex("4c8d15"); boot_set(1570200+i,pos()); little(0,4); boot_set(20,i+1);
+}
+fn fix_memory(arena: i64) {
+    let mut i=0;
+    while i<boot_get(20) { resolve(boot_get(1570200+i),arena); i=i+1; }
+    resolve(boot_get(18),arena+64); resolve(boot_get(19),arena+64);
+}
+fn capture_args() {
+    if windows_target() {
+        hex("4889e3 4883e4f0 4883ec30"); win_api(5);
+        hex("4889c1 488d542428"); win_api(11);
+        metadata_ptr(); hex("49894208 8b442428 498902 4889dc");
+    } else { metadata_ptr(); hex("488b0424 498902 488d442408 49894208"); }
+}
+fn arg_ptr(offset: i64) {
+    metadata_ptr(); hex("488b4424"); emit(offset);
+    hex("48ffc0 4885c0"); trap_if("0f8e"); hex("493b02"); trap_if("0f83");
+    hex("498b5208 488b0cc2");
+}
+fn open_arg(input: bool) {
+    arg_ptr(8);
+    if windows_target() {
+        hex("55 4889e5 4883e4f0 4883ec40 ba"); little(if input {2147483648} else {1073741824},4);
+        hex("41b8"); little(if input {1} else {0},4);
+        hex("4531c9 48c7442420"); little(if input {3} else {1},4);
+        hex("48c744242880000000 48c744243000000000"); win_api(6);
+        hex("4883f8ff"); let fail = branch("0f84"); hex("4889c2 b9"); little(if input {-10} else {-11},4);
+        win_api(7); hex("85c0 0f95c0 0fb6c0 c9c3"); resolve(fail,pos()); hex("31c0 c9c3");
+    } else {
+        hex("4889cf be"); little(if input {0} else {193},4);
+        hex("bae9010000 b802000000 0f05 4885c0"); let fail=branch("0f88");
+        hex("4889c7 be"); little(if input {0} else {1},4);
+        hex("b821000000 0f05 4885c0 0f99c0 0fb6c0 c3"); resolve(fail,pos()); hex("31c0 c3");
+    }
+}
+fn cli_runtime() {
+    boot_set(53,pos()); metadata_ptr(); hex("498b02 48ffc8 c3");
+    boot_set(54,pos()); arg_ptr(16); hex("488b542408 4531c0");
+    let check=pos(); hex("4c3b02"); let end=branch("0f83");
+    if windows_target() { hex("420fb70441"); } else { hex("420fb60401"); }
+    hex("420fb6740208 39f0"); let no=branch("0f85"); hex("49ffc0"); resolve(branch("e9"),check);
+    resolve(end,pos()); if windows_target() { hex("6642833c4100"); } else { hex("42803c0100"); }
+    hex("0f94c0 0fb6c0 c3"); resolve(no,pos()); hex("31c0 c3");
+    boot_set(55,pos()); open_arg(true); boot_set(56,pos()); open_arg(false);
+}
+fn exit_code() {
+    if windows_target() { hex("89c1 4883e4f0 4883ec20"); win_api(3); }
+    else { hex("4889c7 b83c000000 0f05"); }
+    hex("0f0b");
+}
+fn byte_io(id: i64) {
+    boot_set(40+id,pos());
+    let input = id == 5;
+    if !input { hex("48817c2408 ff000000"); trap_if("0f87"); }
+    if windows_target() {
+        hex("55 4889e5 4883e4f0 4883ec40 b9");
+        if input { little(-10,4); } else { little(if id == 6 { -11 } else { -12 },4); }
+        win_api(0); hex("4889c1 488d542430");
+        if !input { hex("8b4510 89442430"); }
+        hex("41b801000000 4c8d4c2434 48c744242000000000");
+        if input { win_api(1); } else { win_api(2); }
+        hex("85c0"); let ok = branch("0f85");
+        if input {
+            win_api(4); hex("83f86d"); let closed = branch("0f84");
+            hex("83f826"); trap_if("0f85"); resolve(closed,pos()); hex("48c7c0ffffffff c9c3");
+        } else { resolve(branch("e9"),boot_get(40)); }
+        resolve(ok,pos()); hex("837c243401");
+        if input { let read_ok = branch("0f84"); hex("48c7c0ffffffff c9c3"); resolve(read_ok,pos()); hex("0fb6442430"); }
+        else { trap_if("0f85"); }
+        hex("c9c3");
+    } else {
+        hex("4883ec08"); let again = pos();
+        if input { hex("31c0 31ff 4889e6"); }
+        else { hex("b801000000 bf"); little(id-5,4); hex("488d742410"); }
+        hex("ba01000000 0f05 4883f8fc"); resolve(branch("0f84"),again);
+        hex("4883f801");
+        if input {
+            let good = branch("0f84"); hex("4885c0"); trap_if("0f85");
+            hex("48c7c0ffffffff 4883c408 c3"); resolve(good,pos()); hex("0fb60424");
+        } else { trap_if("0f85"); }
+        hex("4883c408 c3");
+    }
+}
+fn print_runtime() {
+    // Convert the unsigned magnitude in RAX backwards into the stack buffer.
+    boot_set(50,pos()); hex("55 4889e5 4883ec30 488b4510 488d75ff 48c7c10a000000 4885c0");
+    let positive = branch("0f89"); hex("48f7d8"); resolve(positive,pos());
+    let again = pos(); hex("31d2 48f7f1 80c230 8816 48ffce 4885c0"); resolve(branch("0f85"),again);
+    hex("48837d1000"); let skip = branch("0f89"); hex("c6062d 48ffce"); resolve(skip,pos());
+    hex("48ffc6 488975d8"); let put = pos(); hex("488b75d8 0fb606 50"); invoke_builtin(6);
+    hex("4883c408 48ff45d8 48396dd8"); resolve(branch("0f85"),put); hex("c9c3");
+    boot_set(51,pos()); hex("55 4889e5 4883ec08 48c745f800000000");
+    let each = pos(); hex("488b5510 488b45f8 483b02"); let end = branch("0f83");
+    hex("0fb6440208 50"); invoke_builtin(6); hex("4883c408 48ff45f8"); resolve(branch("e9"),each);
+    resolve(end,pos()); hex("c9c3");
+    boot_set(52,pos()); hex("48837c240800"); let no = branch("0f84");
+    fixed_text("true"); emit(195); resolve(no,pos()); fixed_text("false"); emit(195);
+}
+fn fixed_text(s: String) {
+    let mut i=0; while i < boot_len(s) {
+        emit(106); emit(boot_char(s,i)); invoke_builtin(6); hex("4883c408"); i=i+1;
+    }
+}
+fn runtime() {
+    boot_set(40,pos()); literal(4); exit_code();
+    let mut id = 1;
+    while id <= 2 {
+        boot_set(40+id,pos()); hex("488b4424"); emit(id*8);
+        hex("483d00002000"); trap_if("0f83"); hex("488d15"); boot_set(17+id,pos()); little(0,4);
+        if id == 1 { hex("488b04c2"); } else { hex("488b4c2408 48890cc2"); }
+        emit(195); id=id+1;
+    }
+    boot_set(43,pos()); hex("488b442408 488b00 c3");
+    boot_set(44,pos()); hex("488b542410 488b442408 483b02"); trap_if("0f83"); hex("0fb6440208 c3");
+    byte_io(5); byte_io(6); byte_io(7);
+    boot_set(48,pos()); hex("488b442408"); exit_code();
+    boot_set(49,pos()); literal(if windows_target() { 1 } else { 0 }); emit(195);
+    print_runtime();
+    cli_runtime();
+}
+// Serialize OS headers after resolving every call. Code is read/execute;
+// the zero-filled, bounds-checked workspace is in a separate read/write mapping.
+fn out(n: i64, size: i64) {
+    let mut i=0; let mut v=n;
+    while i<size { boot_write(low(v)); v=next_byte(v); i=i+1; }
+    boot_set(14,boot_get(14)+size);
+}
+fn pad(dest: i64) {
+    if boot_get(14)>dest { reject("image layout overlap"); }
+    while boot_get(14)<dest { out(0,1); }
+}
+fn ascii(s: String) { let mut i=0; while i<boot_len(s) { out(boot_char(s,i),1); i=i+1; } }
+fn body() { let mut i=0; while i<pos() { out(boot_get(270000+i),1); i=i+1; } }
+fn workspace_size() -> i64 { if boot_get(13)!=0 { return 16777280; } return 64; }
+fn segment(kind: i64, flags: i64, addr: i64, file: i64, mem: i64, align: i64) {
+    out(kind,4); out(flags,4); out(0,8); out(addr,8); out(addr,8); out(file,8); out(mem,8); out(align,8);
+}
+fn elf() {
+    fix_memory(8388608-4198400);
+    out(127,1); ascii("ELF"); out(2,1); out(1,1); out(1,1); pad(16);
+    out(2,2); out(62,2); out(1,4); out(4198400,8); out(64,8); out(0,8); out(0,4);
+    out(64,2); out(56,2); out(3,2); pad(64);
+    segment(1,5,4194304,4096+pos(),4096+pos(),4096);
+    segment(1,6,8388608,0,workspace_size(),4096); segment(1685382481,6,0,0,0,16);
+    pad(4096); body();
+}
+fn section(name: String, size: i64, rva: i64, raw: i64, offset: i64, flags: i64) {
+    let start=boot_get(14); ascii(name); pad(start+8); out(size,4); out(rva,4);
+    out(raw,4); out(offset,4); out(0,8); out(0,4); out(flags,4);
+}
+fn thunks(rva:i64) {
+    out(rva+328,8); out(rva+344,8); out(rva+356,8); out(rva+368,8);
+    out(rva+382,8); out(rva+398,8); out(rva+420,8); out(rva+436,8); out(0,8);
+}
+fn import_name(at_byte: i64, name: String) { pad(at_byte); out(0,2); ascii(name); out(0,1); }
+fn pe() {
+    let raw=(pos()+511)/512*512; let data=512+raw;
+    let imports=4096+(pos()+4095)/4096*4096;
+    let arena=imports+4096;
+    let mut i=0; while i<boot_get(16) {
+        resolve(boot_get(1570000+i*2),imports-4096+176+boot_get(1570001+i*2)*8); i=i+1;
+    }
+    fix_memory(arena-4096);
+    ascii("MZ"); pad(60); out(128,4); pad(128); ascii("PE"); out(0,2);
+    out(34404,2); out(3,2); out(0,4); out(0,8); out(240,2); out(35,2);
+    out(523,2); out(0,2); out(raw,4); out(512,4); out(workspace_size(),4);
+    out(4096,4); out(4096,4); out(4194304,8); out(4096,4); out(512,4);
+    out(6,2); out(0,2); out(0,4); out(6,2); out(0,2); out(0,4);
+    out(arena+(workspace_size()+4095)/4096*4096,4); out(512,4); out(0,4); out(3,2); out(256,2);
+    out(1048576,8); out(4096,8); out(1048576,8); out(4096,8); out(0,4); out(16,4);
+    out(0,8); out(imports,4); out(60,4); pad(392);
+    section(".text",pos(),4096,raw,512,1610612768);
+    section(".idata",480,imports,512,data,3221225536);
+    section(".bss",workspace_size(),arena,0,0,3221225600);
+    pad(512); body(); pad(data); out(imports+64,4); out(0,8); out(imports+288,4); out(imports+176,4);
+    out(imports+144,4); out(0,8); out(imports+304,4); out(imports+264,4);
+    pad(data+64); thunks(imports); pad(data+144); out(imports+454,8); out(0,8);
+    pad(data+176); thunks(imports); pad(data+264); out(imports+454,8); out(0,8);
+    pad(data+288); ascii("KERNEL32.dll"); out(0,1); pad(data+304); ascii("SHELL32.dll"); out(0,1);
+    import_name(data+328,"GetStdHandle"); import_name(data+344,"ReadFile");
+    import_name(data+356,"WriteFile"); import_name(data+368,"ExitProcess");
+    import_name(data+382,"GetLastError"); import_name(data+398,"GetCommandLineW");
+    import_name(data+420,"CreateFileW"); import_name(data+436,"SetStdHandle");
+    import_name(data+454,"CommandLineToArgvW"); pad(data+512);
+}
+fn main() {
+    let args=boot_argc();
+    if args==1 {
+        if boot_flag(0,"--version") { println!("blyxc direct 0.1.0"); return; }
+        if boot_flag(0,"--help") { println!("blyxc build INPUT.blyx -o NEW_EXECUTABLE"); return; }
+    }
+    if args!=0 {
+        if args!=4 || !boot_flag(0,"build") || !boot_flag(2,"-o") {
+            message("usage: blyxc build INPUT.blyx -o NEW_EXECUTABLE"); boot_err(10); boot_exit(2);
+        }
+        if !boot_input(1) { reject("cannot open input file"); }
+    }
+    let mut n=0; let mut c=boot_read();
+    while c>=0 {
+        if n>=262144 { reject("source exceeds 256 KiB"); }
+        boot_set(1024+n,c); n=n+1; c=boot_read();
+    }
+    boot_set(0,n); boot_set(12,-1);
+    if starts_source("// blyxc-target: linux-x86_64\n") { boot_set(15,0); }
+    else { if starts_source("// blyxc-target: windows-x86_64\n") || boot_windows() { boot_set(15,1); } }
+    functions(false);
+    if boot_get(12)<0 { reject("missing fn main()"); }
+    if boot_get(13)!=0 { capture_args(); }
+    call_fixup(boot_get(12)); literal(0); exit_code();
+    runtime(); functions(true);
+    let mut i=0;
+    while i<boot_get(5) {
+        let entry=1430000+i*2; resolve(boot_get(entry),boot_get(record(boot_get(entry+1))+1)); i=i+1;
+    }
+    if args!=0 && !boot_output(3) { reject("cannot create output (choose a new file)"); }
+    if windows_target() { pe(); } else { elf(); }
+}

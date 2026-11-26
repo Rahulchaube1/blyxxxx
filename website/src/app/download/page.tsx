@@ -35,6 +35,16 @@ export default function Download() {
                 ))}
             </div>
             <div className="prose block">
+                <section id="direct">
+                    <h2>Blyx Direct 0.1.0</h2>
+                    <p>Build integer and control-flow programs with a compiler written in Blyx. Each archive includes the self-hosted executable and its source. Extract it into its own directory and run its version command to identify it.</p>
+                    <div className="actions">
+                        <a href="https://github.com/Rahulchaube1/blyxxxx/releases/download/direct-v0.1.0/blyxc-direct-windows-x86_64.zip">Windows x64 ZIP</a>
+                        <a href="https://github.com/Rahulchaube1/blyxxxx/releases/download/direct-v0.1.0/blyxc-direct-linux-x86_64.tar.gz">Linux x64 tar.gz</a>
+                        <a href="https://github.com/Rahulchaube1/blyxxxx/releases/download/direct-v0.1.0/SHA256SUMS">SHA-256 checksums</a>
+                        <a href={guideLink("native-builds")}>Build your first executable</a>
+                    </div>
+                </section>
                 <section>
                     <h2>Download Blyx AI tools</h2>
                     <p>Use the published executables with your own CSV files. Each release includes sample data and checksums.</p>

@@ -203,6 +203,9 @@ impl Lowerer<'_> {
 
 fn host_module(name: &str) -> Option<&'static str> {
     Some(match name {
+        "boot_get" | "boot_set" | "boot_len" | "boot_char" | "boot_read" | "boot_write"
+        | "boot_err" | "boot_exit" | "boot_windows" | "boot_argc" | "boot_flag" | "boot_input"
+        | "boot_output" => "std::bootstrap",
         "cli_args" | "args_new" | "args_len" | "args_at" | "args_item" | "args_tail"
         | "args_push" | "args_concat" | "args_join" | "env_get" | "exe_dir" | "stdout_terminal"
         | "stderr_line" | "process_run" | "process_exec" | "process_exit" => "std::cli",
@@ -222,6 +225,7 @@ struct ModuleGraph {
     code: String,
     next_id: usize,
     uses_host: bool,
+    uses_bootstrap: bool,
 }
 
 impl ModuleGraph {
@@ -260,10 +264,11 @@ impl ModuleGraph {
                 Item::Use(u)
                     if matches!(
                         u.path.as_str(),
-                        "std::cli" | "std::fs" | "std::text" | "std::buffer"
+                        "std::cli" | "std::fs" | "std::text" | "std::buffer" | "std::bootstrap"
                     ) =>
                 {
                     self.uses_host = true;
+                    self.uses_bootstrap |= u.path == "std::bootstrap";
                     imports.insert(u.path.as_str());
                 }
                 Item::Use(u) => {
@@ -336,6 +341,9 @@ pub fn build(file: &BlyxFile, input: &Path, output: &Path) -> Result<(), String>
     let mut code = String::from(include_str!("native_prelude.txt"));
     if graph.uses_host {
         code.push_str(include_str!("native_host.rs.inc"));
+    }
+    if graph.uses_bootstrap {
+        code.push_str(include_str!("bootstrap_host.rs.inc"));
     }
     code.push_str(&graph.code);
     code.push_str("fn main() { let _ = f_0_main(); }\n");

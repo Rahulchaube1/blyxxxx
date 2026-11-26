@@ -6984,16 +6984,33 @@
         "slug": "native-builds",
         "title": "Build a native executable",
         "group": "Local toolchain",
-        "summary": "Compile a typed Blyx program and compare the executable with the interpreter on the same input.",
+        "summary": "Build an x86-64 program with Blyx Direct, reproduce the self-hosted compiler, or use the 0.2.1 toolchain for numerical workloads.",
         "example": null,
         "sections": [
+            {
+                "heading": "Build directly with Blyx Direct 0.1.0",
+                "text": "Extract the Windows x64 or Linux x64 archive into its own directory. Its blyxc executable reads Blyx source and emits x86-64 instructions in a PE or ELF file. The build needs no external compiler, assembler or linker. This edition supports integer arithmetic, booleans, string literals, functions, recursion and loops. Save the short program below as double.blyx.",
+                "command": "fn double(n: i64) -> i64 { n * 2 }\nfn main() { println!(double(21)); }",
+                "links": [{"text": "Download the self-hosted compiler", "href": "https://www.blyx-lang.space/download#direct"}]
+            },
+            {
+                "heading": "Run the executable",
+                "text": "On Linux, use the two commands below. In PowerShell use .\\blyxc.exe build double.blyx -o double.exe followed by .\\double.exe. The output should be 42. Choose a fresh filename for the executable.",
+                "command": "./blyxc build double.blyx -o double\n./double"
+            },
+            {
+                "heading": "Rebuild the compiler with itself",
+                "text": "The archive includes compiler.blyx. On Linux the commands below compile it twice and compare the binaries. A successful comparison produces no output. The release test also runs generated applications with PATH empty. Preparing the very first seed from the Rust workspace is a separate build step.",
+                "command": "./blyxc build compiler.blyx -o generation2\n./generation2 build compiler.blyx -o generation3\ncmp generation2 generation3",
+                "links": [{"text":"Supported syntax and Windows verification commands","href":"https://github.com/Rahulchaube1/blyxxxx/tree/direct-v0.1.0/compiler/blyxc/bootstrap"}]
+            },
             {
                 "heading": "Start with a known result",
                 "text": "Run the project source through the interpreter and keep a small expected output. When trying a native build for the first time, use the generated hello project or the capstone. Both have simple results that you can check by eye."
             },
             {
-                "heading": "Build for your host",
-                "text": "Install a Rust compiler and host linker. From inside your Blyx project, run the command below. The native backend translates supported Blyx syntax to Rust and invokes rustc to produce an optimized executable for the build machine.",
+                "heading": "Build with the 0.2.1 toolchain",
+                "text": "Use 0.2.1 for floating-point numbers, vectors, package imports and Apple Silicon macOS. Its build command translates the supported source to Rust and invokes rustc and a host linker. Use the command below with the 0.2.1 driver.",
                 "command": "blyxc build src/main.blyx"
             },
             {

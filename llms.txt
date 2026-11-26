@@ -188,7 +188,7 @@ The release supports synchronous functions, recursion, control flow and numeric 
 
 - [Debug and recover from errors](https://doc.blyx-lang.space/guide/diagnostics) — Locate a syntax error, diagnose a runtime failure, and guard an operation using short-circuit evaluation.
 
-- [Build a native executable](https://doc.blyx-lang.space/guide/native-builds) — Compile a typed Blyx program and compare the executable with the interpreter on the same input.
+- [Build a native executable](https://doc.blyx-lang.space/guide/native-builds) — Build an x86-64 program with Blyx Direct, reproduce the self-hosted compiler, or use the 0.2.1 toolchain for numerical workloads.
 
 ## Language reference
 
