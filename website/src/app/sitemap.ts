@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
               "libraries/logos",
               ...catalog.packages.map((p) => "packages/" + p.slug),
               "articles",
+              "articles/blyx-direct",
               "articles/blyxtorch-portable-training",
               "articles/training-in-factors",
               "blog",

@@ -2,6 +2,10 @@
 
 All notable changes to the **Blyx Language** extension are documented here.
 
+## 1.3.0
+
+- Build a saved Blyx program in a trusted local workspace with an installed Blyx Direct compiler on Windows x64 or Linux x64. Choose a new executable filename and read build diagnostics in the Blyx output channel.
+
 ## 1.2.4
 
 - Show the Blyx logo beside `.blyx` files in light and dark themes that support language icons.

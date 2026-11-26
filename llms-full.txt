@@ -17515,7 +17515,7 @@ The archive includes compiler.blyx. On Linux the commands below compile it twice
 cmp generation2 generation3
 ```
 
-[Supported syntax and Windows verification commands](https://github.com/Rahulchaube1/blyxxxx/tree/direct-v0.1.0/compiler/blyxc/bootstrap)
+[Supported syntax and Windows verification commands](https://github.com/Rahulchaube1/blyxxxx/tree/direct-v0.1.0/compiler/blyxc/bootstrap) · [How Blyx learned to compile itself](https://www.blyx-lang.space/articles/blyx-direct)
 
 #### Start with a known result
 

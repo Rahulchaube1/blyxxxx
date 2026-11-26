@@ -1,5 +1,6 @@
 const vscode = require("vscode");
 const path = require("node:path");
+const { buildNative } = require("./direct");
 const { Worker } = require("node:worker_threads");
 
 function activate(context) {
@@ -59,6 +60,39 @@ function activate(context) {
       const doc = vscode.window.activeTextEditor?.document;
       if (doc?.languageId === "blyx") schedule(doc, true);
       else vscode.window.showInformationMessage("Open a Blyx program to run it.");
+    }),
+    vscode.commands.registerCommand("blyx.buildNative", async () => {
+      const doc = vscode.window.activeTextEditor?.document;
+      if (!vscode.workspace.isTrusted || doc?.languageId !== "blyx" || doc.uri.scheme !== "file") {
+        return vscode.window.showInformationMessage("Open a saved Blyx file in a trusted local workspace to build it.");
+      }
+      if (process.arch !== "x64" || !["win32", "linux"].includes(process.platform)) {
+        return vscode.window.showInformationMessage("Blyx Direct currently targets Windows x64 and Linux x64.");
+      }
+      if (doc.isDirty && !await doc.save()) return;
+      try {
+        const config = vscode.workspace.getConfiguration("blyx");
+        let compiler = config.inspect("directCompilerPath")?.globalValue;
+        if (!compiler) {
+          const picked = await vscode.window.showOpenDialog({ canSelectMany: false, canSelectFiles: true, canSelectFolders: false, openLabel: "Select Blyx Direct compiler" });
+          if (!picked?.length || picked[0].scheme !== "file") return;
+          compiler = picked[0].fsPath;
+        }
+        const input = path.parse(doc.uri.fsPath);
+        const target = await vscode.window.showSaveDialog({
+          defaultUri: vscode.Uri.file(path.join(input.dir, input.name + (process.platform === "win32" ? ".exe" : ""))),
+          saveLabel: "Build to a new file"
+        });
+        if (!target || target.scheme !== "file") return;
+        await buildNative(compiler, doc.uri.fsPath, target.fsPath);
+        output.appendLine("Built " + target.fsPath);
+        output.show(true);
+      } catch (error) {
+        const detail = [error.stderr, error.stdout].map(value => value?.trim()).filter(Boolean).join("\n") || error.message;
+        output.appendLine(detail);
+        output.show(true);
+        vscode.window.showErrorMessage("Blyx native build failed. See the Blyx output channel.");
+      }
     }),
     { dispose() { for (const key of pending.keys()) cancel(key); } }
   );

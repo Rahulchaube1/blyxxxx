@@ -8,7 +8,7 @@ Blyx is an experimental, open-source language for writing small numerical progra
 
 ## Self-hosted compiler
 
-**Self-hosted native compiler.** Blyx Direct 0.1.0 compiles its own Blyx source and integer/control-flow programs directly to Windows x64 or Linux x64 executables. The archive includes the source so you can reproduce the compiler with the executable you download. The separate 0.2.1 toolchain supports vectors, floating-point workloads and imported packages. [Download Blyx Direct](https://github.com/Rahulchaube1/blyxxxx/releases/tag/direct-v0.1.0) · [Build and verify it](compiler/blyxc/bootstrap/README.md)
+**Self-hosted native compiler.** Blyx Direct 0.1.0 compiles its own Blyx source and integer/control-flow programs directly to Windows x64 or Linux x64 executables. The archive includes the source so you can reproduce the compiler with the executable you download. The separate 0.2.1 toolchain supports vectors, floating-point workloads and imported packages. [Download Blyx Direct](https://github.com/Rahulchaube1/blyxxxx/releases/tag/direct-v0.1.0) · [Build and verify it](compiler/blyxc/bootstrap/README.md) · [How Blyx learned to compile itself](https://www.blyx-lang.space/articles/blyx-direct)
 
 ## Learn Blyx
 

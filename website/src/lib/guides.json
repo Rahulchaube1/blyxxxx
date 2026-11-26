@@ -7002,7 +7002,7 @@
                 "heading": "Rebuild the compiler with itself",
                 "text": "The archive includes compiler.blyx. On Linux the commands below compile it twice and compare the binaries. A successful comparison produces no output. The release test also runs generated applications with PATH empty. Preparing the very first seed from the Rust workspace is a separate build step.",
                 "command": "./blyxc build compiler.blyx -o generation2\n./generation2 build compiler.blyx -o generation3\ncmp generation2 generation3",
-                "links": [{"text":"Supported syntax and Windows verification commands","href":"https://github.com/Rahulchaube1/blyxxxx/tree/direct-v0.1.0/compiler/blyxc/bootstrap"}]
+                "links": [{"text":"Supported syntax and Windows verification commands","href":"https://github.com/Rahulchaube1/blyxxxx/tree/direct-v0.1.0/compiler/blyxc/bootstrap"}, {"text":"How Blyx learned to compile itself","href":"https://www.blyx-lang.space/articles/blyx-direct"}]
             },
             {
                 "heading": "Start with a known result",

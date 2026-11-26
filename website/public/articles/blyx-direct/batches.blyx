@@ -1,0 +1,15 @@
+// Count batches while keeping every intermediate value within i64.
+fn batches(readings: i64, capacity: i64) -> i64 {
+    if readings < 0 || capacity <= 0 { return -1; }
+    let full = readings / capacity;
+    if readings % capacity == 0 { return full; }
+    full + 1
+}
+
+fn main() {
+    println!(batches(0, 64));
+    println!(batches(64, 64));
+    println!(batches(65, 64));
+    println!(batches(9223372036854775807, 2));
+    println!(batches(65, 0));
+}

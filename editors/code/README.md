@@ -32,7 +32,11 @@ For a quick diagnostic check, remove the closing brace from `readings.blyx`. Res
 
 ## Interpreter and native builds
 
-The extension supports the Blyx 0.2.0 interpreter, including functions, conditionals, loops, checked integers, floating-point arithmetic, and numeric vectors. Editor runs have a one-million-step budget and an eight-second worker timeout. To build a standalone executable, install `blyxc`, `rustc`, and a host linker, then run `blyxc build readings.blyx` in a terminal. [Compiler downloads](https://www.blyx-lang.space/download) · [Native build guide](https://doc.blyx-lang.space/guide/native-builds)
+The extension supports the Blyx 0.2.0 interpreter, including functions, conditionals, loops, checked integers, floating-point arithmetic, and numeric vectors. Editor runs have a one-million-step budget and an eight-second worker timeout. The numerical 0.2.1 toolchain builds this vector example in a terminal with Rust and a host linker. [Compiler downloads](https://www.blyx-lang.space/download) · [Native build guide](https://doc.blyx-lang.space/guide/native-builds)
+
+### Build a standalone program with Blyx Direct
+
+On Windows x64 or Linux x64, extract the Direct compiler and open the batch-counting example in a trusted local workspace. Choose **Blyx: Build Native Executable**, select the extracted compiler, then choose a fresh output filename. The Blyx output channel shows the resulting path or the compiler diagnostic. Run the binary from a terminal. Its first three lines are `0`, `1` and `2`. To reuse a compiler across builds, set **Blyx › Direct Compiler Path** in User Settings. Direct 0.1.0 supports integer and Boolean programs, functions and loops. [Download Direct](https://www.blyx-lang.space/download#direct) · [Example and expected output](https://www.blyx-lang.space/articles/blyx-direct)
 
 For manual installation, download the editor VSIX from the project’s editor page and choose **Extensions: Install from VSIX…** in desktop VS Code. The repository includes the worker, the WebAssembly runtime tests, and the license for this extension. [Editor downloads](https://www.blyx-lang.space/vscode) · [Runtime tests](https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/tools/test-editor-runtime.mjs) · [MIT license](https://github.com/Rahulchaube1/blyxxxx/blob/blyx-main/editors/code/LICENSE)
 

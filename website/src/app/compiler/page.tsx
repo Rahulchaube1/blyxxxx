@@ -47,6 +47,7 @@ export default function Page() {
             intro="Try a program in the interpreter, build an executable, or rebuild the compiler itself. Choose the toolchain that supports your source and platform."
             sections={sections}
         >
+            <p><a href="/articles/blyx-direct">How Blyx learned to compile itself</a> follows a program from source to machine code and shows how to reproduce the compiler.</p>
             <section>
                 <h2>Check a program’s syntax</h2>
                 <p className="subtle">

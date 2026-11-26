@@ -12,6 +12,15 @@ export default function Articles() {
         </header>
         <article className={styles.feature}>
             <div>
+                <p className={styles.byline}><time dateTime="2026-11-26">26 November 2026</time> · Blyx Direct 0.1.0</p>
+                <h2><a href="/articles/blyx-direct">How Blyx learned to compile itself</a></h2>
+                <p>Build a batch counter, follow a comparison into machine code, and reproduce the compiler from its own Blyx source on Windows or Linux.</p>
+                <a href="/articles/blyx-direct">Read the compiler walkthrough →</a>
+            </div>
+            <img src="/articles/blyx-direct/bootstrap.png" alt="Stages in the Blyx compiler bootstrap" />
+        </article>
+        <article className={styles.feature}>
+            <div>
                 <p className={styles.byline}><time dateTime="2026-11-24">24 November 2026</time> · LinearFit and BlyxTorch</p>
                 <h2><a href="/articles/training-in-factors">A matrix with 2.2 trillion coefficients</a></h2>
                 <p>Fit a matrix from four feature pairs, restart a million-weight training run in two CPU processes, and compare two ways to differentiate the same quantum circuit.</p>
