@@ -25,7 +25,7 @@ export function packageDirectory(category?: PackageCategory) {
             )].join(" "),
         }));
     const additions = workbench.filter((p) => !category || p.kind === category).map((p) => ({
-        ...p, category: p.kind, version: "0.1.0", logo: "/workbench/" + p.slug + ".png?v=" + (p.art ?? p.version),
+        ...p, category: p.kind, logo: "/workbench/" + p.slug + ".png?v=" + (p.art ?? p.version),
         documentation: "https://nest.blyx-lang.space/packages/" + p.slug + ".html",
         flightdeck: false, workbench: true, guide: "", example: "",
         search: [p.slug, p.title, p.kind, p.group, p.description, "workbench"].join(" ").toLowerCase(),
