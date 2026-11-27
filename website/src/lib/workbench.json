@@ -6,7 +6,9 @@
     "description": "Keep editorial approval tied to the submitted revision even when an author edits during review.",
     "group": "Publishing and collaboration",
     "repository": "https://github.com/Rahulchaube1/blyx-edition-review",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "bird": "King eider drake",
+    "art": "d549949dc59f"
   },
   {
     "title": "Embargo Clock",
@@ -15,7 +17,9 @@
     "description": "Release an embargoed story only after its scheduled timestamp and support postponement.",
     "group": "Publishing and collaboration",
     "repository": "https://github.com/Rahulchaube1/blyx-embargo-clock",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "bird": "Rhinoceros hornbill",
+    "art": "94bb8a98ce8d"
   },
   {
     "title": "Locale Bundle",
@@ -24,7 +28,9 @@
     "description": "Collect a declared number of translated segments and hold publication while segments remain.",
     "group": "Publishing and collaboration",
     "repository": "https://github.com/Rahulchaube1/blyx-locale-bundle",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "bird": "Lilac-breasted roller",
+    "art": "3c556155e972"
   },
   {
     "title": "Alias Cutover",
@@ -33,7 +39,9 @@
     "description": "Keep a canonical URL active until the replacement target passes a probe for the same revision.",
     "group": "Publishing and collaboration",
     "repository": "https://github.com/Rahulchaube1/blyx-alias-cutover",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "bird": "Resplendent quetzal",
+    "art": "05a765949ae3"
   },
   {
     "title": "Comment Appeals",
@@ -42,7 +50,9 @@
     "description": "Preserve a moderation case ID across hiding, appeal, review and restoration.",
     "group": "Publishing and collaboration",
     "repository": "https://github.com/Rahulchaube1/blyx-comment-appeals",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "bird": "Great grey owl",
+    "art": "83493ab0c58f"
   },
   {
     "title": "Edit Lease",
@@ -51,7 +61,9 @@
     "description": "Control an exclusive editing window with renewal, expiry and explicit release using logical timestamps.",
     "group": "Publishing and collaboration",
     "repository": "https://github.com/Rahulchaube1/blyx-edit-lease",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "bird": "Secretarybird",
+    "art": "607e6c139942"
   },
   {
     "title": "Newsletter Proof",
@@ -60,7 +72,9 @@
     "description": "Invalidate a newsletter proof after a revision and bind the send request to the approved proof.",
     "group": "Publishing and collaboration",
     "repository": "https://github.com/Rahulchaube1/blyx-newsletter-proof",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "bird": "Atlantic puffin",
+    "art": "d8c603dd1c3e"
   },
   {
     "title": "Media Rights",
@@ -69,7 +83,9 @@
     "description": "Track the expiry of a licensed asset and direct the host to withdraw an expired public copy.",
     "group": "Publishing and collaboration",
     "repository": "https://github.com/Rahulchaube1/blyx-media-rights",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "bird": "Magnificent frigatebird male",
+    "art": "a04aef23d3f0"
   },
   {
     "title": "Chapter Lock",
@@ -78,7 +94,9 @@
     "description": "Prevent a book export from racing a new chapter edit by sealing a numbered manuscript snapshot.",
     "group": "Publishing and collaboration",
     "repository": "https://github.com/Rahulchaube1/blyx-chapter-lock",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "bird": "Superb lyrebird male",
+    "art": "40765e70fdb0"
   },
   {
     "title": "Caption Review",
@@ -87,7 +105,9 @@
     "description": "Track outstanding subtitle corrections and return a corrected track for listening approval.",
     "group": "Publishing and collaboration",
     "repository": "https://github.com/Rahulchaube1/blyx-caption-review",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "bird": "Grey crowned crane",
+    "art": "e07dea55ba77"
   },
   {
     "title": "Cart Reserve",
@@ -96,7 +116,9 @@
     "description": "Reserve a fixed cart quantity, release unneeded units and commit the exact remainder.",
     "group": "Commerce and fulfillment",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/cart_reserve",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Scarlet macaw",
+    "art": "df733dadbfe8"
   },
   {
     "title": "Split Tender",
@@ -105,7 +127,9 @@
     "description": "Collect installments in minor units and prevent capture above the outstanding order balance.",
     "group": "Commerce and fulfillment",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/split_tender",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "African spoonbill",
+    "art": "bd3b7fe72d02"
   },
   {
     "title": "Return Triage",
@@ -114,7 +138,9 @@
     "description": "Route inspected returns to stock, repair, or disposal while preserving the return authorization ID.",
     "group": "Commerce and fulfillment",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/return_triage",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Black skimmer",
+    "art": "b25147cab287"
   },
   {
     "title": "Parcel Claim",
@@ -123,7 +149,9 @@
     "description": "Hold a lost-parcel claim during carrier investigation and cancel compensation when delivery wins the race.",
     "group": "Commerce and fulfillment",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/parcel_claim",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Mandarin duck male",
+    "art": "891016dfcd1a"
   },
   {
     "title": "Auction Close",
@@ -132,7 +160,9 @@
     "description": "Drive a single-item ascending auction with a reserve, strictly increasing bids and a settlement handoff.",
     "group": "Commerce and fulfillment",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/auction_close",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Australian pelican",
+    "art": "f207a5442a8d"
   },
   {
     "title": "Gift Balance",
@@ -141,7 +171,9 @@
     "description": "Redeem a prepaid balance multiple times, decline overdrafts, and close an exhausted card.",
     "group": "Commerce and fulfillment",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/gift_balance",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Golden pheasant male",
+    "art": "d8bec70f6784"
   },
   {
     "title": "Backorder Fill",
@@ -150,7 +182,9 @@
     "description": "Release a backordered line only after cumulative inbound receipts satisfy its shortage.",
     "group": "Commerce and fulfillment",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/backorder_fill",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Southern cassowary",
+    "art": "8c36ee281bca"
   },
   {
     "title": "Coupon Pool",
@@ -159,7 +193,9 @@
     "description": "Manage a finite campaign redemption pool with replenishment and explicit suspension.",
     "group": "Commerce and fulfillment",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/coupon_pool",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Crested auklet",
+    "art": "fe450a8de23f"
   },
   {
     "title": "Subscription Grace",
@@ -168,7 +204,9 @@
     "description": "Control renewal, grace-period expiration and reactivation by comparing absolute billing deadlines.",
     "group": "Commerce and fulfillment",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/subscription_grace",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Demoiselle crane",
+    "art": "7f5bdde715f8"
   },
   {
     "title": "Exchange Stock",
@@ -177,7 +215,9 @@
     "description": "Keep a replacement item reserved until receipt of the matching returned item.",
     "group": "Commerce and fulfillment",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/exchange_stock",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Shoebill",
+    "art": "3d19390ee5a9"
   },
   {
     "title": "Outbox Delivery",
@@ -186,7 +226,9 @@
     "description": "Coordinate durable outbox insertion, delivery and acknowledgement with a stable message ID.",
     "group": "Data systems and queues",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/outbox_delivery",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Common redpoll male",
+    "art": "855b102af8a5"
   },
   {
     "title": "Savepoint Batch",
@@ -195,7 +237,9 @@
     "description": "Control a nested transaction using a savepoint depth and reject outer commit before nested scopes close.",
     "group": "Data systems and queues",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/savepoint_batch",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Turquoise-browed motmot",
+    "art": "5e9e427a08ec"
   },
   {
     "title": "Schema Shadow",
@@ -204,7 +248,9 @@
     "description": "Protect a shadow-table cutover until the declared row backfill and an explicit consistency check finish.",
     "group": "Data systems and queues",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/schema_shadow",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Great crested grebe",
+    "art": "30dceba19496"
   },
   {
     "title": "Stream Watermark",
@@ -213,7 +259,9 @@
     "description": "Advance an event-time watermark monotonically and route late arrivals for correction.",
     "group": "Data systems and queues",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/stream_watermark",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Northern gannet",
+    "art": "201363d191b0"
   },
   {
     "title": "Deadletter Replay",
@@ -222,7 +270,9 @@
     "description": "Replay a dead-letter batch with an explicit per-message attempt budget and manual escalation.",
     "group": "Data systems and queues",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/deadletter_replay",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Snowy egret",
+    "art": "ea6cdd75287b"
   },
   {
     "title": "Snapshot Fence",
@@ -231,7 +281,9 @@
     "description": "Buffer changes during snapshot export and release the change feed only at a matching snapshot fence.",
     "group": "Data systems and queues",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/snapshot_fence",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Inca tern",
+    "art": "4ec46be65713"
   },
   {
     "title": "Replica Promote",
@@ -240,7 +292,9 @@
     "description": "Fence a replica promotion against its required log offset before announcing a new primary.",
     "group": "Data systems and queues",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/replica_promote",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Greater roadrunner",
+    "art": "87940b30593c"
   },
   {
     "title": "Compaction Swap",
@@ -249,7 +303,9 @@
     "description": "Retain old table segments until the replacement file has the expected record count and readers drain.",
     "group": "Data systems and queues",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/compaction_swap",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Roseate spoonbill",
+    "art": "aabadbc649d2"
   },
   {
     "title": "Microbatch Seal",
@@ -258,7 +314,9 @@
     "description": "Close a microbatch on its target row count or an early flush and release only after sink confirmation.",
     "group": "Data systems and queues",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/microbatch_seal",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Cockatiel",
+    "art": "3321f6791e60"
   },
   {
     "title": "Segment Roll",
@@ -267,7 +325,9 @@
     "description": "Roll bounded log segments without losing the append that triggered rotation.",
     "group": "Data systems and queues",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/segment_roll",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Bearded reedling male",
+    "art": "ce1deb1a39b1"
   },
   {
     "title": "Canary Traffic",
@@ -276,7 +336,9 @@
     "description": "Gate ordered traffic increases on the health of the current rollout percentage.",
     "group": "Reliability and delivery",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/canary_traffic",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Vulturine guineafowl",
+    "art": "7a495a5b741b"
   },
   {
     "title": "Breaker Probe",
@@ -285,7 +347,9 @@
     "description": "Open a circuit after a configured number of consecutive failures and admit a single recovery probe.",
     "group": "Reliability and delivery",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/breaker_probe",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Black-necked stilt",
+    "art": "9734999a50e3"
   },
   {
     "title": "Drain Workers",
@@ -294,7 +358,9 @@
     "description": "Stop new admissions before draining the known count of active workers and terminating a deployment.",
     "group": "Reliability and delivery",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/drain_workers",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Black-capped chickadee",
+    "art": "a78fdd6baeab"
   },
   {
     "title": "Backup Chain",
@@ -303,7 +369,9 @@
     "description": "Require a base snapshot and contiguous increments before sealing a restorable backup chain.",
     "group": "Reliability and delivery",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/backup_chain",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Green peafowl male",
+    "art": "9ce0b038e89d"
   },
   {
     "title": "Maintenance Slot",
@@ -312,7 +380,9 @@
     "description": "Track the maintenance window deadline, prevent late starts and flag overrun on completion.",
     "group": "Reliability and delivery",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/maintenance_slot",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Keel-billed toucan",
+    "art": "fb8c5931e251"
   },
   {
     "title": "Incident Silence",
@@ -321,7 +391,9 @@
     "description": "Suppress repeated notifications until a quiet period expires while allowing severity escalation.",
     "group": "Reliability and delivery",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/incident_silence",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Victoria crowned pigeon",
+    "art": "8f540cc440fe"
   },
   {
     "title": "Artifact Promote",
@@ -330,7 +402,9 @@
     "description": "Promote exactly the artifact digest token that passed staging and block substituted build IDs.",
     "group": "Reliability and delivery",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/artifact_promote",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Red-legged seriema",
+    "art": "7a40695a0b3d"
   },
   {
     "title": "Mirror Repair",
@@ -339,7 +413,9 @@
     "description": "Schedule missing mirror blocks and disclose availability only after a consistency probe.",
     "group": "Reliability and delivery",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/mirror_repair",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Hoatzin",
+    "art": "02774641700c"
   },
   {
     "title": "Reboot Ring",
@@ -348,7 +424,9 @@
     "description": "Admit nodes to a rolling reboot one at a time and wait for each health check before the next node.",
     "group": "Reliability and delivery",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/reboot_ring",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Greater flamingo",
+    "art": "4e24eb469cd6"
   },
   {
     "title": "Restore Drill",
@@ -357,7 +435,9 @@
     "description": "Verify restored row counts and run a read probe before declaring a recovery drill successful.",
     "group": "Reliability and delivery",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/restore_drill",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Smew drake",
+    "art": "1061349aaf28"
   },
   {
     "title": "Take Punch",
@@ -366,7 +446,9 @@
     "description": "Punch a recording in and out on a monotonic sample clock and retain the captured duration.",
     "group": "Audio, images and video",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/take_punch",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Sword-billed hummingbird",
+    "art": "359d61548bf2"
   },
   {
     "title": "Silence Gate",
@@ -375,7 +457,9 @@
     "description": "Use separate open and close amplitude thresholds to prevent chatter in an audio gate.",
     "group": "Audio, images and video",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/silence_gate",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Emperor penguin",
+    "art": "d0c1a06e9e5a"
   },
   {
     "title": "Video Keycut",
@@ -384,7 +468,9 @@
     "description": "Snap a requested cut forward to the next eligible keyframe and preserve the resulting sample boundary.",
     "group": "Audio, images and video",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/video_keycut",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Wilson's bird-of-paradise",
+    "art": "1dcd1b3f2268"
   },
   {
     "title": "Proxy Encode",
@@ -393,7 +479,9 @@
     "description": "Bind a low-resolution editing proxy to an original asset ID and support regeneration after rejection.",
     "group": "Audio, images and video",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/proxy_encode",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Red crossbill male",
+    "art": "d2476e5dbbb9"
   },
   {
     "title": "Sprite Sheet",
@@ -402,7 +490,9 @@
     "description": "Assign frames into a fixed-capacity sprite atlas and reject an incomplete finalization.",
     "group": "Audio, images and video",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/sprite_sheet",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Gouldian finch",
+    "art": "5da63f58fb04"
   },
   {
     "title": "Subtitle Clock",
@@ -411,7 +501,9 @@
     "description": "Accept nonoverlapping cues in timestamp order and mark the last closed cue for export.",
     "group": "Audio, images and video",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/subtitle_clock",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Great horned owl",
+    "art": "15b1df9c0986"
   },
   {
     "title": "Loudness Pass",
@@ -420,7 +512,9 @@
     "description": "Require a measured peak from a first pass before applying a bounded mastering target.",
     "group": "Audio, images and video",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/loudness_pass",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Egyptian vulture",
+    "art": "8927f38fc297"
   },
   {
     "title": "Frame Reorder",
@@ -429,7 +523,9 @@
     "description": "Deliver frames on the expected sequence number and signal missing ranges to the decoder.",
     "group": "Audio, images and video",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/frame_reorder",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "White-crested laughingthrush",
+    "art": "6778743aeba9"
   },
   {
     "title": "Panorama Stitch",
@@ -438,7 +534,9 @@
     "description": "Track overlapping frame pairs and require a solved alignment before blending.",
     "group": "Audio, images and video",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/panorama_stitch",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Kakapo",
+    "art": "793d126581bd"
   },
   {
     "title": "Audio Preroll",
@@ -447,7 +545,9 @@
     "description": "Prime a playback buffer and recover from underrun without emitting premature play commands.",
     "group": "Audio, images and video",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/audio_preroll",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Greater racket-tailed drongo",
+    "art": "857de0430377"
   },
   {
     "title": "Crs Handoff",
@@ -456,7 +556,9 @@
     "description": "Require the expected coordinate-system identifier before allowing a vector-layer merge.",
     "group": "Maps, environment and scientific acquisition",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/crs_handoff",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Kea",
+    "art": "02eb058287fd"
   },
   {
     "title": "Tile Pyramid",
@@ -465,7 +567,9 @@
     "description": "Publish pyramid levels in descending zoom order and close only after zoom zero is complete.",
     "group": "Maps, environment and scientific acquisition",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/tile_pyramid",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Blue-footed booby",
+    "art": "9e6bf51a6b8d"
   },
   {
     "title": "Sensor Warmup",
@@ -474,7 +578,9 @@
     "description": "Hold measurements during a sensor warm-up countdown and restart calibration after a reset.",
     "group": "Maps, environment and scientific acquisition",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/sensor_warmup",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Snow bunting male",
+    "art": "bb266b22af63"
   },
   {
     "title": "Survey Transect",
@@ -483,7 +589,9 @@
     "description": "Visit field waypoints in order and distinguish revisits from the next required station.",
     "group": "Maps, environment and scientific acquisition",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/survey_transect",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Saddle-billed stork",
+    "art": "5387e3e9d7af"
   },
   {
     "title": "Gauge Hysteresis",
@@ -492,7 +600,9 @@
     "description": "Raise and clear a flood-gauge advisory with a lower reset band using integer level units.",
     "group": "Maps, environment and scientific acquisition",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/gauge_hysteresis",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "European bee-eater",
+    "art": "47a804421d6a"
   },
   {
     "title": "Survey Closure",
@@ -501,7 +611,9 @@
     "description": "Hold a survey traverse for remeasurement if its reported closure error exceeds the selected tolerance.",
     "group": "Maps, environment and scientific acquisition",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/survey_closure",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Long-tailed tit",
+    "art": "3c659879d0dc"
   },
   {
     "title": "Dark Frame Stack",
@@ -510,7 +622,9 @@
     "description": "Acquire a required stack of dark frames and repeat the acquisition when a light leak is detected.",
     "group": "Maps, environment and scientific acquisition",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/dark_frame_stack",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "White bellbird male",
+    "art": "549809e4725a"
   },
   {
     "title": "Sample Custody",
@@ -519,7 +633,9 @@
     "description": "Track custody of a field sample across dispatch and receipt with a matching seal number.",
     "group": "Maps, environment and scientific acquisition",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/sample_custody",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Splendid fairywren male",
+    "art": "6d9537fb3fee"
   },
   {
     "title": "Instrument Zero",
@@ -528,7 +644,9 @@
     "description": "Apply a zero-offset correction only after repeated reference measurements agree within one count.",
     "group": "Maps, environment and scientific acquisition",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/instrument_zero",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Pied avocet",
+    "art": "3dbcab26ad42"
   },
   {
     "title": "Grid Resample",
@@ -537,7 +655,9 @@
     "description": "Track remaining destination rows during raster reprojection and require an explicit nodata audit before release.",
     "group": "Maps, environment and scientific acquisition",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/grid_resample",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Steller's sea eagle",
+    "art": "5533eda609ad"
   },
   {
     "title": "Fold Holdout",
@@ -546,7 +666,9 @@
     "description": "Fence training and scoring by fold ID so a late training completion cannot score the wrong holdout.",
     "group": "Machine learning and evaluation",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/fold_holdout",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Eurasian nuthatch",
+    "art": "7009c55caaca"
   },
   {
     "title": "Label Consensus",
@@ -555,7 +677,9 @@
     "description": "Require a second independent host-provided label to agree or route the sample for adjudication.",
     "group": "Machine learning and evaluation",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/label_consensus",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Andean cock-of-the-rock",
+    "art": "3a77eb8792e0"
   },
   {
     "title": "Early Plateau",
@@ -564,7 +688,9 @@
     "description": "Track consecutive unimproved evaluations against a caller-selected patience budget.",
     "group": "Machine learning and evaluation",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/early_plateau",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Purple gallinule",
+    "art": "c843b730cf6a"
   },
   {
     "title": "Feature Freeze",
@@ -573,7 +699,9 @@
     "description": "Bind a model fit to one feature schema and request re-encoding when a serving schema differs.",
     "group": "Machine learning and evaluation",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/feature_freeze",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Greater sage-grouse",
+    "art": "c013f16dbe68"
   },
   {
     "title": "Gradient Barrier",
@@ -582,7 +710,9 @@
     "description": "Coordinate a fixed count of host-deduplicated gradient contributions before a single optimizer step.",
     "group": "Machine learning and evaluation",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/gradient_barrier",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Red-crowned crane",
+    "art": "eb31bf60a168"
   },
   {
     "title": "Checkpoint Elect",
@@ -591,7 +721,9 @@
     "description": "Keep the best model checkpoint under integer loss minimization and restore it on a stop request.",
     "group": "Machine learning and evaluation",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/checkpoint_elect",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Eurasian oystercatcher",
+    "art": "6cc39d50a18c"
   },
   {
     "title": "Annotation Budget",
@@ -600,7 +732,9 @@
     "description": "Reserve a bounded labeling budget, route affordable tasks and close the campaign when funds run out.",
     "group": "Machine learning and evaluation",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/annotation_budget",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Amazonian umbrellabird male",
+    "art": "8dbe8d8369d8"
   },
   {
     "title": "Inference Batch",
@@ -609,7 +743,9 @@
     "description": "Seal variable-size inference requests by a token budget and carry the first oversized arrival to the next batch.",
     "group": "Machine learning and evaluation",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/inference_batch",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Indian paradise flycatcher male",
+    "art": "c7519d19cab5"
   },
   {
     "title": "Distill Cache",
@@ -618,7 +754,9 @@
     "description": "Seal teacher predictions at a pinned teacher revision and invalidate stale targets when it changes.",
     "group": "Machine learning and evaluation",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/distill_cache",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Pine grosbeak male",
+    "art": "679c2217f720"
   },
   {
     "title": "Embedding Reindex",
@@ -627,7 +765,9 @@
     "description": "Build and verify a new embedding index without routing queries to partially ingested vectors.",
     "group": "Machine learning and evaluation",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/embedding_reindex",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "African pygmy kingfisher",
+    "art": "2e09edd5ec43"
   },
   {
     "title": "Pdf Signature Set",
@@ -636,7 +776,9 @@
     "description": "Collect signature fields for a PDF packet and prevent flattening while fields remain empty.",
     "group": "Document production and accessibility",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/pdf_signature_set",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Southern ground hornbill",
+    "art": "4bbffb3e2cf6"
   },
   {
     "title": "Print Imposition",
@@ -645,7 +787,9 @@
     "description": "Complete paired front and back impressions before counting a duplex sheet as finished.",
     "group": "Document production and accessibility",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/print_imposition",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Strawberry finch male",
+    "art": "f31a9ad43091"
   },
   {
     "title": "Ocr Review",
@@ -654,7 +798,9 @@
     "description": "Route pages below a caller-provided confidence cutoff to human correction before indexing.",
     "group": "Document production and accessibility",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/ocr_review",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Great blue turaco",
+    "art": "57a2317ab1f2"
   },
   {
     "title": "Outline Depth",
@@ -663,7 +809,9 @@
     "description": "Enforce one-level heading descent while allowing returns to outer levels when constructing an outline.",
     "group": "Document production and accessibility",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/outline_depth",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Crested caracara",
+    "art": "b9d2729e3ba2"
   },
   {
     "title": "Accessible Images",
@@ -672,7 +820,9 @@
     "description": "Track unresolved image alternatives and count explicitly decorative images as reviewed.",
     "group": "Document production and accessibility",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/accessible_images",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Northern lapwing",
+    "art": "91234d8b0689"
   },
   {
     "title": "Translation Memory",
@@ -681,7 +831,9 @@
     "description": "Associate one segment revision with a translation candidate and reject stale approval after source edits.",
     "group": "Document production and accessibility",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/translation_memory",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Temminck's tragopan male",
+    "art": "9636f0feda6d"
   },
   {
     "title": "Mail Merge Batch",
@@ -690,7 +842,9 @@
     "description": "Track unsent records through merge, exclusion and validated spooling of an output batch.",
     "group": "Document production and accessibility",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/mail_merge_batch",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Hyacinth macaw",
+    "art": "daef249805b6"
   },
   {
     "title": "Sheet Recalc",
@@ -699,7 +853,9 @@
     "description": "Fence cached spreadsheet results to the revision that triggered recalculation.",
     "group": "Document production and accessibility",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/sheet_recalc",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Oilbird",
+    "art": "b0e172926b86"
   },
   {
     "title": "Archive Verify",
@@ -708,7 +864,9 @@
     "description": "Compare uncompressed member counts and request integrity checks before accepting a document archive.",
     "group": "Document production and accessibility",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/archive_verify",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Spectacled owl",
+    "art": "5b7caec988c7"
   },
   {
     "title": "Footnote Bind",
@@ -717,7 +875,9 @@
     "description": "Resolve forward footnote references and block typesetting while the outstanding count is positive.",
     "group": "Document production and accessibility",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/footnote_bind",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Eurasian blue tit",
+    "art": "3a4603f39339"
   },
   {
     "title": "Dock Appointments",
@@ -726,7 +886,9 @@
     "description": "Keep a loading bay available until its booked arrival time and account for late arrivals.",
     "group": "Logistics, utilities and production",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/dock_appointments",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Red-billed tropicbird",
+    "art": "d598fbc4216e"
   },
   {
     "title": "Pallet Break",
@@ -735,7 +897,9 @@
     "description": "Pick whole cases from a pallet and direct residual loose units to repacking.",
     "group": "Logistics, utilities and production",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/pallet_break",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Crested barbet",
+    "art": "caa79c080969"
   },
   {
     "title": "Meter Rollover",
@@ -744,7 +908,9 @@
     "description": "Detect dial rollover and report monotonically increasing meter readings or rollover corrections.",
     "group": "Logistics, utilities and production",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/meter_rollover",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Rock ptarmigan male",
+    "art": "289cc506c167"
   },
   {
     "title": "Charge Session",
@@ -753,7 +919,9 @@
     "description": "Schedule a battery charging session to a target percentage with pause, resume and completion.",
     "group": "Logistics, utilities and production",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/charge_session",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Royal flycatcher",
+    "art": "24f1d1dffed6"
   },
   {
     "title": "Inspection Lot",
@@ -762,7 +930,9 @@
     "description": "Release, reject or rework a lot based on observed defects and its configured acceptance limit.",
     "group": "Logistics, utilities and production",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/inspection_lot",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Western capercaillie",
+    "art": "1666f61d0d1a"
   },
   {
     "title": "Kit Assembly",
@@ -771,7 +941,9 @@
     "description": "Prevent packaging an incomplete kit and permit discovery of additional required components.",
     "group": "Logistics, utilities and production",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/kit_assembly",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Brown pelican",
+    "art": "2a41c4d4d5a0"
   },
   {
     "title": "Dispatch Manifest",
@@ -780,7 +952,9 @@
     "description": "Seal one route manifest only after all listed stops have been scanned or explicitly removed.",
     "group": "Logistics, utilities and production",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/dispatch_manifest",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Northern bald ibis",
+    "art": "a399aa07408c"
   },
   {
     "title": "Rental Turnaround",
@@ -789,7 +963,9 @@
     "description": "Bind returned equipment to its rental ID and require cleaning or repair before reissue.",
     "group": "Logistics, utilities and production",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/rental_turnaround",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Sunbittern",
+    "art": "e847f3a5235d"
   },
   {
     "title": "Tank Replenish",
@@ -798,7 +974,9 @@
     "description": "Request a refill below a low-water mark and close the order only after level recovery.",
     "group": "Logistics, utilities and production",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/tank_replenish",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Kori bustard",
+    "art": "2291ae265419"
   },
   {
     "title": "Cycle Count",
@@ -807,7 +985,9 @@
     "description": "Freeze a bin for a blind stock count and require reconciliation for discrepancies.",
     "group": "Logistics, utilities and production",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/cycle_count",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Cedar waxwing",
+    "art": "8b2e9ea762c4"
   },
   {
     "title": "Drag Capture",
@@ -816,7 +996,9 @@
     "description": "Keep pointer capture with its originating pointer during drag, cancel and drop.",
     "group": "Interactive software, games and device clients",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/drag_capture",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Burrowing owl",
+    "art": "7dbc9df2f6a9"
   },
   {
     "title": "Undo Cursor",
@@ -825,7 +1007,9 @@
     "description": "Bound undo traversal by the number of applied edits and clear history at a committed savepoint.",
     "group": "Interactive software, games and device clients",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/undo_cursor",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Black swan",
+    "art": "ff3a0bd3da08"
   },
   {
     "title": "Scene Stream",
@@ -834,7 +1018,9 @@
     "description": "Load a destination game scene before detaching the current scene and discard stale load callbacks.",
     "group": "Interactive software, games and device clients",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/scene_stream",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Green broadbill",
+    "art": "02b1ea94abad"
   },
   {
     "title": "Focus Trap",
@@ -843,7 +1029,9 @@
     "description": "Cycle keyboard focus around a modal boundary and release focus on dismissal.",
     "group": "Interactive software, games and device clients",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/focus_trap",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Laughing kookaburra",
+    "art": "65bcda72fa8c"
   },
   {
     "title": "Game Rounds",
@@ -852,7 +1040,9 @@
     "description": "Advance a fixed-length round counter through scoring, disputes and finalization.",
     "group": "Interactive software, games and device clients",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/game_rounds",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Lady Amherst's pheasant male",
+    "art": "fdcd38c1a198"
   },
   {
     "title": "Device Pairing",
@@ -861,7 +1051,9 @@
     "description": "Match a nonsecret device discovery ID across discovery, user selection and connection callbacks.",
     "group": "Interactive software, games and device clients",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/device_pairing",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Bateleur eagle",
+    "art": "f17200875cba"
   },
   {
     "title": "Offline Drafts",
@@ -870,7 +1062,9 @@
     "description": "Accumulate offline edits and keep dirty status until the uploaded revision is acknowledged.",
     "group": "Interactive software, games and device clients",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/offline_drafts",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Palm cockatoo",
+    "art": "4d2b2cee54c6"
   },
   {
     "title": "Gesture Hold",
@@ -879,7 +1073,9 @@
     "description": "Recognize a long press on a logical clock and suppress it after sufficient movement or early release.",
     "group": "Interactive software, games and device clients",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/gesture_hold",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Three-wattled bellbird",
+    "art": "efcf9cee63e0"
   },
   {
     "title": "Animation Scrub",
@@ -888,7 +1084,9 @@
     "description": "Fence asynchronous preview callbacks to the most recently selected animation frame.",
     "group": "Interactive software, games and device clients",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/animation_scrub",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Rainbow lorikeet",
+    "art": "9178cc543386"
   },
   {
     "title": "Level Checkpoint",
@@ -897,7 +1095,9 @@
     "description": "Track forward game progress while allowing respawns only at a previously committed checkpoint.",
     "group": "Interactive software, games and device clients",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/level_checkpoint",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "bird": "Horned screamer",
+    "art": "911817f12c52"
   },
   {
     "title": "Lower Bound Pos",

@@ -36,10 +36,10 @@ export default function PackageLogoGallery({ category }: { category: PackageCate
                 {workbench.filter((p) => p.kind === category).map((p) => (
                     <li className="library-logo-card" key={p.slug}>
                         <a href={"https://nest.blyx-lang.space/packages/" + p.slug + ".html"}>
-                            <img src={"/workbench/" + p.slug + ".png"} alt="" width="144" height="144" loading="lazy" />
-                            <span>{p.title}</span>
+                            <img src={"/workbench/" + p.slug + ".png?v=" + (p.art ?? p.version)} alt={p.bird ?? ""} width="144" height="144" loading="lazy" />
+                            <span>{p.title}</span>{p.bird && <small>{p.bird}</small>}
                         </a>
-                        <a className="library-logo-download" href={"/workbench/" + p.slug + ".png"} download>Download PNG</a>
+                        <a className="library-logo-download" href={"/workbench/" + p.slug + ".png?v=" + (p.art ?? p.version)} download>Download PNG</a>
                     </li>
                 ))}
             </ul>
