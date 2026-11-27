@@ -1,3 +1,4 @@
+import NestActivity from "@/components/NestActivity";
 import baseline from "@/lib/adoption-baseline.json";
 import { pageMetadata } from "@/lib/metadata";
 import { repository, website } from "@/lib/site";
@@ -39,6 +40,7 @@ export default async function Adoption() {
     }
     return <main className="wrap"><header className="page-head"><h1>Blyx activity</h1>
         <p>Follow compiler downloads, editor installs and successful runs in the browser playground.</p></header>
+        <NestActivity />
         <LiveActivity />
         <section className="block"><h2>Distribution over time</h2><p>Daily snapshot for <time dateTime={s.updated}>{day} UTC</time>. A dash marks a comparison date with no recorded sample.</p>
             <div className={styles.table}><table><thead><tr><th>Channel</th><th>Total</th><th>7-day change</th><th>30-day change</th></tr></thead><tbody>{series.map(([key,label,href]) =>

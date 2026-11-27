@@ -1,3 +1,4 @@
+import NestActivity from "@/components/NestActivity";
 import { condaChannel, distributionRepository, sourceCollection, sourceCollectionArchive } from "@/lib/source-channel";
 import { pageMetadata } from "@/lib/metadata";
 import PackageCatalog from "@/components/PackageCatalog";
@@ -21,6 +22,7 @@ export default function Packages() {
                 <div className="actions"><a className="button" href={nestRegistry + "/"}>Browse the Blyx Nest registry</a><a href={nestRegistry + "/publish.html"}>Publish a Blyx package</a></div>
                 <a href="#install">Install packages with Conda, Homebrew or Scoop</a>
             </header>
+            <NestActivity />
             <nav className="grid directory-choices" aria-label="Package directories">
                 {packageDirectories.map((d) => (
                     <a className="card card-link directory-choice" key={d.category} href={d.href} aria-labelledby={"choose-" + d.category}>
@@ -36,7 +38,8 @@ export default function Packages() {
             <PackageCatalog items={items} />
             <section id="install" className="prose block">
                 <h2>Install Blyx packages</h2>
-                <p>Use Nest for all {items.length} packages. For example, <code>nest demo fd_masked_attention@0.1.0</code> creates a runnable Flightdeck project.</p>
+                <p>Install a pinned release with Nest. For example, <code>nest demo fd_masked_attention@0.1.0</code> creates a runnable Flightdeck project.</p>
+                <p>Recent Nest releases include <a href={nestRegistry + "/packages/utf8_stream.html"}>UTF-8 Stream</a> for incomplete text and <a href={nestRegistry + "/packages/netstring_stream.html"}>Netstring Stream</a> for binary messages. <a href={guideLink("nest-release-files")}>Work through the examples</a> or <a href={nestRegistry + "/sdk.html"}>read release files with the JavaScript SDK</a>.</p>
                 <p>Use the Blyx Conda channel for an individual framework or library. For example, install Moments and run its example from the same directory with the Blyx compiler, Rust and a host linker.</p>
                 <pre>{'conda create -y --prefix ./blyx-env --override-channels -c ' + condaChannel + ' blyx-moments=0.1.0\nblyxc native-run ./blyx-env/share/blyx/moments/main.blyx'}</pre>
                 <p>For the original framework and library collection, use <code>brew install rahulchaube1/blyx/blyx-packages</code> on macOS or Linux. On Windows, add the Blyx bucket with <code>scoop bucket add blyx https://github.com/Rahulchaube1/scoop-blyx</code> and run <code>scoop install blyx/blyx-packages</code>.</p>

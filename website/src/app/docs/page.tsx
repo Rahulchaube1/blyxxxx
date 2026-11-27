@@ -9,7 +9,7 @@ export const metadata = pageMetadata(
 const references = [
     { title: "Language reference", slugs: ["language-reference", "builtin-reference", "compatibility"] },
     { title: "Compiler and tools", slugs: ["installation", "cli-reference", "diagnostics", "native-builds"] },
-    { title: "Projects and packages", slugs: ["sensor-report", "ai-packages", "blyxtorch", "training-and-monitoring"] },
+    { title: "Projects and packages", slugs: ["nest-release-files", "sensor-report", "ai-packages", "blyxtorch", "training-and-monitoring"] },
 ];
 
 export default function Documentation() {

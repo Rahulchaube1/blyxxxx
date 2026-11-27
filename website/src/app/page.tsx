@@ -1,3 +1,4 @@
+import NestActivity from "@/components/NestActivity";
 import { handbookSiteName, languageSiteName, pageMetadata } from "@/lib/metadata";
 import StructuredData from "@/components/StructuredData";
 import { LiveActivity } from "@/components/LiveActivity";
@@ -73,6 +74,7 @@ export default function Home() {
                 </div>
             </section>
             <div className="wrap">
+                <NestActivity />
                 <nav className="site-directory" aria-labelledby="explore-blyx">
                     <h2 id="explore-blyx">Explore Blyx</h2>
                     <ul>

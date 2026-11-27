@@ -725,3 +725,6 @@ button.primary {
 		border: 1px solid #ccc;
 	}
 }
+
+.nest-activity-strip { display: block; width: 100%; height: 122px; border: 0; }
+@media (max-width: 720px) { .nest-activity-strip { height: 180px; } }

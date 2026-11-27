@@ -6805,6 +6805,81 @@
         }
     },
     {
+        "slug": "nest-release-files",
+        "title": "Install a library and inspect its release",
+        "group": "Local toolchain",
+        "summary": "Validate a UTF-8 character across two reads, decode a framed message, and verify a single file from its published Blyx release.",
+        "example": null,
+        "sections": [
+            {
+                "heading": "Install and run a pinned example",
+                "text": "Install the Nest CLI, Blyx compiler and the native toolchain for your platform. From a new working directory, run these commands. Nest creates a demo directory containing the source, a vendor directory and expected.txt.",
+                "command": "nest demo utf8_stream@0.1.0\nblyxc native-run utf8_stream-demo/main.blyx",
+                "links": [
+                    {
+                        "text": "Install Nest",
+                        "href": "https://nest.blyx-lang.space/install.html"
+                    },
+                    {
+                        "text": "Install the Blyx toolchain",
+                        "href": "https://www.blyx-lang.space/download"
+                    }
+                ]
+            },
+            {
+                "heading": "Carry one character across two reads",
+                "text": "The euro sign uses the three UTF-8 bytes 226, 130 and 172. The first call to utf8_step receives only 226. Save its state and pass it to the next call. The demo prints false for the unfinished character, true after all three bytes, and -1 for an invalid surrogate encoding.",
+                "command": "use vendor::utf8_stream::utf8_stream;\n\nfn main() {\n    let lead = utf8_step(0, 226);\n    println!(utf8_complete(lead));\n    let tail = utf8_step(utf8_step(lead, 130), 172);\n    println!(utf8_complete(tail));\n    println!(utf8_step(utf8_step(0, 237), 160));\n}"
+            },
+            {
+                "heading": "Find the end of a message",
+                "text": "A netstring puts its byte length before a colon and ends with a comma. In the message 1:A, the byte A produces event 1 and the trailing comma produces event 2. Only the second event completes the frame. The example prints 1, 2 and true. Its 64-byte limit bounds the permitted payload.",
+                "command": "nest demo netstring_stream@0.1.0\nblyxc native-run netstring_stream-demo/main.blyx",
+                "links": [
+                    {
+                        "text": "Read the framing example",
+                        "href": "https://nest.blyx-lang.space/releases/netstring_stream/0.1.0.html"
+                    }
+                ]
+            },
+            {
+                "heading": "Read one verified file",
+                "text": "Open the release file list to see every path, size and SHA-256 digest. For a scripted check, download nest-sdk.mjs into your current directory, save the following as inspect.mjs and run node inspect.mjs with Node.js 20 or newer. The SDK checks the bytes against the release manifest before returning them.",
+                "command": "import { NestClient } from \"./nest-sdk.mjs\";\n\nconst nest = new NestClient();\nconst release = await nest.manifest(\"utf8_stream\", \"0.1.0\");\nconst source = await nest.readFile(release, \"main.blyx\");\nconsole.log(new TextDecoder().decode(source));",
+                "links": [
+                    {
+                        "text": "Download the SDK module",
+                        "href": "https://nest.blyx-lang.space/nest-sdk.mjs"
+                    },
+                    {
+                        "text": "Inspect the UTF-8 Stream files",
+                        "href": "https://nest.blyx-lang.space/releases/utf8_stream/0.1.0.html"
+                    }
+                ]
+            },
+            {
+                "heading": "Use the library in your own project",
+                "text": "Run nest add in your project, then import vendor::utf8_stream::utf8_stream in a Blyx file. Commit the nest.lock directory. On another checkout, nest install uses the pinned release. When you publish your own library, use the submission command with --dry-run first to check the archive before creating a registry entry.",
+                "command": "nest add utf8_stream@0.1.0\nnest install",
+                "links": [
+                    {
+                        "text": "Publish a package",
+                        "href": "https://nest.blyx-lang.space/publish.html"
+                    },
+                    {
+                        "text": "Read the JavaScript SDK guide",
+                        "href": "https://nest.blyx-lang.space/sdk.html"
+                    }
+                ]
+            }
+        ],
+        "exercise": {
+            "prompt": "What happens if the stream ends after bytes 226 and 130?",
+            "hint": "Stop after the second byte and call utf8_complete on the state.",
+            "answer": "The result is false. Both bytes are a valid prefix, but the euro sign still needs its final byte. Retain the partial state during a read and check completion when the stream ends."
+        }
+    },
+    {
         "slug": "installation",
         "title": "Install and verify Blyx",
         "group": "Local toolchain",
@@ -7374,7 +7449,7 @@
             },
             {
                 "heading": "Features under development",
-                "text": "The package registry and its dependency resolver are prototypes. The published source libraries use versioned Git checkouts. The browser and CLI interpreter execute a single source buffer. GPU kernels, a general tensor runtime, asynchronous tasks and actor scheduling remain development work."
+                "text": "Nest publishes versioned Blyx source archives. Use nest demo to run a reviewed example or nest add to pin a library in your project. Commit the generated nest.lock directory so other developers can restore the same release. The browser and CLI interpreter execute a single source buffer. GPU kernels, a general tensor runtime, asynchronous tasks and actor scheduling remain development work."
             },
             {
                 "heading": "Interpret a benchmark",
