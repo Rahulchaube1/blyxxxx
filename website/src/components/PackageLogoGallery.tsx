@@ -1,3 +1,4 @@
+import flightdeck from "@/lib/flightdeck.json";
 import workbench from "@/lib/workbench.json";
 import catalog from "@/lib/packages.json";
 import { directoryFor, type PackageCategory } from "@/lib/package-categories";
@@ -31,6 +32,15 @@ export default function PackageLogoGallery({ category }: { category: PackageCate
                         </a>
                         {frameworks && <a className="library-logo-download" href={"/packages/" + p.slug + "#editor"} aria-label={"Install the " + p.title + " editor extension"}>Editor extension</a>}
                         <a className="library-logo-download" href={p.logo} download={p.slug + ".png"} aria-label={"Download " + p.title + " logo as a PNG"}>Download PNG</a>
+                    </li>
+                ))}
+                {frameworks && flightdeck.map((p) => (
+                    <li className="library-logo-card" key={"fd_" + p.slug}>
+                        <a href={"/frameworks/flightdeck#" + p.slug}>
+                            <img src={"/flightdeck/" + p.slug + ".png?v=" + p.art} alt={p.bird} width="144" height="144" loading="lazy" decoding="async" />
+                            <span>{p.slug}</span><small>{p.bird}</small>
+                        </a>
+                        <a className="library-logo-download" href={"/flightdeck/" + p.slug + ".png?v=" + p.art} download>Download PNG</a>
                     </li>
                 ))}
                 {workbench.filter((p) => p.kind === category).map((p) => (

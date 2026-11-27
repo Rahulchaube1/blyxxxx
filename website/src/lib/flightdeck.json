@@ -1,6 +1,6 @@
 [
   {
-    "bird": "Macaw",
+    "bird": "Blue-and-yellow macaw",
     "slug": "logistic-loss",
     "description": "Compute stable binary cross entropy from logits and its derivative. Supply binary or soft targets in [0,1].",
     "inputs": [
@@ -11,10 +11,11 @@
       "loss",
       "grad"
     ],
-    "group": "Training objectives"
+    "group": "Training objectives",
+    "art": "80a53cdba450"
   },
   {
-    "bird": "Condor",
+    "bird": "Andean condor",
     "slug": "huber-fit",
     "description": "Fit continuous targets with unit-transition Huber loss. Clip the residual influence of large errors.",
     "inputs": [
@@ -25,10 +26,11 @@
       "loss",
       "grad"
     ],
-    "group": "Training objectives"
+    "group": "Training objectives",
+    "art": "963287e56ecd"
   },
   {
-    "bird": "Parakeet",
+    "bird": "Plum-headed parakeet",
     "slug": "pseudo-huber",
     "description": "Use a smooth robust regression objective and its bounded influence function with scale one.",
     "inputs": [
@@ -39,10 +41,11 @@
       "loss",
       "grad"
     ],
-    "group": "Training objectives"
+    "group": "Training objectives",
+    "art": "25141866ee55"
   },
   {
-    "bird": "Harrier",
+    "bird": "Pallid harrier",
     "slug": "quantile-fit",
     "description": "Train conditional quantiles with pinball loss. Supply a quantile between zero and one. Use zero subgradient at a tie.",
     "inputs": [
@@ -54,10 +57,11 @@
       "loss",
       "grad"
     ],
-    "group": "Training objectives"
+    "group": "Training objectives",
+    "art": "42e2ae301d56"
   },
   {
-    "bird": "Tinamou",
+    "bird": "Elegant crested tinamou",
     "slug": "log-cosh",
     "description": "Measure robust regression error in log space and compute its bounded tanh derivative.",
     "inputs": [
@@ -68,10 +72,11 @@
       "loss",
       "grad"
     ],
-    "group": "Training objectives"
+    "group": "Training objectives",
+    "art": "872bc3970e04"
   },
   {
-    "bird": "Goshawk",
+    "bird": "Northern goshawk",
     "slug": "squared-hinge",
     "description": "Train a margin classifier with labels minus one or plus one and a squared margin deficit.",
     "inputs": [
@@ -82,10 +87,11 @@
       "loss",
       "grad"
     ],
-    "group": "Training objectives"
+    "group": "Training objectives",
+    "art": "ebe2c9b7c11a"
   },
   {
-    "bird": "Kea",
+    "bird": "New Zealand kaka",
     "slug": "poisson-fit",
     "description": "Fit nonnegative counts using a log-rate prediction. Returns Poisson NLL without the target-only factorial term and the log-rate gradient.",
     "inputs": [
@@ -96,10 +102,11 @@
       "loss",
       "grad"
     ],
-    "group": "Training objectives"
+    "group": "Training objectives",
+    "art": "a16904fd9c74"
   },
   {
-    "bird": "Petrel",
+    "bird": "Cape petrel",
     "slug": "cauchy-fit",
     "description": "Downweight large regression residuals using a unit-scale Cauchy objective.",
     "inputs": [
@@ -110,10 +117,11 @@
       "loss",
       "grad"
     ],
-    "group": "Training objectives"
+    "group": "Training objectives",
+    "art": "9685bd3f56f1"
   },
   {
-    "bird": "Quetzal",
+    "bird": "Golden-headed quetzal",
     "slug": "pairwise-rank",
     "description": "Train a pairwise ranker on preferred and rejected scores and return both gradients.",
     "inputs": [
@@ -125,10 +133,11 @@
       "preferred_grad",
       "rejected_grad"
     ],
-    "group": "Training objectives"
+    "group": "Training objectives",
+    "art": "2d0d79eb308b"
   },
   {
-    "bird": "Motmot",
+    "bird": "Amazonian motmot",
     "slug": "listwise-fit",
     "description": "Train a row of logits against a normalized nonnegative target distribution. Return row cross entropy and its logit gradient.",
     "inputs": [
@@ -139,10 +148,11 @@
       "loss",
       "grad"
     ],
-    "group": "Training objectives"
+    "group": "Training objectives",
+    "art": "66bc8c21329a"
   },
   {
-    "bird": "Trogon",
+    "bird": "Cuban trogon",
     "slug": "teacher-fit",
     "description": "Distil a teacher into student logits with temperature two and the temperature-squared loss convention.",
     "inputs": [
@@ -153,10 +163,11 @@
       "loss",
       "grad"
     ],
-    "group": "Training objectives"
+    "group": "Training objectives",
+    "art": "23b4bf211a75"
   },
   {
-    "bird": "Puffin",
+    "bird": "Tufted puffin",
     "slug": "brier-fit",
     "description": "Score binary probability calibration from logits with the Brier loss and its chain-rule gradient.",
     "inputs": [
@@ -167,10 +178,11 @@
       "loss",
       "grad"
     ],
-    "group": "Training objectives"
+    "group": "Training objectives",
+    "art": "e1e30f0d15f3"
   },
   {
-    "bird": "Curlew",
+    "bird": "Eurasian curlew",
     "slug": "dice-fit",
     "description": "Compute smoothed soft Dice loss over a row and its probability-space gradient. Use targets and predictions in [0,1].",
     "inputs": [
@@ -181,10 +193,11 @@
       "loss",
       "grad"
     ],
-    "group": "Training objectives"
+    "group": "Training objectives",
+    "art": "a44ab37f36fa"
   },
   {
-    "bird": "Grebe",
+    "bird": "Hooded grebe",
     "slug": "cosine-fit",
     "description": "Train an embedding direction against a target row. A squared-norm epsilon stabilizes empty signal.",
     "inputs": [
@@ -195,10 +208,11 @@
       "loss",
       "grad"
     ],
-    "group": "Training objectives"
+    "group": "Training objectives",
+    "art": "866d3a4235d6"
   },
   {
-    "bird": "Cockatoo",
+    "bird": "Major Mitchell's cockatoo",
     "slug": "momentum-step",
     "description": "Advance weights and their velocity with classical momentum 0.9. Supply the learning rate as an input.",
     "inputs": [
@@ -211,10 +225,11 @@
       "updated",
       "next_velocity"
     ],
-    "group": "Optimizer steps"
+    "group": "Optimizer steps",
+    "art": "4c3b9d36108e"
   },
   {
-    "bird": "Ibis",
+    "bird": "Glossy ibis",
     "slug": "nesterov-step",
     "description": "Advance a momentum buffer and apply the look-ahead gradient used by Nesterov SGD. Momentum is 0.9.",
     "inputs": [
@@ -227,10 +242,11 @@
       "updated",
       "next_velocity"
     ],
-    "group": "Optimizer steps"
+    "group": "Optimizer steps",
+    "art": "44ee1b50a202"
   },
   {
-    "bird": "Sparrowhawk",
+    "bird": "Eurasian sparrowhawk",
     "slug": "adagrad-step",
     "description": "Accumulate squared gradients and normalize each parameter update by its own history.",
     "inputs": [
@@ -243,10 +259,11 @@
       "updated",
       "next_sum"
     ],
-    "group": "Optimizer steps"
+    "group": "Optimizer steps",
+    "art": "895afba06dde"
   },
   {
-    "bird": "Hornbill",
+    "bird": "Great hornbill",
     "slug": "rmsprop-step",
     "description": "Smooth squared gradients with decay 0.99 and update parameters with a scale-adjusted step.",
     "inputs": [
@@ -259,10 +276,11 @@
       "updated",
       "next_var"
     ],
-    "group": "Optimizer steps"
+    "group": "Optimizer steps",
+    "art": "5eec4da01c6e"
   },
   {
-    "bird": "Waxwing",
+    "bird": "Bohemian waxwing",
     "slug": "adamw-step",
     "description": "Apply AdamW with decoupled decay, beta1=0.9 and beta2=0.999. Pass bias denominators 1-beta^step and nonnegative second moments.",
     "inputs": [
@@ -280,10 +298,11 @@
       "m",
       "v"
     ],
-    "group": "Optimizer steps"
+    "group": "Optimizer steps",
+    "art": "62b36525b1d9"
   },
   {
-    "bird": "Toucan",
+    "bird": "Toco toucan",
     "slug": "lion-step",
     "description": "Use a signed interpolated momentum update and decoupled weight decay. The persistent buffer uses beta2=0.99.",
     "inputs": [
@@ -297,10 +316,11 @@
       "updated",
       "m"
     ],
-    "group": "Optimizer steps"
+    "group": "Optimizer steps",
+    "art": "140a265222a3"
   },
   {
-    "bird": "Sunbird",
+    "bird": "Malachite sunbird",
     "slug": "amsgrad-step",
     "description": "Track the maximum uncorrected second moment for AMSGrad and apply the bias-corrected step.",
     "inputs": [
@@ -319,10 +339,11 @@
       "v",
       "vmax"
     ],
-    "group": "Optimizer steps"
+    "group": "Optimizer steps",
+    "art": "2a6c3e170192"
   },
   {
-    "bird": "Pipitfinch",
+    "bird": "African quailfinch",
     "slug": "adadelta-step",
     "description": "Track gradient and update energies for AdaDelta with decay 0.95. Return both histories for the next batch.",
     "inputs": [
@@ -337,10 +358,11 @@
       "v",
       "u"
     ],
-    "group": "Optimizer steps"
+    "group": "Optimizer steps",
+    "art": "6ba4549f0e58"
   },
   {
-    "bird": "Avocet",
+    "bird": "Red-necked avocet",
     "slug": "lars-step",
     "description": "Scale each parameter row by a LARS trust ratio before an SGD step. Zero norms fall back to unit scaling.",
     "inputs": [
@@ -353,10 +375,11 @@
       "updated",
       "trust"
     ],
-    "group": "Optimizer steps"
+    "group": "Optimizer steps",
+    "art": "138d5e2f7329"
   },
   {
-    "bird": "Jacana",
+    "bird": "Pheasant-tailed jacana",
     "slug": "lookahead-sync",
     "description": "Synchronize fast and slow weights at a caller-selected Lookahead boundary and measure the correction.",
     "inputs": [
@@ -368,10 +391,11 @@
       "next_slow",
       "correction"
     ],
-    "group": "Optimizer steps"
+    "group": "Optimizer steps",
+    "art": "4b4d3f888dda"
   },
   {
-    "bird": "Lyrebird",
+    "bird": "Albert's lyrebird",
     "slug": "rmsnorm-backward",
     "description": "Apply row RMS normalization with per-feature gain and return the input gradient and per-row gain contribution.",
     "inputs": [
@@ -384,10 +408,11 @@
       "dx",
       "dg"
     ],
-    "group": "Transformer activations and backward passes"
+    "group": "Transformer activations and backward passes",
+    "art": "a74413550f7e"
   },
   {
-    "bird": "Crossbill",
+    "bird": "White-winged crossbill",
     "slug": "layernorm-backward",
     "description": "Normalize each embedding row, add affine gain and bias, and propagate an upstream derivative. Sum gain contributions across rows externally.",
     "inputs": [
@@ -401,10 +426,11 @@
       "dx",
       "dg"
     ],
-    "group": "Transformer activations and backward passes"
+    "group": "Transformer activations and backward passes",
+    "art": "6b53e623085d"
   },
   {
-    "bird": "Tanager",
+    "bird": "Seven-colored tanager",
     "slug": "swiglu-backward",
     "description": "Run a SwiGLU gate and return gradients to both halves of a transformer feed-forward projection.",
     "inputs": [
@@ -417,10 +443,11 @@
       "dx",
       "dg"
     ],
-    "group": "Transformer activations and backward passes"
+    "group": "Transformer activations and backward passes",
+    "art": "a6ef9a9897d0"
   },
   {
-    "bird": "Bulbul",
+    "bird": "Red-whiskered bulbul",
     "slug": "geglu-backward",
     "description": "Use a tanh-approximate GELU gate and propagate both value and gate derivatives.",
     "inputs": [
@@ -433,10 +460,11 @@
       "dx",
       "dg"
     ],
-    "group": "Transformer activations and backward passes"
+    "group": "Transformer activations and backward passes",
+    "art": "178f84a88459"
   },
   {
-    "bird": "Myna",
+    "bird": "Bali myna",
     "slug": "reglu-backward",
     "description": "Route feed-forward activations through a ReLU gate. At a zero gate choose the zero subgradient.",
     "inputs": [
@@ -449,10 +477,11 @@
       "dx",
       "dg"
     ],
-    "group": "Transformer activations and backward passes"
+    "group": "Transformer activations and backward passes",
+    "art": "62cd6380ee80"
   },
   {
-    "bird": "Hoopoe",
+    "bird": "Green wood hoopoe",
     "slug": "rope-pairs",
     "description": "Rotate even and odd feature pairs with supplied sine and cosine tables and backpropagate to the input pair.",
     "inputs": [
@@ -469,10 +498,11 @@
       "dx_even",
       "dx_odd"
     ],
-    "group": "Transformer activations and backward passes"
+    "group": "Transformer activations and backward passes",
+    "art": "5a50e69f8add"
   },
   {
-    "bird": "BeeEater",
+    "bird": "Northern carmine bee-eater",
     "slug": "softmax-backward",
     "description": "Normalize attention scores along each row and compute the softmax vector-Jacobian product.",
     "inputs": [
@@ -483,10 +513,11 @@
       "p",
       "dx"
     ],
-    "group": "Transformer activations and backward passes"
+    "group": "Transformer activations and backward passes",
+    "art": "df04939dc8d5"
   },
   {
-    "bird": "Drongo",
+    "bird": "Spangled drongo",
     "slug": "logsoftmax-backward",
     "description": "Compute stable log probabilities and propagate an upstream derivative through row log-softmax.",
     "inputs": [
@@ -497,10 +528,11 @@
       "logp",
       "dx"
     ],
-    "group": "Transformer activations and backward passes"
+    "group": "Transformer activations and backward passes",
+    "art": "1bbc2bd9f5d1"
   },
   {
-    "bird": "Cassowary",
+    "bird": "Dwarf cassowary",
     "slug": "masked-attention",
     "description": "Normalize only unmasked attention scores and propagate through allowed positions. Fully masked rows return zeros. Use a binary mask.",
     "inputs": [
@@ -512,10 +544,11 @@
       "p",
       "dx"
     ],
-    "group": "Transformer activations and backward passes"
+    "group": "Transformer activations and backward passes",
+    "art": "effd558bc19e"
   },
   {
-    "bird": "Brolga",
+    "bird": "Brolga crane",
     "slug": "residual-rms",
     "description": "Fuse a residual addition with pre-normalization and return the combined residual stream and scaled output.",
     "inputs": [
@@ -527,10 +560,11 @@
       "stream",
       "normalized"
     ],
-    "group": "Transformer activations and backward passes"
+    "group": "Transformer activations and backward passes",
+    "art": "460c4e7d4777"
   },
   {
-    "bird": "Lapwing",
+    "bird": "Masked lapwing",
     "slug": "unit-embeddings",
     "description": "Normalize retrieval embeddings to near-unit length and differentiate a row objective through the normalization.",
     "inputs": [
@@ -541,10 +575,11 @@
       "unit",
       "dx"
     ],
-    "group": "Transformer activations and backward passes"
+    "group": "Transformer activations and backward passes",
+    "art": "b9fbc81c87dc"
   },
   {
-    "bird": "Pitta",
+    "bird": "Indian pitta",
     "slug": "glu-backward",
     "description": "Apply a sigmoid gate and return both activation and gate gradients for a gated linear unit.",
     "inputs": [
@@ -557,10 +592,11 @@
       "dx",
       "dg"
     ],
-    "group": "Transformer activations and backward passes"
+    "group": "Transformer activations and backward passes",
+    "art": "3f1df286ee93"
   },
   {
-    "bird": "Merganser",
+    "bird": "Hooded merganser drake",
     "slug": "clip-row-grad",
     "description": "Clip each gradient row to a supplied positive L2 bound. Repeat the same bound across features in a row.",
     "inputs": [
@@ -571,12 +607,13 @@
       "clipped",
       "norm"
     ],
-    "group": "Training stability and compression"
+    "group": "Training stability and compression",
+    "art": "a8cadab8a4d2"
   },
   {
-    "bird": "Spoonwing",
+    "bird": "Spoon-billed sandpiper",
     "slug": "centralize-grad",
-    "description": "Subtract each filter row\u2019s mean gradient and measure its remaining RMS magnitude.",
+    "description": "Subtract each filter row’s mean gradient and measure its remaining RMS magnitude.",
     "inputs": [
       "grad"
     ],
@@ -584,10 +621,11 @@
       "centered",
       "rms"
     ],
-    "group": "Training stability and compression"
+    "group": "Training stability and compression",
+    "art": "31fe364a1761"
   },
   {
-    "bird": "Chough",
+    "bird": "Red-billed chough",
     "slug": "adaptive-clip",
     "description": "Clip a gradient relative to the parameter-row norm. Supply a positive clipping factor fixed within the row.",
     "inputs": [
@@ -599,10 +637,11 @@
       "clipped",
       "scale"
     ],
-    "group": "Training stability and compression"
+    "group": "Training stability and compression",
+    "art": "4d1059babc70"
   },
   {
-    "bird": "Osprey",
+    "bird": "Western osprey",
     "slug": "gradient-conflict",
     "description": "Project one task gradient away from a conflicting task gradient. Output the projected gradient and original row dot product.",
     "inputs": [
@@ -613,10 +652,11 @@
       "projected",
       "dot"
     ],
-    "group": "Training stability and compression"
+    "group": "Training stability and compression",
+    "art": "514ad8450057"
   },
   {
-    "bird": "Bittern",
+    "bird": "American bittern",
     "slug": "weighted-accumulation",
     "description": "Merge two per-example mean gradients using their counts, then emit the merged mean and new count. Nonnegative counts are row constants.",
     "inputs": [
@@ -629,10 +669,11 @@
       "merged",
       "count"
     ],
-    "group": "Training stability and compression"
+    "group": "Training stability and compression",
+    "art": "40e2270eb504"
   },
   {
-    "bird": "Shoebill",
+    "bird": "Whale-headed stork chick",
     "slug": "teacher-ema",
     "description": "Advance an exponential-moving-average teacher and track the mean squared gap from the current student. Decay lies in [0,1].",
     "inputs": [
@@ -644,10 +685,11 @@
       "updated",
       "gap"
     ],
-    "group": "Training stability and compression"
+    "group": "Training stability and compression",
+    "art": "3974c271a323"
   },
   {
-    "bird": "Caracara",
+    "bird": "Red-throated caracara",
     "slug": "int8-roundtrip",
     "description": "Simulate symmetric per-row INT8 weight quantization with nearest-even rounding. Return FP32 codes, reconstruction and scale for error analysis.",
     "inputs": [
@@ -658,10 +700,11 @@
       "decoded",
       "scale"
     ],
-    "group": "Training stability and compression"
+    "group": "Training stability and compression",
+    "art": "c8d489dffcb8"
   },
   {
-    "bird": "Courser",
+    "bird": "Cream-colored courser",
     "slug": "affine-quantize",
     "description": "Simulate 8-bit asymmetric activation quantization with zero included in the range and integer zero point. Outputs use FP32 storage.",
     "inputs": [
@@ -673,10 +716,11 @@
       "zero",
       "scale"
     ],
-    "group": "Training stability and compression"
+    "group": "Training stability and compression",
+    "art": "c5bce78cef0c"
   },
   {
-    "bird": "Skua",
+    "bird": "Long-tailed skua",
     "slug": "error-feedback",
     "description": "Compress a gradient to one sign and one row scale and carry the untransmitted residual to the next step.",
     "inputs": [
@@ -688,10 +732,11 @@
       "carry",
       "scale"
     ],
-    "group": "Training stability and compression"
+    "group": "Training stability and compression",
+    "art": "4f4c8554b3f0"
   },
   {
-    "bird": "Dunlin",
+    "bird": "Dunlin in summer plumage",
     "slug": "ternary-compress",
     "description": "Threshold small gradient coordinates and reconstruct retained signs with their mean absolute magnitude. Supply a nonnegative per-row threshold.",
     "inputs": [
@@ -703,10 +748,11 @@
       "decoded",
       "scale"
     ],
-    "group": "Training stability and compression"
+    "group": "Training stability and compression",
+    "art": "8a45deb8099c"
   },
   {
-    "bird": "Auklet",
+    "bird": "Whiskered auklet",
     "slug": "logit-ensemble",
     "description": "Ensemble two model distributions by a probability-space mixture. Supply a row-constant mixing weight in [0,1].",
     "inputs": [
@@ -718,10 +764,11 @@
       "mixture",
       "entropy"
     ],
-    "group": "Inference and model diagnostics"
+    "group": "Inference and model diagnostics",
+    "art": "6c971b52e9aa"
   },
   {
-    "bird": "Becassine",
+    "bird": "Common snipe",
     "slug": "guidance-mix",
     "description": "Apply classifier-free guidance and report the RMS size of the conditional correction relative to the unconditional prediction.",
     "inputs": [
@@ -733,10 +780,11 @@
       "guided",
       "rms"
     ],
-    "group": "Inference and model diagnostics"
+    "group": "Inference and model diagnostics",
+    "art": "caf8d9afa533"
   },
   {
-    "bird": "Manakin",
+    "bird": "Wire-tailed manakin",
     "slug": "policy-ratio",
     "description": "Compute the clipped PPO surrogate and clipping fraction using sampled-token log probabilities. Supply a fixed positive clip radius in each row.",
     "inputs": [
@@ -749,10 +797,11 @@
       "loss",
       "fraction"
     ],
-    "group": "Inference and model diagnostics"
+    "group": "Inference and model diagnostics",
+    "art": "8b90707bcee4"
   },
   {
-    "bird": "Jacamar",
+    "bird": "Rufous-tailed jacamar",
     "slug": "preference-dpo",
     "description": "Score a preferred/rejected response pair against a reference policy. Return the DPO loss and gradient to the policy log-ratio.",
     "inputs": [
@@ -766,6 +815,7 @@
       "loss",
       "grad"
     ],
-    "group": "Inference and model diagnostics"
+    "group": "Inference and model diagnostics",
+    "art": "f6ad53af75b3"
   }
 ]

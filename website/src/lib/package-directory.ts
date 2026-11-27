@@ -34,8 +34,8 @@ export function packageDirectory(category?: PackageCategory) {
     const workflows = flightdeck.map((tool) => ({
         slug: "fd_" + tool.slug.replaceAll("-", "_"),
         title: tool.slug, category: "framework", kind: "Flightdeck workflow",
-        version: "0.1.0", group: tool.group, description: tool.description,
-        logo: "/flightdeck/" + tool.slug + ".png",
+        version: "0.1.1", group: tool.group, description: tool.description,
+        logo: "/flightdeck/" + tool.slug + ".png?v=" + tool.art,
         documentation: "/frameworks/flightdeck#" + tool.slug,
         flightdeck: true, workbench: false, repository: "", downloadVersion: "", guide: "", example: "",
         search: [tool.slug, "fd_" + tool.slug.replaceAll("-", "_"), tool.description, tool.group, ...tool.inputs, ...tool.outputs, "Flightdeck GPU Vulkan CPU"].join(" ").toLowerCase(),
