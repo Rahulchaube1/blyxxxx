@@ -28,7 +28,7 @@ export function packageDirectory(category?: PackageCategory) {
         ...p, category: p.kind, logo: "/workbench/" + p.slug + ".png?v=" + (p.art ?? p.version),
         documentation: "https://nest.blyx-lang.space/packages/" + p.slug + ".html",
         flightdeck: false, workbench: true, guide: "", example: "",
-        search: [p.slug, p.title, p.kind, p.group, p.description, "workbench"].join(" ").toLowerCase(),
+        search: [p.slug, p.title, p.kind, p.group, p.description, p.bird ?? "", "workbench"].join(" ").toLowerCase(),
     }));
     if (category === "library") return [...packages, ...additions];
     const workflows = flightdeck.map((tool) => ({
