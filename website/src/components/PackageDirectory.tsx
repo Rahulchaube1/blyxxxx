@@ -17,6 +17,7 @@ export default function PackageDirectory({ category }: { category: PackageCatego
                         ? <a href={repository + "/releases/tag/ecosystem-v0.1.0"}>Original 51 workflow CLIs (v0.1.0)</a>
                         : <a href="/packages/framesignal#import">See how to import a library</a>}
                     {category === "framework" && <a href="/frameworks/flightdeck">50 Flightdeck GPU training workflows</a>}
+                    <a href="/articles/workbench">Workbench examples and installation</a>
                     <a href="/packages#install">Package manager installation</a>
                     <a href={directory.href + "/logos"}>Browse {category} logos</a>
                     <a href={sourceCollectionArchive}>Download the current framework and library sources</a>

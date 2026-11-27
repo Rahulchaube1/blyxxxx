@@ -42,7 +42,7 @@ export default function PackageCatalog({ items, category }: { items: DirectoryEn
                         <div className="section-head"><h2>{name}</h2></div>
                         <div className="grid package-grid">
                             {packages.map((p) => (
-                                <article className={p.flightdeck ? "card flightdeck-workflow" : "card package-card"} key={p.slug}>
+                                <article className={p.flightdeck ? "card flightdeck-workflow" : p.workbench ? "card workbench-package" : "card package-card"} key={p.slug}>
                                     <div className="package-heading">
                                         <img className="package-logo" src={p.logo} width="72" height="72" alt="" loading="lazy" decoding="async" />
                                         <div><h3><a href={p.documentation}>{p.title}</a></h3>
@@ -51,9 +51,9 @@ export default function PackageCatalog({ items, category }: { items: DirectoryEn
                                     <p>{p.description}</p>
                                     <div className="actions">
                                         <a href={p.documentation}>Install and use →</a>
-                                        {p.flightdeck ? <a href={"https://nest.blyx-lang.space/packages/" + p.slug + ".html"}>Install from Nest</a> : <a href={playLink(p.example)}>Run example</a>}
-                                        {p.category === "framework" && <a href={p.flightdeck ? "/frameworks/flightdeck#editor" : "/packages/" + p.slug + "#editor"}>Install in editor</a>}
-                                        {p.category === "framework" && !p.flightdeck && <a href={guideLink(p.guide)}>Handbook</a>}
+                                        {p.workbench ? <a href={"https://github.com/Rahulchaube1/blyx-workbench/blob/v0.1.0/packages/" + p.slug + "/README.md"}>API guide</a> : p.flightdeck ? <a href={"https://nest.blyx-lang.space/packages/" + p.slug + ".html"}>Install from Nest</a> : <a href={playLink(p.example)}>Run example</a>}
+                                        {p.category === "framework" && !p.workbench && <a href={p.flightdeck ? "/frameworks/flightdeck#editor" : "/packages/" + p.slug + "#editor"}>Install in editor</a>}
+                                        {p.category === "framework" && !p.workbench && !p.flightdeck && <a href={guideLink(p.guide)}>Handbook</a>}
                                     </div>
                                 </article>
                             ))}

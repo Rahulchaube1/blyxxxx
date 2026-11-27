@@ -1,4 +1,5 @@
 import flightdeck from "./flightdeck.json";
+import workbench from "./workbench.json";
 import catalog from "./packages.json";
 import type { PackageCategory } from "./package-categories";
 
@@ -15,7 +16,7 @@ export function packageDirectory(category?: PackageCategory) {
             group: p.group,
             logo: p.logo,
             documentation: "/packages/" + p.slug,
-            flightdeck: false,
+            flightdeck: false, workbench: false,
             guide: p.guide,
             example: p.example,
             search: [...new Set(
@@ -23,17 +24,23 @@ export function packageDirectory(category?: PackageCategory) {
                     .join(" ").toLowerCase().split(/\s+/),
             )].join(" "),
         }));
-    if (category === "library") return packages;
+    const additions = workbench.filter((p) => !category || p.kind === category).map((p) => ({
+        ...p, category: p.kind, version: "0.1.0", logo: "/workbench/" + p.slug + ".png",
+        documentation: "https://nest.blyx-lang.space/packages/" + p.slug + ".html",
+        flightdeck: false, workbench: true, guide: "", example: "",
+        search: [p.slug, p.title, p.kind, p.group, p.description, "workbench"].join(" ").toLowerCase(),
+    }));
+    if (category === "library") return [...packages, ...additions];
     const workflows = flightdeck.map((tool) => ({
         slug: "fd_" + tool.slug.replaceAll("-", "_"),
         title: tool.slug, category: "framework", kind: "Flightdeck workflow",
         version: "0.1.0", group: tool.group, description: tool.description,
         logo: "/flightdeck/" + tool.slug + ".png",
         documentation: "/frameworks/flightdeck#" + tool.slug,
-        flightdeck: true, guide: "", example: "",
+        flightdeck: true, workbench: false, guide: "", example: "",
         search: [tool.slug, "fd_" + tool.slug.replaceAll("-", "_"), tool.description, tool.group, ...tool.inputs, ...tool.outputs, "Flightdeck GPU Vulkan CPU"].join(" ").toLowerCase(),
     }));
-    return [...packages, ...workflows];
+    return [...packages, ...workflows, ...additions];
 }
 
 export type DirectoryEntry = ReturnType<typeof packageDirectory>[number];

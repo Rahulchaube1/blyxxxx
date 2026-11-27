@@ -11,6 +11,13 @@ export default function Articles() {
             <p>Experiments from the people building Blyx, with the code and data behind each result.</p>
         </header>
         <article className={styles.feature}>
+            <div><p className={styles.byline}>Blyx Workbench 0.1.0</p>
+                <h2><a href="/articles/workbench">What happens when an approval arrives late?</a></h2>
+                <p>Replay an editorial workflow, divide a payment exactly and explore 200 installable Blyx packages.</p>
+                <a href="/articles/workbench">Read the walkthrough →</a></div>
+            <div className="actions"><a href="/frameworks">Browse frameworks</a><a href="/libraries">Browse libraries</a></div>
+        </article>
+        <article className={styles.feature}>
             <div><p className={styles.byline}>27 November 2026 · Blyx Flightdeck 0.1.0</p>
                 <h2><a href="/articles/flightdeck">From a loss function to a GPU training step</a></h2>
                 <p>Follow a three-weight classifier and check 50 workflows on CPU and Vulkan.</p>

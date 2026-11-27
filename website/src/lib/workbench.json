@@ -1,0 +1,1402 @@
+[
+  {
+    "title": "Edition Review",
+    "kind": "framework",
+    "slug": "edition_review",
+    "description": "Keep editorial approval tied to the submitted revision even when an author edits during review.",
+    "group": "Publishing and collaboration"
+  },
+  {
+    "title": "Embargo Clock",
+    "kind": "framework",
+    "slug": "embargo_clock",
+    "description": "Release an embargoed story only after its scheduled timestamp and support postponement.",
+    "group": "Publishing and collaboration"
+  },
+  {
+    "title": "Locale Bundle",
+    "kind": "framework",
+    "slug": "locale_bundle",
+    "description": "Collect a declared number of translated segments and hold publication while segments remain.",
+    "group": "Publishing and collaboration"
+  },
+  {
+    "title": "Alias Cutover",
+    "kind": "framework",
+    "slug": "alias_cutover",
+    "description": "Keep a canonical URL active until the replacement target passes a probe for the same revision.",
+    "group": "Publishing and collaboration"
+  },
+  {
+    "title": "Comment Appeals",
+    "kind": "framework",
+    "slug": "comment_appeals",
+    "description": "Preserve a moderation case ID across hiding, appeal, review and restoration.",
+    "group": "Publishing and collaboration"
+  },
+  {
+    "title": "Edit Lease",
+    "kind": "framework",
+    "slug": "edit_lease",
+    "description": "Control an exclusive editing window with renewal, expiry and explicit release using logical timestamps.",
+    "group": "Publishing and collaboration"
+  },
+  {
+    "title": "Newsletter Proof",
+    "kind": "framework",
+    "slug": "newsletter_proof",
+    "description": "Invalidate a newsletter proof after a revision and bind the send request to the approved proof.",
+    "group": "Publishing and collaboration"
+  },
+  {
+    "title": "Media Rights",
+    "kind": "framework",
+    "slug": "media_rights",
+    "description": "Track the expiry of a licensed asset and direct the host to withdraw an expired public copy.",
+    "group": "Publishing and collaboration"
+  },
+  {
+    "title": "Chapter Lock",
+    "kind": "framework",
+    "slug": "chapter_lock",
+    "description": "Prevent a book export from racing a new chapter edit by sealing a numbered manuscript snapshot.",
+    "group": "Publishing and collaboration"
+  },
+  {
+    "title": "Caption Review",
+    "kind": "framework",
+    "slug": "caption_review",
+    "description": "Track outstanding subtitle corrections and return a corrected track for listening approval.",
+    "group": "Publishing and collaboration"
+  },
+  {
+    "title": "Cart Reserve",
+    "kind": "framework",
+    "slug": "cart_reserve",
+    "description": "Reserve a fixed cart quantity, release unneeded units and commit the exact remainder.",
+    "group": "Commerce and fulfillment"
+  },
+  {
+    "title": "Split Tender",
+    "kind": "framework",
+    "slug": "split_tender",
+    "description": "Collect installments in minor units and prevent capture above the outstanding order balance.",
+    "group": "Commerce and fulfillment"
+  },
+  {
+    "title": "Return Triage",
+    "kind": "framework",
+    "slug": "return_triage",
+    "description": "Route inspected returns to stock, repair, or disposal while preserving the return authorization ID.",
+    "group": "Commerce and fulfillment"
+  },
+  {
+    "title": "Parcel Claim",
+    "kind": "framework",
+    "slug": "parcel_claim",
+    "description": "Hold a lost-parcel claim during carrier investigation and cancel compensation when delivery wins the race.",
+    "group": "Commerce and fulfillment"
+  },
+  {
+    "title": "Auction Close",
+    "kind": "framework",
+    "slug": "auction_close",
+    "description": "Drive a single-item ascending auction with a reserve, strictly increasing bids and a settlement handoff.",
+    "group": "Commerce and fulfillment"
+  },
+  {
+    "title": "Gift Balance",
+    "kind": "framework",
+    "slug": "gift_balance",
+    "description": "Redeem a prepaid balance multiple times, decline overdrafts, and close an exhausted card.",
+    "group": "Commerce and fulfillment"
+  },
+  {
+    "title": "Backorder Fill",
+    "kind": "framework",
+    "slug": "backorder_fill",
+    "description": "Release a backordered line only after cumulative inbound receipts satisfy its shortage.",
+    "group": "Commerce and fulfillment"
+  },
+  {
+    "title": "Coupon Pool",
+    "kind": "framework",
+    "slug": "coupon_pool",
+    "description": "Manage a finite campaign redemption pool with replenishment and explicit suspension.",
+    "group": "Commerce and fulfillment"
+  },
+  {
+    "title": "Subscription Grace",
+    "kind": "framework",
+    "slug": "subscription_grace",
+    "description": "Control renewal, grace-period expiration and reactivation by comparing absolute billing deadlines.",
+    "group": "Commerce and fulfillment"
+  },
+  {
+    "title": "Exchange Stock",
+    "kind": "framework",
+    "slug": "exchange_stock",
+    "description": "Keep a replacement item reserved until receipt of the matching returned item.",
+    "group": "Commerce and fulfillment"
+  },
+  {
+    "title": "Outbox Delivery",
+    "kind": "framework",
+    "slug": "outbox_delivery",
+    "description": "Coordinate durable outbox insertion, delivery and acknowledgement with a stable message ID.",
+    "group": "Data systems and queues"
+  },
+  {
+    "title": "Savepoint Batch",
+    "kind": "framework",
+    "slug": "savepoint_batch",
+    "description": "Control a nested transaction using a savepoint depth and reject outer commit before nested scopes close.",
+    "group": "Data systems and queues"
+  },
+  {
+    "title": "Schema Shadow",
+    "kind": "framework",
+    "slug": "schema_shadow",
+    "description": "Protect a shadow-table cutover until the declared row backfill and an explicit consistency check finish.",
+    "group": "Data systems and queues"
+  },
+  {
+    "title": "Stream Watermark",
+    "kind": "framework",
+    "slug": "stream_watermark",
+    "description": "Advance an event-time watermark monotonically and route late arrivals for correction.",
+    "group": "Data systems and queues"
+  },
+  {
+    "title": "Deadletter Replay",
+    "kind": "framework",
+    "slug": "deadletter_replay",
+    "description": "Replay a dead-letter batch with an explicit per-message attempt budget and manual escalation.",
+    "group": "Data systems and queues"
+  },
+  {
+    "title": "Snapshot Fence",
+    "kind": "framework",
+    "slug": "snapshot_fence",
+    "description": "Buffer changes during snapshot export and release the change feed only at a matching snapshot fence.",
+    "group": "Data systems and queues"
+  },
+  {
+    "title": "Replica Promote",
+    "kind": "framework",
+    "slug": "replica_promote",
+    "description": "Fence a replica promotion against its required log offset before announcing a new primary.",
+    "group": "Data systems and queues"
+  },
+  {
+    "title": "Compaction Swap",
+    "kind": "framework",
+    "slug": "compaction_swap",
+    "description": "Retain old table segments until the replacement file has the expected record count and readers drain.",
+    "group": "Data systems and queues"
+  },
+  {
+    "title": "Microbatch Seal",
+    "kind": "framework",
+    "slug": "microbatch_seal",
+    "description": "Close a microbatch on its target row count or an early flush and release only after sink confirmation.",
+    "group": "Data systems and queues"
+  },
+  {
+    "title": "Segment Roll",
+    "kind": "framework",
+    "slug": "segment_roll",
+    "description": "Roll bounded log segments without losing the append that triggered rotation.",
+    "group": "Data systems and queues"
+  },
+  {
+    "title": "Canary Traffic",
+    "kind": "framework",
+    "slug": "canary_traffic",
+    "description": "Gate ordered traffic increases on the health of the current rollout percentage.",
+    "group": "Reliability and delivery"
+  },
+  {
+    "title": "Breaker Probe",
+    "kind": "framework",
+    "slug": "breaker_probe",
+    "description": "Open a circuit after a configured number of consecutive failures and admit a single recovery probe.",
+    "group": "Reliability and delivery"
+  },
+  {
+    "title": "Drain Workers",
+    "kind": "framework",
+    "slug": "drain_workers",
+    "description": "Stop new admissions before draining the known count of active workers and terminating a deployment.",
+    "group": "Reliability and delivery"
+  },
+  {
+    "title": "Backup Chain",
+    "kind": "framework",
+    "slug": "backup_chain",
+    "description": "Require a base snapshot and contiguous increments before sealing a restorable backup chain.",
+    "group": "Reliability and delivery"
+  },
+  {
+    "title": "Maintenance Slot",
+    "kind": "framework",
+    "slug": "maintenance_slot",
+    "description": "Track the maintenance window deadline, prevent late starts and flag overrun on completion.",
+    "group": "Reliability and delivery"
+  },
+  {
+    "title": "Incident Silence",
+    "kind": "framework",
+    "slug": "incident_silence",
+    "description": "Suppress repeated notifications until a quiet period expires while allowing severity escalation.",
+    "group": "Reliability and delivery"
+  },
+  {
+    "title": "Artifact Promote",
+    "kind": "framework",
+    "slug": "artifact_promote",
+    "description": "Promote exactly the artifact digest token that passed staging and block substituted build IDs.",
+    "group": "Reliability and delivery"
+  },
+  {
+    "title": "Mirror Repair",
+    "kind": "framework",
+    "slug": "mirror_repair",
+    "description": "Schedule missing mirror blocks and disclose availability only after a consistency probe.",
+    "group": "Reliability and delivery"
+  },
+  {
+    "title": "Reboot Ring",
+    "kind": "framework",
+    "slug": "reboot_ring",
+    "description": "Admit nodes to a rolling reboot one at a time and wait for each health check before the next node.",
+    "group": "Reliability and delivery"
+  },
+  {
+    "title": "Restore Drill",
+    "kind": "framework",
+    "slug": "restore_drill",
+    "description": "Verify restored row counts and run a read probe before declaring a recovery drill successful.",
+    "group": "Reliability and delivery"
+  },
+  {
+    "title": "Take Punch",
+    "kind": "framework",
+    "slug": "take_punch",
+    "description": "Punch a recording in and out on a monotonic sample clock and retain the captured duration.",
+    "group": "Audio, images and video"
+  },
+  {
+    "title": "Silence Gate",
+    "kind": "framework",
+    "slug": "silence_gate",
+    "description": "Use separate open and close amplitude thresholds to prevent chatter in an audio gate.",
+    "group": "Audio, images and video"
+  },
+  {
+    "title": "Video Keycut",
+    "kind": "framework",
+    "slug": "video_keycut",
+    "description": "Snap a requested cut forward to the next eligible keyframe and preserve the resulting sample boundary.",
+    "group": "Audio, images and video"
+  },
+  {
+    "title": "Proxy Encode",
+    "kind": "framework",
+    "slug": "proxy_encode",
+    "description": "Bind a low-resolution editing proxy to an original asset ID and support regeneration after rejection.",
+    "group": "Audio, images and video"
+  },
+  {
+    "title": "Sprite Sheet",
+    "kind": "framework",
+    "slug": "sprite_sheet",
+    "description": "Assign frames into a fixed-capacity sprite atlas and reject an incomplete finalization.",
+    "group": "Audio, images and video"
+  },
+  {
+    "title": "Subtitle Clock",
+    "kind": "framework",
+    "slug": "subtitle_clock",
+    "description": "Accept nonoverlapping cues in timestamp order and mark the last closed cue for export.",
+    "group": "Audio, images and video"
+  },
+  {
+    "title": "Loudness Pass",
+    "kind": "framework",
+    "slug": "loudness_pass",
+    "description": "Require a measured peak from a first pass before applying a bounded mastering target.",
+    "group": "Audio, images and video"
+  },
+  {
+    "title": "Frame Reorder",
+    "kind": "framework",
+    "slug": "frame_reorder",
+    "description": "Deliver frames on the expected sequence number and signal missing ranges to the decoder.",
+    "group": "Audio, images and video"
+  },
+  {
+    "title": "Panorama Stitch",
+    "kind": "framework",
+    "slug": "panorama_stitch",
+    "description": "Track overlapping frame pairs and require a solved alignment before blending.",
+    "group": "Audio, images and video"
+  },
+  {
+    "title": "Audio Preroll",
+    "kind": "framework",
+    "slug": "audio_preroll",
+    "description": "Prime a playback buffer and recover from underrun without emitting premature play commands.",
+    "group": "Audio, images and video"
+  },
+  {
+    "title": "Crs Handoff",
+    "kind": "framework",
+    "slug": "crs_handoff",
+    "description": "Require the expected coordinate-system identifier before allowing a vector-layer merge.",
+    "group": "Maps, environment and scientific acquisition"
+  },
+  {
+    "title": "Tile Pyramid",
+    "kind": "framework",
+    "slug": "tile_pyramid",
+    "description": "Publish pyramid levels in descending zoom order and close only after zoom zero is complete.",
+    "group": "Maps, environment and scientific acquisition"
+  },
+  {
+    "title": "Sensor Warmup",
+    "kind": "framework",
+    "slug": "sensor_warmup",
+    "description": "Hold measurements during a sensor warm-up countdown and restart calibration after a reset.",
+    "group": "Maps, environment and scientific acquisition"
+  },
+  {
+    "title": "Survey Transect",
+    "kind": "framework",
+    "slug": "survey_transect",
+    "description": "Visit field waypoints in order and distinguish revisits from the next required station.",
+    "group": "Maps, environment and scientific acquisition"
+  },
+  {
+    "title": "Gauge Hysteresis",
+    "kind": "framework",
+    "slug": "gauge_hysteresis",
+    "description": "Raise and clear a flood-gauge advisory with a lower reset band using integer level units.",
+    "group": "Maps, environment and scientific acquisition"
+  },
+  {
+    "title": "Survey Closure",
+    "kind": "framework",
+    "slug": "survey_closure",
+    "description": "Hold a survey traverse for remeasurement if its reported closure error exceeds the selected tolerance.",
+    "group": "Maps, environment and scientific acquisition"
+  },
+  {
+    "title": "Dark Frame Stack",
+    "kind": "framework",
+    "slug": "dark_frame_stack",
+    "description": "Acquire a required stack of dark frames and repeat the acquisition when a light leak is detected.",
+    "group": "Maps, environment and scientific acquisition"
+  },
+  {
+    "title": "Sample Custody",
+    "kind": "framework",
+    "slug": "sample_custody",
+    "description": "Track custody of a field sample across dispatch and receipt with a matching seal number.",
+    "group": "Maps, environment and scientific acquisition"
+  },
+  {
+    "title": "Instrument Zero",
+    "kind": "framework",
+    "slug": "instrument_zero",
+    "description": "Apply a zero-offset correction only after repeated reference measurements agree within one count.",
+    "group": "Maps, environment and scientific acquisition"
+  },
+  {
+    "title": "Grid Resample",
+    "kind": "framework",
+    "slug": "grid_resample",
+    "description": "Track remaining destination rows during raster reprojection and require an explicit nodata audit before release.",
+    "group": "Maps, environment and scientific acquisition"
+  },
+  {
+    "title": "Fold Holdout",
+    "kind": "framework",
+    "slug": "fold_holdout",
+    "description": "Fence training and scoring by fold ID so a late training completion cannot score the wrong holdout.",
+    "group": "Machine learning and evaluation"
+  },
+  {
+    "title": "Label Consensus",
+    "kind": "framework",
+    "slug": "label_consensus",
+    "description": "Require a second independent host-provided label to agree or route the sample for adjudication.",
+    "group": "Machine learning and evaluation"
+  },
+  {
+    "title": "Early Plateau",
+    "kind": "framework",
+    "slug": "early_plateau",
+    "description": "Track consecutive unimproved evaluations against a caller-selected patience budget.",
+    "group": "Machine learning and evaluation"
+  },
+  {
+    "title": "Feature Freeze",
+    "kind": "framework",
+    "slug": "feature_freeze",
+    "description": "Bind a model fit to one feature schema and request re-encoding when a serving schema differs.",
+    "group": "Machine learning and evaluation"
+  },
+  {
+    "title": "Gradient Barrier",
+    "kind": "framework",
+    "slug": "gradient_barrier",
+    "description": "Coordinate a fixed count of host-deduplicated gradient contributions before a single optimizer step.",
+    "group": "Machine learning and evaluation"
+  },
+  {
+    "title": "Checkpoint Elect",
+    "kind": "framework",
+    "slug": "checkpoint_elect",
+    "description": "Keep the best model checkpoint under integer loss minimization and restore it on a stop request.",
+    "group": "Machine learning and evaluation"
+  },
+  {
+    "title": "Annotation Budget",
+    "kind": "framework",
+    "slug": "annotation_budget",
+    "description": "Reserve a bounded labeling budget, route affordable tasks and close the campaign when funds run out.",
+    "group": "Machine learning and evaluation"
+  },
+  {
+    "title": "Inference Batch",
+    "kind": "framework",
+    "slug": "inference_batch",
+    "description": "Seal variable-size inference requests by a token budget and carry the first oversized arrival to the next batch.",
+    "group": "Machine learning and evaluation"
+  },
+  {
+    "title": "Distill Cache",
+    "kind": "framework",
+    "slug": "distill_cache",
+    "description": "Seal teacher predictions at a pinned teacher revision and invalidate stale targets when it changes.",
+    "group": "Machine learning and evaluation"
+  },
+  {
+    "title": "Embedding Reindex",
+    "kind": "framework",
+    "slug": "embedding_reindex",
+    "description": "Build and verify a new embedding index without routing queries to partially ingested vectors.",
+    "group": "Machine learning and evaluation"
+  },
+  {
+    "title": "Pdf Signature Set",
+    "kind": "framework",
+    "slug": "pdf_signature_set",
+    "description": "Collect signature fields for a PDF packet and prevent flattening while fields remain empty.",
+    "group": "Document production and accessibility"
+  },
+  {
+    "title": "Print Imposition",
+    "kind": "framework",
+    "slug": "print_imposition",
+    "description": "Complete paired front and back impressions before counting a duplex sheet as finished.",
+    "group": "Document production and accessibility"
+  },
+  {
+    "title": "Ocr Review",
+    "kind": "framework",
+    "slug": "ocr_review",
+    "description": "Route pages below a caller-provided confidence cutoff to human correction before indexing.",
+    "group": "Document production and accessibility"
+  },
+  {
+    "title": "Outline Depth",
+    "kind": "framework",
+    "slug": "outline_depth",
+    "description": "Enforce one-level heading descent while allowing returns to outer levels when constructing an outline.",
+    "group": "Document production and accessibility"
+  },
+  {
+    "title": "Accessible Images",
+    "kind": "framework",
+    "slug": "accessible_images",
+    "description": "Track unresolved image alternatives and count explicitly decorative images as reviewed.",
+    "group": "Document production and accessibility"
+  },
+  {
+    "title": "Translation Memory",
+    "kind": "framework",
+    "slug": "translation_memory",
+    "description": "Associate one segment revision with a translation candidate and reject stale approval after source edits.",
+    "group": "Document production and accessibility"
+  },
+  {
+    "title": "Mail Merge Batch",
+    "kind": "framework",
+    "slug": "mail_merge_batch",
+    "description": "Track unsent records through merge, exclusion and validated spooling of an output batch.",
+    "group": "Document production and accessibility"
+  },
+  {
+    "title": "Sheet Recalc",
+    "kind": "framework",
+    "slug": "sheet_recalc",
+    "description": "Fence cached spreadsheet results to the revision that triggered recalculation.",
+    "group": "Document production and accessibility"
+  },
+  {
+    "title": "Archive Verify",
+    "kind": "framework",
+    "slug": "archive_verify",
+    "description": "Compare uncompressed member counts and request integrity checks before accepting a document archive.",
+    "group": "Document production and accessibility"
+  },
+  {
+    "title": "Footnote Bind",
+    "kind": "framework",
+    "slug": "footnote_bind",
+    "description": "Resolve forward footnote references and block typesetting while the outstanding count is positive.",
+    "group": "Document production and accessibility"
+  },
+  {
+    "title": "Dock Appointments",
+    "kind": "framework",
+    "slug": "dock_appointments",
+    "description": "Keep a loading bay available until its booked arrival time and account for late arrivals.",
+    "group": "Logistics, utilities and production"
+  },
+  {
+    "title": "Pallet Break",
+    "kind": "framework",
+    "slug": "pallet_break",
+    "description": "Pick whole cases from a pallet and direct residual loose units to repacking.",
+    "group": "Logistics, utilities and production"
+  },
+  {
+    "title": "Meter Rollover",
+    "kind": "framework",
+    "slug": "meter_rollover",
+    "description": "Detect dial rollover and report monotonically increasing meter readings or rollover corrections.",
+    "group": "Logistics, utilities and production"
+  },
+  {
+    "title": "Charge Session",
+    "kind": "framework",
+    "slug": "charge_session",
+    "description": "Schedule a battery charging session to a target percentage with pause, resume and completion.",
+    "group": "Logistics, utilities and production"
+  },
+  {
+    "title": "Inspection Lot",
+    "kind": "framework",
+    "slug": "inspection_lot",
+    "description": "Release, reject or rework a lot based on observed defects and its configured acceptance limit.",
+    "group": "Logistics, utilities and production"
+  },
+  {
+    "title": "Kit Assembly",
+    "kind": "framework",
+    "slug": "kit_assembly",
+    "description": "Prevent packaging an incomplete kit and permit discovery of additional required components.",
+    "group": "Logistics, utilities and production"
+  },
+  {
+    "title": "Dispatch Manifest",
+    "kind": "framework",
+    "slug": "dispatch_manifest",
+    "description": "Seal one route manifest only after all listed stops have been scanned or explicitly removed.",
+    "group": "Logistics, utilities and production"
+  },
+  {
+    "title": "Rental Turnaround",
+    "kind": "framework",
+    "slug": "rental_turnaround",
+    "description": "Bind returned equipment to its rental ID and require cleaning or repair before reissue.",
+    "group": "Logistics, utilities and production"
+  },
+  {
+    "title": "Tank Replenish",
+    "kind": "framework",
+    "slug": "tank_replenish",
+    "description": "Request a refill below a low-water mark and close the order only after level recovery.",
+    "group": "Logistics, utilities and production"
+  },
+  {
+    "title": "Cycle Count",
+    "kind": "framework",
+    "slug": "cycle_count",
+    "description": "Freeze a bin for a blind stock count and require reconciliation for discrepancies.",
+    "group": "Logistics, utilities and production"
+  },
+  {
+    "title": "Drag Capture",
+    "kind": "framework",
+    "slug": "drag_capture",
+    "description": "Keep pointer capture with its originating pointer during drag, cancel and drop.",
+    "group": "Interactive software, games and device clients"
+  },
+  {
+    "title": "Undo Cursor",
+    "kind": "framework",
+    "slug": "undo_cursor",
+    "description": "Bound undo traversal by the number of applied edits and clear history at a committed savepoint.",
+    "group": "Interactive software, games and device clients"
+  },
+  {
+    "title": "Scene Stream",
+    "kind": "framework",
+    "slug": "scene_stream",
+    "description": "Load a destination game scene before detaching the current scene and discard stale load callbacks.",
+    "group": "Interactive software, games and device clients"
+  },
+  {
+    "title": "Focus Trap",
+    "kind": "framework",
+    "slug": "focus_trap",
+    "description": "Cycle keyboard focus around a modal boundary and release focus on dismissal.",
+    "group": "Interactive software, games and device clients"
+  },
+  {
+    "title": "Game Rounds",
+    "kind": "framework",
+    "slug": "game_rounds",
+    "description": "Advance a fixed-length round counter through scoring, disputes and finalization.",
+    "group": "Interactive software, games and device clients"
+  },
+  {
+    "title": "Device Pairing",
+    "kind": "framework",
+    "slug": "device_pairing",
+    "description": "Match a nonsecret device discovery ID across discovery, user selection and connection callbacks.",
+    "group": "Interactive software, games and device clients"
+  },
+  {
+    "title": "Offline Drafts",
+    "kind": "framework",
+    "slug": "offline_drafts",
+    "description": "Accumulate offline edits and keep dirty status until the uploaded revision is acknowledged.",
+    "group": "Interactive software, games and device clients"
+  },
+  {
+    "title": "Gesture Hold",
+    "kind": "framework",
+    "slug": "gesture_hold",
+    "description": "Recognize a long press on a logical clock and suppress it after sufficient movement or early release.",
+    "group": "Interactive software, games and device clients"
+  },
+  {
+    "title": "Animation Scrub",
+    "kind": "framework",
+    "slug": "animation_scrub",
+    "description": "Fence asynchronous preview callbacks to the most recently selected animation frame.",
+    "group": "Interactive software, games and device clients"
+  },
+  {
+    "title": "Level Checkpoint",
+    "kind": "framework",
+    "slug": "level_checkpoint",
+    "description": "Track forward game progress while allowing respawns only at a previously committed checkpoint.",
+    "group": "Interactive software, games and device clients"
+  },
+  {
+    "title": "Lower Bound Pos",
+    "kind": "library",
+    "slug": "lower_bound_pos",
+    "description": "Locate the first element greater than or equal to a key in an ascending numeric vector. Returns the length when insertion belongs at the end.",
+    "group": "Sequence and table processing"
+  },
+  {
+    "title": "Run Mode",
+    "kind": "library",
+    "slug": "run_mode",
+    "description": "Return the most frequent value in a sorted nonempty vector, choosing the smallest value on ties. Empty input returns zero.",
+    "group": "Sequence and table processing"
+  },
+  {
+    "title": "Common Prefix Len",
+    "kind": "library",
+    "slug": "common_prefix_len",
+    "description": "Find the length of the shared leading sequence of two numeric ID streams before producing a diff.",
+    "group": "Sequence and table processing"
+  },
+  {
+    "title": "Ordered Subsequence",
+    "kind": "library",
+    "slug": "ordered_subsequence",
+    "description": "Test whether a series of required events appears in order, allowing unrelated events in between.",
+    "group": "Sequence and table processing"
+  },
+  {
+    "title": "Sorted Overlap Count",
+    "kind": "library",
+    "slug": "sorted_overlap_count",
+    "description": "Count the multiset intersection of two sorted vectors while honoring repeated keys on both sides.",
+    "group": "Sequence and table processing"
+  },
+  {
+    "title": "First Inversion",
+    "kind": "library",
+    "slug": "first_inversion",
+    "description": "Return the zero-based index of the first row that breaks ascending order, or minus one when sorted.",
+    "group": "Sequence and table processing"
+  },
+  {
+    "title": "Stable Rank",
+    "kind": "library",
+    "slug": "stable_rank",
+    "description": "Return the zero-based ascending rank of one row, breaking ties by its original index. Invalid indices return minus one.",
+    "group": "Sequence and table processing"
+  },
+  {
+    "title": "Majority Index",
+    "kind": "library",
+    "slug": "majority_index",
+    "description": "Find an index containing a strict majority using cancellation and a verification pass. Return minus one if none exists.",
+    "group": "Sequence and table processing"
+  },
+  {
+    "title": "Max Slice Sum",
+    "kind": "library",
+    "slug": "max_slice_sum",
+    "description": "Find the largest contiguous sum in a numeric signal, allowing the empty slice with sum zero.",
+    "group": "Sequence and table processing"
+  },
+  {
+    "title": "Balance Index",
+    "kind": "library",
+    "slug": "balance_index",
+    "description": "Find the first index where the sum of earlier values equals the sum of later values. Return minus one if none exists.",
+    "group": "Sequence and table processing"
+  },
+  {
+    "title": "Zero Cross Count",
+    "kind": "library",
+    "slug": "zero_cross_count",
+    "description": "Count sign changes in sampled audio, ignoring zero-valued plateaus.",
+    "group": "Audio and image processing"
+  },
+  {
+    "title": "Signal Energy",
+    "kind": "library",
+    "slug": "signal_energy",
+    "description": "Sum squared amplitudes of a finite signal block for comparing energy across equal-length windows.",
+    "group": "Audio and image processing"
+  },
+  {
+    "title": "Peak Sample Index",
+    "kind": "library",
+    "slug": "peak_sample_index",
+    "description": "Locate the first sample of greatest absolute magnitude, preserving the index for waveform annotation. Empty input returns minus one.",
+    "group": "Audio and image processing"
+  },
+  {
+    "title": "Lag Product",
+    "kind": "library",
+    "slug": "lag_product",
+    "description": "Compute the unnormalized autocorrelation sum at a nonnegative integer lag. A missing overlap contributes zero.",
+    "group": "Audio and image processing"
+  },
+  {
+    "title": "Fir Point",
+    "kind": "library",
+    "slug": "fir_point",
+    "description": "Evaluate one causal FIR output using taps in lag order and zero padding at the start of a signal.",
+    "group": "Audio and image processing"
+  },
+  {
+    "title": "Median Three",
+    "kind": "library",
+    "slug": "median_three",
+    "description": "Remove isolated impulses from a three-sample window by selecting its median, including ties.",
+    "group": "Audio and image processing"
+  },
+  {
+    "title": "Pcm Sign Extend",
+    "kind": "library",
+    "slug": "pcm_sign_extend",
+    "description": "Interpret an unsigned 16-bit PCM word as a signed sample. Values outside the word range return minus 32769.",
+    "group": "Audio and image processing"
+  },
+  {
+    "title": "Pixel Luma",
+    "kind": "library",
+    "slug": "pixel_luma",
+    "description": "Compute integer BT.601-style luma using fixed weights 77, 150 and 29 with nearest rounding. RGB channels must be bytes.",
+    "group": "Audio and image processing"
+  },
+  {
+    "title": "Alpha Over Gray",
+    "kind": "library",
+    "slug": "alpha_over_gray",
+    "description": "Composite one straight-alpha grayscale sample over an opaque background with nearest byte rounding.",
+    "group": "Audio and image processing"
+  },
+  {
+    "title": "Row Stride Align",
+    "kind": "library",
+    "slug": "row_stride_align",
+    "description": "Calculate padded scanline storage in bytes for a packed pixel format at a byte alignment.",
+    "group": "Audio and image processing"
+  },
+  {
+    "title": "Turn Orientation",
+    "kind": "library",
+    "slug": "turn_orientation",
+    "description": "Determine the direction of a planar turn from six coordinates. Returns one for counterclockwise, zero for collinear, minus one for clockwise.",
+    "group": "Geometry, maps and layout"
+  },
+  {
+    "title": "Polygon Double Area",
+    "kind": "library",
+    "slug": "polygon_double_area",
+    "description": "Compute the absolute doubled area of a simple planar polygon from its vertex coordinates using the shoelace sum.",
+    "group": "Geometry, maps and layout"
+  },
+  {
+    "title": "Segment Distance Sq",
+    "kind": "library",
+    "slug": "segment_distance_sq",
+    "description": "Return squared Euclidean distance from a point to a closed segment, including the zero-length case.",
+    "group": "Geometry, maps and layout"
+  },
+  {
+    "title": "Polyline Taxicab",
+    "kind": "library",
+    "slug": "polyline_taxicab",
+    "description": "Measure total Manhattan travel along a rectilinear path. Mismatched coordinate arrays return minus one.",
+    "group": "Geometry, maps and layout"
+  },
+  {
+    "title": "Grid Cell Index",
+    "kind": "library",
+    "slug": "grid_cell_index",
+    "description": "Map an in-bounds integer cell into a zero-based row-major array with explicit dimension checks.",
+    "group": "Geometry, maps and layout"
+  },
+  {
+    "title": "Tile Parent Id",
+    "kind": "library",
+    "slug": "tile_parent_id",
+    "description": "Map a row-major square tile ID into its parent in an even-width tile level. Reject invalid IDs and odd widths.",
+    "group": "Geometry, maps and layout"
+  },
+  {
+    "title": "Longitude Delta",
+    "kind": "library",
+    "slug": "longitude_delta",
+    "description": "Find the shortest signed longitude change in degrees in the half-open interval from minus 180 to 180.",
+    "group": "Geometry, maps and layout"
+  },
+  {
+    "title": "Point In Ring",
+    "kind": "library",
+    "slug": "point_in_ring",
+    "description": "Apply an even-odd ray crossing test to an open or closed polygon ring. Supply a query off the boundary.",
+    "group": "Geometry, maps and layout"
+  },
+  {
+    "title": "Nearest Site",
+    "kind": "library",
+    "slug": "nearest_site",
+    "description": "Find the first closest planar site by squared Euclidean distance. Return minus one for empty or mismatched coordinate arrays.",
+    "group": "Geometry, maps and layout"
+  },
+  {
+    "title": "Periodic Index",
+    "kind": "library",
+    "slug": "periodic_index",
+    "description": "Wrap a signed pixel or lattice coordinate into a repeating axis of positive integer width.",
+    "group": "Geometry, maps and layout"
+  },
+  {
+    "title": "Absolute Error Mean",
+    "kind": "library",
+    "slug": "absolute_error_mean",
+    "description": "Summarize average absolute deviation between paired targets and predictions. Empty or unequal batches return minus one.",
+    "group": "Learning, forecasting and statistics"
+  },
+  {
+    "title": "Symmetric Ape",
+    "kind": "library",
+    "slug": "symmetric_ape",
+    "description": "Compute mean symmetric absolute percentage error on a 0 to 200 scale with zero contribution when both values are zero.",
+    "group": "Learning, forecasting and statistics"
+  },
+  {
+    "title": "Heldout Group",
+    "kind": "library",
+    "slug": "heldout_group",
+    "description": "Identify the nth distinct group in first-seen order for leave-one-group-out validation. Return its first row index or minus one.",
+    "group": "Learning, forecasting and statistics"
+  },
+  {
+    "title": "Balanced Fold Start",
+    "kind": "library",
+    "slug": "balanced_fold_start",
+    "description": "Locate the start row of a balanced contiguous validation fold, giving extra rows to earlier folds. Fold count itself returns the end sentinel.",
+    "group": "Learning, forecasting and statistics"
+  },
+  {
+    "title": "Pair Concordance",
+    "kind": "library",
+    "slug": "pair_concordance",
+    "description": "Count concordant minus discordant unordered pairs for two ranked measurements. Ties contribute zero.",
+    "group": "Learning, forecasting and statistics"
+  },
+  {
+    "title": "Isotonic Breaks",
+    "kind": "library",
+    "slug": "isotonic_breaks",
+    "description": "Count adjacent violations of a nondecreasing response curve before monotonic calibration.",
+    "group": "Learning, forecasting and statistics"
+  },
+  {
+    "title": "Gini Impurity",
+    "kind": "library",
+    "slug": "gini_impurity",
+    "description": "Compute class impurity from nonnegative class counts. An empty or zero-mass histogram yields zero.",
+    "group": "Learning, forecasting and statistics"
+  },
+  {
+    "title": "Positive Rank Auc",
+    "kind": "library",
+    "slug": "positive_rank_auc",
+    "description": "Compute binary ROC AUC by positive-negative score comparisons with half credit for ties. Undefined classes return minus one.",
+    "group": "Learning, forecasting and statistics"
+  },
+  {
+    "title": "Weighted Median Pos",
+    "kind": "library",
+    "slug": "weighted_median_pos",
+    "description": "Select the first sorted value index whose cumulative nonnegative weight reaches half the total. Zero total returns minus one.",
+    "group": "Learning, forecasting and statistics"
+  },
+  {
+    "title": "Residual Bias",
+    "kind": "library",
+    "slug": "residual_bias",
+    "description": "Measure signed mean prediction minus target for paired samples. An empty batch or mismatched lengths produces zero.",
+    "group": "Learning, forecasting and statistics"
+  },
+  {
+    "title": "Cart Discount",
+    "kind": "library",
+    "slug": "cart_discount",
+    "description": "Calculate a minor-unit discount capped by both an offer maximum and the subtotal. Rates are whole basis points rounded down.",
+    "group": "Commerce, allocation and measurement"
+  },
+  {
+    "title": "Cash Rounding",
+    "kind": "library",
+    "slug": "cash_rounding",
+    "description": "Round a nonnegative amount to the nearest cash increment, resolving exact halves upwards.",
+    "group": "Commerce, allocation and measurement"
+  },
+  {
+    "title": "Installment Piece",
+    "kind": "library",
+    "slug": "installment_piece",
+    "description": "Distribute minor units across equal installments, assigning one extra unit to each earliest installment until the remainder is exhausted.",
+    "group": "Commerce, allocation and measurement"
+  },
+  {
+    "title": "Break Even Units",
+    "kind": "library",
+    "slug": "break_even_units",
+    "description": "Calculate the first whole unit count whose positive contribution margin covers fixed overhead. Return minus one for a nonpositive margin.",
+    "group": "Commerce, allocation and measurement"
+  },
+  {
+    "title": "Tier Units",
+    "kind": "library",
+    "slug": "tier_units",
+    "description": "Count units charged inside one progressive pricing tier with excluded lower and included upper cumulative boundaries.",
+    "group": "Commerce, allocation and measurement"
+  },
+  {
+    "title": "Unit Pack Waste",
+    "kind": "library",
+    "slug": "unit_pack_waste",
+    "description": "Compute spare slots in the final shipping case when a nonnegative order is packed into equal-size cases.",
+    "group": "Commerce, allocation and measurement"
+  },
+  {
+    "title": "Inventory Days",
+    "kind": "library",
+    "slug": "inventory_days",
+    "description": "Find the first demand period that cannot be filled from current stock. Return the number of fully served periods.",
+    "group": "Commerce, allocation and measurement"
+  },
+  {
+    "title": "Meter Consumption",
+    "kind": "library",
+    "slug": "meter_consumption",
+    "description": "Compute consumption between two readings on a wrapping meter, assuming at most one wrap. Modulus is one beyond the largest reading.",
+    "group": "Commerce, allocation and measurement"
+  },
+  {
+    "title": "Shelf Life Pick",
+    "kind": "library",
+    "slug": "shelf_life_pick",
+    "description": "Choose the earliest nonexpired lot with sufficient stock for an unsplit order. Ties preserve input order.",
+    "group": "Commerce, allocation and measurement"
+  },
+  {
+    "title": "Bin First Fit",
+    "kind": "library",
+    "slug": "bin_first_fit",
+    "description": "Find the first container with remaining capacity for a nonnegative item. Return minus one if no container fits.",
+    "group": "Commerce, allocation and measurement"
+  },
+  {
+    "title": "Luhn Digits",
+    "kind": "library",
+    "slug": "luhn_digits",
+    "description": "Validate a sequence of decimal digits against the Luhn check digit, including its final digit.",
+    "group": "Data integrity, identifiers and formats"
+  },
+  {
+    "title": "Isbn10 Check",
+    "kind": "library",
+    "slug": "isbn10_check",
+    "description": "Validate ten ISBN-10 values in print order. Encode the final X as 10.",
+    "group": "Data integrity, identifiers and formats"
+  },
+  {
+    "title": "Ean13 Digit",
+    "kind": "library",
+    "slug": "ean13_digit",
+    "description": "Derive the EAN-13 check digit from exactly twelve decimal data digits. Invalid input returns minus one.",
+    "group": "Data integrity, identifiers and formats"
+  },
+  {
+    "title": "Fletcher16 Bytes",
+    "kind": "library",
+    "slug": "fletcher16_bytes",
+    "description": "Compute Fletcher-16 on byte values modulo 255. Invalid byte input returns minus one.",
+    "group": "Data integrity, identifiers and formats"
+  },
+  {
+    "title": "Uleb Width",
+    "kind": "library",
+    "slug": "uleb_width",
+    "description": "Determine the encoded byte length of a nonnegative integer in unsigned LEB128.",
+    "group": "Data integrity, identifiers and formats"
+  },
+  {
+    "title": "Zigzag Encode",
+    "kind": "library",
+    "slug": "zigzag_encode",
+    "description": "Map signed integers to their unsigned ZigZag representation for compact varints. Inputs must fit in signed 32 bits.",
+    "group": "Data integrity, identifiers and formats"
+  },
+  {
+    "title": "Base64 Size",
+    "kind": "library",
+    "slug": "base64_size",
+    "description": "Calculate the number of padded Base64 characters required for a known payload byte count.",
+    "group": "Data integrity, identifiers and formats"
+  },
+  {
+    "title": "Utf8 Width",
+    "kind": "library",
+    "slug": "utf8_width",
+    "description": "Return the byte width of a Unicode scalar encoded as UTF-8. Reject surrogate code points and values beyond Unicode.",
+    "group": "Data integrity, identifiers and formats"
+  },
+  {
+    "title": "Byte Order U32",
+    "kind": "library",
+    "slug": "byte_order_u32",
+    "description": "Decode four validated bytes beginning at an offset into an unsigned big-endian 32-bit value represented exactly in FP64.",
+    "group": "Data integrity, identifiers and formats"
+  },
+  {
+    "title": "Packbits Extent",
+    "kind": "library",
+    "slug": "packbits_extent",
+    "description": "Measure decoded length of a PackBits byte stream, checking run and literal boundaries. Header 128 is a no-op.",
+    "group": "Data integrity, identifiers and formats"
+  },
+  {
+    "title": "Ring Occupancy",
+    "kind": "library",
+    "slug": "ring_occupancy",
+    "description": "Count occupied slots in a one-empty-slot circular queue with wrapped read and write cursors.",
+    "group": "Systems, queues and reliability"
+  },
+  {
+    "title": "Serial Newer",
+    "kind": "library",
+    "slug": "serial_newer",
+    "description": "Compare unsigned 32-bit serial numbers under half-range ordering. Equal and exactly half-range pairs return false.",
+    "group": "Systems, queues and reliability"
+  },
+  {
+    "title": "Buddy Order",
+    "kind": "library",
+    "slug": "buddy_order",
+    "description": "Find the least buddy allocator order that holds a request in positive equal base blocks. Order zero uses one block.",
+    "group": "Systems, queues and reliability"
+  },
+  {
+    "title": "Cache Reuse Distance",
+    "kind": "library",
+    "slug": "cache_reuse_distance",
+    "description": "Count distinct addresses since the previous identical reference to estimate LRU stack distance. A cold reference returns minus one.",
+    "group": "Systems, queues and reliability"
+  },
+  {
+    "title": "Rendezvous Winner",
+    "kind": "library",
+    "slug": "rendezvous_winner",
+    "description": "Choose an available replica from precomputed rendezvous hash scores, resolving ties by lowest index. Positive flags indicate available replicas.",
+    "group": "Systems, queues and reliability"
+  },
+  {
+    "title": "Quorum Overlap",
+    "kind": "library",
+    "slug": "quorum_overlap",
+    "description": "Calculate the minimum overlap between two successful quorum sets in a universe of distinct nodes.",
+    "group": "Systems, queues and reliability"
+  },
+  {
+    "title": "Burst Backlog",
+    "kind": "library",
+    "slug": "burst_backlog",
+    "description": "Compute the peak queued work across synchronized arrivals followed by service at each time step. Return minus one for invalid counts.",
+    "group": "Systems, queues and reliability"
+  },
+  {
+    "title": "Missing Sequence",
+    "kind": "library",
+    "slug": "missing_sequence",
+    "description": "Find the first missing ID starting at an expected ID in an ascending stream that may contain duplicates.",
+    "group": "Systems, queues and reliability"
+  },
+  {
+    "title": "Striped Owner",
+    "kind": "library",
+    "slug": "striped_owner",
+    "description": "Map a logical block address to a disk in a round-robin stripe layout with configurable blocks per stripe.",
+    "group": "Systems, queues and reliability"
+  },
+  {
+    "title": "Deadline Miss Count",
+    "kind": "library",
+    "slug": "deadline_miss_count",
+    "description": "Count jobs missing absolute deadlines on one nonpreemptive worker in the supplied dispatch order.",
+    "group": "Systems, queues and reliability"
+  },
+  {
+    "title": "Weekday Mask Count",
+    "kind": "library",
+    "slug": "weekday_mask_count",
+    "description": "Count allowed weekdays in a half-open span using a seven-value flag vector and the supplied starting weekday from zero to six.",
+    "group": "Calendar, time and scheduling"
+  },
+  {
+    "title": "Month Span Days",
+    "kind": "library",
+    "slug": "month_span_days",
+    "description": "Return the Gregorian length of a named month for positive civil years. Invalid months and years return minus one.",
+    "group": "Calendar, time and scheduling"
+  },
+  {
+    "title": "Quarter Index",
+    "kind": "library",
+    "slug": "quarter_index",
+    "description": "Map a calendar month to a one-based fiscal quarter for a configurable starting month.",
+    "group": "Calendar, time and scheduling"
+  },
+  {
+    "title": "Next Cadence",
+    "kind": "library",
+    "slug": "next_cadence",
+    "description": "Find the first cadence tick at or after a time, anchored to an initial tick. Period must be positive.",
+    "group": "Calendar, time and scheduling"
+  },
+  {
+    "title": "Slot Conflict Count",
+    "kind": "library",
+    "slug": "slot_conflict_count",
+    "description": "Count half-open reservations overlapping a proposed half-open time slot. Ignore empty reservations.",
+    "group": "Calendar, time and scheduling"
+  },
+  {
+    "title": "First Free Gap",
+    "kind": "library",
+    "slug": "first_free_gap",
+    "description": "Find the first start time that fits a duration past sorted, possibly overlapping reservations. Ignore empty reservations.",
+    "group": "Calendar, time and scheduling"
+  },
+  {
+    "title": "Clock Unwrap",
+    "kind": "library",
+    "slug": "clock_unwrap",
+    "description": "Convert a wrapped time-of-day to the earliest absolute minute at or after a reference minute, using a fixed 1440-minute day.",
+    "group": "Calendar, time and scheduling"
+  },
+  {
+    "title": "Session Count",
+    "kind": "library",
+    "slug": "session_count",
+    "description": "Count activity sessions in a sorted event timeline. A gap strictly greater than the timeout starts a new session.",
+    "group": "Calendar, time and scheduling"
+  },
+  {
+    "title": "Coverage Minutes",
+    "kind": "library",
+    "slug": "coverage_minutes",
+    "description": "Sum occupied minutes over sorted nonoverlapping activity intervals clipped to a reporting window.",
+    "group": "Calendar, time and scheduling"
+  },
+  {
+    "title": "Periodic Overlap",
+    "kind": "library",
+    "slug": "periodic_overlap",
+    "description": "Measure minutes in a recurring daily window, including windows that cross midnight, within one specified minute-of-day interval. Equal daily endpoints mean an empty window.",
+    "group": "Calendar, time and scheduling"
+  },
+  {
+    "title": "Euclid Gcd",
+    "kind": "library",
+    "slug": "euclid_gcd",
+    "description": "Find the greatest common divisor of two nonnegative integral measurements using Euclid's remainder algorithm.",
+    "group": "Scientific and numerical methods"
+  },
+  {
+    "title": "Integer Sqrt",
+    "kind": "library",
+    "slug": "integer_sqrt",
+    "description": "Return the exact floor of the square root of a nonnegative integer using division-safe binary search.",
+    "group": "Scientific and numerical methods"
+  },
+  {
+    "title": "Horner Eval",
+    "kind": "library",
+    "slug": "horner_eval",
+    "description": "Evaluate polynomial coefficients supplied from highest to lowest degree. An empty polynomial evaluates to zero.",
+    "group": "Scientific and numerical methods"
+  },
+  {
+    "title": "Piecewise Interp",
+    "kind": "library",
+    "slug": "piecewise_interp",
+    "description": "Linearly interpolate between sorted strictly increasing knots, extending constant values past both ends. Supply matching nonempty arrays.",
+    "group": "Scientific and numerical methods"
+  },
+  {
+    "title": "Central Slope",
+    "kind": "library",
+    "slug": "central_slope",
+    "description": "Estimate a centered finite-difference slope at an interior sample of uniformly spaced data. Invalid positions or spacing return zero.",
+    "group": "Scientific and numerical methods"
+  },
+  {
+    "title": "Simpson Uniform",
+    "kind": "library",
+    "slug": "simpson_uniform",
+    "description": "Integrate an odd number of at least three equally spaced samples with composite Simpson weights. Invalid grids return zero.",
+    "group": "Scientific and numerical methods"
+  },
+  {
+    "title": "Dot Kahan",
+    "kind": "library",
+    "slug": "dot_kahan",
+    "description": "Accumulate a dot product with compensated summation for bounded finite inputs. Mismatched arrays return zero.",
+    "group": "Scientific and numerical methods"
+  },
+  {
+    "title": "Matrix Diag Sum",
+    "kind": "library",
+    "slug": "matrix_diag_sum",
+    "description": "Sum the principal diagonal of a rectangular row-major matrix after validating its flattened length.",
+    "group": "Scientific and numerical methods"
+  },
+  {
+    "title": "Newton Step",
+    "kind": "library",
+    "slug": "newton_step",
+    "description": "Apply one scalar Newton update to a root estimate with a caller-supplied derivative. Preserve the estimate for a zero derivative.",
+    "group": "Scientific and numerical methods"
+  },
+  {
+    "title": "Mean Abs Step",
+    "kind": "library",
+    "slug": "mean_abs_step",
+    "description": "Measure average absolute change between successive readings, yielding zero for a series with fewer than two observations.",
+    "group": "Scientific and numerical methods"
+  },
+  {
+    "title": "Tab Column",
+    "kind": "library",
+    "slug": "tab_column",
+    "description": "Advance a zero-based text column to the next tab stop for a positive tab width.",
+    "group": "Testing, documents and accessible interfaces"
+  },
+  {
+    "title": "Widow Split",
+    "kind": "library",
+    "slug": "widow_split",
+    "description": "Choose the largest paragraph prefix that fits while leaving a minimum count on each side. Zero means defer the paragraph to the next page.",
+    "group": "Testing, documents and accessible interfaces"
+  },
+  {
+    "title": "Utf16 Units",
+    "kind": "library",
+    "slug": "utf16_units",
+    "description": "Count UTF-16 code units for an array of Unicode scalar values and reject malformed scalar values.",
+    "group": "Testing, documents and accessible interfaces"
+  },
+  {
+    "title": "Rle Encoded Pairs",
+    "kind": "library",
+    "slug": "rle_encoded_pairs",
+    "description": "Count count-value runs required for a bounded run-length encoding, splitting long repeated runs at the configured maximum.",
+    "group": "Testing, documents and accessible interfaces"
+  },
+  {
+    "title": "Sequence Edit Distance",
+    "kind": "library",
+    "slug": "sequence_edit_distance",
+    "description": "Compute unit-cost Levenshtein distance between two token ID sequences using one dynamic programming row.",
+    "group": "Testing, documents and accessible interfaces"
+  },
+  {
+    "title": "Bracket Depth",
+    "kind": "library",
+    "slug": "bracket_depth",
+    "description": "Check a stream encoded as plus one for open and minus one for close and return maximum balanced nesting. Reject premature closes and unfinished groups.",
+    "group": "Testing, documents and accessible interfaces"
+  },
+  {
+    "title": "Test Streak",
+    "kind": "library",
+    "slug": "test_streak",
+    "description": "Find the longest consecutive run of failures in test results encoded as zero for pass and one for failure.",
+    "group": "Testing, documents and accessible interfaces"
+  },
+  {
+    "title": "Test Flips",
+    "kind": "library",
+    "slug": "test_flips",
+    "description": "Count observed pass-to-fail or fail-to-pass transitions across reruns of one test. Reject nonbinary results.",
+    "group": "Testing, documents and accessible interfaces"
+  },
+  {
+    "title": "Assert Close Count",
+    "kind": "library",
+    "slug": "assert_close_count",
+    "description": "Count coordinate deviations exceeding an absolute plus relative reference tolerance. Reject unequal vectors or negative tolerances.",
+    "group": "Testing, documents and accessible interfaces"
+  },
+  {
+    "title": "Focus Next Enabled",
+    "kind": "library",
+    "slug": "focus_next_enabled",
+    "description": "Return the next enabled control index in a circular tab order. Return minus one when every control is disabled or the starting index is invalid.",
+    "group": "Testing, documents and accessible interfaces"
+  }
+]

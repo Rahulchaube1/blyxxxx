@@ -1,3 +1,4 @@
+import workbench from "@/lib/workbench.json";
 import catalog from "@/lib/packages.json";
 import { directoryFor, type PackageCategory } from "@/lib/package-categories";
 
@@ -29,6 +30,15 @@ export default function PackageLogoGallery({ category }: { category: PackageCate
                         </a>
                         {frameworks && <a className="library-logo-download" href={"/packages/" + p.slug + "#editor"} aria-label={"Install the " + p.title + " editor extension"}>Editor extension</a>}
                         <a className="library-logo-download" href={p.logo} download={p.slug + ".png"} aria-label={"Download " + p.title + " logo as a PNG"}>Download PNG</a>
+                    </li>
+                ))}
+                {workbench.filter((p) => p.kind === category).map((p) => (
+                    <li className="library-logo-card" key={p.slug}>
+                        <a href={"https://nest.blyx-lang.space/packages/" + p.slug + ".html"}>
+                            <img src={"/workbench/" + p.slug + ".png"} alt="" width="144" height="144" loading="lazy" />
+                            <span>{p.title}</span>
+                        </a>
+                        <a className="library-logo-download" href={"/workbench/" + p.slug + ".png"} download>Download PNG</a>
                     </li>
                 ))}
             </ul>

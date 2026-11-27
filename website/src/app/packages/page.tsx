@@ -42,7 +42,7 @@ export default function Packages() {
                 <p>For the original framework and library collection, use <code>brew install rahulchaube1/blyx/blyx-packages</code> on macOS or Linux. On Windows, add the Blyx bucket with <code>scoop bucket add blyx https://github.com/Rahulchaube1/scoop-blyx</code> and run <code>scoop install blyx/blyx-packages</code>.</p>
                 <div className="actions">
                     <a href={condaChannel + "/"}>Conda channel</a>
-                    <a href={sourceCollectionArchive}>Download the original {items.filter((p) => !p.flightdeck).length} source projects</a>
+                    <a href={sourceCollectionArchive}>Download the original {items.filter((p) => !p.flightdeck && !p.workbench).length} source projects</a>
                     <a href={sourceCollection}>Collection release and checksums</a>
                     <a href={distributionRepository + "#install-the-collection"}>Homebrew and Scoop examples</a>
                 </div>
