@@ -17,6 +17,7 @@ export default function PackageLogoGallery({ category }: { category: PackageCate
                     : "Each penguin illustrates a task you can do with that library. Choose a name to see an example."}</p>
                 <div className="actions">
                     <a className="button" href={"/blyx-" + category + "-logos.zip"} download>Download {items.length} logos (ZIP)</a>
+                    <a href={"/workbench/" + category + "-logos.zip"} download>Download 100 Workbench {category} logos (ZIP)</a>
                     {frameworks && <a href="/flightdeck/workflow-logos.zip" download>Download 50 Flightdeck logos (ZIP)</a>}
                     {frameworks && <a href="/frameworks/flightdeck">Explore the Flightdeck workflows</a>}
                 </div>
