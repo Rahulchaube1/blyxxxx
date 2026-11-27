@@ -51,7 +51,8 @@ export default function PackageCatalog({ items, category }: { items: DirectoryEn
                                     <p>{p.description}</p>
                                     <div className="actions">
                                         <a href={p.documentation}>Install and use →</a>
-                                        {p.workbench ? <a href={"https://github.com/Rahulchaube1/blyx-workbench/blob/v0.1.0/packages/" + p.slug + "/README.md"}>API guide</a> : p.flightdeck ? <a href={"https://nest.blyx-lang.space/packages/" + p.slug + ".html"}>Install from Nest</a> : <a href={playLink(p.example)}>Run example</a>}
+                                        {p.workbench ? <a href={p.repository}>GitHub repository</a> : p.flightdeck ? <a href={"https://nest.blyx-lang.space/packages/" + p.slug + ".html"}>Install from Nest</a> : <a href={playLink(p.example)}>Run example</a>}
+                                        {p.workbench && p.version === "0.1.1" && <a href={p.repository + "/releases/tag/v" + p.version}>Editor download</a>}
                                         {p.category === "framework" && !p.workbench && <a href={p.flightdeck ? "/frameworks/flightdeck#editor" : "/packages/" + p.slug + "#editor"}>Install in editor</a>}
                                         {p.category === "framework" && !p.workbench && !p.flightdeck && <a href={guideLink(p.guide)}>Handbook</a>}
                                     </div>

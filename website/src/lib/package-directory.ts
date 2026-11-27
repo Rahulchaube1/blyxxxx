@@ -16,7 +16,7 @@ export function packageDirectory(category?: PackageCategory) {
             group: p.group,
             logo: p.logo,
             documentation: "/packages/" + p.slug,
-            flightdeck: false, workbench: false,
+            flightdeck: false, workbench: false, repository: "",
             guide: p.guide,
             example: p.example,
             search: [...new Set(
@@ -37,7 +37,7 @@ export function packageDirectory(category?: PackageCategory) {
         version: "0.1.0", group: tool.group, description: tool.description,
         logo: "/flightdeck/" + tool.slug + ".png",
         documentation: "/frameworks/flightdeck#" + tool.slug,
-        flightdeck: true, workbench: false, guide: "", example: "",
+        flightdeck: true, workbench: false, repository: "", guide: "", example: "",
         search: [tool.slug, "fd_" + tool.slug.replaceAll("-", "_"), tool.description, tool.group, ...tool.inputs, ...tool.outputs, "Flightdeck GPU Vulkan CPU"].join(" ").toLowerCase(),
     }));
     return [...packages, ...workflows, ...additions];
