@@ -9,7 +9,7 @@ export default function Flightdeck() {
     return <main className="wrap"><header className="page-head">
         <a href="/frameworks">Blyx frameworks</a>
         <h1>Flightdeck training workflows</h1>
-        <p>Choose a tensor operation, inspect its inputs and outputs, and export a graph for your batch shape. Install one workflow from Nest or download all 50 with Flightdeck 0.1.0.</p>
+        <p>Choose a tensor operation, inspect its inputs and outputs, and export a graph for your batch shape. Install any workflow from Nest at 0.1.1, or download the Flightdeck 0.1.0 exporter to run all 50.</p>
         <div id="editor" className="actions"><a className="button" href={release}>Download Flightdeck</a><a href="/articles/flightdeck">Read the GPU study</a><a href="https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-flightdeck">Visual Studio Marketplace</a><a href="https://open-vsx.org/extension/RahulChaube/blyx-flightdeck">Open VSX</a><a href="/flightdeck/blyx-flightdeck-0.1.1.vsix">Download the editor (.vsix)</a></div>
     </header><Browser tools={tools} /></main>;
 }
