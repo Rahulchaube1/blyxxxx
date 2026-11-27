@@ -36,12 +36,13 @@ export default function Packages() {
             <PackageCatalog items={items} />
             <section id="install" className="prose block">
                 <h2>Install Blyx packages</h2>
+                <p>Use Nest for all {items.length} packages. For example, <code>nest demo fd_masked_attention@0.1.0</code> creates a runnable Flightdeck project.</p>
                 <p>Use the Blyx Conda channel for an individual framework or library. For example, install Moments and run its example from the same directory with the Blyx compiler, Rust and a host linker.</p>
                 <pre>{'conda create -y --prefix ./blyx-env --override-channels -c ' + condaChannel + ' blyx-moments=0.1.0\nblyxc native-run ./blyx-env/share/blyx/moments/main.blyx'}</pre>
-                <p>For the full source collection, use <code>brew install rahulchaube1/blyx/blyx-packages</code> on macOS or Linux. On Windows, add the Blyx bucket with <code>scoop bucket add blyx https://github.com/Rahulchaube1/scoop-blyx</code> and run <code>scoop install blyx/blyx-packages</code>.</p>
+                <p>For the original framework and library collection, use <code>brew install rahulchaube1/blyx/blyx-packages</code> on macOS or Linux. On Windows, add the Blyx bucket with <code>scoop bucket add blyx https://github.com/Rahulchaube1/scoop-blyx</code> and run <code>scoop install blyx/blyx-packages</code>.</p>
                 <div className="actions">
                     <a href={condaChannel + "/"}>Conda channel</a>
-                    <a href={sourceCollectionArchive}>Download all {items.length} source projects</a>
+                    <a href={sourceCollectionArchive}>Download the original {items.filter((p) => !p.flightdeck).length} source projects</a>
                     <a href={sourceCollection}>Collection release and checksums</a>
                     <a href={distributionRepository + "#install-the-collection"}>Homebrew and Scoop examples</a>
                 </div>
@@ -64,7 +65,7 @@ export default function Packages() {
                     <a href="/packages.json">Catalog JSON</a>
                     <a href="/libraries/logos">Browse the library logos</a>
                     <a href="/frameworks/logos">Browse the framework birds</a>
-                    <a href="/blyx-package-logos.zip" download>Download all package logos</a>
+                    <a href="/blyx-package-logos.zip" download>Download the original package logos</a>
                     <a href="/community">Discuss an idea</a>
                     <a href="/#sponsor">Sponsor Blyx development</a>
                 </div>
