@@ -20,6 +20,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
               "packages",
               "frameworks",
               "frameworks/logos",
+              "frameworks/flightdeck",
+              "articles/flightdeck",
               "libraries",
               "libraries/logos",
               ...catalog.packages.map((p) => "packages/" + p.slug),

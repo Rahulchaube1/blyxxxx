@@ -11,6 +11,13 @@ export default function Articles() {
             <p>Experiments from the people building Blyx, with the code and data behind each result.</p>
         </header>
         <article className={styles.feature}>
+            <div><p className={styles.byline}>27 November 2026 · Blyx Flightdeck 0.1.0</p>
+                <h2><a href="/articles/flightdeck">From a loss function to a GPU training step</a></h2>
+                <p>Follow a three-weight classifier and check 50 workflows on CPU and Vulkan.</p>
+                <a href="/articles/flightdeck">Read the study →</a></div>
+            <img src="/flightdeck/training.png" alt="CPU and GPU training loss across 80 updates" />
+        </article>
+        <article className={styles.feature}>
             <div><p className={styles.byline}><time dateTime="2026-11-26">26 November 2026</time> · Interactive audio timing</p>
                 <h2><a href="/articles/tap-tempo">What happens when you miss a beat?</a></h2>
                 <p>Build a tap-tempo instrument in Blyx and follow six taps from timestamps to a 120 BPM reading.</p>

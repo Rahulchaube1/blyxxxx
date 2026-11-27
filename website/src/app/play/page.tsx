@@ -29,7 +29,8 @@ export default async function Playground({
                 <h2>{active.title}</h2>
                 <p className="subtle">{active.description}</p>
             </div>
-            <Runner playground key={active.id} code={active.code} filename={active.file} />
+            <p><a href={"/examples/source/" + active.id} download>Download this Blyx example</a></p>
+            <Runner playground exampleOutput={active.expected} key={active.id} code={active.code} filename={active.file} />
         </main>
     );
 }

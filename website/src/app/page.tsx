@@ -129,7 +129,8 @@ export default function Home() {
                 </section>
                 <section className="prose block">
                     <h2>Engineering articles</h2>
-                    <p>How can four examples train a matrix with 2.2 trillion entries? Explore the storage, the learned values and a separate CPU experiment on quantum circuit gradients.</p>
+                    <p>Follow a GPU training step from logits to updated weights. The Flightdeck study includes source code, a CPU comparison and results from 50 workflows.</p>
+                    <a href="/articles/flightdeck">Read the Flightdeck study →</a>
                     <div className="actions"><a href="/articles/training-in-factors">Read the matrix and circuit study →</a><a href="/articles/blyxtorch-portable-training">One checkpoint, two processors</a><a href="/articles">All articles</a></div>
                 </section>
                 <section className="block"><div className="section-head"><h2>Blyx activity</h2><a href="/adoption">All usage statistics →</a></div><LiveActivity compact /></section>

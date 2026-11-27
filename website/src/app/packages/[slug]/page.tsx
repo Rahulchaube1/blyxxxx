@@ -62,11 +62,13 @@ export default async function Package({ params }: Props) {
                     {p.projects && <a href="#projects">Try the projects</a>}
                     {p.trainedExample && <a href={playLink(p.trainedExample)}>Run the trained XOR network →</a>}
                     <a className={p.trainedExample ? undefined : "button"} href={playLink(p.example)}>{p.workflow?.browserTitle ?? (p.trainedExample ? "Differentiate a loss" : "Run the Blyx example →")}</a>
+                    <a href={"/examples/source/" + p.example} download>Download runnable Blyx example</a>
                     <a href={p.release}>Release on GitHub</a>
                     <a href={p.logo} download={p.slug + ".png"}>Download logo (PNG)</a>
                 </div>
             </header>
             <article className="prose">
+                {slug === "blyxtorch" && <section><h2>GPU training workflows</h2><p>Export FP32 loss, normalization and optimizer graphs for CPU or Vulkan with Blyx Flightdeck.</p><a href="/frameworks/flightdeck">Find a workflow</a></section>}
                 {p.releaseStudy && (
                     <section id="release-study">
                         <h2>{p.releaseStudy.title}</h2>

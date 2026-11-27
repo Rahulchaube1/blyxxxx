@@ -12,12 +12,14 @@ export default function Runner({
     code,
     filename,
     practiceOutput,
+    exampleOutput,
     checkOnly = false,
     playground = false,
 }: {
     code: string;
     filename: string;
     practiceOutput?: string;
+    exampleOutput?: string;
     checkOnly?: boolean;
     playground?: boolean;
 }) {
@@ -154,6 +156,11 @@ export default function Runner({
                     <pre aria-label="Program output">{output}</pre>
                 </div>
             </div>
+            {exampleOutput !== undefined && state === "Finished" && <details className="lesson-disclosure">
+                <summary>Compare with the published example output</summary>
+                <p>{output === exampleOutput ? "Your program produced the published output." : "Your output differs from the published example. Compare it with the reference below."}</p>
+                <pre aria-label="Published example output">{exampleOutput}</pre>
+            </details>}
             {playground && <PlaygroundUsage />}
             {practiceOutput !== undefined && state === "Finished" && (
                 <details className="lesson-disclosure">

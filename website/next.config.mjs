@@ -62,6 +62,7 @@ const config = {
                 redirect("/docs", "/"),
                 redirect("/packages/:slug", "https://www.blyx-lang.space/packages/:slug"),
                 redirect("/packages.json", "https://www.blyx-lang.space/packages.json"),
+                redirect("/frameworks/flightdeck", "https://www.blyx-lang.space/frameworks/flightdeck"),
                 redirect("/articles/:path*", "https://www.blyx-lang.space/articles/:path*"),
                 redirect("/demos/:path*", "https://www.blyx-lang.space/demos/:path*"),
                 ...[
