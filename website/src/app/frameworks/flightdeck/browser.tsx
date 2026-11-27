@@ -14,7 +14,8 @@ export default function Browser({tools}:{tools:Tool[]}) {
     </div><div className="grid package-grid">{matches.map(t=><article id={t.slug} className="card package-card" key={t.slug}>
         <div className="package-heading"><img className="package-logo" src={"/flightdeck/"+t.slug+".png"} width="64" height="64" alt="" loading="lazy" /><div><small>{t.group}</small><h2 style={{fontSize:"1.25rem",overflowWrap:"anywhere"}}>{t.slug}</h2></div></div><p>{t.description}</p>
         <details><summary>Tensor inputs and outputs</summary><p><strong>Inputs</strong> {t.inputs.join(", ")}</p><p><strong>Outputs</strong> {t.outputs.join(", ")}</p><p>Export two rows of width 64</p><code style={{overflowWrap:"anywhere"}}>flightdeck {t.slug} 2 64</code></details>
-        <div className="actions"><a href={repo+t.slug.replaceAll("-","_")+".blyx"}>Read Blyx source</a></div></article>)}</div>
+        <p><code style={{overflowWrap:"anywhere"}}>nest demo fd_{t.slug.replaceAll("-","_")}@0.1.0</code></p>
+        <div className="actions"><a href={"https://nest.blyx-lang.space/packages/fd_"+t.slug.replaceAll("-","_")+".html"}>Install from Nest</a><a href={repo+t.slug.replaceAll("-","_")+".blyx"}>Read Blyx source</a></div></article>)}</div>
         {!matches.length && <p>No matching workflow. <button onClick={()=>{setQuery("");setGroup("");}}>Clear filters</button></p>}
     </section>;
 }
