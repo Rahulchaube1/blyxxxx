@@ -34,6 +34,8 @@ function Resources() {
     return (
         <aside className="forum-resources" aria-label="Community resources">
             <h2>Project resources</h2>
+            <a href="https://discord.gg/ZPNWqNsvC">Join the Blyx Language Discord ↗</a>
+            <a href="https://nest.blyx-lang.space/">Browse packages on Blyx Nest ↗</a>
             <a href={repository + "/issues"}>Report a compiler bug ↗</a>
             <a href={repository + "/tree/blyx-main/RFC"}>Language proposals ↗</a>
             <a href={repository + "/blob/blyx-main/CONTRIBUTING.md"}>Contribution guide ↗</a>
