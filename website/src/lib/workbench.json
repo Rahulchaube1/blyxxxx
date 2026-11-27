@@ -8,7 +8,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-edition-review",
     "version": "0.1.1",
     "bird": "King eider drake",
-    "art": "d549949dc59f"
+    "art": "d549949dc59f",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Embargo Clock",
@@ -19,7 +20,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-embargo-clock",
     "version": "0.1.1",
     "bird": "Rhinoceros hornbill",
-    "art": "94bb8a98ce8d"
+    "art": "94bb8a98ce8d",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Locale Bundle",
@@ -30,7 +32,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-locale-bundle",
     "version": "0.1.1",
     "bird": "Lilac-breasted roller",
-    "art": "3c556155e972"
+    "art": "3c556155e972",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Alias Cutover",
@@ -41,7 +44,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-alias-cutover",
     "version": "0.1.1",
     "bird": "Resplendent quetzal",
-    "art": "05a765949ae3"
+    "art": "05a765949ae3",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Comment Appeals",
@@ -52,7 +56,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-comment-appeals",
     "version": "0.1.1",
     "bird": "Great grey owl",
-    "art": "83493ab0c58f"
+    "art": "83493ab0c58f",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Edit Lease",
@@ -63,7 +68,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-edit-lease",
     "version": "0.1.1",
     "bird": "Secretarybird",
-    "art": "607e6c139942"
+    "art": "607e6c139942",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Newsletter Proof",
@@ -74,7 +80,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-newsletter-proof",
     "version": "0.1.1",
     "bird": "Atlantic puffin",
-    "art": "d8c603dd1c3e"
+    "art": "d8c603dd1c3e",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Media Rights",
@@ -85,7 +92,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-media-rights",
     "version": "0.1.1",
     "bird": "Magnificent frigatebird male",
-    "art": "a04aef23d3f0"
+    "art": "a04aef23d3f0",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Chapter Lock",
@@ -96,7 +104,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-chapter-lock",
     "version": "0.1.1",
     "bird": "Superb lyrebird male",
-    "art": "40765e70fdb0"
+    "art": "40765e70fdb0",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Caption Review",
@@ -107,7 +116,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-caption-review",
     "version": "0.1.1",
     "bird": "Grey crowned crane",
-    "art": "e07dea55ba77"
+    "art": "e07dea55ba77",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Cart Reserve",
@@ -118,7 +128,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/cart_reserve",
     "version": "0.1.0",
     "bird": "Scarlet macaw",
-    "art": "df733dadbfe8"
+    "art": "df733dadbfe8",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Split Tender",
@@ -129,7 +140,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/split_tender",
     "version": "0.1.0",
     "bird": "African spoonbill",
-    "art": "bd3b7fe72d02"
+    "art": "bd3b7fe72d02",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Return Triage",
@@ -140,7 +152,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/return_triage",
     "version": "0.1.0",
     "bird": "Black skimmer",
-    "art": "b25147cab287"
+    "art": "b25147cab287",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Parcel Claim",
@@ -151,7 +164,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/parcel_claim",
     "version": "0.1.0",
     "bird": "Mandarin duck male",
-    "art": "891016dfcd1a"
+    "art": "891016dfcd1a",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Auction Close",
@@ -162,7 +176,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/auction_close",
     "version": "0.1.0",
     "bird": "Australian pelican",
-    "art": "f207a5442a8d"
+    "art": "f207a5442a8d",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Gift Balance",
@@ -173,7 +188,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/gift_balance",
     "version": "0.1.0",
     "bird": "Golden pheasant male",
-    "art": "d8bec70f6784"
+    "art": "d8bec70f6784",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Backorder Fill",
@@ -184,7 +200,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/backorder_fill",
     "version": "0.1.0",
     "bird": "Southern cassowary",
-    "art": "8c36ee281bca"
+    "art": "8c36ee281bca",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Coupon Pool",
@@ -195,7 +212,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/coupon_pool",
     "version": "0.1.0",
     "bird": "Crested auklet",
-    "art": "fe450a8de23f"
+    "art": "fe450a8de23f",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Subscription Grace",
@@ -206,7 +224,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/subscription_grace",
     "version": "0.1.0",
     "bird": "Demoiselle crane",
-    "art": "7f5bdde715f8"
+    "art": "7f5bdde715f8",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Exchange Stock",
@@ -217,7 +236,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/exchange_stock",
     "version": "0.1.0",
     "bird": "Shoebill",
-    "art": "3d19390ee5a9"
+    "art": "3d19390ee5a9",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Outbox Delivery",
@@ -228,7 +248,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/outbox_delivery",
     "version": "0.1.0",
     "bird": "Common redpoll male",
-    "art": "855b102af8a5"
+    "art": "855b102af8a5",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Savepoint Batch",
@@ -239,7 +260,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/savepoint_batch",
     "version": "0.1.0",
     "bird": "Turquoise-browed motmot",
-    "art": "5e9e427a08ec"
+    "art": "5e9e427a08ec",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Schema Shadow",
@@ -250,7 +272,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/schema_shadow",
     "version": "0.1.0",
     "bird": "Great crested grebe",
-    "art": "30dceba19496"
+    "art": "30dceba19496",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Stream Watermark",
@@ -261,7 +284,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/stream_watermark",
     "version": "0.1.0",
     "bird": "Northern gannet",
-    "art": "201363d191b0"
+    "art": "201363d191b0",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Deadletter Replay",
@@ -272,7 +296,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/deadletter_replay",
     "version": "0.1.0",
     "bird": "Snowy egret",
-    "art": "ea6cdd75287b"
+    "art": "ea6cdd75287b",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Snapshot Fence",
@@ -283,7 +308,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/snapshot_fence",
     "version": "0.1.0",
     "bird": "Inca tern",
-    "art": "4ec46be65713"
+    "art": "4ec46be65713",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Replica Promote",
@@ -294,7 +320,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/replica_promote",
     "version": "0.1.0",
     "bird": "Greater roadrunner",
-    "art": "87940b30593c"
+    "art": "87940b30593c",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Compaction Swap",
@@ -305,7 +332,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/compaction_swap",
     "version": "0.1.0",
     "bird": "Roseate spoonbill",
-    "art": "aabadbc649d2"
+    "art": "aabadbc649d2",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Microbatch Seal",
@@ -316,7 +344,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/microbatch_seal",
     "version": "0.1.0",
     "bird": "Cockatiel",
-    "art": "3321f6791e60"
+    "art": "3321f6791e60",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Segment Roll",
@@ -327,7 +356,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/segment_roll",
     "version": "0.1.0",
     "bird": "Bearded reedling male",
-    "art": "ce1deb1a39b1"
+    "art": "ce1deb1a39b1",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Canary Traffic",
@@ -338,7 +368,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/canary_traffic",
     "version": "0.1.0",
     "bird": "Vulturine guineafowl",
-    "art": "7a495a5b741b"
+    "art": "7a495a5b741b",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Breaker Probe",
@@ -349,7 +380,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/breaker_probe",
     "version": "0.1.0",
     "bird": "Black-necked stilt",
-    "art": "9734999a50e3"
+    "art": "9734999a50e3",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Drain Workers",
@@ -360,7 +392,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/drain_workers",
     "version": "0.1.0",
     "bird": "Black-capped chickadee",
-    "art": "a78fdd6baeab"
+    "art": "a78fdd6baeab",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Backup Chain",
@@ -371,7 +404,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/backup_chain",
     "version": "0.1.0",
     "bird": "Green peafowl male",
-    "art": "9ce0b038e89d"
+    "art": "9ce0b038e89d",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Maintenance Slot",
@@ -382,7 +416,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/maintenance_slot",
     "version": "0.1.0",
     "bird": "Keel-billed toucan",
-    "art": "fb8c5931e251"
+    "art": "fb8c5931e251",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Incident Silence",
@@ -393,7 +428,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/incident_silence",
     "version": "0.1.0",
     "bird": "Victoria crowned pigeon",
-    "art": "8f540cc440fe"
+    "art": "8f540cc440fe",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Artifact Promote",
@@ -404,7 +440,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/artifact_promote",
     "version": "0.1.0",
     "bird": "Red-legged seriema",
-    "art": "7a40695a0b3d"
+    "art": "7a40695a0b3d",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Mirror Repair",
@@ -415,7 +452,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/mirror_repair",
     "version": "0.1.0",
     "bird": "Hoatzin",
-    "art": "02774641700c"
+    "art": "02774641700c",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Reboot Ring",
@@ -426,7 +464,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/reboot_ring",
     "version": "0.1.0",
     "bird": "Greater flamingo",
-    "art": "4e24eb469cd6"
+    "art": "4e24eb469cd6",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Restore Drill",
@@ -437,7 +476,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/restore_drill",
     "version": "0.1.0",
     "bird": "Smew drake",
-    "art": "1061349aaf28"
+    "art": "1061349aaf28",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Take Punch",
@@ -448,7 +488,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/take_punch",
     "version": "0.1.0",
     "bird": "Sword-billed hummingbird",
-    "art": "359d61548bf2"
+    "art": "359d61548bf2",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Silence Gate",
@@ -459,7 +500,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/silence_gate",
     "version": "0.1.0",
     "bird": "Emperor penguin",
-    "art": "d0c1a06e9e5a"
+    "art": "d0c1a06e9e5a",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Video Keycut",
@@ -470,7 +512,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/video_keycut",
     "version": "0.1.0",
     "bird": "Wilson's bird-of-paradise",
-    "art": "1dcd1b3f2268"
+    "art": "1dcd1b3f2268",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Proxy Encode",
@@ -481,7 +524,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/proxy_encode",
     "version": "0.1.0",
     "bird": "Red crossbill male",
-    "art": "d2476e5dbbb9"
+    "art": "d2476e5dbbb9",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Sprite Sheet",
@@ -492,7 +536,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/sprite_sheet",
     "version": "0.1.0",
     "bird": "Gouldian finch",
-    "art": "5da63f58fb04"
+    "art": "5da63f58fb04",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Subtitle Clock",
@@ -503,7 +548,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/subtitle_clock",
     "version": "0.1.0",
     "bird": "Great horned owl",
-    "art": "15b1df9c0986"
+    "art": "15b1df9c0986",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Loudness Pass",
@@ -514,7 +560,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/loudness_pass",
     "version": "0.1.0",
     "bird": "Egyptian vulture",
-    "art": "8927f38fc297"
+    "art": "8927f38fc297",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Frame Reorder",
@@ -525,7 +572,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/frame_reorder",
     "version": "0.1.0",
     "bird": "White-crested laughingthrush",
-    "art": "6778743aeba9"
+    "art": "6778743aeba9",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Panorama Stitch",
@@ -536,7 +584,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/panorama_stitch",
     "version": "0.1.0",
     "bird": "Kakapo",
-    "art": "793d126581bd"
+    "art": "793d126581bd",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Audio Preroll",
@@ -547,7 +596,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/audio_preroll",
     "version": "0.1.0",
     "bird": "Greater racket-tailed drongo",
-    "art": "857de0430377"
+    "art": "857de0430377",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Crs Handoff",
@@ -558,7 +608,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/crs_handoff",
     "version": "0.1.0",
     "bird": "Kea",
-    "art": "02eb058287fd"
+    "art": "02eb058287fd",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Tile Pyramid",
@@ -569,7 +620,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/tile_pyramid",
     "version": "0.1.0",
     "bird": "Blue-footed booby",
-    "art": "9e6bf51a6b8d"
+    "art": "9e6bf51a6b8d",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Sensor Warmup",
@@ -580,7 +632,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/sensor_warmup",
     "version": "0.1.0",
     "bird": "Snow bunting male",
-    "art": "bb266b22af63"
+    "art": "bb266b22af63",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Survey Transect",
@@ -591,7 +644,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/survey_transect",
     "version": "0.1.0",
     "bird": "Saddle-billed stork",
-    "art": "5387e3e9d7af"
+    "art": "5387e3e9d7af",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Gauge Hysteresis",
@@ -602,7 +656,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/gauge_hysteresis",
     "version": "0.1.0",
     "bird": "European bee-eater",
-    "art": "47a804421d6a"
+    "art": "47a804421d6a",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Survey Closure",
@@ -613,7 +668,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/survey_closure",
     "version": "0.1.0",
     "bird": "Long-tailed tit",
-    "art": "3c659879d0dc"
+    "art": "3c659879d0dc",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Dark Frame Stack",
@@ -624,7 +680,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/dark_frame_stack",
     "version": "0.1.0",
     "bird": "White bellbird male",
-    "art": "549809e4725a"
+    "art": "549809e4725a",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Sample Custody",
@@ -635,7 +692,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/sample_custody",
     "version": "0.1.0",
     "bird": "Splendid fairywren male",
-    "art": "6d9537fb3fee"
+    "art": "6d9537fb3fee",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Instrument Zero",
@@ -646,7 +704,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/instrument_zero",
     "version": "0.1.0",
     "bird": "Pied avocet",
-    "art": "3dbcab26ad42"
+    "art": "3dbcab26ad42",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Grid Resample",
@@ -657,7 +716,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/grid_resample",
     "version": "0.1.0",
     "bird": "Steller's sea eagle",
-    "art": "5533eda609ad"
+    "art": "5533eda609ad",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Fold Holdout",
@@ -668,7 +728,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/fold_holdout",
     "version": "0.1.0",
     "bird": "Eurasian nuthatch",
-    "art": "7009c55caaca"
+    "art": "7009c55caaca",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Label Consensus",
@@ -679,7 +740,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/label_consensus",
     "version": "0.1.0",
     "bird": "Andean cock-of-the-rock",
-    "art": "3a77eb8792e0"
+    "art": "3a77eb8792e0",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Early Plateau",
@@ -690,7 +752,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/early_plateau",
     "version": "0.1.0",
     "bird": "Purple gallinule",
-    "art": "c843b730cf6a"
+    "art": "c843b730cf6a",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Feature Freeze",
@@ -701,7 +764,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/feature_freeze",
     "version": "0.1.0",
     "bird": "Greater sage-grouse",
-    "art": "c013f16dbe68"
+    "art": "c013f16dbe68",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Gradient Barrier",
@@ -712,7 +776,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/gradient_barrier",
     "version": "0.1.0",
     "bird": "Red-crowned crane",
-    "art": "eb31bf60a168"
+    "art": "eb31bf60a168",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Checkpoint Elect",
@@ -723,7 +788,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/checkpoint_elect",
     "version": "0.1.0",
     "bird": "Eurasian oystercatcher",
-    "art": "6cc39d50a18c"
+    "art": "6cc39d50a18c",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Annotation Budget",
@@ -734,7 +800,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/annotation_budget",
     "version": "0.1.0",
     "bird": "Amazonian umbrellabird male",
-    "art": "8dbe8d8369d8"
+    "art": "8dbe8d8369d8",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Inference Batch",
@@ -745,7 +812,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/inference_batch",
     "version": "0.1.0",
     "bird": "Indian paradise flycatcher male",
-    "art": "c7519d19cab5"
+    "art": "c7519d19cab5",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Distill Cache",
@@ -756,7 +824,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/distill_cache",
     "version": "0.1.0",
     "bird": "Pine grosbeak male",
-    "art": "679c2217f720"
+    "art": "679c2217f720",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Embedding Reindex",
@@ -767,7 +836,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/embedding_reindex",
     "version": "0.1.0",
     "bird": "African pygmy kingfisher",
-    "art": "2e09edd5ec43"
+    "art": "2e09edd5ec43",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Pdf Signature Set",
@@ -778,7 +848,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/pdf_signature_set",
     "version": "0.1.0",
     "bird": "Southern ground hornbill",
-    "art": "4bbffb3e2cf6"
+    "art": "4bbffb3e2cf6",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Print Imposition",
@@ -789,7 +860,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/print_imposition",
     "version": "0.1.0",
     "bird": "Strawberry finch male",
-    "art": "f31a9ad43091"
+    "art": "f31a9ad43091",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Ocr Review",
@@ -800,7 +872,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/ocr_review",
     "version": "0.1.0",
     "bird": "Great blue turaco",
-    "art": "57a2317ab1f2"
+    "art": "57a2317ab1f2",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Outline Depth",
@@ -811,7 +884,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/outline_depth",
     "version": "0.1.0",
     "bird": "Crested caracara",
-    "art": "b9d2729e3ba2"
+    "art": "b9d2729e3ba2",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Accessible Images",
@@ -822,7 +896,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/accessible_images",
     "version": "0.1.0",
     "bird": "Northern lapwing",
-    "art": "91234d8b0689"
+    "art": "91234d8b0689",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Translation Memory",
@@ -833,7 +908,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/translation_memory",
     "version": "0.1.0",
     "bird": "Temminck's tragopan male",
-    "art": "9636f0feda6d"
+    "art": "9636f0feda6d",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Mail Merge Batch",
@@ -844,7 +920,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/mail_merge_batch",
     "version": "0.1.0",
     "bird": "Hyacinth macaw",
-    "art": "daef249805b6"
+    "art": "daef249805b6",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Sheet Recalc",
@@ -855,7 +932,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/sheet_recalc",
     "version": "0.1.0",
     "bird": "Oilbird",
-    "art": "b0e172926b86"
+    "art": "b0e172926b86",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Archive Verify",
@@ -866,7 +944,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/archive_verify",
     "version": "0.1.0",
     "bird": "Spectacled owl",
-    "art": "5b7caec988c7"
+    "art": "5b7caec988c7",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Footnote Bind",
@@ -877,7 +956,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/footnote_bind",
     "version": "0.1.0",
     "bird": "Eurasian blue tit",
-    "art": "3a4603f39339"
+    "art": "3a4603f39339",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Dock Appointments",
@@ -888,7 +968,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/dock_appointments",
     "version": "0.1.0",
     "bird": "Red-billed tropicbird",
-    "art": "d598fbc4216e"
+    "art": "d598fbc4216e",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Pallet Break",
@@ -899,7 +980,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/pallet_break",
     "version": "0.1.0",
     "bird": "Crested barbet",
-    "art": "caa79c080969"
+    "art": "caa79c080969",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Meter Rollover",
@@ -910,7 +992,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/meter_rollover",
     "version": "0.1.0",
     "bird": "Rock ptarmigan male",
-    "art": "289cc506c167"
+    "art": "289cc506c167",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Charge Session",
@@ -921,7 +1004,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/charge_session",
     "version": "0.1.0",
     "bird": "Royal flycatcher",
-    "art": "24f1d1dffed6"
+    "art": "24f1d1dffed6",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Inspection Lot",
@@ -932,7 +1016,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/inspection_lot",
     "version": "0.1.0",
     "bird": "Western capercaillie",
-    "art": "1666f61d0d1a"
+    "art": "1666f61d0d1a",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Kit Assembly",
@@ -943,7 +1028,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/kit_assembly",
     "version": "0.1.0",
     "bird": "Brown pelican",
-    "art": "2a41c4d4d5a0"
+    "art": "2a41c4d4d5a0",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Dispatch Manifest",
@@ -954,7 +1040,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/dispatch_manifest",
     "version": "0.1.0",
     "bird": "Northern bald ibis",
-    "art": "a399aa07408c"
+    "art": "a399aa07408c",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Rental Turnaround",
@@ -965,7 +1052,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/rental_turnaround",
     "version": "0.1.0",
     "bird": "Sunbittern",
-    "art": "e847f3a5235d"
+    "art": "e847f3a5235d",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Tank Replenish",
@@ -976,7 +1064,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/tank_replenish",
     "version": "0.1.0",
     "bird": "Kori bustard",
-    "art": "2291ae265419"
+    "art": "2291ae265419",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Cycle Count",
@@ -987,7 +1076,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/cycle_count",
     "version": "0.1.0",
     "bird": "Cedar waxwing",
-    "art": "8b2e9ea762c4"
+    "art": "8b2e9ea762c4",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Drag Capture",
@@ -998,7 +1088,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/drag_capture",
     "version": "0.1.0",
     "bird": "Burrowing owl",
-    "art": "7dbc9df2f6a9"
+    "art": "7dbc9df2f6a9",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Undo Cursor",
@@ -1009,7 +1100,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/undo_cursor",
     "version": "0.1.0",
     "bird": "Black swan",
-    "art": "ff3a0bd3da08"
+    "art": "ff3a0bd3da08",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Scene Stream",
@@ -1020,7 +1112,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/scene_stream",
     "version": "0.1.0",
     "bird": "Green broadbill",
-    "art": "02b1ea94abad"
+    "art": "02b1ea94abad",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Focus Trap",
@@ -1031,7 +1124,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/focus_trap",
     "version": "0.1.0",
     "bird": "Laughing kookaburra",
-    "art": "65bcda72fa8c"
+    "art": "65bcda72fa8c",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Game Rounds",
@@ -1042,7 +1136,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/game_rounds",
     "version": "0.1.0",
     "bird": "Lady Amherst's pheasant male",
-    "art": "fdcd38c1a198"
+    "art": "fdcd38c1a198",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Device Pairing",
@@ -1053,7 +1148,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/device_pairing",
     "version": "0.1.0",
     "bird": "Bateleur eagle",
-    "art": "f17200875cba"
+    "art": "f17200875cba",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Offline Drafts",
@@ -1064,7 +1160,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/offline_drafts",
     "version": "0.1.0",
     "bird": "Palm cockatoo",
-    "art": "4d2b2cee54c6"
+    "art": "4d2b2cee54c6",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Gesture Hold",
@@ -1075,7 +1172,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/gesture_hold",
     "version": "0.1.0",
     "bird": "Three-wattled bellbird",
-    "art": "efcf9cee63e0"
+    "art": "efcf9cee63e0",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Animation Scrub",
@@ -1086,7 +1184,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/animation_scrub",
     "version": "0.1.0",
     "bird": "Rainbow lorikeet",
-    "art": "9178cc543386"
+    "art": "9178cc543386",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Level Checkpoint",
@@ -1097,7 +1196,8 @@
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/level_checkpoint",
     "version": "0.1.0",
     "bird": "Horned screamer",
-    "art": "911817f12c52"
+    "art": "911817f12c52",
+    "downloadVersion": "0.1.2"
   },
   {
     "title": "Lower Bound Pos",
@@ -1106,7 +1206,8 @@
     "description": "Locate the first element greater than or equal to a key in an ascending numeric vector. Returns the length when insertion belongs at the end.",
     "group": "Sequence and table processing",
     "repository": "https://github.com/Rahulchaube1/blyx-lower-bound-pos",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Run Mode",
@@ -1115,7 +1216,8 @@
     "description": "Return the most frequent value in a sorted nonempty vector, choosing the smallest value on ties. Empty input returns zero.",
     "group": "Sequence and table processing",
     "repository": "https://github.com/Rahulchaube1/blyx-run-mode",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Common Prefix Len",
@@ -1124,7 +1226,8 @@
     "description": "Find the length of the shared leading sequence of two numeric ID streams before producing a diff.",
     "group": "Sequence and table processing",
     "repository": "https://github.com/Rahulchaube1/blyx-common-prefix-len",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Ordered Subsequence",
@@ -1133,7 +1236,8 @@
     "description": "Test whether a series of required events appears in order, allowing unrelated events in between.",
     "group": "Sequence and table processing",
     "repository": "https://github.com/Rahulchaube1/blyx-ordered-subsequence",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Sorted Overlap Count",
@@ -1142,7 +1246,8 @@
     "description": "Count the multiset intersection of two sorted vectors while honoring repeated keys on both sides.",
     "group": "Sequence and table processing",
     "repository": "https://github.com/Rahulchaube1/blyx-sorted-overlap-count",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "First Inversion",
@@ -1151,7 +1256,8 @@
     "description": "Return the zero-based index of the first row that breaks ascending order, or minus one when sorted.",
     "group": "Sequence and table processing",
     "repository": "https://github.com/Rahulchaube1/blyx-first-inversion",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Stable Rank",
@@ -1160,7 +1266,8 @@
     "description": "Return the zero-based ascending rank of one row, breaking ties by its original index. Invalid indices return minus one.",
     "group": "Sequence and table processing",
     "repository": "https://github.com/Rahulchaube1/blyx-stable-rank",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Majority Index",
@@ -1169,7 +1276,8 @@
     "description": "Find an index containing a strict majority using cancellation and a verification pass. Return minus one if none exists.",
     "group": "Sequence and table processing",
     "repository": "https://github.com/Rahulchaube1/blyx-majority-index",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Max Slice Sum",
@@ -1178,7 +1286,8 @@
     "description": "Find the largest contiguous sum in a numeric signal, allowing the empty slice with sum zero.",
     "group": "Sequence and table processing",
     "repository": "https://github.com/Rahulchaube1/blyx-max-slice-sum",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Balance Index",
@@ -1187,7 +1296,8 @@
     "description": "Find the first index where the sum of earlier values equals the sum of later values. Return minus one if none exists.",
     "group": "Sequence and table processing",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/balance_index",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Zero Cross Count",
@@ -1196,7 +1306,8 @@
     "description": "Count sign changes in sampled audio, ignoring zero-valued plateaus.",
     "group": "Audio and image processing",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/zero_cross_count",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Signal Energy",
@@ -1205,7 +1316,8 @@
     "description": "Sum squared amplitudes of a finite signal block for comparing energy across equal-length windows.",
     "group": "Audio and image processing",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/signal_energy",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Peak Sample Index",
@@ -1214,7 +1326,8 @@
     "description": "Locate the first sample of greatest absolute magnitude, preserving the index for waveform annotation. Empty input returns minus one.",
     "group": "Audio and image processing",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/peak_sample_index",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Lag Product",
@@ -1223,7 +1336,8 @@
     "description": "Compute the unnormalized autocorrelation sum at a nonnegative integer lag. A missing overlap contributes zero.",
     "group": "Audio and image processing",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/lag_product",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Fir Point",
@@ -1232,7 +1346,8 @@
     "description": "Evaluate one causal FIR output using taps in lag order and zero padding at the start of a signal.",
     "group": "Audio and image processing",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/fir_point",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Median Three",
@@ -1241,7 +1356,8 @@
     "description": "Remove isolated impulses from a three-sample window by selecting its median, including ties.",
     "group": "Audio and image processing",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/median_three",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Pcm Sign Extend",
@@ -1250,7 +1366,8 @@
     "description": "Interpret an unsigned 16-bit PCM word as a signed sample. Values outside the word range return minus 32769.",
     "group": "Audio and image processing",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/pcm_sign_extend",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Pixel Luma",
@@ -1259,7 +1376,8 @@
     "description": "Compute integer BT.601-style luma using fixed weights 77, 150 and 29 with nearest rounding. RGB channels must be bytes.",
     "group": "Audio and image processing",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/pixel_luma",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Alpha Over Gray",
@@ -1268,7 +1386,8 @@
     "description": "Composite one straight-alpha grayscale sample over an opaque background with nearest byte rounding.",
     "group": "Audio and image processing",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/alpha_over_gray",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Row Stride Align",
@@ -1277,7 +1396,8 @@
     "description": "Calculate padded scanline storage in bytes for a packed pixel format at a byte alignment.",
     "group": "Audio and image processing",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/row_stride_align",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Turn Orientation",
@@ -1286,7 +1406,8 @@
     "description": "Determine the direction of a planar turn from six coordinates. Returns one for counterclockwise, zero for collinear, minus one for clockwise.",
     "group": "Geometry, maps and layout",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/turn_orientation",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Polygon Double Area",
@@ -1295,7 +1416,8 @@
     "description": "Compute the absolute doubled area of a simple planar polygon from its vertex coordinates using the shoelace sum.",
     "group": "Geometry, maps and layout",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/polygon_double_area",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Segment Distance Sq",
@@ -1304,7 +1426,8 @@
     "description": "Return squared Euclidean distance from a point to a closed segment, including the zero-length case.",
     "group": "Geometry, maps and layout",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/segment_distance_sq",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Polyline Taxicab",
@@ -1313,7 +1436,8 @@
     "description": "Measure total Manhattan travel along a rectilinear path. Mismatched coordinate arrays return minus one.",
     "group": "Geometry, maps and layout",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/polyline_taxicab",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Grid Cell Index",
@@ -1322,7 +1446,8 @@
     "description": "Map an in-bounds integer cell into a zero-based row-major array with explicit dimension checks.",
     "group": "Geometry, maps and layout",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/grid_cell_index",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Tile Parent Id",
@@ -1331,7 +1456,8 @@
     "description": "Map a row-major square tile ID into its parent in an even-width tile level. Reject invalid IDs and odd widths.",
     "group": "Geometry, maps and layout",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/tile_parent_id",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Longitude Delta",
@@ -1340,7 +1466,8 @@
     "description": "Find the shortest signed longitude change in degrees in the half-open interval from minus 180 to 180.",
     "group": "Geometry, maps and layout",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/longitude_delta",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Point In Ring",
@@ -1349,7 +1476,8 @@
     "description": "Apply an even-odd ray crossing test to an open or closed polygon ring. Supply a query off the boundary.",
     "group": "Geometry, maps and layout",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/point_in_ring",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Nearest Site",
@@ -1358,7 +1486,8 @@
     "description": "Find the first closest planar site by squared Euclidean distance. Return minus one for empty or mismatched coordinate arrays.",
     "group": "Geometry, maps and layout",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/nearest_site",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Periodic Index",
@@ -1367,7 +1496,8 @@
     "description": "Wrap a signed pixel or lattice coordinate into a repeating axis of positive integer width.",
     "group": "Geometry, maps and layout",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/periodic_index",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Absolute Error Mean",
@@ -1376,7 +1506,8 @@
     "description": "Summarize average absolute deviation between paired targets and predictions. Empty or unequal batches return minus one.",
     "group": "Learning, forecasting and statistics",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/absolute_error_mean",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Symmetric Ape",
@@ -1385,7 +1516,8 @@
     "description": "Compute mean symmetric absolute percentage error on a 0 to 200 scale with zero contribution when both values are zero.",
     "group": "Learning, forecasting and statistics",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/symmetric_ape",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Heldout Group",
@@ -1394,7 +1526,8 @@
     "description": "Identify the nth distinct group in first-seen order for leave-one-group-out validation. Return its first row index or minus one.",
     "group": "Learning, forecasting and statistics",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/heldout_group",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Balanced Fold Start",
@@ -1403,7 +1536,8 @@
     "description": "Locate the start row of a balanced contiguous validation fold, giving extra rows to earlier folds. Fold count itself returns the end sentinel.",
     "group": "Learning, forecasting and statistics",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/balanced_fold_start",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Pair Concordance",
@@ -1412,7 +1546,8 @@
     "description": "Count concordant minus discordant unordered pairs for two ranked measurements. Ties contribute zero.",
     "group": "Learning, forecasting and statistics",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/pair_concordance",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Isotonic Breaks",
@@ -1421,7 +1556,8 @@
     "description": "Count adjacent violations of a nondecreasing response curve before monotonic calibration.",
     "group": "Learning, forecasting and statistics",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/isotonic_breaks",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Gini Impurity",
@@ -1430,7 +1566,8 @@
     "description": "Compute class impurity from nonnegative class counts. An empty or zero-mass histogram yields zero.",
     "group": "Learning, forecasting and statistics",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/gini_impurity",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Positive Rank Auc",
@@ -1439,7 +1576,8 @@
     "description": "Compute binary ROC AUC by positive-negative score comparisons with half credit for ties. Undefined classes return minus one.",
     "group": "Learning, forecasting and statistics",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/positive_rank_auc",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Weighted Median Pos",
@@ -1448,7 +1586,8 @@
     "description": "Select the first sorted value index whose cumulative nonnegative weight reaches half the total. Zero total returns minus one.",
     "group": "Learning, forecasting and statistics",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/weighted_median_pos",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Residual Bias",
@@ -1457,7 +1596,8 @@
     "description": "Measure signed mean prediction minus target for paired samples. An empty batch or mismatched lengths produces zero.",
     "group": "Learning, forecasting and statistics",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/residual_bias",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Cart Discount",
@@ -1466,7 +1606,8 @@
     "description": "Calculate a minor-unit discount capped by both an offer maximum and the subtotal. Rates are whole basis points rounded down.",
     "group": "Commerce, allocation and measurement",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/cart_discount",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Cash Rounding",
@@ -1475,7 +1616,8 @@
     "description": "Round a nonnegative amount to the nearest cash increment, resolving exact halves upwards.",
     "group": "Commerce, allocation and measurement",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/cash_rounding",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Installment Piece",
@@ -1484,7 +1626,8 @@
     "description": "Distribute minor units across equal installments, assigning one extra unit to each earliest installment until the remainder is exhausted.",
     "group": "Commerce, allocation and measurement",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/installment_piece",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Break Even Units",
@@ -1493,7 +1636,8 @@
     "description": "Calculate the first whole unit count whose positive contribution margin covers fixed overhead. Return minus one for a nonpositive margin.",
     "group": "Commerce, allocation and measurement",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/break_even_units",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Tier Units",
@@ -1502,7 +1646,8 @@
     "description": "Count units charged inside one progressive pricing tier with excluded lower and included upper cumulative boundaries.",
     "group": "Commerce, allocation and measurement",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/tier_units",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Unit Pack Waste",
@@ -1511,7 +1656,8 @@
     "description": "Compute spare slots in the final shipping case when a nonnegative order is packed into equal-size cases.",
     "group": "Commerce, allocation and measurement",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/unit_pack_waste",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Inventory Days",
@@ -1520,7 +1666,8 @@
     "description": "Find the first demand period that cannot be filled from current stock. Return the number of fully served periods.",
     "group": "Commerce, allocation and measurement",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/inventory_days",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Meter Consumption",
@@ -1529,7 +1676,8 @@
     "description": "Compute consumption between two readings on a wrapping meter, assuming at most one wrap. Modulus is one beyond the largest reading.",
     "group": "Commerce, allocation and measurement",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/meter_consumption",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Shelf Life Pick",
@@ -1538,7 +1686,8 @@
     "description": "Choose the earliest nonexpired lot with sufficient stock for an unsplit order. Ties preserve input order.",
     "group": "Commerce, allocation and measurement",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/shelf_life_pick",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Bin First Fit",
@@ -1547,7 +1696,8 @@
     "description": "Find the first container with remaining capacity for a nonnegative item. Return minus one if no container fits.",
     "group": "Commerce, allocation and measurement",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/bin_first_fit",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Luhn Digits",
@@ -1556,7 +1706,8 @@
     "description": "Validate a sequence of decimal digits against the Luhn check digit, including its final digit.",
     "group": "Data integrity, identifiers and formats",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/luhn_digits",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Isbn10 Check",
@@ -1565,7 +1716,8 @@
     "description": "Validate ten ISBN-10 values in print order. Encode the final X as 10.",
     "group": "Data integrity, identifiers and formats",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/isbn10_check",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Ean13 Digit",
@@ -1574,7 +1726,8 @@
     "description": "Derive the EAN-13 check digit from exactly twelve decimal data digits. Invalid input returns minus one.",
     "group": "Data integrity, identifiers and formats",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/ean13_digit",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Fletcher16 Bytes",
@@ -1583,7 +1736,8 @@
     "description": "Compute Fletcher-16 on byte values modulo 255. Invalid byte input returns minus one.",
     "group": "Data integrity, identifiers and formats",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/fletcher16_bytes",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Uleb Width",
@@ -1592,7 +1746,8 @@
     "description": "Determine the encoded byte length of a nonnegative integer in unsigned LEB128.",
     "group": "Data integrity, identifiers and formats",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/uleb_width",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Zigzag Encode",
@@ -1601,7 +1756,8 @@
     "description": "Map signed integers to their unsigned ZigZag representation for compact varints. Inputs must fit in signed 32 bits.",
     "group": "Data integrity, identifiers and formats",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/zigzag_encode",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Base64 Size",
@@ -1610,7 +1766,8 @@
     "description": "Calculate the number of padded Base64 characters required for a known payload byte count.",
     "group": "Data integrity, identifiers and formats",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/base64_size",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Utf8 Width",
@@ -1619,7 +1776,8 @@
     "description": "Return the byte width of a Unicode scalar encoded as UTF-8. Reject surrogate code points and values beyond Unicode.",
     "group": "Data integrity, identifiers and formats",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/utf8_width",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Byte Order U32",
@@ -1628,7 +1786,8 @@
     "description": "Decode four validated bytes beginning at an offset into an unsigned big-endian 32-bit value represented exactly in FP64.",
     "group": "Data integrity, identifiers and formats",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/byte_order_u32",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Packbits Extent",
@@ -1637,7 +1796,8 @@
     "description": "Measure decoded length of a PackBits byte stream, checking run and literal boundaries. Header 128 is a no-op.",
     "group": "Data integrity, identifiers and formats",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/packbits_extent",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Ring Occupancy",
@@ -1646,7 +1806,8 @@
     "description": "Count occupied slots in a one-empty-slot circular queue with wrapped read and write cursors.",
     "group": "Systems, queues and reliability",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/ring_occupancy",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Serial Newer",
@@ -1655,7 +1816,8 @@
     "description": "Compare unsigned 32-bit serial numbers under half-range ordering. Equal and exactly half-range pairs return false.",
     "group": "Systems, queues and reliability",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/serial_newer",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Buddy Order",
@@ -1664,7 +1826,8 @@
     "description": "Find the least buddy allocator order that holds a request in positive equal base blocks. Order zero uses one block.",
     "group": "Systems, queues and reliability",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/buddy_order",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Cache Reuse Distance",
@@ -1673,7 +1836,8 @@
     "description": "Count distinct addresses since the previous identical reference to estimate LRU stack distance. A cold reference returns minus one.",
     "group": "Systems, queues and reliability",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/cache_reuse_distance",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Rendezvous Winner",
@@ -1682,7 +1846,8 @@
     "description": "Choose an available replica from precomputed rendezvous hash scores, resolving ties by lowest index. Positive flags indicate available replicas.",
     "group": "Systems, queues and reliability",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/rendezvous_winner",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Quorum Overlap",
@@ -1691,7 +1856,8 @@
     "description": "Calculate the minimum overlap between two successful quorum sets in a universe of distinct nodes.",
     "group": "Systems, queues and reliability",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/quorum_overlap",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Burst Backlog",
@@ -1700,7 +1866,8 @@
     "description": "Compute the peak queued work across synchronized arrivals followed by service at each time step. Return minus one for invalid counts.",
     "group": "Systems, queues and reliability",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/burst_backlog",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Missing Sequence",
@@ -1709,7 +1876,8 @@
     "description": "Find the first missing ID starting at an expected ID in an ascending stream that may contain duplicates.",
     "group": "Systems, queues and reliability",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/missing_sequence",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Striped Owner",
@@ -1718,7 +1886,8 @@
     "description": "Map a logical block address to a disk in a round-robin stripe layout with configurable blocks per stripe.",
     "group": "Systems, queues and reliability",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/striped_owner",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Deadline Miss Count",
@@ -1727,7 +1896,8 @@
     "description": "Count jobs missing absolute deadlines on one nonpreemptive worker in the supplied dispatch order.",
     "group": "Systems, queues and reliability",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/deadline_miss_count",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Weekday Mask Count",
@@ -1736,7 +1906,8 @@
     "description": "Count allowed weekdays in a half-open span using a seven-value flag vector and the supplied starting weekday from zero to six.",
     "group": "Calendar, time and scheduling",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/weekday_mask_count",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Month Span Days",
@@ -1745,7 +1916,8 @@
     "description": "Return the Gregorian length of a named month for positive civil years. Invalid months and years return minus one.",
     "group": "Calendar, time and scheduling",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/month_span_days",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Quarter Index",
@@ -1754,7 +1926,8 @@
     "description": "Map a calendar month to a one-based fiscal quarter for a configurable starting month.",
     "group": "Calendar, time and scheduling",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/quarter_index",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Next Cadence",
@@ -1763,7 +1936,8 @@
     "description": "Find the first cadence tick at or after a time, anchored to an initial tick. Period must be positive.",
     "group": "Calendar, time and scheduling",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/next_cadence",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Slot Conflict Count",
@@ -1772,7 +1946,8 @@
     "description": "Count half-open reservations overlapping a proposed half-open time slot. Ignore empty reservations.",
     "group": "Calendar, time and scheduling",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/slot_conflict_count",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "First Free Gap",
@@ -1781,7 +1956,8 @@
     "description": "Find the first start time that fits a duration past sorted, possibly overlapping reservations. Ignore empty reservations.",
     "group": "Calendar, time and scheduling",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/first_free_gap",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Clock Unwrap",
@@ -1790,7 +1966,8 @@
     "description": "Convert a wrapped time-of-day to the earliest absolute minute at or after a reference minute, using a fixed 1440-minute day.",
     "group": "Calendar, time and scheduling",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/clock_unwrap",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Session Count",
@@ -1799,7 +1976,8 @@
     "description": "Count activity sessions in a sorted event timeline. A gap strictly greater than the timeout starts a new session.",
     "group": "Calendar, time and scheduling",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/session_count",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Coverage Minutes",
@@ -1808,7 +1986,8 @@
     "description": "Sum occupied minutes over sorted nonoverlapping activity intervals clipped to a reporting window.",
     "group": "Calendar, time and scheduling",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/coverage_minutes",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Periodic Overlap",
@@ -1817,7 +1996,8 @@
     "description": "Measure minutes in a recurring daily window, including windows that cross midnight, within one specified minute-of-day interval. Equal daily endpoints mean an empty window.",
     "group": "Calendar, time and scheduling",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/periodic_overlap",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Euclid Gcd",
@@ -1826,7 +2006,8 @@
     "description": "Find the greatest common divisor of two nonnegative integral measurements using Euclid's remainder algorithm.",
     "group": "Scientific and numerical methods",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/euclid_gcd",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Integer Sqrt",
@@ -1835,7 +2016,8 @@
     "description": "Return the exact floor of the square root of a nonnegative integer using division-safe binary search.",
     "group": "Scientific and numerical methods",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/integer_sqrt",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Horner Eval",
@@ -1844,7 +2026,8 @@
     "description": "Evaluate polynomial coefficients supplied from highest to lowest degree. An empty polynomial evaluates to zero.",
     "group": "Scientific and numerical methods",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/horner_eval",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Piecewise Interp",
@@ -1853,7 +2036,8 @@
     "description": "Linearly interpolate between sorted strictly increasing knots, extending constant values past both ends. Supply matching nonempty arrays.",
     "group": "Scientific and numerical methods",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/piecewise_interp",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Central Slope",
@@ -1862,7 +2046,8 @@
     "description": "Estimate a centered finite-difference slope at an interior sample of uniformly spaced data. Invalid positions or spacing return zero.",
     "group": "Scientific and numerical methods",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/central_slope",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Simpson Uniform",
@@ -1871,7 +2056,8 @@
     "description": "Integrate an odd number of at least three equally spaced samples with composite Simpson weights. Invalid grids return zero.",
     "group": "Scientific and numerical methods",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/simpson_uniform",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Dot Kahan",
@@ -1880,7 +2066,8 @@
     "description": "Accumulate a dot product with compensated summation for bounded finite inputs. Mismatched arrays return zero.",
     "group": "Scientific and numerical methods",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/dot_kahan",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Matrix Diag Sum",
@@ -1889,7 +2076,8 @@
     "description": "Sum the principal diagonal of a rectangular row-major matrix after validating its flattened length.",
     "group": "Scientific and numerical methods",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/matrix_diag_sum",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Newton Step",
@@ -1898,7 +2086,8 @@
     "description": "Apply one scalar Newton update to a root estimate with a caller-supplied derivative. Preserve the estimate for a zero derivative.",
     "group": "Scientific and numerical methods",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/newton_step",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Mean Abs Step",
@@ -1907,7 +2096,8 @@
     "description": "Measure average absolute change between successive readings, yielding zero for a series with fewer than two observations.",
     "group": "Scientific and numerical methods",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/mean_abs_step",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Tab Column",
@@ -1916,7 +2106,8 @@
     "description": "Advance a zero-based text column to the next tab stop for a positive tab width.",
     "group": "Testing, documents and accessible interfaces",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/tab_column",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Widow Split",
@@ -1925,7 +2116,8 @@
     "description": "Choose the largest paragraph prefix that fits while leaving a minimum count on each side. Zero means defer the paragraph to the next page.",
     "group": "Testing, documents and accessible interfaces",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/widow_split",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Utf16 Units",
@@ -1934,7 +2126,8 @@
     "description": "Count UTF-16 code units for an array of Unicode scalar values and reject malformed scalar values.",
     "group": "Testing, documents and accessible interfaces",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/utf16_units",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Rle Encoded Pairs",
@@ -1943,7 +2136,8 @@
     "description": "Count count-value runs required for a bounded run-length encoding, splitting long repeated runs at the configured maximum.",
     "group": "Testing, documents and accessible interfaces",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/rle_encoded_pairs",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Sequence Edit Distance",
@@ -1952,7 +2146,8 @@
     "description": "Compute unit-cost Levenshtein distance between two token ID sequences using one dynamic programming row.",
     "group": "Testing, documents and accessible interfaces",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/sequence_edit_distance",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Bracket Depth",
@@ -1961,7 +2156,8 @@
     "description": "Check a stream encoded as plus one for open and minus one for close and return maximum balanced nesting. Reject premature closes and unfinished groups.",
     "group": "Testing, documents and accessible interfaces",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/bracket_depth",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Test Streak",
@@ -1970,7 +2166,8 @@
     "description": "Find the longest consecutive run of failures in test results encoded as zero for pass and one for failure.",
     "group": "Testing, documents and accessible interfaces",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/test_streak",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Test Flips",
@@ -1979,7 +2176,8 @@
     "description": "Count observed pass-to-fail or fail-to-pass transitions across reruns of one test. Reject nonbinary results.",
     "group": "Testing, documents and accessible interfaces",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/test_flips",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Assert Close Count",
@@ -1988,7 +2186,8 @@
     "description": "Count coordinate deviations exceeding an absolute plus relative reference tolerance. Reject unequal vectors or negative tolerances.",
     "group": "Testing, documents and accessible interfaces",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/assert_close_count",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   },
   {
     "title": "Focus Next Enabled",
@@ -1997,6 +2196,7 @@
     "description": "Return the next enabled control index in a circular tab order. Return minus one when every control is disabled or the starting index is invalid.",
     "group": "Testing, documents and accessible interfaces",
     "repository": "https://github.com/Rahulchaube1/blyx-workbench/tree/v0.1.0/packages/focus_next_enabled",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "downloadVersion": "0.1.1"
   }
 ]
