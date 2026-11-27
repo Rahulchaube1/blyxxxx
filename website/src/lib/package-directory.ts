@@ -31,7 +31,7 @@ export function packageDirectory(category?: PackageCategory) {
         logo: "/flightdeck/" + tool.slug + ".png",
         documentation: "/frameworks/flightdeck#" + tool.slug,
         flightdeck: true, guide: "", example: "",
-        search: [tool.slug, tool.description, tool.group, ...tool.inputs, ...tool.outputs, "Flightdeck GPU Vulkan CPU"].join(" ").toLowerCase(),
+        search: [tool.slug, "fd_" + tool.slug.replaceAll("-", "_"), tool.description, tool.group, ...tool.inputs, ...tool.outputs, "Flightdeck GPU Vulkan CPU"].join(" ").toLowerCase(),
     }));
     return [...packages, ...workflows];
 }
