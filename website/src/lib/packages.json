@@ -631,7 +631,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-swiftlet",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-swiftlet-starter-0.1.0.zip",
                 "examplePrefix": "blyx-swiftlet-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-swiftlet",
                 "source": "https://github.com/Rahulchaube1/blyx-swiftlet/tree/afec01cad3db3086f124939f9077da3e205589ab/editor",
                 "sha256": "4e851e79f013f7ef4fa588b522e2cc5046e3f116e5a2e85e58f19de4117fbab9"
             }
@@ -2021,7 +2021,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-turnstone",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-turnstone-starter-0.1.0.zip",
                 "examplePrefix": "blyx-turnstone-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-turnstone",
                 "source": "https://github.com/Rahulchaube1/blyx-turnstone/tree/7c08c8169b85ad6c20974cc941138a4022c86583/editor",
                 "sha256": "eb094a34aa7c6174c0c61ea41cbca3d796a44a6c85f9800ddfb5eacd6b5016c7"
             }
@@ -2885,7 +2885,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-tanager",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-tanager-starter-0.1.0.zip",
                 "examplePrefix": "blyx-tanager-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-tanager",
                 "source": "https://github.com/Rahulchaube1/blyx-tanager/tree/bcd693a33b6f37da2abebc17c040fc591f762603/editor",
                 "sha256": "98356284186857daf9afc2cccd52ed743cdf4ab23c6678367f0ff47c83f8f0e7"
             }
@@ -6639,7 +6639,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-swallow",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-swallow-starter-0.1.0.zip",
                 "examplePrefix": "blyx-swallow-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-swallow",
                 "source": "https://github.com/Rahulchaube1/blyx-swallow/tree/2c51ae2e42d7fd4fe0e3b113188ddad675fadae6/editor",
                 "sha256": "945ed59aa5b488c71f151323702783c00b69b466bf2b264501bb193fb13b443e"
             }
@@ -7503,7 +7503,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-starling",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-starling-starter-0.1.0.zip",
                 "examplePrefix": "blyx-starling-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-starling",
                 "source": "https://github.com/Rahulchaube1/blyx-starling/tree/973ce75d5c41b9485d32a4c7a359cf293d3452a2/editor",
                 "sha256": "76afae31b8098481c5fe43fa09c1a3378f8f51bee0dd4f5d66c94c3151bae561"
             }
@@ -7791,7 +7791,7 @@
                 "openVsx": "https://open-vsx.org/extension/RahulChaube/blyx-towhee",
                 "starter": "https://github.com/Rahulchaube1/blyxxxx/releases/download/framework-editors-v0.1.0/blyx-towhee-starter-0.1.0.zip",
                 "examplePrefix": "blyx-towhee-demo",
-                "marketplace": null,
+                "marketplace": "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-towhee",
                 "source": "https://github.com/Rahulchaube1/blyx-towhee/tree/6613da44d9c753673812db14a69856dc69c85768/editor",
                 "sha256": "ae33ca9d28200eaaeea095edc52f8d5893f87de6f4c319ce48ce8c25f7ffc9cb"
             }
