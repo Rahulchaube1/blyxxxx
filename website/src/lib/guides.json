@@ -747,7 +747,7 @@
             },
             {
                 "heading": "Import a versioned library",
-                "text": "Install Blyx 0.2.2, Rust 1.85 or later and a platform linker for a source build. In an empty project directory, run the clone command below. It puts the release beside the entry file. For a shared project, record the commit in version control, for example as a Git submodule.",
+                "text": "Install Blyx 0.2.3, Rust 1.85 or later and a platform linker for a source build. In an empty project directory, run the clone command below. It puts the release beside the entry file. For a shared project, record the commit in version control, for example as a Git submodule.",
                 "command": "git clone --depth 1 --branch v0.1.1 https://github.com/Rahulchaube1/blyx-classification.git vendor/classification"
             },
             {
@@ -827,7 +827,7 @@
             },
             {
                 "heading": "Add a package to a native project",
-                "text": "With Blyx 0.2.2, Rust and a host linker installed, clone the tagged release next to your entry file. The training and monitoring packages include their pinned Blyx dependencies. Save the imported program as main.blyx and run blyxc native-run main.blyx. The package catalog has the exact import, function reference, runnable example and source for every package.",
+                "text": "With Blyx 0.2.3, Rust and a host linker installed, clone the tagged release next to your entry file. The training and monitoring packages include their pinned Blyx dependencies. Save the imported program as main.blyx and run blyxc native-run main.blyx. The package catalog has the exact import, function reference, runnable example and source for every package.",
                 "command": "git clone --depth 1 --branch v0.1.1 https://github.com/Rahulchaube1/blyx-linearfit.git vendor/linearfit\n\n# First line of main.blyx\nuse vendor::linearfit::linearfit;"
             },
             {
@@ -968,7 +968,7 @@
             },
             {
                 "heading": "Compile a different network",
-                "text": "Widths include input and output. This example uses eight and four hidden units for a three-class classifier. Compile the emitted Blyx source with Blyx 0.2.2, Rust 1.85 or later and a host linker. The resulting executable can train and predict on a different machine of the same target platform. For Windows PowerShell, send the emitted source through Out-File -Encoding ascii classifier.blyx and compile to classifier.exe.",
+                "text": "Widths include input and output. This example uses eight and four hidden units for a three-class classifier. Compile the emitted Blyx source with Blyx 0.2.3, Rust 1.85 or later and a host linker. The resulting executable can train and predict on a different machine of the same target platform. For Windows PowerShell, send the emitted source through Out-File -Encoding ascii classifier.blyx and compile to classifier.exe.",
                 "command": "./blyxtorch emit 2,8,4,3 softmax relu > classifier.blyx\nblyxc build classifier.blyx -o classifier\n./classifier --help"
             },
             {
@@ -1134,7 +1134,7 @@
             },
             {
                 "heading": "Run the project locally",
-                "text": "Pass PATCH and /books/42?preview=yes to the dispatcher. It selects /books/:id and extracts 42. Try the same method on /books/new, an explicitly read-only resource. The CGI example also serves a health check through an existing web server. Install Blyx 0.2.2, Rust and a host linker, then run these commands.",
+                "text": "Pass PATCH and /books/42?preview=yes to the dispatcher. It selects /books/:id and extracts 42. Try the same method on /books/new, an explicitly read-only resource. The CGI example also serves a health check through an existing web server. Install Blyx 0.2.3, Rust and a host linker, then run these commands.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-swiftlet.git\ncd blyx-swiftlet\nblyxc native-run project.blyx",
                 "links": [
                     {
@@ -1219,7 +1219,7 @@
             },
             {
                 "heading": "Run the project locally",
-                "text": "A literal-word search and a paraphrase search return different article IDs. The example prints the first three fused results. Article 21 wins because both rankers put it near the top. Install Blyx 0.2.2, Rust and a host linker, then run these commands.",
+                "text": "A literal-word search and a paraphrase search return different article IDs. The example prints the first three fused results. Article 21 wins because both rankers put it near the top. Install Blyx 0.2.3, Rust and a host linker, then run these commands.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-shrike.git\ncd blyx-shrike\nblyxc native-run project.blyx",
                 "links": [
                     {
@@ -1300,7 +1300,7 @@
             },
             {
                 "heading": "Run the project locally",
-                "text": "Group eight first-reply waits at 5, 10 and 20 minutes. The resulting HTML page opens offline and exposes intervals, counts and shares as a table. Every observation contributes to one row. Install Blyx 0.2.2, Rust and a host linker, then run these commands.",
+                "text": "Group eight first-reply waits at 5, 10 and 20 minutes. The resulting HTML page opens offline and exposes intervals, counts and shares as a table. Every observation contributes to one row. Install Blyx 0.2.3, Rust and a host linker, then run these commands.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-bunting.git\ncd blyx-bunting\nblyxc native-run project.blyx",
                 "links": [
                     {
@@ -1385,7 +1385,7 @@
             },
             {
                 "heading": "Run the project locally",
-                "text": "The suite checks a decimal invoice total and a whole-box count, then records an offline printer as a skip. Change the expected box count to see the process exit with status 1. Install Blyx 0.2.2, Rust and a host linker, then run these commands.",
+                "text": "The suite checks a decimal invoice total and a whole-box count, then records an offline printer as a skip. Change the expected box count to see the process exit with status 1. Install Blyx 0.2.3, Rust and a host linker, then run these commands.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-wren.git\ncd blyx-wren\nblyxc native-run project.blyx",
                 "links": [
                     {
@@ -1470,7 +1470,7 @@
             },
             {
                 "heading": "Run the project locally",
-                "text": "The example draws five file tiles in three columns. The final row has two items. Use the same geometry for touch or mouse hit testing when embedding the layout in a UI host. Install Blyx 0.2.2, Rust and a host linker, then run these commands.",
+                "text": "The example draws five file tiles in three columns. The final row has two items. Use the same geometry for touch or mouse hit testing when embedding the layout in a UI host. Install Blyx 0.2.3, Rust and a host linker, then run these commands.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-weaver.git\ncd blyx-weaver\nblyxc native-run project.blyx",
                 "links": [
                     {
@@ -1555,7 +1555,7 @@
             },
             {
                 "heading": "Run the project locally",
-                "text": "The importer preserves a literal quote in the first note and an embedded newline in the second. Give it a UTF-8 CSV file to check its width before reading the note column. Install Blyx 0.2.2, Rust and a host linker, then run these commands.",
+                "text": "The importer preserves a literal quote in the first note and an embedded newline in the second. Give it a UTF-8 CSV file to check its width before reading the note column. Install Blyx 0.2.3, Rust and a host linker, then run these commands.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-dipper.git\ncd blyx-dipper\nblyxc native-run project.blyx",
                 "links": [
                     {
@@ -1640,7 +1640,7 @@
             },
             {
                 "heading": "Run the project locally",
-                "text": "Feed the same five frame times into a fixed-step ball simulation. One 100 ms stall exceeds the catch-up limit. The replay reports positions and the number of milliseconds discarded. Install Blyx 0.2.2, Rust and a host linker, then run these commands.",
+                "text": "Feed the same five frame times into a fixed-step ball simulation. One 100 ms stall exceeds the catch-up limit. The replay reports positions and the number of milliseconds discarded. Install Blyx 0.2.3, Rust and a host linker, then run these commands.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-kestrel.git\ncd blyx-kestrel\nblyxc native-run project.blyx",
                 "links": [
                     {
@@ -1721,7 +1721,7 @@
             },
             {
                 "heading": "Run the project locally",
-                "text": "Replay sequence and local receipt-time pairs. The bundled trace contains a duplicate, a two-ID gap and one out-of-order delivery. You can feed your own two-column headerless trace into the same program. Install Blyx 0.2.2, Rust and a host linker, then run these commands.",
+                "text": "Replay sequence and local receipt-time pairs. The bundled trace contains a duplicate, a two-ID gap and one out-of-order delivery. You can feed your own two-column headerless trace into the same program. Install Blyx 0.2.3, Rust and a host linker, then run these commands.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-heron.git\ncd blyx-heron\nblyxc native-run project.blyx",
                 "links": [
                     {
@@ -1801,7 +1801,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-oriole.git\ncd blyx-oriole\nblyxc native-run project.blyx -- 12 10 20 \"4,4,8\" 2",
                 "links": [
                     {
@@ -1897,7 +1897,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-avocet.git\ncd blyx-avocet\nblyxc native-run project.blyx -- 10 \"3,4\" 8 4",
                 "links": [
                     {
@@ -2001,7 +2001,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.1 https://github.com/Rahulchaube1/blyx-ibis.git\ncd blyx-ibis\nblyxc native-run project.blyx -- \"2,1\" \"125,50\" \"200,125\"",
                 "links": [
                     {
@@ -2097,7 +2097,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-pipit.git\ncd blyx-pipit\nblyxc native-run project.blyx -- \"0,3,0\" 8 2 1",
                 "links": [
                     {
@@ -2193,7 +2193,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-nuthatch.git\ncd blyx-nuthatch\nblyxc native-run project.blyx -- \"4,4,4,4\" 6 99 2",
                 "links": [
                     {
@@ -2297,7 +2297,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-turnstone.git\ncd blyx-turnstone\nblyxc native-run project.blyx -- 10 4 \"0,0,1\"",
                 "links": [
                     {
@@ -2385,7 +2385,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-osprey.git\ncd blyx-osprey\nblyxc native-run project.blyx -- \"-2,0,2,2\" \"0,0,4,2\" 4 4 0.5",
                 "links": [
                     {
@@ -2489,7 +2489,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.1 https://github.com/Rahulchaube1/blyx-warbler.git\ncd blyx-warbler\nblyxc native-run project.blyx -- \"1,-1,0,0\" 1 1",
                 "links": [
                     {
@@ -2577,7 +2577,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.1 https://github.com/Rahulchaube1/blyx-linnet.git\ncd blyx-linnet\nblyxc native-run project.blyx -- \"0,3,0,3,0,0,3\" 1 1 10",
                 "links": [
                     {
@@ -2673,7 +2673,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-curlew.git\ncd blyx-curlew\nblyxc native-run project.blyx -- \"-1,4\" \"1,3\" 2",
                 "links": [
                     {
@@ -2769,7 +2769,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-egret.git\ncd blyx-egret\nblyxc native-run project.blyx -- \"2,0,2\"",
                 "links": [
                     {
@@ -2849,7 +2849,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-tanager.git\ncd blyx-tanager\nblyxc native-run project.blyx -- \"1,1,2\" \"2,2,2\" 2",
                 "links": [
                     {
@@ -2945,7 +2945,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-merganser.git\ncd blyx-merganser\nblyxc native-run project.blyx -- \"100,80,75,100\" 0.25 1",
                 "links": [
                     {
@@ -3037,7 +3037,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-pintail.git\ncd blyx-pintail\nblyxc native-run project.blyx -- \"0.75,0.25\" \"0.5,0.5\" 0.125",
                 "links": [
                     {
@@ -3133,7 +3133,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-siskin.git\ncd blyx-siskin\nblyxc native-run project.blyx -- 20 \"-15,-10,30\" 10",
                 "links": [
                     {
@@ -3225,7 +3225,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-sandpiper.git\ncd blyx-sandpiper\nblyxc native-run project.blyx -- 10 8 19 2 16 1",
                 "links": [
                     {
@@ -3325,7 +3325,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-petrel.git\ncd blyx-petrel\nblyxc native-run project.blyx -- 2 10 2 1 8 2",
                 "links": [
                     {
@@ -3429,7 +3429,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-fulmar.git\ncd blyx-fulmar\nblyxc native-run project.blyx -- \"4,6,5,6\" \"4,6\" 4",
                 "links": [
                     {
@@ -3525,7 +3525,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-waxwing.git\ncd blyx-waxwing\nblyxc native-run project.blyx -- \"1,2,2\" \"1,3,2\" \"1,4,2\" 3 15",
                 "links": [
                     {
@@ -3637,7 +3637,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-martin.git\ncd blyx-martin\nblyxc native-run project.blyx -- 100 \"20,30\" 10 35 14 1 1 3",
                 "links": [
                     {
@@ -3757,7 +3757,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-kinglet.git\ncd blyx-kinglet\nblyxc native-run project.blyx -- 100 1 90 200",
                 "links": [
                     {
@@ -3876,7 +3876,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-barnowl.git\ncd blyx-barnowl\nblyxc native-run project.blyx -- \"40,42,42\" \"10,14,12\"",
                 "links": [
                     {
@@ -3964,7 +3964,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-harrier.git\ncd blyx-harrier\nblyxc native-run project.blyx -- 100 90 110 0 2 2 92 10",
                 "links": [
                     {
@@ -4076,7 +4076,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-plover.git\ncd blyx-plover\nblyxc native-run project.blyx -- 2 10 10 100 0.05 2",
                 "links": [
                     {
@@ -4176,7 +4176,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.1 https://github.com/Rahulchaube1/blyx-jacana.git\ncd blyx-jacana\nblyxc native-run project.blyx -- \"0,6\" \"2,6\" \"1,1\"",
                 "links": [
                     {
@@ -4272,7 +4272,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-redstart.git\ncd blyx-redstart\nblyxc native-run project.blyx -- 1 1 1 1",
                 "links": [
                     {
@@ -4368,7 +4368,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-quail.git\ncd blyx-quail\nblyxc native-run project.blyx -- \"1,0\" \"1,2\" 2 6",
                 "links": [
                     {
@@ -4468,7 +4468,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-skimmer.git\ncd blyx-skimmer\nblyxc native-run project.blyx -- \"4,0,0,4\" 1 0.1",
                 "links": [
                     {
@@ -4556,7 +4556,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-magpie.git\ncd blyx-magpie\nblyxc native-run project.blyx -- \"0,1,4\" \"2,2,2\" 2",
                 "links": [
                     {
@@ -4648,7 +4648,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-flamingo.git\ncd blyx-flamingo\nblyxc native-run project.blyx -- \"3,11\" 1 4",
                 "links": [
                     {
@@ -4744,7 +4744,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-bittern.git\ncd blyx-bittern\nblyxc native-run project.blyx -- \"1,2,5\" \"1,2\" \"10,20\" \"10,20\" 0",
                 "links": [
                     {
@@ -4852,7 +4852,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-grebe.git\ncd blyx-grebe\nblyxc native-run project.blyx -- \"10,20,30,40\" 15 2",
                 "links": [
                     {
@@ -4944,7 +4944,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-dunlin.git\ncd blyx-dunlin\nblyxc native-run project.blyx -- \"1,1,3\" \"1,2,2\"",
                 "links": [
                     {
@@ -5032,7 +5032,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-sanderling.git\ncd blyx-sanderling\nblyxc native-run project.blyx -- 8 100 105 10 6 0",
                 "links": [
                     {
@@ -5132,7 +5132,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-cormorant.git\ncd blyx-cormorant\nblyxc native-run project.blyx -- \"0,16\" \"100,148\" 0",
                 "links": [
                     {
@@ -5224,7 +5224,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-bulbul.git\ncd blyx-bulbul\nblyxc native-run project.blyx -- \"1,9\" \"1,2\" \"1,2\" 1",
                 "links": [
                     {
@@ -5324,7 +5324,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-fantail.git\ncd blyx-fantail\nblyxc native-run project.blyx -- \"2,15,0\" \"1,1,0\" 5 0 10",
                 "links": [
                     {
@@ -5424,7 +5424,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-swallow.git\ncd blyx-swallow\nblyxc native-run project.blyx -- \"1,1\" \"65,66\" 1 12976260",
                 "links": [
                     {
@@ -5528,7 +5528,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-lapwing.git\ncd blyx-lapwing\nblyxc native-run project.blyx -- \"4,6,3\" 120 10 10 10",
                 "links": [
                     {
@@ -5636,7 +5636,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-hoopoe.git\ncd blyx-hoopoe\nblyxc native-run project.blyx -- 400 200 100 100 3 4 14000",
                 "links": [
                     {
@@ -5756,7 +5756,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-spoonbill.git\ncd blyx-spoonbill\nblyxc native-run project.blyx -- \"0,20\" \"30,60\" 1 30 0",
                 "links": [
                     {
@@ -5852,7 +5852,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-raven.git\ncd blyx-raven\nblyxc native-run project.blyx -- \"9,17,9,21,21\" 17 2",
                 "links": [
                     {
@@ -5940,7 +5940,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-robin.git\ncd blyx-robin\nblyxc native-run project.blyx -- 1970 1 1",
                 "links": [
                     {
@@ -6028,7 +6028,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-starling.git\ncd blyx-starling\nblyxc native-run project.blyx -- \"0,2,4\" \"4,5,7\" 1",
                 "links": [
                     {
@@ -6120,7 +6120,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-blackbird.git\ncd blyx-blackbird\nblyxc native-run project.blyx -- 11000 10000 3600 0 1",
                 "links": [
                     {
@@ -6216,7 +6216,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-towhee.git\ncd blyx-towhee\nblyxc native-run project.blyx -- \"0,4,12\" \"60,88,70\" 4 80",
                 "links": [
                     {
@@ -6312,7 +6312,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-bowerbird.git\ncd blyx-bowerbird\nblyxc native-run project.blyx -- \"1,2,9\" \"1,10,0\" \"1,0,0\" \"2,0,0\"",
                 "links": [
                     {
@@ -6404,7 +6404,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-albatross.git\ncd blyx-albatross\nblyxc native-run project.blyx -- \"-1,0,0,2\" \"1,3,2,5\" 2",
                 "links": [
                     {
@@ -6519,7 +6519,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-chaffinch.git\ncd blyx-chaffinch\nblyxc native-run project.blyx -- \"1,1,2,4\" \"2,2,3,4\"",
                 "links": [
                     {
@@ -6626,7 +6626,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-pelican.git\ncd blyx-pelican\nblyxc native-run project.blyx -- \"0,5,20\" \"4,3,2\" 1 8",
                 "links": [
                     {
@@ -6730,7 +6730,7 @@
             },
             {
                 "heading": "Run the framework with your own input",
-                "text": "Install Blyx 0.2.2 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
+                "text": "Install Blyx 0.2.3 and a Rust toolchain with a host linker, then run the versioned project. Each positional argument is a number or a comma-separated numerical vector. The CLI accepts up to 16 entries per vector. The imported module accepts longer inputs.",
                 "command": "git clone --depth 1 --branch v0.1.0 https://github.com/Rahulchaube1/blyx-nightingale.git\ncd blyx-nightingale\nblyxc native-run project.blyx -- \"2,6\" \"0,10,30\" 0.5 20",
                 "links": [
                     {

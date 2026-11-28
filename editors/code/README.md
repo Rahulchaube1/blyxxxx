@@ -32,7 +32,7 @@ For a quick diagnostic check, remove the closing brace from `readings.blyx`. Res
 
 ## Interpreter and native builds
 
-The extension supports the Blyx 0.2.0 interpreter, including functions, conditionals, loops, checked integers, floating-point arithmetic, and numeric vectors. Editor runs have a one-million-step budget and an eight-second worker timeout. The numerical 0.2.1 toolchain builds this vector example in a terminal with Rust and a host linker. [Compiler downloads](https://www.blyx-lang.space/download) · [Native build guide](https://doc.blyx-lang.space/guide/native-builds)
+Blyx Language 1.4.0 bundles the Blyx 0.2.3 interpreter. It runs functions, conditionals, loops, checked integers, floating-point arithmetic and numeric vectors. Use `squared_distance(a, b)` to compare two numeric vectors of equal length. Editor runs have a one-million-step budget and an eight-second worker timeout. The Blyx 0.2.3 CLI can also compile this vector example in a terminal with Rust and a host linker. [Compiler downloads](https://www.blyx-lang.space/download) · [Native build guide](https://doc.blyx-lang.space/guide/native-builds)
 
 ### Build a standalone program with Blyx Direct
 

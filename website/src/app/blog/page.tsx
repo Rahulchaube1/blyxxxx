@@ -1,5 +1,5 @@
 import { pageMetadata } from "@/lib/metadata";
-import { repository, release, website } from "@/lib/site";
+import { cliVersion, repository, release, website } from "@/lib/site";
 export const metadata = pageMetadata(
     "Blyx release notes",
     "Find published Blyx releases, version history, and links to the release notes and downloads on GitHub.",
@@ -61,7 +61,7 @@ export default async function Blog() {
                 </div>
             ) : (
                 <div className="card">
-                    <h2>Blyx 0.2.2</h2>
+                    <h2>Blyx {cliVersion}</h2>
                     <p>
                         The release feed is currently unavailable. The
                         documented release remains available on GitHub.
