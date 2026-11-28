@@ -1,10 +1,14 @@
 {
-  "observed": "2026-11-28T10:25:56+00:00",
+  "observed": "2026-11-28T10:42:16+00:00",
   "channels": {
-    "openVsx": 28421,
-    "marketplace": 266,
+    "openVsx": 28423,
+    "marketplace": 265,
     "github": 2663,
     "cargo": 1904
   },
-  "total": 33254
+  "total": 33255,
+  "cliRelease": {
+    "tag": "v0.2.3",
+    "downloads": 19
+  }
 }
