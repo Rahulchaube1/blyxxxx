@@ -82,6 +82,7 @@ jobs:
       - run: node editors/code/scripts/prepare.cjs
       - run: node tools/test-blyx-grammar.cjs
       - run: node --test tools/test-blyx-adoption-audit.mjs
+      - run: node --test tools/test-live-downloads.mjs
       - run: node --test tools/test-blyx-grammar-export.mjs
       - run: node tools/test-editor-runtime.mjs
       - run: node tools/export-handbook.mjs --check

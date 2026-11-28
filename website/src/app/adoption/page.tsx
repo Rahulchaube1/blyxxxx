@@ -1,4 +1,5 @@
 import NestActivity from "@/components/NestActivity";
+import { connection } from "next/server";
 import baseline from "@/lib/adoption-baseline.json";
 import { pageMetadata } from "@/lib/metadata";
 import { repository, website } from "@/lib/site";
@@ -32,6 +33,7 @@ const series: [keyof Sample, string, string][] = [
 ];
 const format = (n: number) => n.toLocaleString("en-US");
 export default async function Adoption() {
+    await connection();
     const [s, ecosystem] = await Promise.all([latest(), ecosystemDownloads()]);
     const day = s.updated.slice(0,10), counts = s.history[day];
     function change(key: keyof Sample, days: number) {
@@ -54,6 +56,6 @@ export default async function Adoption() {
             <p>The ecosystem total adds Blyx extension downloads on Open VSX, reported Marketplace installs, downloads of the official compiler crates, and software files attached to public Blyx GitHub releases. Package managers and automated builds can fetch those files. Direct website downloads without a public counter are outside this total. Registries update on their own schedules. One developer can install several packages or keep using the CLI offline.</p>
             <p>On the playground, you can opt in to count successful clicks on Run program. Automatic runs, syntax checks and failed builds are excluded. Your browser picks one of 16,384 random slots and sends its slot, daily count, and whether the selected example was edited. The report includes a broad LinkedIn or other referral category. The server groups participating browser-days by country when the hosting platform supplies it. The report contains no source code, filenames or program output.</p>
             <p>“Active” means a slot reported success in the current or previous 14 UTC minutes. The weekly window covers today and six preceding UTC dates. Shared slots can undercount browsers, and clearing storage or using several devices can count a person again. Each slot contributes up to 255 runs per day. Country and referral counts appear from five browser-days. Unchecking the box clears the local slot and stops reporting. The desktop CLI and editor run offline.</p>
-            <p><a href={snapshotUrl}>Latest ecosystem count (JSON)</a> · <a href={raw}>Daily channel history</a> · <a href={repository + "/tree/adoption-history"}>Snapshot history</a> · <a href="/play">Open the playground</a></p></section>
+            <p><a href="/api/adoption">Live counters (JSON)</a> · <a href={snapshotUrl}>Last full collection</a> · <a href={raw}>Daily channel history</a> · <a href={repository + "/tree/adoption-history"}>Snapshot history</a> · <a href="/play">Open the playground</a></p></section>
     </main>;
 }

@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import sys
+import tomllib
 from urllib.parse import quote, urlencode
 
 from adoption import fetch, GALLERY
@@ -46,7 +47,7 @@ def release_files(name):
     for release in pages(base):
         if not release["draft"]:
             for asset in pages(f"{base}/{release['id']}/assets"):
-                yield asset["name"], asset["download_count"]
+                yield release["tag_name"], asset["name"], asset["download_count"]
 
 
 def github_downloads():
@@ -55,8 +56,18 @@ def github_downloads():
     if "blyxxxx" not in names:
         raise ValueError("Compiler repository missing from GitHub inventory")
     total = 0
+    manifest = Path(__file__).resolve().parents[1] / "compiler/blyxc/Cargo.toml"
+    cli_tag = "v" + tomllib.loads(manifest.read_text(encoding="utf-8"))["package"]["version"]
+    cli_count = 0
+    def include(repo, tag, filename, downloads):
+        nonlocal total, cli_count
+        if filename.lower().endswith(SOFTWARE):
+            downloads = count(downloads)
+            total += downloads
+            if repo == "blyxxxx" and tag == cli_tag:
+                cli_count += downloads
     for batch in chunks(names, 16):
-        fields = "name releases(first:12){totalCount nodes{isDraft databaseId releaseAssets(first:35){totalCount nodes{name downloadCount}}}}"
+        fields = "name releases(first:12){totalCount nodes{tagName isDraft databaseId releaseAssets(first:35){totalCount nodes{name downloadCount}}}}"
         queries = [f'p{i}:repository(owner:"{OWNER}",name:{json.dumps(n)}){{{fields}}}' for i, n in enumerate(batch)]
         result = github("/graphql", {"query": "{" + " ".join(queries) + "}"})
         if result.get("errors"):
@@ -64,8 +75,8 @@ def github_downloads():
         for i, name in enumerate(batch):
             releases = result["data"][f"p{i}"]["releases"]
             if releases["totalCount"] > len(releases["nodes"]):
-                files = release_files(name)
-                total += sum(count(n) for filename, n in files if filename.lower().endswith(SOFTWARE))
+                for tag, filename, downloads in release_files(name):
+                    include(name, tag, filename, downloads)
                 continue
             for release in releases["nodes"]:
                 if release["isDraft"]:
@@ -73,10 +84,12 @@ def github_downloads():
                 assets = release["releaseAssets"]
                 if assets["totalCount"] > len(assets["nodes"]):
                     rows = pages(f"/repos/{OWNER}/{name}/releases/{release['databaseId']}/assets")
-                    total += sum(count(a["download_count"]) for a in rows if a["name"].lower().endswith(SOFTWARE))
+                    for asset in rows:
+                        include(name, release["tagName"], asset["name"], asset["download_count"])
                 else:
-                    total += sum(count(a["downloadCount"]) for a in assets["nodes"] if a["name"].lower().endswith(SOFTWARE))
-    return total
+                    for asset in assets["nodes"]:
+                        include(name, release["tagName"], asset["name"], asset["downloadCount"])
+    return total, {"tag": cli_tag, "downloads": cli_count}
 
 
 def official(slug):
@@ -147,9 +160,10 @@ def main(path):
         github_result = pool.submit(github_downloads)
         cargo_result = pool.submit(crate_downloads)
         channels = editor_downloads()
-        channels.update(github=github_result.result(), cargo=cargo_result.result())
+        github_total, cli_release = github_result.result()
+        channels.update(github=github_total, cargo=cargo_result.result())
     snapshot = {"observed": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-                "channels": channels, "total": sum(channels.values())}
+                "channels": channels, "total": sum(channels.values()), "cliRelease": cli_release}
     # Publish a new observation only after every source has completed.
     path.write_text(json.dumps(snapshot, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(snapshot), flush=True)

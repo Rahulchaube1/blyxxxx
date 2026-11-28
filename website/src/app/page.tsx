@@ -1,4 +1,5 @@
 import NestActivity from "@/components/NestActivity";
+import { connection } from "next/server";
 import { handbookSiteName, languageSiteName, pageMetadata } from "@/lib/metadata";
 import StructuredData from "@/components/StructuredData";
 import { LiveActivity } from "@/components/LiveActivity";
@@ -38,6 +39,7 @@ export default async function Home() {
         }} />
     );
     if (bookEdition) return <>{identity}<GuideIndex /></>;
+    await connection();
     return (
         <main>
             {identity}
