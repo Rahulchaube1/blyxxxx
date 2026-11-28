@@ -21,9 +21,9 @@ const sections = [
     },
     {
         heading: "Install the Blyx Language extension",
-        body: "Choose Extensions → Install from VSIX in desktop VS Code. Version 1.3.0 adds Blyx: Build Native Executable for saved files in trusted workspaces. Install Blyx Direct on Windows x64 or Linux x64, then choose a fresh output filename.",
-        label: "Download Blyx Language 1.3.0",
-        href: repository + "/releases/download/editor-v1.3.0/blyx-language-1.3.0.vsix",
+        body: "Choose Extensions → Install from VSIX in desktop VS Code. Version 1.4.0 bundles the smaller vector runtime and a squared_distance snippet. Use Blyx: Run File to try it. Install Blyx Direct on Windows x64 or Linux x64, then choose a fresh output filename.",
+        label: "Download Blyx Language 1.4.0",
+        href: repository + "/releases/download/editor-v1.4.0/blyx-language-1.4.0.vsix",
     },
     {
         heading: "Run a file",
@@ -33,7 +33,7 @@ const sections = [
     },
     {
         heading: "Extension registries",
-        body: "Each registry displays its currently published version. The release download above installs version 1.3.0 directly.",
+        body: "Each registry displays its currently published version. The release download above installs version 1.4.0 directly.",
         label: "Visual Studio Marketplace",
         href: "https://marketplace.visualstudio.com/items?itemName=RahulChaube.blyx-language",
     },

@@ -9,6 +9,15 @@
         "code": "// Fit y = slope * x by least squares through the origin.\nfn fit(samples: vector, targets: vector) -> f64 {\n    dot(samples, targets) / dot(samples, samples)\n}\n\nfn main() {\n    let samples = [1.0, 2.0, 3.0, 4.0];\n    let targets = [2.0, 4.0, 6.0, 8.0];\n    let slope = fit(samples, targets);\n    println!(slope);\n    println!(slope * 5.0);\n}\n"
     },
     {
+        "id": "nearest-centroid",
+        "title": "Compare two centroids",
+        "category": "Machine learning",
+        "description": "Compare squared distances to two candidate centers in one pass per center.",
+        "file": "examples/ml/nearest_centroid.blyx",
+        "expected": "5\n25\ntrue\n",
+        "code": "fn main() {\n    let observation = [2.0, 3.0];\n    let to_first = squared_distance(observation, [1.0, 1.0]);\n    let to_second = squared_distance(observation, [5.0, 7.0]);\n    println!(to_first);\n    println!(to_second);\n    println!(to_first < to_second);\n}\n"
+    },
+    {
         "id": "fibonacci",
         "title": "Fibonacci",
         "category": "Control flow",

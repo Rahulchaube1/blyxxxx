@@ -6,6 +6,7 @@ fn native_and_interpreter_agree_on_shipped_programs() {
     let bin = dir.path().join(format!("sample{}", std::env::consts::EXE_SUFFIX));
     let examples = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../examples");
     for (name, expected) in [
+        ("ml/nearest_centroid.blyx", "5\n25\ntrue\n"),
         ("ml/linear_fit.blyx", "2\n10\n"),
         ("basic/fibonacci.blyx", "Fibonacci(10):\n55\n"),
         ("basic/loops.blyx", "Factorial(6):\n720\n10\n"),

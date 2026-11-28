@@ -131,6 +131,7 @@ export default function Home() {
                 </section>
                 <section className="prose block">
                     <h2>Engineering articles</h2>
+                    <p><a href="/articles/vector-distance">New in Blyx 0.2.3: finding the nearest center in one pass</a></p>
                     <p>Follow a GPU training step from logits to updated weights. The Flightdeck study includes source code, a CPU comparison and results from 50 workflows.</p>
                     <a href="/articles/flightdeck">Read the Flightdeck study →</a>
                     <div className="actions"><a href="/articles/training-in-factors">Read the matrix and circuit study →</a><a href="/articles/blyxtorch-portable-training">One checkpoint, two processors</a><a href="/articles">All articles</a></div>

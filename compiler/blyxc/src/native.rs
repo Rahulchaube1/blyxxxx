@@ -185,7 +185,8 @@ impl Lowerer<'_> {
                     )
                 } else if let Some(symbol) = self.functions.get(name.as_str()) {
                     format!("{symbol}({})", args.join(","))
-                } else if matches!(name.as_str(), "len" | "sum" | "at" | "dot") {
+                } else if matches!(name.as_str(), "len" | "sum" | "at" | "dot" | "squared_distance")
+                {
                     format!("{name}({})", args.join(","))
                 } else if let Some(module) = host_module(name) {
                     if !self.imports.contains(module) {

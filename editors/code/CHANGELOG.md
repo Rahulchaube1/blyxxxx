@@ -2,6 +2,10 @@
 
 All notable changes to the **Blyx Language** extension are documented here.
 
+## 1.4.0
+
+- Run squared_distance on numerical vectors with the offline interpreter and insert it with a snippet. The packaged WebAssembly module is 30,008 bytes smaller.
+
 ## 1.3.0
 
 - Build a saved Blyx program in a trusted local workspace with an installed Blyx Direct compiler on Windows x64 or Linux x64. Choose a new executable filename and read build diagnostics in the Blyx output channel.

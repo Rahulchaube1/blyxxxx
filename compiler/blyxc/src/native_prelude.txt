@@ -7,6 +7,13 @@ fn number(n: impl Number) -> f64 { n.numeric() }
 fn boolean(b: bool) -> bool { b }
 fn len(v: Vector) -> i64 { v.len() as i64 }
 fn sum(v: Vector) -> f64 { v.iter().sum() }
+fn squared_distance(a: Vector, b: Vector) -> f64 {
+    if a.len() != b.len() { fail("squared_distance requires vectors of equal length") }
+    a.iter().zip(b.iter()).fold(0.0, |total, (x,y)| {
+        let delta = x-y;
+        total + delta*delta
+    })
+}
 fn dot(a: Vector, b: Vector) -> f64 {
     if a.len() != b.len() { fail("dot requires vectors of equal length") }
     a.iter().zip(b.iter()).map(|(x,y)| x*y).sum()

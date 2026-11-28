@@ -2,7 +2,7 @@
   "name": "blyx-language",
   "displayName": "Blyx Language",
   "description": "Run Blyx with the bundled interpreter, see syntax diagnostics and build native executables with Blyx Direct.",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "publisher": "RahulChaube",
   "license": "MIT",
   "icon": "blyx.png",

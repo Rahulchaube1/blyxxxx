@@ -343,16 +343,20 @@ impl<'a> Interpreter<'a> {
                 let Expr::Ident(name, _) = target.as_ref() else {
                     return Err("assignment target must be a variable".into());
                 };
-                if !env.binding(name)?.is_mut {
+                let binding = env.binding(name)?;
+                if !binding.is_mut {
                     return Err(format!(
                         "cannot assign to immutable variable '{name}'; use let mut"
                     ));
                 }
                 // Read compound-assignment LHS before evaluating its RHS (left-to-right).
-                let previous = env.binding(name)?.value.clone();
+                let compound = match expr {
+                    Expr::AssignOp { op, .. } => Some((*op, binding.value.clone())),
+                    _ => None,
+                };
                 let mut value = value_or_return!(self.eval_expr(value, env));
-                if let Expr::AssignOp { op, .. } = expr {
-                    value = self.binary(*op, previous, value)?;
+                if let Some((op, previous)) = compound {
+                    value = self.binary(op, previous, value)?;
                 }
                 env.assign(name, value)?;
                 Ok(Flow::Value(Value::Unit))
@@ -412,8 +416,25 @@ impl<'a> Interpreter<'a> {
                     return Ok(Flow::Value(Value::Unit));
                 }
                 let function = self.functions.get(name);
-                if function.is_none() && !matches!(name.as_str(), "dot" | "len" | "at" | "sum") {
+                if function.is_none()
+                    && !matches!(name.as_str(), "dot" | "len" | "at" | "sum" | "squared_distance")
+                {
                     return Err(format!("unknown function '{name}'"));
+                }
+                // These built-ins take one or two arguments. Keep the values on the stack.
+                if function.is_none() {
+                    match args.as_slice() {
+                        [arg] => {
+                            let v = value_or_return!(self.eval_expr(arg, env));
+                            return self.vector_call(name, &[v]).map(Flow::Value);
+                        }
+                        [left, right] => {
+                            let a = value_or_return!(self.eval_expr(left, env));
+                            let b = value_or_return!(self.eval_expr(right, env));
+                            return self.vector_call(name, &[a, b]).map(Flow::Value);
+                        }
+                        _ => {}
+                    }
                 }
                 let mut values = Vec::with_capacity(args.len());
                 for arg in args {
@@ -478,6 +499,16 @@ impl<'a> Interpreter<'a> {
             ("sum", [Value::Vector(v)]) => {
                 self.spend(v.len() as u64)?;
                 Ok(Value::Float(v.iter().sum()))
+            }
+            ("squared_distance", [Value::Vector(a), Value::Vector(b)]) => {
+                if a.len() != b.len() {
+                    return Err("squared_distance requires vectors of equal length".into());
+                }
+                self.spend(a.len() as u64)?;
+                Ok(Value::Float(a.iter().zip(b.iter()).fold(0.0, |total, (x, y)| {
+                    let delta = x - y;
+                    total + delta * delta
+                })))
             }
             ("dot", [Value::Vector(a), Value::Vector(b)]) => {
                 if a.len() != b.len() {
@@ -791,6 +822,21 @@ mod control_flow_tests {
         assert_eq!(env.loop_depth, 0);
         assert!(interpreter.run_main().is_err());
         assert_eq!(interpreter.call_depth.get(), 0);
+    }
+
+    #[test]
+    fn squared_distance_handles_empty_and_signed_inputs() {
+        assert_eq!(run("fn main() { squared_distance([], []) }").unwrap(), Value::Float(0.0));
+        assert_eq!(
+            run("fn main() { squared_distance([-1, 2], [2, -2]) }").unwrap(),
+            Value::Float(25.0)
+        );
+        assert!(
+            run("fn main() { squared_distance([0], []) }").unwrap_err().contains("equal length")
+        );
+        assert!(
+            run("fn main() { squared_distance(1, 2) }").unwrap_err().contains("invalid arguments")
+        );
     }
 
     #[test]

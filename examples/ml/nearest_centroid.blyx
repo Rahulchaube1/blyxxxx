@@ -1,0 +1,8 @@
+fn main() {
+    let observation = [2.0, 3.0];
+    let to_first = squared_distance(observation, [1.0, 1.0]);
+    let to_second = squared_distance(observation, [5.0, 7.0]);
+    println!(to_first);
+    println!(to_second);
+    println!(to_first < to_second);
+}

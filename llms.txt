@@ -1,6 +1,6 @@
 # The Blyx handbook
 
-Blyx 0.2.2 · Released language and toolchain
+Blyx 0.2.3 · Released language and toolchain
 
 Start with a complete fn main(). Run your program in the playground or use blyxc check FILE followed by blyxc run FILE. For a native executable, use blyxc build FILE with Rust and a host linker installed.
 
@@ -180,6 +180,8 @@ The release supports synchronous functions, recursion, control flow and numeric 
 
 ## Local toolchain
 
+- [Install a library and inspect its release](https://doc.blyx-lang.space/guide/nest-release-files) — Validate a UTF-8 character across two reads, decode a framed message, and verify a single file from its published Blyx release.
+
 - [Install and verify Blyx](https://doc.blyx-lang.space/guide/installation) — Choose a binary or package manager, locate the executable, and verify the exact compiler version.
 
 - [Create a project on disk](https://doc.blyx-lang.space/guide/projects) — Move a program from the browser into a project, check the file and run it from a terminal.
@@ -188,14 +190,14 @@ The release supports synchronous functions, recursion, control flow and numeric 
 
 - [Debug and recover from errors](https://doc.blyx-lang.space/guide/diagnostics) — Locate a syntax error, diagnose a runtime failure, and guard an operation using short-circuit evaluation.
 
-- [Build a native executable](https://doc.blyx-lang.space/guide/native-builds) — Build an x86-64 program with Blyx Direct, reproduce the self-hosted compiler, or use the 0.2.2 toolchain for numerical workloads.
+- [Build a native executable](https://doc.blyx-lang.space/guide/native-builds) — Build an x86-64 program with Blyx Direct, reproduce the self-hosted compiler, or use the 0.2.3 toolchain for numerical workloads.
 
 ## Language reference
 
-- [Syntax, types and operators](https://doc.blyx-lang.space/guide/language-reference) — Look up the executable forms, operator order and value types used in Blyx 0.2.2.
+- [Syntax, types and operators](https://doc.blyx-lang.space/guide/language-reference) — Look up the executable forms, operator order and value types used in Blyx 0.2.3.
 
 - [Built-in functions and output](https://doc.blyx-lang.space/guide/builtin-reference) — Look up every vector built-in and both output macros, including their inputs, results and boundary cases.
 
 - [Command-line reference](https://doc.blyx-lang.space/guide/cli-reference) — Look up CLI forms, output files, execution budgets and exit codes.
 
-- [What Blyx 0.2.2 can run](https://doc.blyx-lang.space/guide/compatibility) — Choose an execution mode and identify features that are still being developed.
+- [What Blyx 0.2.3 can run](https://doc.blyx-lang.space/guide/compatibility) — Choose an execution mode and identify features that are still being developed.

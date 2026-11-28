@@ -124,7 +124,7 @@ export default async function Package({ params }: Props) {
                         </div>
                         <p>Create an empty <code>.blyx</code> file, type <code>{p.editor.examplePrefix}</code> and accept the completion. Choose <strong>Blyx: Run File</strong> to run the example.</p>
                         <p>For an offline installation, choose <strong>Extensions: Install from VSIX</strong> for Blyx Language first, then for {p.title}.</p>
-                        <a href="https://github.com/Rahulchaube1/blyxxxx/releases/download/editor-v1.3.0/blyx-language-1.3.0.vsix">Download the companion Blyx Language VSIX</a>
+                        <a href="https://github.com/Rahulchaube1/blyxxxx/releases/download/editor-v1.4.0/blyx-language-1.4.0.vsix">Download the companion Blyx Language VSIX</a>
                     </section>
                 )}
                 {p.collection && (

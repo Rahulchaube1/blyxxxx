@@ -1,4 +1,9 @@
 {
+  "Squared distance": {
+    "prefix": "squared_distance",
+    "body": "squared_distance(${1:observation}, ${2:center})",
+    "description": "Sum the squared differences between two equal-length vectors"
+  },
   "Blyx Function": {
     "prefix": "fn",
     "body": [

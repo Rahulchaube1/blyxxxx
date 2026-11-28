@@ -124,7 +124,7 @@ dependencies = [
 
 [[package]]
 name = "blyxc"
-version = "0.2.2"
+version = "0.2.3"
 dependencies = [
  "blyx_ast",
  "blyx_lexer",

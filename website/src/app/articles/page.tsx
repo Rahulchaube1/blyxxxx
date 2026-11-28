@@ -11,6 +11,12 @@ export default function Articles() {
             <p>Experiments from the people building Blyx, with the code and data behind each result.</p>
         </header>
         <article className={styles.feature}>
+            <div><p className={styles.byline}>28 November 2026 · Blyx 0.2.3</p>
+                <h2><a href="/articles/vector-distance">Finding the nearest center in one pass</a></h2>
+                <p>Follow a vector comparison from a Blyx loop to a built-in, then reproduce the timings in the editor runtime.</p>
+            </div><a href="/play?example=nearest-centroid">Run the example →</a>
+        </article>
+        <article className={styles.feature}>
             <div><p className={styles.byline}>Blyx Workbench 0.1.0</p>
                 <h2><a href="/articles/workbench">What happens when an approval arrives late?</a></h2>
                 <p>Replay an editorial workflow, divide a payment exactly and explore 200 installable Blyx packages.</p>

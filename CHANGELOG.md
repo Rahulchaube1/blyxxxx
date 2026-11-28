@@ -1,5 +1,11 @@
 # Blyx Changelog
 
+## 0.2.3
+
+- Added squared_distance for numerical vectors in the interpreter and native backend. Common vector built-ins avoid allocating an argument list.
+- Reduced the browser and editor WebAssembly payload by stripping debugging symbols from the release build.
+- Added a runnable nearest-centroid example and a benchmark that checks the output of each implementation.
+
 ## 0.2.0
 
 - Build standalone executables for the typed subset through rustc.

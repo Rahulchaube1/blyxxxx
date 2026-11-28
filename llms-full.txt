@@ -1,6 +1,6 @@
 # The Blyx handbook
 
-Blyx 0.2.2 · Released language and toolchain
+Blyx 0.2.3 · Released language and toolchain
 
 Start with a complete fn main(). Run your program in the playground or use blyxc check FILE followed by blyxc run FILE. For a native executable, use blyxc build FILE with Rust and a host linker installed.
 
@@ -17260,6 +17260,86 @@ Output after the change
 
 ## Local toolchain
 
+### [Install a library and inspect its release](https://doc.blyx-lang.space/guide/nest-release-files)
+
+Validate a UTF-8 character across two reads, decode a framed message, and verify a single file from its published Blyx release.
+
+#### Install and run a pinned example
+
+Install the Nest CLI, Blyx compiler and the native toolchain for your platform. From a new working directory, run these commands. Nest creates a demo directory containing the source, a vendor directory and expected.txt.
+
+```
+nest demo utf8_stream@0.1.0
+blyxc native-run utf8_stream-demo/main.blyx
+```
+
+[Install Nest](https://nest.blyx-lang.space/install.html) · [Install the Blyx toolchain](https://www.blyx-lang.space/download)
+
+#### Carry one character across two reads
+
+The euro sign uses the three UTF-8 bytes 226, 130 and 172. The first call to utf8_step receives only 226. Save its state and pass it to the next call. The demo prints false for the unfinished character, true after all three bytes, and -1 for an invalid surrogate encoding.
+
+```
+use vendor::utf8_stream::utf8_stream;
+
+fn main() {
+    let lead = utf8_step(0, 226);
+    println!(utf8_complete(lead));
+    let tail = utf8_step(utf8_step(lead, 130), 172);
+    println!(utf8_complete(tail));
+    println!(utf8_step(utf8_step(0, 237), 160));
+}
+```
+
+#### Find the end of a message
+
+A netstring puts its byte length before a colon and ends with a comma. In the message 1:A, the byte A produces event 1 and the trailing comma produces event 2. Only the second event completes the frame. The example prints 1, 2 and true. Its 64-byte limit bounds the permitted payload.
+
+```
+nest demo netstring_stream@0.1.0
+blyxc native-run netstring_stream-demo/main.blyx
+```
+
+[Read the framing example](https://nest.blyx-lang.space/releases/netstring_stream/0.1.0.html)
+
+#### Read one verified file
+
+Open the release file list to see every path, size and SHA-256 digest. For a scripted check, download nest-sdk.mjs into your current directory, save the following as inspect.mjs and run node inspect.mjs with Node.js 20 or newer. The SDK checks the bytes against the release manifest before returning them.
+
+```
+import { NestClient } from "./nest-sdk.mjs";
+
+const nest = new NestClient();
+const release = await nest.manifest("utf8_stream", "0.1.0");
+const source = await nest.readFile(release, "main.blyx");
+console.log(new TextDecoder().decode(source));
+```
+
+[Download the SDK module](https://nest.blyx-lang.space/nest-sdk.mjs) · [Inspect the UTF-8 Stream files](https://nest.blyx-lang.space/releases/utf8_stream/0.1.0.html)
+
+#### Use the library in your own project
+
+Run nest add in your project, then import vendor::utf8_stream::utf8_stream in a Blyx file. Commit the nest.lock directory. On another checkout, nest install uses the pinned release. When you publish your own library, use the submission command with --dry-run first to check the archive before creating a registry entry.
+
+```
+nest add utf8_stream@0.1.0
+nest install
+```
+
+[Publish a package](https://nest.blyx-lang.space/publish.html) · [Read the JavaScript SDK guide](https://nest.blyx-lang.space/sdk.html)
+
+#### Practice
+
+What happens if the stream ends after bytes 226 and 130?
+
+Hint
+
+Stop after the second byte and call utf8_complete on the state.
+
+Solution
+
+The result is false. Both bytes are a valid prefix, but the euro sign still needs its final byte. Retain the partial state during a read and check completion when the stream ends.
+
 ### [Install and verify Blyx](https://doc.blyx-lang.space/guide/installation)
 
 Choose a binary or package manager, locate the executable, and verify the exact compiler version.
@@ -17295,12 +17375,12 @@ blyxc --version
 With Rust, Cargo and a host linker installed, build the compiler from crates.io. The version flag selects the same release as this course. Cargo normally places the result in the bin directory under your Cargo home.
 
 ```
-cargo install --locked --version 0.2.2 blyxc
+cargo install --locked --version 0.2.3 blyxc
 ```
 
 #### Check your installation
 
-Open a fresh terminal after a PATH change. The version command should print blyxc 0.2.2. If the shell cannot find it, check the directory from which the executable runs directly and make sure that directory appears on PATH.
+Open a fresh terminal after a PATH change. The version command should print blyxc 0.2.3. If the shell cannot find it, check the directory from which the executable runs directly and make sure that directory appears on PATH.
 
 ```
 blyxc --version
@@ -17483,7 +17563,7 @@ false
 
 ### [Build a native executable](https://doc.blyx-lang.space/guide/native-builds)
 
-Build an x86-64 program with Blyx Direct, reproduce the self-hosted compiler, or use the 0.2.2 toolchain for numerical workloads.
+Build an x86-64 program with Blyx Direct, reproduce the self-hosted compiler, or use the 0.2.3 toolchain for numerical workloads.
 
 #### Build directly with Blyx Direct 0.1.0
 
@@ -17521,9 +17601,9 @@ cmp generation2 generation3
 
 Run the project source through the interpreter and keep a small expected output. When trying a native build for the first time, use the generated hello project or the capstone. Both have simple results that you can check by eye.
 
-#### Build with the 0.2.2 toolchain
+#### Build with the 0.2.3 toolchain
 
-Use 0.2.2 for floating-point numbers, vectors, package imports and Apple Silicon macOS. Its build command translates the supported source to Rust and invokes rustc and a host linker. Use the command below with the 0.2.2 driver.
+Use 0.2.3 for floating-point numbers, vectors, package imports and Apple Silicon macOS. Its build command translates the supported source to Rust and invokes rustc and a host linker. Use the command below with the 0.2.3 driver.
 
 ```
 blyxc build src/main.blyx
@@ -17575,7 +17655,7 @@ The four readings sum to 123.5, two exceed 30, and the empty call prints no read
 
 ### [Syntax, types and operators](https://doc.blyx-lang.space/guide/language-reference)
 
-Look up the executable forms, operator order and value types used in Blyx 0.2.2.
+Look up the executable forms, operator order and value types used in Blyx 0.2.3.
 
 #### Read the shape of a program
 
@@ -17706,6 +17786,7 @@ All four functions receive vectors by value in Blyx source. The interpreter shar
 | at(vector, i64) | The element at a zero-based index | at([4.0, 9.0], 1) → 9 |
 | sum(vector) | Sum of the elements | sum([4.0, 9.0]) → 13 |
 | dot(vector, vector) | Sum of products at matching indices | dot([1.0, 2.0], [4.0, 9.0]) → 22 |
+| squared_distance(a, b) | Sum of squared coordinate differences. Both vectors must have the same length. | squared_distance([2, 3], [1, 1]) returns 5.0. |
 
 #### Preconditions
 
@@ -17718,6 +17799,12 @@ print!() emits no text. println!() emits a newline. With a single expression, pr
 #### Cost of the operations
 
 Reading the length or one element requires no scan. sum and dot visit the elements and their work grows with vector length. The interpreter charges its execution budget for these reductions. Holding the sum in a binding avoids recomputing it in every loop iteration.
+
+#### Choose the closer center
+
+Compute each squared distance and choose the smaller result. On empty vectors the result is zero. Length mismatches raise an error. Each comparison takes one pass and constant additional storage. Large values can overflow f64 when squared.
+
+[Run the nearest-centroid example](https://www.blyx-lang.space/play?example=nearest-centroid)
 
 #### Practice
 
@@ -17781,7 +17868,7 @@ Solution
 
 Use blyxc check main.blyx, followed on success by blyxc run main.blyx --max-steps 500. A parser success does not guarantee that execution will finish within the budget.
 
-### [What Blyx 0.2.2 can run](https://doc.blyx-lang.space/guide/compatibility)
+### [What Blyx 0.2.3 can run](https://doc.blyx-lang.space/guide/compatibility)
 
 Choose an execution mode and identify features that are still being developed.
 
@@ -17801,7 +17888,7 @@ The teaching examples use functions, local bindings, scalar arithmetic, loops, r
 
 #### Features under development
 
-The package registry and its dependency resolver are prototypes. The published source libraries use versioned Git checkouts. The browser and CLI interpreter execute a single source buffer. GPU kernels, a general tensor runtime, asynchronous tasks and actor scheduling remain development work.
+Nest publishes versioned Blyx source archives. Use nest demo to run a reviewed example or nest add to pin a library in your project. Commit the generated nest.lock directory so other developers can restore the same release. The browser and CLI interpreter execute a single source buffer. GPU kernels, a general tensor runtime, asynchronous tasks and actor scheduling remain development work.
 
 #### Interpret a benchmark
 
