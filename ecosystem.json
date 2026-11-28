@@ -1,10 +1,10 @@
 {
-  "observed": "2026-11-28T08:51:42+00:00",
+  "observed": "2026-11-28T10:25:56+00:00",
   "channels": {
-    "openVsx": 26889,
+    "openVsx": 28421,
     "marketplace": 266,
-    "github": 2655,
+    "github": 2663,
     "cargo": 1904
   },
-  "total": 31714
+  "total": 33254
 }
