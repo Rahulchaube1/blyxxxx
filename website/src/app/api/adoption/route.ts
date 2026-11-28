@@ -1,5 +1,6 @@
 import { unstable_cache } from "next/cache";
 import { cliVersion } from "@/lib/site";
+import { ecosystemDownloads } from "@/lib/ecosystem-downloads";
 import { usageSummary, utcDay } from "@/app/adoption/usage";
 
 export const dynamic = "force-dynamic";
@@ -36,6 +37,8 @@ const releaseDownloads = unstable_cache(async () => {
 }, ["blyx-cli-archive-counters", cliVersion], { revalidate: 300 });
 
 export async function GET() {
-    const [registry, playground, archives] = await Promise.all([registries(), usageSummary(utcDay()).catch(() => null), releaseDownloads().catch(() => null)]);
-    return Response.json({ registry, playground, archives }, { headers: { "Cache-Control": "public, s-maxage=30, stale-while-revalidate=30" } });
+    const [registry, playground, archives, ecosystem] = await Promise.all([
+        registries(), usageSummary(utcDay()).catch(() => null), releaseDownloads().catch(() => null), ecosystemDownloads(),
+    ]);
+    return Response.json({ registry, playground, archives, ecosystem }, { headers: { "Cache-Control": "public, s-maxage=30, stale-while-revalidate=30" } });
 }

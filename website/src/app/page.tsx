@@ -2,6 +2,7 @@ import NestActivity from "@/components/NestActivity";
 import { handbookSiteName, languageSiteName, pageMetadata } from "@/lib/metadata";
 import StructuredData from "@/components/StructuredData";
 import { LiveActivity } from "@/components/LiveActivity";
+import { ecosystemDownloads } from "@/lib/ecosystem-downloads";
 import GuideIndex from "@/components/GuideIndex";
 import { bookEdition, buyMeACoffee, docs, githubSponsors, guideLink, playLink, repository, website } from "@/lib/site";
 import samples from "@/lib/samples.json";
@@ -25,7 +26,7 @@ const destinations = [
     ["Package catalog", "/packages", "Search all Blyx packages by name or task and find their source and releases."],
 ];
 
-export default function Home() {
+export default async function Home() {
     const identity = (
         <StructuredData data={{
             "@context": "https://schema.org",
@@ -74,6 +75,7 @@ export default function Home() {
                 </div>
             </section>
             <div className="wrap">
+                <section className="block"><div className="section-head"><h2>Blyx activity</h2><a href="/adoption">All usage statistics →</a></div><LiveActivity compact initial={await ecosystemDownloads()} /></section>
                 <NestActivity />
                 <nav className="site-directory" aria-labelledby="explore-blyx">
                     <h2 id="explore-blyx">Explore Blyx</h2>
@@ -136,7 +138,6 @@ export default function Home() {
                     <a href="/articles/flightdeck">Read the Flightdeck study →</a>
                     <div className="actions"><a href="/articles/training-in-factors">Read the matrix and circuit study →</a><a href="/articles/blyxtorch-portable-training">One checkpoint, two processors</a><a href="/articles">All articles</a></div>
                 </section>
-                <section className="block"><div className="section-head"><h2>Blyx activity</h2><a href="/adoption">All usage statistics →</a></div><LiveActivity compact /></section>
                 <section className="sponsor-section block" id="sponsor" aria-labelledby="sponsor-heading">
                     <div>
                         <h2 id="sponsor-heading">Support Blyx development</h2>

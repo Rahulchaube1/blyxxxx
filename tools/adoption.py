@@ -13,10 +13,11 @@ ROOT = Path(__file__).resolve().parents[1]
 GALLERY = "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery"
 RELEASES = "https://api.github.com/repos/Rahulchaube1/blyxxxx/releases"
 
-def fetch(url, payload=None):
+def fetch(url, payload=None, *, extra_headers=None):
     headers = {"User-Agent": "Blyx-Adoption/1.0 (+https://www.blyx-lang.space/adoption)"}
     if payload is not None:
         headers.update({"Content-Type": "application/json", "Accept": "application/json;api-version=7.2-preview.1"})
+    headers.update(extra_headers or {})
     req = Request(url, data=json.dumps(payload).encode() if payload is not None else None, headers=headers)
     for attempt in range(4):
         try:
